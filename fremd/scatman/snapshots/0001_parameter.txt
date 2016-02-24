@@ -1,0 +1,6 @@
+Shape: ellipsoid
+Long axis: 600nm
+Short axis: 200nm
+Rotation around y: 80°
+Rotation around z: 0°
+Wavelength: 57.6nm
