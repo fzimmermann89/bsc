@@ -1,48 +1,42 @@
 refRadius=25;
-refError=1.1;
-maskScale=0.03%0.03%.1;
+refError=1.5;
+maskScale=0%.1%0.03%.1;
 sigma=10;
-useHoloSupport=false;
+useHoloSupport=true;
 %create reconstruction plan
 plan=reconPlan();
-% plan.addStep('hio',500);
-% plan.addStep('er',500);
-% for n=0:10
-% plan.addStep('hio',200);
-%   plan.addStep('er',1);
-% end
-% plan.addStep('errp',100);
-%
-for n=0:15
-    plan.addStep('hio',200);
-    plan.addStep('er',1);
-    plan.addStep('sw',1);
+
+if useHoloSupport
+    for n=0:30
+        plan.addStep('hio',300);
+        plan.addStep('er',1);
+    end
+    plan.addStep('er',100);
+    
+else
+    for n=0:50
+        plan.addStep('hio',75);
+        plan.addStep('er',24);
+        plan.addStep('sw',1);
+        plan.addStep('show')
+    end
+    for n=0:15
+        plan.addStep('hio',199);
+        plan.addStep('er',1);
+        plan.addStep('show')
+    end
+    plan.addStep('er',100);
     plan.addStep('show')
 end
-for n=0:15
-    plan.addStep('hio',200);
-    plan.addStep('er',1);
-    plan.addStep('hio',200);
-    plan.addStep('sw',1);
-    plan.addStep('show')
-end
-for n=0:20
-    plan.addStep('hio',200);
-    plan.addStep('er',1);
-%     plan.addStep('show')
-end
-plan.addStep('er',100);
-
-
 
 
 %load image
 input=double(gpuArray(rgb2gray(imread('input_2.png'))))/255;
 
-% %create Reference
-% [xx,yy]=meshgrid(-refRadius:1:refRadius);
-% refImage=xx.^2+yy.^2<refRadius^2;
-% input(end-2*refRadius:end,end-2*refRadius:end)=refImage;
+%create Reference
+[xx,yy]=meshgrid(-refRadius:1:refRadius);
+refImage=xx.^2+yy.^2<refRadius^2;
+input(end-2*refRadius:end,end-2*refRadius:end)=refImage;
 
 %pad
 N=size(input);
@@ -62,9 +56,10 @@ scatterImage=absFinput.*mask;
 %create support
 [start,support,cross]=holoSupport(scatterImage.*softmask,refRadius*refError);
 if ~useHoloSupport
-    support=abs(ift2(scatterImage.*softmask))>0.05;
-    support = imfill(support, 'holes');
+    support=abs(ift2(scatterImage.*softmask));
+    support=support>max(support(:))*0.005;
     support = imdilate(support,ones(3));
+   support = imfill(support, 'holes');
     
     % support=padarray(support,N,0);
     start=support.*rand(size(scatterImage));
@@ -110,21 +105,22 @@ for nplan=1:length(plan)
                 nerror=nerror+1;
             end
         case 'sw'
-            sigma=10;
-            relThreshold=1;
+            sigma=7;
+            relThreshold=0.10;
             support=SW(curImage,relThreshold,sigma);
             errors(nerror)=errors(nerror-1);
             nerror=nerror+1;
         case 'show'
-            fprintf('%.2f%% done, error:%.2f\n',nplan/length(plan)*100,errors(nerror-1));
             figure(5);imagesc(support); title('support');
             figure(6);imagesc(abs(curImage));title('cur. Image')
             figure(2); plot(errors); title('error');
+            drawnow;
         otherwise
             warning('unknown plan');
     end
+                fprintf('%.1f%% done, error:%.2f\n',nplan/length(plan)*100,errors(nerror-1));
+
     
-    drawnow;
 end
 toc
 %     % curImage=support;
