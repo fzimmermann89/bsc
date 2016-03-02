@@ -1,11 +1,11 @@
-function [ newImage,realError ] = ERiter(amplitude, curImage, support )
+function [ newImage,realError ] = ERiter(amplitude, curImage, support,mask )
     %Perform one iteration of ER
     %   Detailed explanation goes here
     
     %Take Phase of curImag and amplitude to construct a tmpImage
     curImagF=ft2(curImage);
     curPhase=angle(curImagF);
-    tmpImage=ift2(amplitude.*(exp(1i.*curPhase)));
+    tmpImage=ift2(mask.*amplitude.*(exp(1i.*curPhase))+~mask.*curImagF);
 
     %Force (real) constrains on tmpImage to get newImage
     newImage=support.*tmpImage;
