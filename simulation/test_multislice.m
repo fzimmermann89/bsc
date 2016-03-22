@@ -1,6 +1,6 @@
 % load('dens.mat')
 clear all;
-N=2048;
+N=4096;
 %all units are in nm
 wavelength=1;
 dx=wavelength/2;
@@ -20,7 +20,7 @@ objects=cell(1);
 objects{1}=scatterObjects.sphere();
   objects{1}.delta=0;%1.78E-4;
   objects{1}.beta=0.01;%1.34E-5;
-objects{1}.radius=maxXY/32;
+objects{1}.radius=maxXY/16;
 % objects{1}.positionX=maxXY/4;
 % objects{1}.positionY=maxXY/4;
 % objects{1}.positionZ=maxXY/4;
@@ -153,11 +153,11 @@ drawnow;
 
 %% mie
 tic
-% [angleMie,streubildMie]=mie(wavelength,objects{1}.radius,objects{1}.beta,objects{1}.delta);
-[S,~,angleMie]=calcmie(objects{1}.radius,1-objects{1}.delta+1i*objects{1}.beta,1,wavelength,1000);
-streubildMie=(squeeze((S(1,1,:)+ S(2,2,:))/2));
-streubildMie=streubildMie./max(streubildMie(:));
-angleMie=angleMie./180*pi;
+[angleMie,streubildMie]=mie(wavelength,objects{1}.radius,objects{1}.beta,objects{1}.delta);
+% [S,~,angleMie]=calcmie(objects{1}.radius,1-objects{1}.delta+1i*objects{1}.beta,1,wavelength,1000);
+% streubildMie=(squeeze((S(1,1,:)+ S(2,2,:))/2));
+% streubildMie=streubildMie./max(streubildMie(:));
+% angleMie=angleMie./180*pi;
 toc
 
 %% plot radialprofile
