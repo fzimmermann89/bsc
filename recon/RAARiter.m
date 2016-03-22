@@ -1,6 +1,16 @@
-function [ newImage,realError  ] = HIOiter( amplitude, curImage, support,mask  )
+function [ newImage,realError  ] = RAARiter( amplitude, curImage, support,mask  )
     %Perform one iteration of HIO
-    beta=0.9;
+
+    %Adaptive beta, vgl Luke?
+    persistent beta
+    if isempty(beta)
+        beta=0.95;
+    else
+        beta=max(beta-0.0005,0.3);
+    end
+    beta
+    beta=0.87; %debug´
+
     %Take Phase of curImag and amplitude to construct a tmpImage
     curImagF=ft2(curImage);
     curPhase=angle(curImagF);
@@ -10,7 +20,7 @@ function [ newImage,realError  ] = HIOiter( amplitude, curImage, support,mask  )
     %inside support
     newImage=support.*tmpImage;
     %outside support
-    feedback=curImage-beta.*tmpImage;
+    feedback=beta*curImage+(1-2*beta).*tmpImage;
     newImage=newImage+~support.*feedback;
     %should be different function? XXX
 

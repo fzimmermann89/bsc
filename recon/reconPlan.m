@@ -1,27 +1,27 @@
 classdef reconPlan<handle
     %Plan for phase retrieval
-    
+
     properties
         steps=struct('method',{},'iterations',{},'parameters',{});
         iterations=0;
     end
-    
+
     methods
         function addStep(this,method,iterations,parameters)
             step.method=method;
-           
+
             if exist('iterations','var')
                 step.iterations=iterations;
             else
                 step.iterations=1;
             end
-            
+
             if exist('parameters','var')
                 step.parameters=parameters;
             else
                 step.parameters=[];
             end
-            
+
             this.steps(end+1)=step;
             this.iterations=this.iterations+step.iterations;
         end

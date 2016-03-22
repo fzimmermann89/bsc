@@ -8,13 +8,12 @@ function [ newImage,realError ] = ERiter(amplitude, curImage, support,mask )
     tmpImage=ift2(mask.*amplitude.*(exp(1i.*curPhase))+~mask.*curImagF);
 
     %Force (real) constrains on tmpImage to get newImage
-    newImage=support.*tmpImage;
+    newImage=support.*abs(real(tmpImage));
     %should be different function? XXX
 
     %calculate realError (nochmal nachdenken XXX)
     if nargout>1
      realError=norm(tmpImage.*~support,'fro');
     end
-%   figure(8);subplot(2,1,1);imagesc(real(newImage));colorbar;subplot(2,1,2);imagesc(abs(ft2(newImage)));colorbar;drawnow;
 end
 
