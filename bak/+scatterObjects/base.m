@@ -1,19 +1,19 @@
 classdef (Abstract) base<handle
     %BASE Abstract base class for scatter Objects
-    
+
     properties
         delta=0;
         beta=0;
     end
     properties(Abstract)
         N;
-        
+
     end
     properties(Abstract,SetAccess = protected)
         gpu;
     end
-    
-    
+
+
     methods
         function clonedObj=clone(this)
             clonedObj=feval(class(this),this.N,this.gpu);
@@ -23,6 +23,6 @@ classdef (Abstract) base<handle
             end
         end
     end
-    
+
 end
 

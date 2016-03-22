@@ -9,20 +9,20 @@ classdef tetrahedron<scatterObjects.polyhedron
             1  1  1;    1 -1 -1;   -1 -1  1; ...
             1  1  1;   -1 -1  1;   -1  1 -1; ...
             ]);
-        
+
         NFaces=4;
         NEdgesPerFace=3;
         NEdges=6;
-        
+
     end
-    
+
     methods
         %uses methods defined in polyhedron
         function this=tetrahedron(N)
             this=this@scatterObjects.polyhedron(N);
         end
-        
+
     end
-    
+
 end
 

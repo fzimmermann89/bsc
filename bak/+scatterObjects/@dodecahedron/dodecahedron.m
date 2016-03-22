@@ -17,20 +17,20 @@ classdef dodecahedron<scatterObjects.polyhedron
             -1 (2-((1+sqrt(5))/2)) 0; -1 -(2-((1+sqrt(5))/2)) 0; -(1/((1+sqrt(5))/2)) -(1/((1+sqrt(5))/2)) -(1/((1+sqrt(5))/2)); -(2-((1+sqrt(5))/2)) 0 -1; -(1/((1+sqrt(5))/2)) (1/((1+sqrt(5))/2)) -(1/((1+sqrt(5))/2)); ...
             -1 -(2-((1+sqrt(5))/2)) 0; -1 (2-((1+sqrt(5))/2)) 0; -(1/((1+sqrt(5))/2)) (1/((1+sqrt(5))/2)) (1/((1+sqrt(5))/2)); -(2-((1+sqrt(5))/2)) 0 1; -(1/((1+sqrt(5))/2)) -(1/((1+sqrt(5))/2)) (1/((1+sqrt(5))/2)); ...
             ]);
-        
+
         NFaces=12;
         NEdgesPerFace=5;
         NEdges=30;
-        
+
     end
-    
+
     methods
         %uses methods defined in polyhedron
         function this=dodecahedron(varargin)
             this=this@scatterObjects.polyhedron(varargin{:});
         end
-        
+
     end
-    
+
 end
 

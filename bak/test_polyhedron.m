@@ -93,7 +93,7 @@ toc
 % % out2=out2+t2.getSlice(z);
 % % out2=out2+s2.getSlice(z);
 % % end
-% 
+%
 % % %benchmark
 % % tic
 % % c2=scatterObjects.cube(N,false);
@@ -112,10 +112,10 @@ toc
 % % out2=out2+s2.getSlice(z);
 % % end
 % % toc
-% % 
-% % 
-% % 
-% % 
+% %
+% %
+% %
+% %
 % % figure(1);
 % %subplot(1,2,1);
 % imagesc(1:N,1:N,out);colormap(hot);axis 'square';
@@ -132,7 +132,7 @@ toc
 % drawnow
 % frame = getframe(1);
 % im = frame2im(frame);
-% [A,map] = rgb2ind(im,256); 
+% [A,map] = rgb2ind(im,256);
 % 	if n == 1;
 % 		imwrite(A,map,filename,'gif','LoopCount',Inf,'DelayTime',0.1);
 % 	else

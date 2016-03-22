@@ -11,18 +11,18 @@ classdef cube<scatterObjects.polyhedron
             -1 -1 -1;  -1  1 -1;  -1  1  1;  -1 -1  1;...
             -1 -1 -1;  -1 -1  1;   1 -1  1;   1 -1 -1;...
             ]);
-        
+
         NFaces=6;
         NEdgesPerFace=4;
         NEdges=12;
     end
-    
+
     methods
         %uses methods defined in polyhedron
         function this=cube(varargin)
             this=this@scatterObjects.polyhedron(varargin{:});
         end
-        
+
     end
-    
+
 end
