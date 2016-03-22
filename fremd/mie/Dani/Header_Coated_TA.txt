@@ -1,5 +1,0 @@
-Alpha1=221.000000	Refractive index_m1=(0.999647, 0.000220)
-Alpha2=221.000000	Refractive index_m2=(0.999647, 0.000220)
-
-Kext=0.136389, Ksca=0.015641, Kabs=0.120748
-
