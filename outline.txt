@@ -1,0 +1,84 @@
+Bachelorarbeit
+-Einleitung
+    hohe Auflösung->kurze Wellenlänge, neue Strahlungsquellen(Verweis FEL), fehlende optische Elemente, Frage nach abbildungsmethode          0.5
+    
+theoretischer hintergrund
+
+    fourier optik
+        -wellengl, propagation nach angular spektrum, fresnel näherung, fraunhofer näherung, kurz+knacking entlang goodman                   -1.5S
+        -multislice
+    
+    dft eigenschaften                               -wichting aliasing, entlang fresnel-pdf                                                    .5S
+    
+    -phasenproblem,                                                                                 
+    lösungsmöglichkeiten: iterative rekonstruktion und holographie
+
+        -prinzip holographie, verweis auf cluster als mögliche referenz                                                                        3S
+            -eingehen auf faltung.                                                             
+                -entfaltungsmethoden - quelle das buch von manu, hauptsächlich wiener
+        -iterative phasenrekonstruktion                                                                                                        2S
+            grundprinzip                            
+            er,hio,raar                                     fienup,luke, m...-paper
+            support generierung ->shrinkwrap ->holographie
+    
+    
+problemstellung der arbeit:                                                                                                                    .5S
+    1. erstellen von referenzbildern
+    2. rekonstruktion von 2D Bildern
+    3. rekonstruktion von Referenzbildern
+
+praktischer teil
+    
+    -vergleich msft (quelle?), multislice und multislice additions näherung mit mie (quelle)                                                   5S
+    - kurz implementierungsprinzip                                                                                                             1
+        inkl objekterzeugung 
+    -> ergebnis: exitwave~summe aus zwei exitwaves (hoffentlich)
+    ->abbildung nach fraunhofer näherung FT davon, damit nur phasenproblem
+
+    -rekonstruktion an 2d bildern                                                                                                              4S
+    -vergleich wiener-deconv mit ipr+sw und holo+ipr,
+    (auch laufzeit)
+    -einfluss von beamstopp und noise und referenz unsicherheit
+    
+    -(versuch blind deconv - eher nicht) oder nutzen von ipr für deconv
+    
+    -frc für auslösung
+    
+ergebnis zusammenfassung?                                                                                                                      2S
+
+diskussion     
+  ergebnisdiskussion       
+    limitation: nicht mit realen bildern                                                                                                      2S
+    ausblick: bessere deconvolution
+              verweis auf problem mit beamstop
+
+
+fazit                                                                                                                                         .5S
+   
+   
+                                   SUMME                                                               ~25S
+     
+
+anhang:
+    flowcharts programm
+    herleitung simulation
+    umformung phase retrieval darstellung  
+
+
+wichtigste TODOs:
+
+    simulationscode
+        -komischer bug bei multislice
+        -skalierung/sinnvolle parameter/propagation auf screen
+        -möglicherweise bug in scatterobjects.polyhedron: sind würfel vllt. quader (länge z richtung, insbesondere bei drehung)
+        -sinnvolles objekt erstellen
+        -für kugel profile erstellen
+        -mie vergleich
+        -(thiebault multislice wäre super)
+     rekonstruktion
+        -auflösungscode
+        -sinnvolles 2d objekt
+        -testen mit exitwave
+      code
+        rekonstruktionscode in plan klasse
+        simulationscode aufräumen
