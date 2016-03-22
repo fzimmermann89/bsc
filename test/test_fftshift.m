@@ -11,7 +11,7 @@ x0=gpuArray(rand(Nm)+1i*rand(Nm));
 tic
 idx=getIdx(N);
 for n=1:rep
-    
+
     x1 = x0(idx{:});
     x1=fft2(x1);
     x1=x1(idx{:});
@@ -29,8 +29,8 @@ end
 toc
 tic
 for n=1:rep
-    
-    
+
+
     x2 = fftshift(x0);
     x2=fft2(x2);
     x2=fftshift(x2);
@@ -39,10 +39,10 @@ end
 toc
 
 tic
-  
+
 for n=1:rep
-    
- 
+
+
     x2 = circshift(x0,(floor(size(x0)/2)));
     x2=fft2(x2);
     x2=circshift2(x2,(floor(size(x2)/2)));
@@ -50,7 +50,7 @@ for n=1:rep
 end
 toc
 
-  
+
 tic
 for n=1:rep
     x3 = ft2(x0);
@@ -64,14 +64,14 @@ toc
 % a=0;
 % b=0;
 % c=0;
-% 
+%
 % Nm=[N N];
-% 
+%
 % x0=(rand(Nm)+1i*rand(Nm));
 % tic
 % idx=getIdx(N);
 % for n=1:rep
-%     
+%
 %     x1 = x0(idx{:});
 %     x1=fft2(x1);
 %     x1=x1(idx{:});
@@ -89,8 +89,8 @@ toc
 % toc
 % tic
 % for n=1:rep
-%     
-%     
+%
+%
 %     x2 = fftshift(x0);
 %     x2=fft2(x2);
 %     x2=fftshift(x2);

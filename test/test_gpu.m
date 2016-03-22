@@ -10,7 +10,7 @@ toc
 % gpu=gpuDevice(1);
 % display('start')
 % tic
-% 
+%
 % a=gpuArray(1:100000000);
 % fft(a);
 % wait(gpu)

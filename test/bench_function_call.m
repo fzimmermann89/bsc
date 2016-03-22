@@ -31,14 +31,14 @@ Nz=1024;
 
 display('bsx')
 tic
- x=1:N; 
+ x=1:N;
  y=x.';
  tmp=zeros(N,N);
 
 for z=1:Nz
- f=@(xx,yy) (xx).^2+(yy).^2+(z)^2 <=400^2 ; 
+ f=@(xx,yy) (xx).^2+(yy).^2+(z)^2 <=400^2 ;
  slice=(bsxfun(f,x,y));
- 
+
  tmp=tmp+slice;
 end
 toc
@@ -55,7 +55,7 @@ end
 toc
 
 display('gpu1')
-tic   
+tic
 tmp=gpuArray(zeros(N,N));
 for n=1:Nz
 
@@ -72,7 +72,7 @@ toc
 % toc
 
 display('cpu1')
-tic   
+tic
 tmp=(zeros(N,N));
 for n=1:Nz
 
@@ -180,7 +180,7 @@ toc
 %     tmp=tmp+rand(1);
 % end
 % toc
-% 
+%
 % disp('func')
 % tic
 % tmp=0;
@@ -188,7 +188,7 @@ toc
 %     tmp=tmp+test_rand(1);
 % end
 % toc
-% 
+%
 % disp('handle')
 % handle=@test_rand;
 % tic
@@ -197,7 +197,7 @@ toc
 %     tmp=tmp+handle(1);
 % end
 % toc
-% 
+%
 % disp('anon')
 % handle1=@()test_rand(1);
 % tic

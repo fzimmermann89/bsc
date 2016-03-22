@@ -16,7 +16,7 @@ imshow(im);
 % analytic result for y2=0 slice
  Uout_an  = fresnel_prop_square_ap(x2(N/2+1,:), 0, D, wvl, Dz);
 
-    
+
     function U = fresnel_prop_square_ap(x2, y2, D1, wvl, Dz)
  % function U = fresnel_prop_square_ap(x2, y2, D1, wvl, Dz)
 
@@ -41,7 +41,7 @@ imshow(im);
  U = 1 /(2*i) *((ca2 - ca1) + i * (sa2 - sa1)) ...
  .* ((cb2 - cb1) + i * (sb2 - sb1));
     end
-    
+
     function G = ft2(g, delta)
         G = fftshift(fft2(fftshift(g))) * delta^2;
     end
@@ -51,10 +51,10 @@ imshow(im);
         x = abs(x);
         y = double(x<D/2);
         y(x == D/2) = 0.5;
-       
+
     end
     function [x2, y2, Uout]  = one_step_prop(Uin, lambda, d1, Dz)
-        
+
         N = size(Uin, 1); % assume square grid
         k = 2*pi/lambda; % optical wavevector
         % source-plane coordinates

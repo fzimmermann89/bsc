@@ -25,9 +25,9 @@ classdef osphere<handle
             tmp=(xx.^2+yy.^2+z^2)<this.radius^2;
             slice=gather(tmp);
         end
-        
-        
-        
+
+
+
     end
     methods (Static)
         function fun=getslicefun(N,radius)
@@ -35,16 +35,16 @@ classdef osphere<handle
             fun=@(z)osphere.slicefun(z,radius,X1,Y1);
         end
         function slice=slicefun(z,radius,X,Y)
-            
+
             slice = double((X.^2+Y.^2+z^2) <= (radius)^2);
-            
-            
+
+
         end
         function slice=slicefun2(z,radius,XY)
-            
+
             slice = double((XY+z^2) <= (radius)^2);
-            
-            
+
+
         end
     end
 end

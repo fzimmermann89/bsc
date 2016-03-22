@@ -1,17 +1,17 @@
 classdef scene<handle
     %Scene
     %   Detailed explanation goes here
-  
+
     properties
         resolution=struct('x',256,'y',256,'z',256);
         angle=struct('a',0,'b',0,'c',0);
         objects={}
     end
-    
+
     properties(Dependent)
         data
     end
-    
+
     methods
         function index=AddObject(this,obj)
             this.objects{end+1}=obj;

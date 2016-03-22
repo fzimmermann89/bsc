@@ -6,12 +6,12 @@
 % Elapsed time is 15.802378 seconds.
 clear all;
 tic
-N=100;
+N=128;
 dx=55;
 deltaz=dx/8;
-s=scatterObjects.sphere();
+s=scatterObjects.cube();
 s.radius=50;
-f=s.prepareSliceMethod(N,dx,true); 
+f=s.prepareSliceMethod(N,dx,true);
 aus=zeros(20000,1,'gpuArray');
 in=zeros(20000,1,'gpuArray');
 for n=1:20000
@@ -66,7 +66,7 @@ figure(2);
 % %         out=out+f{n}(z);
 % %     end
 % % end
-% 
+%
 % % [r,c,v] = ind2sub(size(out),find(out == 1));
 % % scatter3(r,c,v);
 % % %benchmark
@@ -101,10 +101,10 @@ figure(2);
 % %     end
 % out=out+f1(z)+f2(z)+f3(z)+f4(z)+f5(z);
 % end
-% 
+%
 % ol=gather(out);
 % toc
-% 
+%
 % % %cpu
 % % %warmup
 % % % c2=scatterObjects.cube(N,false);

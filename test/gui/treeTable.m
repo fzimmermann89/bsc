@@ -8,7 +8,7 @@ function jtable = treeTable(varargin)
 %    pnContainer - optional handle to container uipanel or figure. If empty/unsupplied then current figure will be used
 %    headers     - optional cell array of column header strings. If unsupplied then = {'A','B','C'}
 %    data        - optional vector/matrix (either scalar or cell array) of data values
-%    'PropName',PropValue - 
+%    'PropName',PropValue -
 %                  optional list of property pairs (e.g., 'iconFilenames',{'a.gif','b.jpg'},'columnTypes',{'char','logical'})
 %                  Note: All optional parameters of treeTable may be specified using PropName/PropValue pairs,
 %                        case-insensitive, in whichever order (see the bottom example below):
@@ -254,7 +254,7 @@ function jtable = treeTable(varargin)
           a=1;  % never mind...
       end
       %}
-      
+
       % Process optional args
       processParams(paramsStruct,hcontainer,jtable);
 
@@ -308,7 +308,7 @@ function setColumnRenderersEditors(jtable,colIdx,paramsStruct)
             catch
             end
             jtable.getColumnModel.getColumn(colIdx).setCellEditor(cbe);
-            
+
             % Checkbox renderer
             cellRenderer = javaObject('javax.swing.JTable$BooleanRenderer');
             cellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -328,7 +328,7 @@ function setColumnRenderersEditors(jtable,colIdx,paramsStruct)
             catch
             end
             jtable.getColumnModel.getColumn(colIdx).setCellRenderer(cellRenderer);
-            
+
         %else
             % never mind - leave as-is (label)
         end
@@ -337,7 +337,7 @@ function setColumnRenderersEditors(jtable,colIdx,paramsStruct)
         a=1;
     end
     %return;
-    
+
     % The first column should have an icon
     if colIdx == 0 && paramsStruct.groupable
         try
@@ -505,7 +505,7 @@ function processParams(paramsStruct,container,jtable)
                 paramName  = paramsStruct.extra{argIdx};
                 paramValue = paramsStruct.extra{argIdx+1};
                 propMethodName = ['set' paramName];
-                
+
                 % First try to modify the container
                 try
                     set(container, paramName, paramValue);

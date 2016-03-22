@@ -25,5 +25,5 @@ imagesc(1:N,1:N,abs(a));
 % c=ifftshift(ifft2(c));
 %  end
 % toc
-% 
+%
 % [min(min(imag(c-d))), min(min(real(c-d))), min(min(imag(c-d))),min(min(real(c-d)))]

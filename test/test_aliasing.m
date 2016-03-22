@@ -3,7 +3,7 @@ N=32;
     nsq = nx.^2;
     wt = 0.25*N;%0.25*N;
     w = exp(-nsq.^8/wt^16);
-%     
+%
 % rinput1=zeros(1,N);
 % rinput1(N/4+1:3*N/4+1)=1;
 % finput1=fftshift(fft(fftshift(rinput1)));

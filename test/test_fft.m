@@ -26,7 +26,7 @@ for n=1:(N*8)
     b=fftshift(ifft2(fftshift(b)));
    end
 toc
-% 
+%
 % a=rand(N,'gpuArray');
 % a=padarray(a,[N,N]);
 % b=rand(N);
