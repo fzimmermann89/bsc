@@ -2,8 +2,8 @@
 function waveR=multislice(wavelength,objects,N,dx,gpu,filter)
     % calculate exitWave after scene.
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
-
     debug=false;ndebug=0;
+    
     deltaz=wavelength;
     k=2*pi/wavelength;
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
@@ -114,7 +114,7 @@ function waveR=multislice(wavelength,objects,N,dx,gpu,filter)
             [nx, ny] = meshgrid(linspace(-N/2,N/2-1,N));
         end
         nsq = nx.^2 + ny.^2;
-        wt = 0.25*N;
+        wt = 0.33*N;
         out = exp(-nsq.^8/wt^16);
     end
 
