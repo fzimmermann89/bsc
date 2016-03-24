@@ -1,6 +1,7 @@
 
 function exitWave=thibault(wavelength,objects,N,dx,gpu)
-    % calculate exitWave after scene.
+    % calculate exitWave after scene following Thibault 2006
+    % "Reconstruction of a yeast cell from X-ray diffraction data"
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     
     debug=false;    ndebug=0;

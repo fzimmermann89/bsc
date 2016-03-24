@@ -1,6 +1,7 @@
 
 function waveR=multislice(wavelength,objects,N,dx,gpu,filter)
     % calculate exitWave after scene.
+    % Uses algorith similar to cowley or hare
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     debug=false;ndebug=0;
     

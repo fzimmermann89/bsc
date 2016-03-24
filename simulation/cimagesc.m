@@ -1,4 +1,6 @@
 function  cimagesc( img,plottitle )
+    %plot abs and phase of a complex matrix side by side.
+    
     if ~exist('plottitle','var');
         plottitle='';
     end

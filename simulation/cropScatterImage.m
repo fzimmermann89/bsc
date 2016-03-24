@@ -1,4 +1,7 @@
 function out=cropScatterImage(in, tosize)
+    % crop in to tosize and interpolate it back to original size 
+    % by padding in the fourier domain
+    
     border=(size(in)-tosize)./2;
     cropped=in(...
        1+floor(border(1)):end-floor(border(1)),...
