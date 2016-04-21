@@ -1,0 +1,108 @@
+\chapter{Theoretischer Hintergrund}
+\label{c_theorie}
+ 
+\section{Skalare Beugungstheorie}
+\section{Fraunhofer-Näherung}
+\section{Angular-Spectrum Propagation}
+\section{Born-Näherung}
+
+
+\begin{comment}
+
+\subsubsection{Subsubsection}
+
+\paragraph{Paragraph}
+
+
+
+\section{Abbildungen}
+Eine Beispiel-Abbildung ist in Abb. \ref{Abb:BspAbbildung} gezeigt.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{images/SchemaErzeugungNachweis.jpg}
+\caption[Abbildungstext im Abbildungsverzeichnis]{Abbildungsunterschrift. Abbildung nach \cite{B-SViel}.}
+\label{Abb:BspAbbildung}
+\end{figure} 
+
+
+
+\section{Tabellen}
+Eine Vorlage ist in Tabelle \ref{Tab:BspTabelle} gegeben.
+ 
+\begin{table}
+\centering
+\begin{tabular}{SccrrS}
+\hline\hline
+{Druck [\si{\milli\bar}]} & Gas &  $T_0$ [K]& $\Gamma^\ast$ & $\langle N \rangle$ & {$R$ [nm]}\\
+\hline
+1000 & Ar &  300 & 2.325 & 240 & 1,3\\
+1000 & Ar &  300 & 2.971 & 426 & 1,6\\
+1000 & Xe &  300 & 7.845 & 4.177 & 3,9\\
+1000 & Xe &  300 & 10.024 & 6.337 & 4,4\\
+\hline
+5000 & Ar &  300 & 11.625 & 8.274 & 4,2\\
+5000 & Ar &  300 & 14.854 & 12.862 & 4,9\\
+5000 & Xe &  300 & 39.226 & 73.863 & 10,1\\
+5000 & Xe &  300 & 50.121 & 114.826 & 11,7\\
+\hline
+10000 & Ar & 300 & 23.250 & 28.812 & 6,3\\
+10000 & Ar & 300 & 29.708 & 44.790 & 7,4\\
+10000 & Xe & 300 & 78.452 & 257.207 & 15,3\\
+10000 & Xe & 300 & 100.243 & 399.848 & 17,7\\
+\hline
+8000 & Xe &  220 & 127.589 & 617.258 & 20,4\\
+8000 & Xe &  220 & 163.029 & 959.574 & 23,7\\
+\hline\hline
+\end{tabular}
+\caption[Text für Tabellenverzeichnis]{Tabellenunterschrift.}
+\label{Tab:BspTabelle}
+\end{table}
+
+\section{Anführungszeichen}
+Anführungszeichen werden global über das Paket \emph{csquotes} gesetzt und wie folgt eingebunden:
+
+\verb+\enquote{Text in Anführungszeichen}+
+
+Ausgabe: \enquote{Text in Anführungszeichen}.
+
+
+
+\section{Setzen von Einheiten}
+Zum Setzen von Einheiten wird das Package \emph{siunitx} verwendet:
+
+Zahlen: \num{83567}, \num{,23e-16}, \num{3,89+-0,03}
+
+Winkel: \ang{12.3}, \ang{1;2;3}
+
+Wert mit Einheit: $v_{max}=\SI{260}{\m/\s}$, $v_\infty=\SI{173}{\metre\per\second}$, $R = \SI[per-mode=symbol]{8,3144621}{\joule\per\mol\per\kelvin}$
+
+Wert mit Fehler und Einheit: $T_0=\SI{5,234(15)}{\kelvin}$
+
+Celsius: $T_S=\SI{38.6}{\celsius}$ 
+
+Minuten: $t_c=\SI{90}{\min}$
+
+Druck: $p_0=\SI{80}{\bar}$, Hintergrunddruck \SI{1,9e-9}{\torr}
+
+
+ 
+\subsection{Einheiten in Tabellen}
+Die Verwendung von Einheiten in Tabellen mit dem Paket \emph{siunitx} ist in Tabelle \ref{Tab:BspS} gezeigt.
+\begin{table}
+\centering
+\begin{tabular}{lSSSSS}
+\hline\hline
+ & {He} &  {Ne} & {Ar} & {Kr} & {Xe}\\
+\hline
+$\Gamma_{ch}$ [\SI{e16}{\metre\tothe{\num{-2.15}}\kelvin\tothe{\num{-1.2875}}}] & 36,189 & 31,07 & 3,495 & 1,9531 & 231,036\\
+$K_{ch}$ [\si{\K\tothe{\num{2.2875}}\per\milli\bar\micro\metre\tothe{\num{0.85}}}] & 34,865 & 18,5 & 16,46 & 2980,982 & 5,554\\
+\hline\hline
+\end{tabular}
+\caption[Beispiel für die \emph{siunitx}-Klasse \enquote{S} in Tabellen]{Mit der Klasse \enquote{S} des \emph{siunitx}-Pakets werden Zahlen in Tabellen am Dezimaltrennzeichen ausgerichtet. Normaler Text muss dann in geschweiften Klammern gesetzt werden.}
+\label{Tab:BspS}
+\end{table}
+
+
+\section{Blindtext}
+\end{comment}
