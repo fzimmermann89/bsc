@@ -1,3 +1,14 @@
+##matrizen sind gross
+*.mat
+
+##fremdes material (copyright)
+fremd/
+material/
+
+##komische datei
+*.tex~tx*
+
+
 ##Matlab autosave
 *.asv
 
