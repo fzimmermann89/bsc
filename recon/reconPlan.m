@@ -4,6 +4,7 @@ classdef reconPlan<handle
     properties
         steps=struct('method',{},'iterations',{},'parameters',{});
         iterations=0;
+        record_errors=true;
     end
 
     methods

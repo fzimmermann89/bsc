@@ -6,10 +6,10 @@ function [ newImage,realError  ] = RAARiter( amplitude, curImage, support,mask  
     if isempty(beta)
         beta=0.95;
     else
-        beta=max(beta-0.0005,0.3);
+        beta=max(beta-0.00001,0.5);
     end
-    beta
-    beta=0.87; %debug´
+%     beta
+%     beta=0.87; %debug´
 
     %Take Phase of curImag and amplitude to construct a tmpImage
     curImagF=ft2(curImage);
