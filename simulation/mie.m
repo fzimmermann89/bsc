@@ -71,10 +71,10 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
         % using the recurrence relation (4.89) for Dn on p. 127 and
         % starting conditions as described in Appendix A.
         % C. Mätzler, July 2002
-        % ffz2016:modified to use ceil for nmax,
-        % changed var names to be closer to BH, cleanup.
+        % ffz2016
+        % changed var names to be closer to BH, major cleanup.
         
-        nmx=round(max(nmax,abs(z))+16);
+       
         n=(1:nmax);
         
         %create spherical bessel functions
@@ -87,6 +87,7 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
         
         %Computation of Dn(z) according to (4.89) of B+H (1983)
         z=m.*x;
+        nmx=round(max(nmax,abs(z))+16);
         dn(nmx)=0+0i;
         for j=nmx:-1:2
             dn(j-1)=j./z-1/(dn(j)+j./z);

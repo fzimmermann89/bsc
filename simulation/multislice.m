@@ -5,7 +5,7 @@ function waveR=multislice(wavelength,objects,N,dx,gpu,filter)
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     debug=false;ndebug=0;
     
-    deltaz=wavelength;
+    deltaz=wavelength/2;
     k=2*pi/wavelength;
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
 

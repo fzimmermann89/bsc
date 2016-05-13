@@ -5,7 +5,7 @@ function exitWave=thibault(wavelength,objects,N,dx,gpu)
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     
     debug=false;    ndebug=0;
-    deltaz=wavelength;
+    deltaz=wavelength/2;
     k=2*pi/wavelength;
     
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
@@ -61,7 +61,7 @@ function exitWave=thibault(wavelength,objects,N,dx,gpu)
     
     %check intensity, should be close to 1 without absorption
     fprintf('Check= %f (should be ~1 w/o absorption)\n',  sum(abs(exitWave(:)))/(N*N));
-    if any(isnan(exitWave))
+    if gather(any(isnan(exitWave)))
         error 'NaN occured'
     end
     
@@ -82,7 +82,7 @@ function exitWave=thibault(wavelength,objects,N,dx,gpu)
         end
         [qx,qy]=meshgrid(range);
         
-        evanescence_mask=k^2*0.8>(qx.^2+qy.^2);         %0.8 is safety margin
+        evanescence_mask=k^2*0.95>(qx.^2+qy.^2);         %0.8 is safety margin
         kdiff=sqrt(complex(k^2-(qx.^2+qy.^2)))-k;
         propagator=exp(1i*deltaz*kdiff);
         factor=1i*k*deltaz./sqrt(complex(1-(qx.^2+qy.^2)/k^2)).*evanescence_mask;

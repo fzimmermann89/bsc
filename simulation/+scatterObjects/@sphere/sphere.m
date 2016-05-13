@@ -50,7 +50,7 @@ classdef sphere<scatterObjects.base
 
             [xx,yy]=meshgrid(range);   %
             %dx is added to the radius to force rounding to a bigger sphere
-            this.x2y2=((xx-this.positionX).^2+(yy-this.positionY).^2)/(this.radius+this.dx)^2;
+            this.x2y2=((xx-this.positionX).^2+(yy-this.positionY).^2)/(this.radius+1/4*this.dx)^2;
 
             fun=@this.getSlice;
         end
