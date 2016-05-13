@@ -1,6 +1,7 @@
 Bachelorarbeit
 -Einleitung
     hohe Auflösung->kurze Wellenlänge, neue Strahlungsquellen(Verweis FEL), fehlende optische Elemente, Frage nach abbildungsmethode          0.5
+    cdi
     
 theoretischer hintergrund
 
