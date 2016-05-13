@@ -15,6 +15,9 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{bbold}
+\usepackage{xfrac}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage[textwidth=145mm,textheight=235mm,left=35mm,top=30mm,headsep=10mm]{geometry}
@@ -24,7 +27,7 @@
 \captionsetup{width=.9\textwidth,skip=5pt,format=plain,indention=5pt}
 \usepackage{booktabs} %Schönere Tabellen
 \usepackage{fancyhdr} %Schönere Kopfzeile
-\usepackage[section,above]{placeins} %Abbildungen und Tabellen bleiben in ihrer Section
+\usepackage[section]{placeins} %Abbildungen und Tabellen bleiben in ihrer Section
 \usepackage{blindtext} %Einfügen von Blindtext über \blindtext
 \usepackage{siunitx} %Einstellungen für Dezimaltrennzeichen und Definitionen in siunitx.cfg
 \usepackage[autostyle=true,german=quotes]{csquotes} %Verwendung von Anführungszeichen über \enquote{Text}
@@ -64,7 +67,38 @@ pdfauthor={Felix Frederik Zimmermann}
 
 %neue Pakete
 \usepackage{verbatim} %kommentare
-\usepackage[super,comma]{natbib} %bibliographie
+\usepackage[numbers,comma]{natbib} %bibliographie
+\usepackage{commath}
+
+%%kleinere abstände bei gleichungen
+%\setlength{\abovedisplayskip}{0pt}
+%\setlength{\belowdisplayskip}{0pt}
+
+%abs symbol
+%\usepackage{mathtools}
+
+%bold capital
+\usepackage{bold-extra}
+
+%function beschreibung
+\usepackage{enumitem}
+
+\newenvironment{desc}
+{\vspace{-3ex}\begin{quote}}
+	{\vspace{-1ex}\end{quote}}
+
+%abb. zu referenzen hinzufügen
+\usepackage[german,plain]{fancyref}
+
+%zum erzwingen von nummerierung bei formeln
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%%pygments%
+\usepackage{fancyvrb}
+\usepackage{xcolor}
+\include{pygments}
+
+
 %%%%%%%%%%%%%   MASTERARBEIT   %%%%%%%%%%%%%%%
 
 \begin{document}
@@ -109,6 +143,7 @@ pdfauthor={Felix Frederik Zimmermann}
 
 
 \setlength{\parskip}{3mm}
+\setcounter{tocdepth}{5}
 \tableofcontents
 \cleardoublepage
 
@@ -127,10 +162,8 @@ pdfauthor={Felix Frederik Zimmermann}
 
 \include{einleitung}
 \include{theorie}
-\include{problemstellung}
 \include{simulation}
 \include{rekonstruktion}
-\include{ergebnisse}
 \include{fazit}
 
 %%%%%%%%%%%%%%%%   ANHANG   %%%%%%%%%%%%%%%%%%

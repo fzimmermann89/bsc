@@ -1,2 +1,30 @@
-\chapter{Diskrete Fourier Transformation}
+\chapter{Fourier Transformation}
+Die in dieser Arbeit verwendete Form der Fouriertransformation lautet
+\begin{equation}
+	\mathscr{F} [f(\vec{x})] (\vec{q})
+	 =
+	 \frac{1}{(2\pi)^\frac{n}{2}}
+	 \int_{-\infty}^{\infty}
+	 f(\vec{x})
+	 e^{-i\vec{q} \cdot \vec{x} } 
+	 \dif  \vec{x}
+\end{equation}
+mit der inversen Fouriertransformation
+\begin{equation}
+\mathscr{F}^-1 [\tilde{f}(\vec{q})] (\vec{x})
+=
+\frac{1}{(2\pi)^\frac{n}{2}}
+\int_{-\infty}^{\infty}
+\tilde{f}(\vec{q})
+e^{i\vec{q} \cdot \vec{x} } 
+\dif  \vec{q} \, .
+\end{equation}
+Für diese gilt unter anderem das 
+\paragraph{Faltungstheorem}
+\begin{align}
+ 	\mathscr{F} [f\ast g]&=(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]\\
+ 	\mathscr{F}[fg]&=(2\pi)^\frac{n}{2}\mathscr{F}[f]\ast \mathscr{F}[g]
+\end{align}
+
 relevante Eigenschaften der diskreten Fourier Transformation
+stichwort: periodisch, aliasing im vgl zur kontinuierlichen, matlab shift nötig
