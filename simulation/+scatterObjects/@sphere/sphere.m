@@ -12,10 +12,11 @@ classdef sphere<scatterObjects.base
         positionY=0;
         positionZ=0;
     end
-    properties (Access=private)
+    properties (Access=public)
         x2y2
         N;
         dx;
+        range
     end
 
     methods
@@ -41,17 +42,19 @@ classdef sphere<scatterObjects.base
                 %if range is a gpuArray, all following calculations will
                 %inherit beeing on the gpu
 
+frac = @(x) (x-round(x));
                 %the -1/2dx is a shift to have real fft
+                range=dx*((gpuArray.linspace((-N/2+1/2+frac(this.radius/this.dx)),(N/2-1/2+frac(this.radius/this.dx)),N)));
+%                 range=dx*(gpuArray.linspace((-N/2),(N/2),N));
 
-                range=dx*(gpuArray.linspace((-N/2-1/2),(N/2-1/2),N));
             else
                 range=linspace((-(N-1)/2)*dx,((N-1)/2)*dx,N);
             end
 
             [xx,yy]=meshgrid(range);   %
             %dx is added to the radius to force rounding to a bigger sphere
-            this.x2y2=((xx-this.positionX).^2+(yy-this.positionY).^2)/(this.radius+1/4*this.dx)^2;
-
+            this.x2y2=((xx-this.positionX).^2+(yy-this.positionY).^2)/((this.radius))^2; %+1/4*this.dx
+this.range=range;
             fun=@this.getSlice;
         end
 
