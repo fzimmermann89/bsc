@@ -1,6 +1,6 @@
 
 
-function out=msft2(wavelength,objects,N,dx,gpu)
+function out=msft2(wavelength,objects,N,dx,deltaz,gpu)
     %calculates multislice ft of object, based on ingo barke's code
     %output is matrix of complex amplitudes over different exit k_x,y (not scatter vectors)
     %constant phase shifts are ignored
@@ -26,7 +26,7 @@ function out=msft2(wavelength,objects,N,dx,gpu)
     % -> phaseshift=z*(k-kout_z)=z*kdiff with
     % kdiff=k-sqrt(k^2-(dk_x^2+dk_y^2))
     
-    deltaz=dx/2;
+%     deltaz=dx/4;
     k=2*pi/wavelength;
     Lz=dx*N/2; %cubic box
     

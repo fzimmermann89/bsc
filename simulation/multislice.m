@@ -1,11 +1,11 @@
 
-function waveR=multislice(wavelength,objects,N,dx,gpu,filter)
+function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
     % calculate exitWave after scene.
     % Uses algorith similar to cowley or hare
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     debug=false;ndebug=0;
     
-    deltaz=wavelength/2;
+%     deltaz=wavelength/2;
     k=2*pi/wavelength;
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
 

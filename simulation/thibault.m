@@ -1,11 +1,11 @@
 
-function exitWave=thibault(wavelength,objects,N,dx,gpu)
+function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu)
     % calculate exitWave after scene following Thibault 2006
     % "Reconstruction of a yeast cell from X-ray diffraction data"
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     
     debug=false;    ndebug=0;
-    deltaz=wavelength/2;
+%     deltaz=wavelength/2;
     k=2*pi/wavelength;
     
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
