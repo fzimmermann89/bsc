@@ -11,8 +11,12 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
     refIndex=gather(1-delta+1i*beta);
     
     if ~exist('steps','var');steps=10000;end
+    if length(steps)==1
+      theta=linspace(0,pi,steps)';
+    else
+      theta=gather(steps(:));
+    end
     
-    theta=linspace(0,pi,steps);
     u=cos(theta);
     
     [S1,S2]=mie_S1S22(refIndex,x,u);
@@ -41,8 +45,8 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
         fn=(2*n+1)./(n.*(n+1));
         anfn=an.*fn;
         bnfn=bn.*fn;
-        S1=(anfn*pin'+bnfn*taun');
-        S2=(anfn*taun'+bnfn*pin');
+        S1=(pin*anfn'+taun*bnfn');
+        S2=(taun*anfn'+pin*bnfn');
         
     end
     
@@ -58,8 +62,8 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
         pie(:,2)=3*u;
         tau(:,2)=6*u.^2-3; %same as 3*cos(2*acos(u));
         for n=3:nmax
-            pie(:,n)=((2*n-1)./(n-1).*pie(:,n-1).*u')-(n./(n-1).*pie(:,n-2));
-            tau(:,n)=(n*u'.*pie(:,n))-((n+1).*pie(:,n-1));
+            pie(:,n)=((2*n-1)./(n-1).*pie(:,n-1).*u)-(n./(n-1).*pie(:,n-2));
+            tau(:,n)=(n*u.*pie(:,n))-((n+1).*pie(:,n-1));
         end;
     end
     
