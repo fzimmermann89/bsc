@@ -13,7 +13,7 @@ precision=0;
 angleRad=calcAngleRad();
 anglerange=asin(((-N/2:N/2-1)*1/(N*dx))*wavelength)';
 
-run.profiles_x=angleRad;
+run.profiles_x=gather(angleRad);
 run.scatters_scale=anglerange;
 run.exitwaves_scale=((-N/2:N/2-1)*dx);
 
@@ -33,6 +33,7 @@ scatter=normalize(abs(ft2(exitwave)).^2*(dx^2));
 
 name='FTproj';
 run=addtorun(run,name,exitwave,scatter);
+clear exitwave scatter;
 
 %% multislice
 exitwave=(multislice(wavelength,objects,N,dx,dz,gpu,false));
@@ -40,6 +41,7 @@ scatter=normalize(abs(ft2(exitwave)).^2*(dx^2));
 
 name='multislice';
 run=addtorun(run,name,exitwave,scatter);
+clear exitwave scatter;
 
 %% thibault
 exitwave=(thibault(wavelength,objects,N,dx,dz,gpu));
@@ -47,18 +49,19 @@ scatter=normalize(abs(ft2(exitwave)).^2*(dx^2));
 
 name='thibault';
 run=addtorun(run,name,exitwave,scatter);
+clear exitwave scatter;
 
 %% msft
 msft=(msft2(wavelength,objects,N,dx,dz,gpu));
-scatter=(abs(msft).^2);
+scatter=normalize(abs(msft).^2);
 exitwave=ift2(msft/(dx^2));
 clear msft
 
 name='msft';
 run=addtorun(run,name,exitwave,scatter);
+clear exitwave scatter;
 
 %%
-fprintf('\n fertig \n');
 toc
 
 %% helper functions
