@@ -12,66 +12,69 @@ classdef sphere<scatterObjects.base
         positionY=0;
         positionZ=0;
     end
-    properties (Access=public)
+    properties (Access=private)
         x2y2
         N;
         dx;
-        range
+        gpu;
     end
-
+    
     methods
         function this=sphere()
         end
-
-
+        
+        
         function fun=prepareSliceMethod(this,N,dx,gpu)
-             %locks the object and returns slice method
+            %locks the object and returns slice method
             if this.locked
                 error('Object locked. Please Unlock first.')
             end
-
+            
+            this.locked=true;
             this.N=N;
             this.dx=dx;
+            this.gpu=gpu;
             maxsize=N*dx;
-
+            
             if maxsize<(abs(this.positionX)+this.radius/2)||maxsize<(abs(this.positionY)+this.radius/2)||maxsize<(abs(this.positionZ)+this.radius/2)
                 warning('Object outside simulation area! Increase N or dx');
             end
-
+            frac = @(x) (x-round(x));
+            
             if (gpu==true)
-                %if range is a gpuArray, all following calculations will
-                %inherit beeing on the gpu
-
-frac = @(x) (x-round(x));
-                %the -1/2dx is a shift to have real fft
                 range=dx*((gpuArray.linspace((-N/2+1/2+frac(this.radius/this.dx)),(N/2-1/2+frac(this.radius/this.dx)),N)));
-%                 range=dx*(gpuArray.linspace((-N/2),(N/2),N));
-
             else
-                range=linspace((-(N-1)/2)*dx,((N-1)/2)*dx,N);
+                range=dx*((linspace((-N/2+1/2+frac(this.radius/this.dx)),(N/2-1/2+frac(this.radius/this.dx)),N)));
             end
-
-            [xx,yy]=meshgrid(range);   %
-            %dx is added to the radius to force rounding to a bigger sphere
-            this.x2y2=((xx-this.positionX).^2+(yy-this.positionY).^2)/((this.radius))^2; %+1/4*this.dx
-this.range=range;
+            
+            [xx,yy]=meshgrid(range);
+            this.x2y2=((xx-this.positionX).^2+(yy-this.positionY).^2)/((this.radius))^2;
             fun=@this.getSlice;
         end
-
-         function unlock(this)
-             %shall not be called while a SliceMethod function handle is
-             %still in use.
-                this.locked=false;
-         end
-
+        
+        function unlock(this)
+            %shall not be called while a SliceMethod function handle is
+            %still in use.
+            this.locked=false;
+        end
+        
     end
     methods (Access=private)
         function slice=getSlice(this,z)
-
-            z2=(gather(z-this.positionZ)^2/this.radius^2);
-            slice=((this.x2y2+ z2)<1);
+            
+            z2=(gather(z-this.positionZ)^2);
+            if (z2<=this.radius^2)
+                z2=z2/this.radius^2;
+                slice=((this.x2y2+ z2)<1);
+            else
+                if this.gpu
+                    slice=gpuArray.false(this.N,this.N);
+                else
+                    slice=false(this.N,this.N);
+                end
+            end
         end
-
-
+        
+        
     end
 end
