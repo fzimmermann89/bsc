@@ -1,5 +1,5 @@
 clear all;
-N=.25*1024;
+N=2*1024;
 g=gpuDevice();
 
 %all units are in nm
@@ -11,8 +11,8 @@ objects{1}.beta=1e-3;
 objects{1}.delta=1e-3;
 objects{1}.radius=50;
 
-dxsteps=2.^(-1:4);
-dzsteps=2.^(-4:4);
+dxsteps=2.^(-2:0.25:4);
+dzsteps=2.^(-4:0.25:4);
 
 nmax=(numel(dxsteps)*numel(dzsteps));
 n=nmax;
