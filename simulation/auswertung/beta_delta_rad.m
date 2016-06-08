@@ -53,13 +53,13 @@ function handles=loaddata(handles,path)
         clear data;
         
         handles.ub=unique(handles.beta);
-        handles.list_beta.String=cellstr(num2str(handles.ub,'%.2e'));
+        handles.list_beta.String=cellstr(num2str(handles.ub','%.2e'));
         
         handles.ud=unique(handles.delta);
-        handles.list_delta.String=cellstr(num2str(handles.ud,'%.2e'));
+        handles.list_delta.String=cellstr(num2str(handles.ud','%.2e'));
         
         handles.ur=unique(handles.radius);
-        handles.list_radius.String=cellstr(num2str(handles.ur,'%.2e'));
+        handles.list_radius.String=cellstr(num2str(handles.ur','%.2e'));
         handles.axes.Visible='on';
         handles.p_param.Visible='on';
         handles.p_settings.Visible='on';
@@ -76,7 +76,7 @@ function draw(handles)
     radius=handles.ur(handles.list_radius.Value);
     
     id=find((handles.beta==beta)&(handles.delta==delta)&(handles.radius==radius));
-    x=handles.x(id,:);
+    x=handles.x(:,id);
     
     labels={};
     if handles.rb_profile.Value
