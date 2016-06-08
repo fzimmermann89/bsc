@@ -93,6 +93,6 @@ toc
         
         %unique distances
         R=unique(R,'sorted');
-        angleRad=(asin(R/(N*dx)*wavelength));
+        angleRad=min(1,(asin(R/(N*dx)*wavelength)));
     end
 end
