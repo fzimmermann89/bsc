@@ -8,6 +8,8 @@ material/
 ##komische datei
 *.tex~tx*
 
+##backuo
+back/
 
 ##Matlab autosave
 *.asv
