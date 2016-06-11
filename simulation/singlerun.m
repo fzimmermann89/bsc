@@ -1,4 +1,4 @@
-function run=singlerun(N,dx,dz,wavelength,objects)
+function run=singlerun(N,dx,dz,wavelength,objects,param)
 %% setup
 tic
 run=storage.run(N,dx,dz,wavelength,objects);
@@ -44,7 +44,11 @@ run=addtorun(run,name,exitwave,scatter);
 clear exitwave scatter;
 
 %% thibault
-exitwave=(thibault(wavelength,objects,N,dx,dz,gpu));
+if nargin<6
+    exitwave=(thibault(wavelength,objects,N,dx,dz,gpu));
+elseif isfield(param,'margin')
+    exitwave=(thibault(wavelength,objects,N,dx,dz,gpu,param.margin));
+end
 scatter=normalize(abs(ft2(exitwave)).^2*(dx^2));
 
 name='thibault';
