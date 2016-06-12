@@ -67,7 +67,7 @@ function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
     %check intensity, should be close to 1 without absorption
     fprintf('Check= %f (should be ~1 w/o absorption)\n',  sum(abs(exitWave(:)))/(N*N));
     if gather(any(isnan(exitWave)))
-        error 'NaN occured'
+        warning 'NaN occured'
     end
     
     %unlock objects
@@ -91,7 +91,6 @@ function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
         kdiff=sqrt(complex(k^2-(qx.^2+qy.^2)))-k;
         propagator=exp(1i*deltaz*kdiff);
         factor=1i*k*deltaz./sqrt(complex(1-(qx.^2+qy.^2)/k^2)).*evanescence_mask;
-        factor(isnan(factor))=0;
     end
     
     function out=window(N)
