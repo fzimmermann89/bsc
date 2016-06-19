@@ -56,22 +56,22 @@ function handles=loaddata(handles,path)
         handles.profiles_stdev=data.profiles_stdev;
         clear data;
         
-        handles.uN=unique(handles.N); handles.list_N.String=cellstr(num2str(handles.uN','%.2e'));
-        handles.uwavelength=unique(handles.wavelength); handles.list_wavelength.String=cellstr(num2str(handles.uwavelength','%.2e'));
-        handles.udx=unique(handles.dx); handles.list_dx.String=cellstr(num2str(handles.udx','%.2e'));
-        handles.udz=unique(handles.dz); handles.list_dz.String=cellstr(num2str(handles.udz','%.2e'));
+        handles.uN=unique(handles.N); handles.list_N.String=cellstr(num2str(handles.uN','%d'));
+        handles.uwavelength=unique(handles.wavelength); handles.list_wavelength.String=cellstr(num2str(handles.uwavelength','%0.2f nm'));
+        handles.udx=unique(handles.dx); handles.list_dx.String=cellstr(num2str(handles.udx','%.5g'));
+        handles.udz=unique(handles.dz); handles.list_dz.String=cellstr(num2str(handles.udz','%.5g'));
         handles.ubeta=unique(handles.beta); handles.list_beta.String=cellstr(num2str(handles.ubeta','%.2e'));
         handles.udelta=unique(handles.delta); handles.list_delta.String=cellstr(num2str(handles.udelta','%.2e'));
-        handles.uradius=unique(handles.radius); handles.list_radius.String=cellstr(num2str(handles.uradius','%.2e'));
+        handles.uradius=unique(handles.radius); handles.list_radius.String=cellstr(num2str(handles.uradius','%.2f nm'));
         
-       handles.list_N.Value=1;
-       handles.list_wavelength.Value=1;
-              handles.list_dx.Value=1;
-       handles.list_dz.Value=1;
-       handles.list_radius.Value=1;
-       handles.list_beta.Value=1;
-       handles.list_delta.Value=1;
-
+        handles.list_N.Value=1;
+        handles.list_wavelength.Value=1;
+        handles.list_dx.Value=1;
+        handles.list_dz.Value=1;
+        handles.list_radius.Value=1;
+        handles.list_beta.Value=1;
+        handles.list_delta.Value=1;
+        
         
         handles.axes.Visible='on';
         handles.p_param.Visible='on';
@@ -109,54 +109,73 @@ function draw(handles)
             
         elseif handles.rb_abserr.Value
             %plot abs errors
-            y=handles.error_abs(id);
+            algos = fieldnames(handles.error_abs(id));
+            for n = 1:numel(algos)
+                cury=handles.y(id).(algos{n});
+                curerr=handles.error_abs(id).(algos{n});
+                y.(algos{n}) =abs( curerr);
+            end
         else
             %plot rel errors
             algos = fieldnames(handles.error_abs(id));
             for n = 1:numel(algos)
                 cury=handles.y(id).(algos{n});
                 curerr=handles.error_abs(id).(algos{n});
-                y.(algos{n}) =( curerr./ cury);
+                y.(algos{n}) =abs( curerr./ cury);
             end
-            
+            y= structfun(@(a)log10(abs((a)./(handles.mie(:,id)))),handles.y(id),'UniformOutput',false);
+            y= structfun(@(a)(abs(a-handles.mie(:,id))./handles.mie(:,id)),handles.y(id),'UniformOutput',false);
         end
+        fac=@(a)exp(- (a-handles.mie(:,id)).^2 ./ handles.mie(:,id));
+        structfun(@(a)prod(fac(a)),y,'UniformOutput',false)
         
         if handles.cb_msft.Value;
-            plot(handles.axes,x,y.msft);
+            plot(handles.axes,x,y.msft,'-');
             hold on;
             labels{end+1}='msft';
         end
         
         if handles.cb_thibault.Value;
-            plot(handles.axes,x,y.thibault);
+            plot(handles.axes,x,y.thibault,'-');
             hold on;
             labels{end+1}='thibault';
         end
         
         if handles.cb_multislice.Value;
-            plot(handles.axes,x,y.multislice);
+            plot(handles.axes,x,y.multislice,'-');
             hold on;
             labels{end+1}='multislice';
         end
         
         if handles.cb_FTproj.Value;
-            plot(handles.axes,x,y.FTproj);
+            plot(handles.axes,x,y.FTproj,'-');
             hold on;
             labels{end+1}='ft proj';
         end
         
         hold off;
-        if handles.rb_profile.Value
+        if handles.rb_profile.Value || handles.rb_abserr.Value
             %plot profiles, log scale
             handles.axes.YScale='log';
         else
-            handles.axes.YScale='linear';
+            handles.axes.YScale='log';
         end
         
         hold off;
         axis(handles.axes,'auto')
+        handles.axes.XLim=[0 0.5];
         if ~isempty(labels); legend(handles.axes,labels); end
         drawnow;
+        %
+        %     figure(2)
+        %     fn=fieldnames(handles.error_abs);
+        %     for n=1:numel(fn)
+        %         t=[handles.error_abs.(fn{n})];
+        %         t=sum(abs(t(3:end/2,:)));
+        %         plot(handles.radius,t);hold on;
+        %     end
+        %     hold off;
+        %     legend(fn);
     end
 end
 
