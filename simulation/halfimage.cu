@@ -1,20 +1,24 @@
 #ifdef wip
-__global__ void conv_col(const int N, const double *data, double *out)
+__global__ void halfy(const int N, const double *data, double *out)
 {
+#ifdef shared
+    extern  __shared__ double in[];
+#endif
     //über y=1:n bei festem x aus 1..2N
     
-    
     int x = (blockIdx.x * blockDim.x) + threadIdx.x;
-    int y = (blockIdx.y * blockDim.y) + threadIdx.y;
-    int inpos=x*N + 2*y;
-    int sharepos=threadIdx.y*2+1;
-//     const int size = blockDim.y*2+1;
+    const int y = (blockIdx.y * blockDim.y) + threadIdx.y;
+    
     if (x<2*N&&y<N) {
 #ifdef shared
-        extern  __shared__ double in[];
-        if (y==0)in[0]=((blockIdx.y>0)?data[inpos-1]:0);
-        in[sharepos]=data[ inpos];
-        in[sharepos+1]=data[ inpos+1];
+        
+        int step=min(N,blockDim.y);
+        int inpos=x*2*N + y;
+        int sharepos=threadIdx.y*2+1;
+        
+        if (threadIdx.y==0)in[0]=((blockIdx.y>0)?data[inpos-1]:0);
+        in[1+threadIdx.y]=data[inpos];
+        in[1+threadIdx.y+step]=data[inpos+step];
         __syncthreads();
         
         double prev=in[sharepos-1];
@@ -22,20 +26,18 @@ __global__ void conv_col(const int N, const double *data, double *out)
         double next=in[sharepos+1];
         
 #else
-        double prev= y>0?data[x*N + 2 * y-1]:0;
-        double center = data[ x*N + 2*y];
-        double next = data[x*N + 2 * y];
+        int inpos=x*2*N + 2 * y;
+        double prev= y>0?data[inpos-1]:0;
+        double center = data[inpos];
+        double next = data[inpos+1];
 #endif
         
-        
-        
-        out[x*N + y] =(prev+2*center+next) /((y>0)+3);
-        
+        out[x*N + y] =(prev+2*center+next) /((y>0)?4:3);
     }
 }
 
 
-__global__ void conv_row(const int N, const double *data, double *out)
+__global__ void halfx(const int N, const double *data, double *out)
 {
     
     //über x=1:n bei festem y aus 1..n
@@ -46,13 +48,13 @@ __global__ void conv_row(const int N, const double *data, double *out)
     
     
     
-// 	if (x<N&&y<N) {
+	if (x<N&&y<N) {
     double prev= x>0?data[(x*2-1)*N + y]:0;
     double center = data[x*2*N + y];
-    double next = data[(x*2-1)*N +  y];
+    double next = data[(x*2+1)*N +  y];
     out[x*N + y] = (prev+2*center+next)/((x>0)+3);
-//         out[x*N + y]=center;
-// 	}
+//         out[x*N + y]=prev;
+ 	}
 }
 #endif
 __global__ void halfimage(const int N, const double *data, double *out)
