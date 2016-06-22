@@ -1,8 +1,4 @@
-function out=mie_scatter3(wavelength,radius,beta,delta)
-    N=2048;
-    dx=0.5;
-    
-    
+function out=mie_scatter3(wavelength,radius,beta,delta,N,dx)
     y=-N/2-.5:.5:N/2-.5;
     dscale=(wavelength/(N*dx));
     out=zeros(N,N);
