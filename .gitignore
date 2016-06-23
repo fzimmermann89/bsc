@@ -1,15 +1,18 @@
-##matrizen sind gross
+##matrizen sind gross, data
 *.mat
+data/
 
 ##fremdes material (copyright)
 fremd/
 material/
 
+##backup
+back/
+error/
+
 ##komische datei
 *.tex~tx*
-
-##backuo
-back/
+*.xwm
 
 ##Matlab autosave
 *.asv
