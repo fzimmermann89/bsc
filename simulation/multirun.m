@@ -14,7 +14,7 @@ dxsteps=2.^(-3:1:1);
 dzsteps=2.^(-3:1:1);
 % dzsteps=1/8;
 
-radiussteps=25:25:100; %.25*(1:100);
+radiussteps=[25,50,100]; %.25*(1:100);
 
 % betasteps=10.^-(1+0.25*(0:8));
 betasteps=1e-4;
@@ -23,13 +23,13 @@ betasteps=1e-4;
 deltasteps=10.^(-1:-0.25:-3);
 
 %marginsteps=0.95;
-marginsteps=0.5:0.05:1;
+marginsteps=[0.5:0.05:0.9,0.925,0.95,0.975,0.9,0.99,1];
 %% calculation
 g=gpuDevice();
 objects=cell(1);
 objects{1}=scatterObjects.sphere();
 
-nmax=(numel(Nsteps)*numel(wavelengthsteps)*numel(dxsteps)*numel(dzsteps)*numel(radiussteps)*numel(betasteps)*numel(deltasteps));
+nmax=(numel(marginsteps)*numel(Nsteps)*numel(wavelengthsteps)*numel(dxsteps)*numel(dzsteps)*numel(radiussteps)*numel(betasteps)*numel(deltasteps));
 n=nmax;
 
 for nN=1:numel(Nsteps)
