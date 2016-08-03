@@ -5,27 +5,30 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
     % Normalized for forward intensity.
     % based on Mie functions by C. Mätzler (2002)
     % which are based on Bohren and Huffman (1983)
-    
+    blocklength=1e5;
     k=2*pi/lambda;                  % vacuum wave number in 1/nm
     x=gather(k*radius);             % size parameter
     refIndex=gather(1-delta+1i*beta);
     
     if ~exist('steps','var');steps=10000;end
     if length(steps)==1
-      theta=linspace(0,pi,steps)';
+        theta=linspace(0,pi,steps)';
     else
-      theta=gather(steps(:));
+        theta=gather(steps(:));
     end
-    
-    u=cos(theta);
-    
-    [S1,S2]=mie_S1S22(refIndex,x,u);
-    
-    S11=(abs(S1).^2+abs(S2).^2)/2;
-    
+    Intensity=steps;
+    for m=1:ceil(length(steps)/blocklength)
+        first=1+(m-1)*blocklength;
+        last=min(m*blocklength,length(steps));
+        u=cos(theta(first:last));
+        
+        [S1,S2]=mie_S1S22(refIndex,x,u);
+        
+        S11=(abs(S1).^2+abs(S2).^2)/2;
+        Intensity(first:last)=S11;
+    end
     %normalize
-    Intensity=S11./S11(1);
-    
+    Intensity=Intensity./max(Intensity(:));
     
     %% modified versions of original functions by C. Mätzler
     function [S1,S2] = mie_S1S22(m, x, u)
@@ -78,7 +81,7 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
         % ffz2016
         % changed var names to be closer to BH, major cleanup.
         
-       
+        
         n=(1:nmax);
         
         %create spherical bessel functions

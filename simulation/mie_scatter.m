@@ -1,43 +1,32 @@
-function out=mie_scatter3(wavelength,radius,beta,delta,N,dx)
-    y=-N/2-.5:.5:N/2-.5;
-    dscale=(wavelength/(N*dx));
+function out=mie_scatter(wavelength,radius,beta,delta,N,dx,offset)
+    if nargin<7;offset=0;end
+    center=N/2+1+offset;
     out=zeros(N,N);
+%     tic
+%     range=linspace(-N/2+1+offset,offset,N/2);
+%     [XX,YY]=meshgrid(range,range);
+%     R=(hypot(XX,YY));
+%      angle=asin(min(1,(R/(N*dx)*wavelength)));
+%       [uangle,~,iangle]=unique(angle,'sorted');
+%     toc
     
-    %calculate columns
-    left=mierow(-N/2-.5);
-    for ncol=1:N/2+1;
-        cur=mierow(-N/2+ncol-1);
-        right=mierow(-N/2+ncol-1+.5);
-        tmp=row(left,cur,right);
-        out(:,ncol)=tmp;
-        left=right;
-    end
+    tic
+    range=linspace(-N/2+offset,offset,N/2+1).^2;
+    [XX,YY]=meshgrid(range,range);
+    R=(sqrt(XX+YY));
+    [uR,~,idx]=unique(R,'sorted');
+        angle=asin(min(1,(uR/(N*dx)*wavelength)));
+  [~,mieval]=mie(wavelength,radius,beta,delta,angle);
+  mieval=reshape(mieval(idx),[N/2+1,N/2+1]);
+  out(1:N/2+1,1:N/2+1)=mieval;
+  out(N/2+2:end,1:N/2+1)=flipud(mieval(2:end-1,1:end));
+  out(1:end,end/2+2:end)=fliplr(out(1:end,2:end/2));
+    toc
     
-   %mirror 
-    for ncol=2:N/2
-        out(:,N-ncol+2)=out(:,ncol);
-    end
-    
-    
-    
-    function out=mierow(x)
-        d=sqrt(x^2+y.^2)*dscale;
-        d=asin(min(1,d));
-        [~,out]=mie(wavelength,radius,beta,delta,d);
-    end
-    
-    function out=row(left,cur,right)
-        out=zeros(N,1);
-        
-        for n=1:N/2+1
-            %weighted average
-            out(n)=(left(2*n-1)+right(2*n-1)+left(2*n+1)+right(2*n+1))/16 ...
-                +(left(2*n)+right(2*n)+cur(2*n-1)+cur(2*n+1))/8 ...
-                +(cur(2*n)/4);
-        end
-        %mirror
-        for n=2:N/2
-            out(N-n+2)=out(n);
-        end
-    end
+%     angle=asin(min(1,(R/(N*dx)*wavelength)));
+%     [uangle,~,iangle]=unique(angle,'sorted');
+%     [~,mieval]=mie(wavelength,radius,beta,delta,uangle);
+%     out=reshape(mieval(iangle),[N,N]);
+% %     out=out./out(end/2+2,end/2+2);
 end
+% mie_scatter(wavelength,radius,beta,delta,4*N,dx)
