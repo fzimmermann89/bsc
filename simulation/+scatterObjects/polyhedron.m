@@ -22,11 +22,6 @@ classdef polyhedron<scatterObjects.base
         rotationY=0;
         rotationZ=0;
     end
-    properties (Constant)
-        %max number of edges of all derived classes
-        %         maxEdges=100;
-        %https://groups.google.com/forum/#!topic/comp.soft-sys.matlab/qeXoDmFC2ug
-    end
     methods
         function this=polyhedron()
         end%polyhedron
@@ -70,7 +65,6 @@ classdef polyhedron<scatterObjects.base
     end%methods
 
 
-
     methods (Access=protected)
         function [startPoint,endPoint]=getEdges(this)
             % gets start and end of each unique edge
@@ -79,14 +73,14 @@ classdef polyhedron<scatterObjects.base
             rotation=scatterObjects.getRotationMatrix(this.rotationX,this.rotationY,this.rotationZ);
             positionN=[this.positionX/this.dx,this.positionY/this.dx,this.positionZ]+[(this.N)/2+1,(this.N)/2+1,0];
             radiusN=diag([(this.radius/this.dx),(this.radius/this.dx),this.radius]       );%+[1/2;1/2;0]);
+            
             scaledCoords=(rotation*this.coords')';
             scaledCoords=scaledCoords*radiusN+repmat(positionN,length(this.coords),1);
-            % faces using unique vertices
+            
+            % find unique edges
             [verts, ~, N] = unique(scaledCoords, 'rows', 'first');
             ind1 = reshape((1:this.NEdgesPerFace*this.NFaces), [this.NEdgesPerFace this.NFaces])';
             faces = N(ind1);
-
-            % unique edges from faces
             ind2 = [reshape(faces(:, 1:this.NEdgesPerFace), [this.NEdgesPerFace*this.NFaces 1]) reshape(faces(:, [2:this.NEdgesPerFace 1]), [this.NEdgesPerFace*this.NFaces 1])];
             ind2 = unique(sort(ind2, 2), 'rows');
             startPoint=verts(ind2(:,1),:,:);
@@ -100,11 +94,6 @@ classdef polyhedron<scatterObjects.base
             end
             %get edges in slice
             nVectors=0;
-
-            %ugly hack because of https://groups.google.com/forum/#!topic/comp.soft-sys.matlab/qeXoDmFC2ug
-            %             vertx=zeros(this.maxEdges,1);
-            %             verty=zeros(this.maxEdges,1);
-            %no longer necessary
 
             vertx=zeros(length(this.edgesStart),1);
             verty=zeros(length(this.edgesStart),1);
@@ -122,7 +111,6 @@ classdef polyhedron<scatterObjects.base
                     yend=this.edgesEnd(n,2);
                     vertx(nVectors)=xstart+(xend-xstart)/zdiff*(z-zstart);
                     verty(nVectors)=ystart+(yend-ystart)/zdiff*(z-zstart);
-
                 end
             end
 
@@ -140,7 +128,6 @@ classdef polyhedron<scatterObjects.base
 
                 %get slice
                 if (this.gpu)
-                    %slice=scatterObjects.poly2mat(this.N,single(vertx),single(verty),nVectors);
                     slice=this.empty;
                     slice=feval(this.kernel,this.N,single(vertx),single(verty),nVectors,slice);
                 else
