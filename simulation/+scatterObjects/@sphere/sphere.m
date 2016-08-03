@@ -48,7 +48,7 @@ classdef sphere<scatterObjects.base
             end
             
             [xx,yy]=meshgrid(range);
-            this.x2y2=((xx-this.positionX).^2+(yy-this.positionY).^2)/((this.radius))^2;
+            this.x2y2=single(((xx-this.positionX).^2+(yy-this.positionY).^2)/((this.radius))^2);
             fun=@this.getSlice;
         end
         
@@ -64,7 +64,7 @@ classdef sphere<scatterObjects.base
             
             z2=(gather(z-this.positionZ)^2);
             if (z2<=this.radius^2)
-                z2=z2/this.radius^2;
+                z2=single(z2/this.radius^2);
                 slice=((this.x2y2+ z2)<1);
             else
                 if this.gpu
