@@ -4,8 +4,8 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
     % Uses algorith similar to cowley or hare
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     debug=false;ndebug=0;
-    
-%     deltaz=wavelength/2;
+    if nargin<7; filter=false;end;
+
     k=2*pi/wavelength;
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
 
@@ -39,14 +39,12 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
         %     %bw limit propagator, allows symetrical bw limit on propagator and transission->
         %     %better resolution, vgl kirkland
     if filter
-              %bw limit propagator, allows symetrical bw limit on propagator and transission->
-    %better resolution, vgl kirkland
-
         w=window(N);
         propagatorSingleStep=propagatorSingleStep.*w;
     end
+    
     for z=-Lz/2:deltaz:Lz/2
-
+        
         %output of progress if enabled every 100 iterations
         if debug
             if (ndebug==100)
@@ -81,7 +79,6 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
         end
 
         waveF=waveF.*propagatorSingleStep;
-
 
     end
     waveR=ft2(waveF)/(dx^2);
