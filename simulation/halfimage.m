@@ -7,5 +7,8 @@ function out=halfimage(in)
     kernel.ThreadBlockSize =[4, 8,1];
     kernel.GridSize=[ceil(N/4),ceil(N/8),1];
     
-    out=feval(kernel,N,in,gpuArray.zeros(N,N));
+    out=feval(kernel,N,gpuArray(double(in)),gpuArray.zeros(N,N));
+    if ~isa(in,'gpuArray')
+        out=gather(out);
+    end;
 end
