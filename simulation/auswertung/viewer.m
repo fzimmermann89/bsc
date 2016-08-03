@@ -95,60 +95,155 @@ function draw(handles)
     id=find((handles.N==N)&(handles.wavelength==wavelength)&(handles.dx==dx)&(handles.dz==dz)&(handles.beta==beta)&(handles.delta==delta)&(handles.radius==radius));
     if numel(id)==1
         x=handles.x(:,id);
+        valmie=normalize(handles.mie(:,id));
+        valalgos= structfun(@(x)normalize(x),handles.y(id),'UniformOutput',false);
         
         labels={};
         if handles.rb_profile.Value
             %plot profiles, needs to plot mie
-            y=handles.y(id);
-            ipx=(interp1(1:numel(x),x(:),linspace(1,numel(x),4*numel(x))))';
-            [~,ipmie,~,~]=mie(1,radius,beta,delta,ipx);
-            ipmie=(ipmie./max(ipmie(:)));
-            plot(handles.axes,ipx,ipmie);
-            hold on;
-            labels{end+1}='mie';
             
+            
+            %             [~,miesampled]=rprofil(mie_scatter(wavelength,radius,beta,delta,N,dx),N/2);
+            %             m=handles.y(id).multislice;
+            %             spanm=max(m(100:200))-min(m(100:200))
+            %             offsetm=min(m(100:200))
+            %             offsets=min(miesampled(100:200))
+            %             spans=max(miesampled(100:200))-min(miesampled(100:200))
+            %             miesampled=((miesampled-offsets)*(spanm/spans))+offsetm;
+            %             x(100)
+            %             x(200)
+            
+            
+            
+            
+            
+            
+            %             ipx=(interp1(1:numel(x),x(:),linspace(1,numel(x),4*numel(x))))';
+            %             [~,ipmie,~,~]=mie(1,radius,beta,delta,ipx);
+            %             ipmie=(ipmie./max(ipmie(:)));
+            %             hold on;
+            %             plot(handles.axes,ipx,ipmie);
+            
+            hold on;
+            plot(handles.axes,x,valmie,'-');
+            labels{end+1}='mie';
+            y=valalgos;
+            %             plot(handles.axes,x,miesampled);
+            %             labels{end+1}='miesampled';
         elseif handles.rb_abserr.Value
+            
             %plot abs errors
-            algos = fieldnames(handles.error_abs(id));
-            for n = 1:numel(algos)
-                cury=handles.y(id).(algos{n});
-                curerr=handles.error_abs(id).(algos{n});
-                y.(algos{n}) =abs( curerr);
+%             offset=structfun(@(x)fminsearch(@(offset)sum(abs((offset+x(2:end/2)-valmie(2:end/2))./valmie(2:end/2))),0,optimset('Display','none','TolX',1e-10,'TolFun',1e-10)),valalgos,'UniformOutput',false)
+%             a=structfun(@(x)sum(abs(x(2:end/2)-valmie(2:end/2))),valalgos,'UniformOutput',false)
+%             f=fieldnames(valalgos);
+%             for n=1:numel(f)
+%                 valalgos.(f{n})=valalgos.(f{n})+offset.(f{n});
+%             end
+%             b=structfun(@(x)sum(abs(x(2:end/2)-valmie(2:end/2))),valalgos,'UniformOutput',false)
+%             
+%             y= structfun(@(x)abs((x-valmie)),valalgos,'UniformOutput',false);
+%             
+%             
+%             offsetspan=structfun(@(x)fminsearch(@(offsetspan)sum(abs((((x(2:end/4)-min(x(2:end/4))*offsetspan(1)+offsetspan(2)))-valmie(2:end/4)))),[1,0],optimset('Display','none','TolX',1e-10,'TolFun',1e-10)),valalgos,'UniformOutput',false)
+%                          offsetspan=structfun(@(x)fminsearch(...
+%                        @(offsetspan) sum(abs(((x(2:end/4)-min(x(2:end/4)))*offsetspan(1)+offsetspan(2))-valmie(2:end/4))) ...
+%                        ,[1,0], optimset('Display','none','TolX',1e-10,'TolFun',1e-10)),valalgos,'UniformOutput',false)
+     offsetspan=structfun(@(x)fminsearch(...
+                       @(offsetspan) sum(abs(((x(2:end/4)-offsetspan(3))*offsetspan(1)+offsetspan(2))-valmie(2:end/4))./valmie(2:end/4)) ...
+                       ,[1,0,0], optimset('Display','none','TolX',1e-15,'TolFun',1e-15)),valalgos,'UniformOutput',false)
+            
+a=structfun(@(x)sum(abs(x(2:end/4)-valmie(2:end/4)))./numel(x(2:end/4)),valalgos,'UniformOutput',false)
+            f=fieldnames(valalgos);
+            for n=1:numel(f)
+                val=valalgos.(f{n});
+                curoffsetspan=offsetspan.(f{n});
+                valalgos.(f{n})=(val-min(val(2:end/4)))*curoffsetspan(1)+curoffsetspan(2);
             end
+            
+            b=structfun(@(x)sum(abs(x(2:end/4)-valmie(2:end/4)))./numel(x(2:end/4)),valalgos,'UniformOutput',false)
+            y= structfun(@(x)abs((x-valmie)),valalgos,'UniformOutput',false);
+            
+            
+            
+            %             algos = fieldnames(handles.error_abs(id));
+            %             for n = 1:numel(algos)
+            %                 cury=handles.y(id).(algos{n});
+            %                 curerr=handles.error_abs(id).(algos{n});
+            %                 y.(algos{n}) =abs( curerr);
+            %             end
         else
             %plot rel errors
-            algos = fieldnames(handles.error_abs(id));
-            for n = 1:numel(algos)
-                cury=handles.y(id).(algos{n});
-                curerr=handles.error_abs(id).(algos{n});
-                y.(algos{n}) =abs( curerr./ cury);
+            
+            %             algos = fieldnames(handles.error_abs(id));
+            %             for n = 1:numel(algos)
+            %                 cury=handles.y(id).(algos{n});
+            %                 curerr=handles.error_abs(id).(algos{n});
+            %                 y.(algos{n}) =abs( curerr./ cury);
+            %             end
+            %             y= structfun(@(a)log10(abs((a)./(handles.mie(:,id)))),handles.y(id),'UniformOutput',false);
+            %             y= structfun(@(a)smooth((a-handles.mie(:,id))./handles.mie(:,id),10,'rloess'),handles.y(id),'UniformOutput',false);
+            %             y= structfun(@(a)((a-handles.mie(:,id))./handles.mie(:,id)),handles.y(id),'UniformOutput',false);
+            % offset=structfun(@(x)fminsearch(@(offset)sum((abs(x-valmie+offset)./valmie)),0),valalgos,'UniformOutput',false);
+            %
+            % f=fieldnames(valalgos);
+            % for n=1:numel(f)
+            %     valalgos.(f{n})=valalgos.(f{n})+offset.(f{n});
+            % end
+%             a=structfun(@(x)sum(abs(x(2:end/2)-valmie(2:end/2))./valmie(2:end/2)),valalgos,'UniformOutput',false)
+
+%             offset=structfun(@(x)fminsearch(@(offset)sum(abs((offset+x(2:end/2)-valmie(2:end/2))./valmie(2:end/2))),0,optimset('Display','none','TolX',1e-10,'TolFun',1e-10)),valalgos,'UniformOutput',false)
+%             a=structfun(@(x)sum(abs(x(2:end/2)-valmie(2:end/2))./valmie(2:end/2)),valalgos,'UniformOutput',false)
+%             f=fieldnames(valalgos);
+%             for n=1:numel(f)
+%                 valalgos.(f{n})=valalgos.(f{n})+offset.(f{n});
+%             end
+            
+            offsetspan=structfun(@(x)fminsearch(@(offsetspan)sum(abs((((x(2:end/4)-min(x(2:end/4)))*offsetspan(1)+offsetspan(2))-valmie(2:end/4))./valmie(2:end/4))),[1,0],optimset('Display','none','TolX',1e-10,'TolFun',1e-10)),valalgos,'UniformOutput',false)
+            %-min(x(2:end/4))       
+            offsetspan=structfun(@(x)fminsearch(...
+                       @(offsetspan) sum(abs(((x(2:end/4)-offsetspan(3))*offsetspan(1)+offsetspan(2))-valmie(2:end/4))./valmie(2:end/4)) ...
+                       ,[1,0,0], optimset('Display','none','TolX',1e-15,'TolFun',1e-15)),valalgos,'UniformOutput',false)
+            
+            a=structfun(@(x)sum(abs(x(2:end/4)-valmie(2:end/4))./valmie(2:end/4))./numel(x(2:end/4)),valalgos,'UniformOutput',false)
+            f=fieldnames(valalgos);
+            for n=1:numel(f)
+                val=valalgos.(f{n});
+                curoffsetspan=offsetspan.(f{n});
+                valalgos.(f{n})=(val-curoffsetspan(3))*curoffsetspan(1)+curoffsetspan(2);
             end
-            y= structfun(@(a)log10(abs((a)./(handles.mie(:,id)))),handles.y(id),'UniformOutput',false);
-            y= structfun(@(a)(abs(a-handles.mie(:,id))./handles.mie(:,id)),handles.y(id),'UniformOutput',false);
+            
+            b=structfun(@(x)sum(abs(x(2:end/4)-valmie(2:end/4))./valmie(2:end/4))./numel(x(2:end/4)),valalgos,'UniformOutput',false)
+            
+            y= structfun(@(x)(abs(x-valmie)./valmie),valalgos,'UniformOutput',false);
+            %                           structfun(@(x)(abs(x-valmie)./valmie),valalgos,'UniformOutput',false)
+            %                              y= structfun(@(x)smooth(x,10,'moving'),y,'UniformOutput',false);
+            
+            
         end
-        fac=@(a)exp(- (a-handles.mie(:,id)).^2 ./ handles.mie(:,id));
-        structfun(@(a)prod(fac(a)),y,'UniformOutput',false)
+        
+        %         fac=@(a)exp(- (a-handles.mie(:,id)).^2 ./ handles.mie(:,id));
+        %         structfun(@(a)prod(fac(a)),y,'UniformOutput',false)
         
         if handles.cb_msft.Value;
-            plot(handles.axes,x,y.msft,'-');
+            plot(handles.axes,x,y.msft,'x');
             hold on;
             labels{end+1}='msft';
         end
         
         if handles.cb_thibault.Value;
-            plot(handles.axes,x,y.thibault,'-');
+            plot(handles.axes,x,y.thibault,'x');
             hold on;
             labels{end+1}='thibault';
         end
         
         if handles.cb_multislice.Value;
-            plot(handles.axes,x,y.multislice,'-');
+            plot(handles.axes,x,y.multislice,'x');
             hold on;
             labels{end+1}='multislice';
         end
         
         if handles.cb_FTproj.Value;
-            plot(handles.axes,x,y.FTproj,'-');
+            plot(handles.axes,x,y.FTproj,'x');
             hold on;
             labels{end+1}='ft proj';
         end
@@ -158,7 +253,7 @@ function draw(handles)
             %plot profiles, log scale
             handles.axes.YScale='log';
         else
-            handles.axes.YScale='log';
+            handles.axes.YScale='linear';
         end
         
         hold off;
@@ -179,7 +274,14 @@ function draw(handles)
     end
 end
 
-
+function x=normalize(x)
+    %     x=x./sum(x(2:end));
+    x=x./sum(abs(x(2:end/2)));
+    %        x=x./x(2);
+    % x=x-x(2)+1;
+    
+    %     x=x-x(2)+1;
+end
 % --- Outputs from this function are returned to the command line.
 function varargout = viewer_OutputFcn(hObject, eventdata, handles)
     varargout{1} = handles.output;

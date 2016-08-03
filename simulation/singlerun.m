@@ -65,13 +65,13 @@ function run=singlerun(N,dx,dz,wavelength,objects,param)
         
         clear exitwave scatter;
         
-        %% thibault
-%         exitwave=(thibault(wavelength,objects,N,dx,dz,gpu));
-%         scatter=normalize(abs(ft2(exitwave)).^2*(dx^2));
-%         
-%         name='thibault';
-%         run=addtorun(run,name,exitwave,scatter);
-%         clear exitwave scatter;
+        % thibault
+        exitwave=(thibault(wavelength,objects,N,dx,dz,gpu));
+        scatter=normalize(abs(ft2(exitwave)).^2*(dx^2));
+        
+        name='thibault';
+        run=addtorun(run,name,exitwave,scatter);
+        clear exitwave scatter;
         
         %% msft
         msft=(msft2(wavelength,objects,N,dx,dz,gpu));
@@ -90,7 +90,7 @@ function run=singlerun(N,dx,dz,wavelength,objects,param)
     %% helper functions
     function run=addtorun(run,name,exitwave,scatter)
         [~,meanData,stdData,minData,maxData]=rprofil(scatter,limit,precision);
-        [~,abserror,relerror]=difference(gather(angleRad),gather(meanData),gather(angleRad),gather(pMie));
+%         [~,abserror,relerror]=difference(gather(angleRad),gather(meanData),gather(angleRad),gather(pMie));
 %         run.exitwaves.(name)=gather(exitwave);
 %         run.scatters.(name)=gather(scatter);
         run.profiles_y.(name)=gather(meanData);
@@ -98,7 +98,7 @@ function run=singlerun(N,dx,dz,wavelength,objects,param)
         run.profiles_min.(name)=gather(minData);
         run.profiles_max.(name)=gather(maxData);
 %         run.errors_rel.(name)=gather(relerror);
-        run.errors_abs.(name)=gather(abserror);
+%         run.errors_abs.(name)=gather(abserror);
 %         run.errors_rms.(name)=gather(sqrt(sum(abserror(:).^2)./numel(abserror)));
     end
     
