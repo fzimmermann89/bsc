@@ -1,32 +1,7 @@
 \chapter{Simulation von Streubildern}
 Das Problem der Berechnung synthetischer Streubilder besitzt verschiedene Lösungsansätze..
 \section{Mie Streuung}
-Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel  in Form einer unendlichen Reihe, die numerisch ausgewertet werden kann \cite{bohren2008}. Für die Intensität beim Streuwinkel $\theta$ gilt in dieser Theorie für die Streuung unpolarisierter Strahlung in Abhängigkeit von der Brechzahl $\eta$ der Sphäre (Radius $r$) und dem Parameter $x=r/k$:
-\begin{equation}
-I(\theta)\propto\frac{1}{2}\left(\abs{S_1}^2+\abs{S_2}^2\right)
-\end{equation} 
-mit
-\begin{align}
-S_1=\sum_j{\frac{2n+1}{n(n+1)}(a_n\pi_n+b_n\tau_n)} &&S_2=\sum_n{\frac{2n+1}{n(n+1)}(a_n\tau_n+b_n\pi_n)}
-\end{align}
-wobei die Reihe bei der numerischen Auswertung nach $N$ Termen abgebrochen wird. Eine hinreichende Konvergenz liegt meist bei $N\approx2+x+4\sqrt[3]{x}$ Termen vor.  $\pi_n$ und $\tau_n$ können mit $\pi_1=1$ und  $\pi_2=3\cos{\theta}$ rekursiv über die Relationen
-\begin{align}
-&\pi_n=\frac{2n-1}{n-1}\cos{\theta}\pi_{n-1}-\frac{n}{n-1}\pi_{n-2}&&\tau_n=n\cos{\theta}\pi_n-(n+1)\pi_{n-1}\\
-\end{align}
-und $a_n$,$b_n$ über 
-\begin{align}
-a_n=\frac{(D_n/\eta+n/x)\psi_n-\psi_{n-1}}{(D_n/\eta+n/x)\chi_n-\chi_{n-1}} &&
-b_n=\frac{(\eta D_n+n/x)\psi_n-\psi_{n-1}}{(\eta D_n+n/x)\chi_n-\chi_{n-1}}
-\end{align} definiert werden. $D_n$ lässt sich rekursiv über
-\begin{align}
-D_{N+15}=0 && D_{n-1}=\frac{n}{\eta*x}-\frac{1}{D_n+n/(\eta x)}
-\end{align}
-und $\psi_n$,$\chi_n$ mittels sphärischer Besselfunktionen 1. Art ($j_n$) und 2. Art ($y_n$) als 
-\begin{align}
-\psi_n=x j_n&&  \chi_n=x j_n+ixy_n
-\end{align}
-berechnen \cite[S. 112f, 95, 127f]{bohren2008}.
-Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{maetzler2002} basierten Matlab Funktion \texttt{simulation/mie.m} vor und dient der Verifizierung der Simulationsverfahren.
+Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel  in Form einer unendlichen Reihe basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen \cite{bohren2008}. Die unendliche reihe lässt sich näherungsweise numerisch berechenen (Details siehe Anhang XX). Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{maetzler2002} basierenden Matlab Funktionen \texttt{simulation/mie.m} für winkelabhängige Radialprofile sowie \texttt{simulation/mie\_scatter.m} für Streubilder vor und dient der Verifizierung der Simulationsverfahren.
 
 \section{Projektion}
 	Näherung der dreidimensionalen Streuobjekte durch zweidimensionale Blenden durch Projektion. Für diese Projektionen lässt sich in Fraunhofer-Fernfeldnäherung das Streubild darstellen XXX. 
@@ -149,10 +124,33 @@ e^{i\Delta z(\kappa-k)}
 Die numerische Simulation dieser Methode ist in \texttt{simulation/thibault.m} implementiert.
 
 
-\section{Ergebnisse und Diskussion}
-\subsection{Verifizierung}
-Zur Verifizierung der vorgestellten Simulationsalgorithmen und deren numerische Implementierungen eignet sich der Vergleich der berechneten Streubilder hinter Kugeln mit den Ergebnissen aus der Berechnung mittels Mie-Streuung. Der vergleich wird für verschiedene Brechzahlen, Kugelradien und Berechnungsauflösungen bei einer Wellenlänge von 1\si{nm} durchgeführt.
-Zur Quantifizierung des Vergleichs wird die Summe der Betragsquadrat der Abweichung zwischen den Simulationsdatenpunkten und der Berechnung mittels Mie verwendet.
+\section{Verifizierung}
+Zur Verifizierung der vorgestellten Simulationsalgorithmen und deren numerische Implementierungen eignet sich der Vergleich der berechneten Streubilder hinter Kugeln mit den Ergebnissen aus der Berechnung mittels Mie-Streuung. Der vergleich wird für verschiedene Brechzahlen und Kugelradien bei einer Wellenlänge von 1\si{nm} durchgeführt.
+
+Da ein realer Detektor nicht die Intensitäten bei präzise defnierten Winkelpunkten misst sondern innerhalb eines Areales, ist es zweckmäßig, die simulierte Detektorfläche in quadratische Areale zu unterteilen und die Intensität in jedem dieser Areale als gewichtetes Mittel zwischen in dem Areal liegenden Punkten zu betrachten.
+Hierbei werden an den Rändern zwischen zwei Arealen liegende Berechnungspunkte zur je zur Hälfte in beiden Arealen, in der Ecke zwischen vier Arealen liegende Berechnungspunkte je zu einem Viertel in den vier Arealen berücksichtigt.
+Besonders bemerkbar ist dieser Bearbeitungsschritt bei Pixeln die genau in den Intensitätsminima liegen: Ohne die gewichtete Mittelung würde der gesammten Fläche zwischen den Pixeln die Intensität des Minimums zugewiesen werden, auch wenn dessen Breite extrem schmal ist, werden zusätzliche Pixel berechnet und anschließend gewichtet gemittelt, ergibt sich eine korrektere Wiedergabe des tatsächlichen Intensitätsverlaufs (Abb. XX).
+
+Anschließend werden die simulierten Streubilder bezüglich Verschiebung und Offset auf die Mie-Streubilder normiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streubildern betrachtet.
+
+Exemplarisch dargestellt in Abb. XX.
+
+Aus den rotationssymmetrischen Streubildern können Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden (Abb.)
+
+Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund des steilen Verlaufs scharfe,nur 1-2 Datenpunkte umfassende, Maxima annimmt.
+Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen ums sie als in diesem Bereich valide anzusehen (Abb. XX)
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/average.eps}
+	\caption[Gewichteter Mittelwert]{Die Verwendung eines gewichteten Mittelwertes zum Binning des Streubildes: Um die Intensität im links rot umrandeten Bereich zu bestimmen, wird die Intensität an den Schwarzen Punkten berechnet und ein gewichteter Mittelwert gebildet, indem die Intensität der vier Randwerte zur Hälfte, die der vier Eckpixel zu einem Viertel in dem umrandeten Bereich mitberücksichtigt werden. Der Effekt gegenüber einer Berchnung nur in den Zentren der Pixel zeigt sich rechts: Wird die Intensität bei einem schwarz dargestellten wahren Intensitätsverlauf nur an den roten Punkten bestimmt, dominiert das Minimum den Intensitätsverlauf. Eine geringere Abweichung ergibt sich bei dem gewichteten Mittelwert (blau).}
+	\label{Abb:BspAbbildung}
+\end{figure} 
+
+
+
+
 
 
 XXWelche Paramerter?
@@ -160,8 +158,11 @@ hier Bild von Austrittswellen und Streubilder
 Radialprofile
 Plot der Fehler
 
-Zur Quantifizierung der Genauigkeit der Simulationen wird die Summe der quadratischen Abweichungen der Datenpunkte der aus den Streubildern erzeugten Radialprofile von der Mie-Lösung betrachtet:
 
 
-\subsection{Austrittswellen}
-darstellung von interessanten austrittswellen von mehreren objekten und vgl. mit summe aus einzel austrittswellen
+\section{Austrittswellen}
+Neben der Berechnung von Streubilder von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen Objekten.
+
+Als interessante Testszene wird ein Ikosaeder mit eingebetteter Kugel sowie ein davon disjunktes, kleineres Dodekaeder betrachtet (Abb.)
+
+
