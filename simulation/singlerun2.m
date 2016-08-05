@@ -61,9 +61,9 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
     
     
     
-    [structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error,'UniformOutput',false)]
-    
-    toc
+    err=structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error,'UniformOutput',false);
+    fprintf('\n \n Done with N%g, dx%g, dz%g. Time: %gs. Median Errors:\n',N,dx,dz,toc);
+    disp(struct2table(err));
     
     %% helper functions
     function run=addtorun(run,name,exitwave)
