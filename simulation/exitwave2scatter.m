@@ -1,4 +1,4 @@
-function [out,angles]=exitwave2scatter(exitwave,dx,wavelength,padhalf,padcut)
+function [out,angles]=exitwave2scatter(exitwave,dx,wavelength,padhalf,padcut,angles)
     % Converts exitwave to scatter image.
     % padhalf (default:true): pad and use weighted average to half resolution
     % padcut (default:false): pad image before converting and cut afterwards
@@ -6,11 +6,14 @@ function [out,angles]=exitwave2scatter(exitwave,dx,wavelength,padhalf,padcut)
     if nargin<4;padhalf=true;end
     if nargin<5;padcut=false; end
     N=length(exitwave);
-    if padhalf; Npad=2*Nneu;end
-    if padcut; Npad=2*Nneu;end
+    Npad=N;
+    if padhalf; Npad=2*Npad;end
+    if padcut; Npad=2*Npad;end
     out=gather(exitwave-exitwave(1));
-    
-    angles=gather(single(anglemap(N,dx+dx*padcut,wavelength)*180/pi));
+    if nargin<6
+        angles=anglemap(N,dx+dx*padcut,wavelength)*180/pi;
+    end
+    angles=gather(angles);
     
     out=pad2size(out,Npad);
     
