@@ -31,12 +31,13 @@ Das Problem der Entfaltung tritt in verschiedenen Bereichen auf, unter anderem i
 Hier ist der Prozess der Wiener Entfaltung etabliert. 
 
 Für Rauschen, dass nicht mit dem Signal korreliert ist stellt dies die Lösung...
+Ist das Rauschen jedoch mit dem Signal korreliert, wie dies z.B. bei Poisson-Rauschen (Shot-Noise) der Fall ist, so lässt sich eine heuristische Form des Wiener-Filters mit konstantem,  XX anwenden. Hierbei muss ein Kompromiss aus Rauschunterdrückung und Entfaltung gewählt werden.
 
 \section{iterative Phasenrückgewinnung}
 Wäre neben der Amplitude auch Phase der Fouriertransformation der Austrittswelle bekannt, so könnte diese durch eine inverse Transformation wiederhergestellt werden. 
 Da bei N komplexen Datenpunkten im Realraum die Fouriertransformation durch N Amplituden und N Phasen, also 2N Variablen dargestellt werden kann, jedoch nur N Variablen (die Fourieramplituden) gemessen werden können, ist das Problem unterbestimmt und nicht eindeutig lösbar. Kann jedoch das zu rekonstruierende Objekt im Realraum auf N/2 Bildpunkte beschränkt werden, so wird das Problem lösbar. Die räumliche Beschränkung im Realraum wird 
 durch die Wahl eines sog. Supports, außerhalb dessen der Realraum als leer angenommen wird umgesetzt.  
-Die Problemstellung ist nun eine Lösung der Gleichung $\rho(x)=\mathscr{F}^{-1}\tilde{\rho}(q)$ unter den Nebenbedingungen dass 1. $\rho$ auf den Support beschränkt ist und 2. die Amplituden von $\tilde{\rho}$ mit den bekannten Fourieramplituden $A(q)$ übereinstimmt. 
+Die Problemstellung ist nun im rauschfreien Fall eine Lösung der Gleichung $\rho(x)=\mathscr{F}^{-1}\tilde{\rho}(q)$ unter den Nebenbedingungen dass 1. $\rho$ auf den Support beschränkt ist und 2. die Amplituden von $\tilde{\rho}$ mit den bekannten Fourieramplituden $A(q)$ übereinstimmt.
 \subsection{Algorithmen}
 Ein zur Lösung der Problemstellung verwendeter Algorithmus, der Error-Reduction Algorithmus (ER) basiert auf abwechselnden Erzwingen der der Nebenbedingungen, d.h. von einem Startwert $\rho_0$ ausgehend wird zunächst $\tilde{\rho_0}$ bestimmt, die Amplitude im Fourierraum durch $A$ ersetzt, in den Realraum transformiert und dort außerhalb des Supports gleich Null gesetzt. Dies wird iterativ wiederholt, wobei sich $\rho_n$ einer beide Nebenbedingungen erfüllenden Lösung annähert.
 
@@ -68,7 +69,8 @@ aufgefasst werden. Der analoge Projektor für die Erfüllung der Nebenbedingung 
 	R_\nu= (\mathbb{1}+2(P-\mathbb{1}))=(2P_\nu-\mathbb{1})
 	\end{equation}
 	eingeführt werden.
-In dieser Schreibweise können auch Weiterentwicklungen wie der Hybrid Input Output (HIO) und Relaxed Averaged Alternating Reflections (RAAR) Algorithmus dargestellt werden XXTabelleXX. Ihre Prinzip ist in XXX graphisch dargestellt.
+In dieser Schreibweise können auch Weiterentwicklungen wie der Hybrid Input Output (HIO) und Relaxed Averaged Alternating Reflections (RAAR) Algorithmus dargestellt werden XXTabelleXX. Ihre Prinzip ist in XXX graphisch dargestellt. Die Algorithmen unterscheiden sich bezüglich ihres Konvergenzverhaltungs und insbesondere bezüglich ihrer Anfälligkeit für Stagnation in lokalen Minima. 
+Ein Rauschen im Fourierraum, wie unvermeidbar bei der Rekonstruktion aus aufgenommenen Streubildern, bewirkt, dass keine eindeutige, exakte Lösung existieren muss, sondern nur die ein globales Minumum aufgefunden werden kann. 
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.75\textwidth]{images/algorithmen.eps}
@@ -106,4 +108,3 @@ Sowohl für die Entfaltung wie auch für die festlegung des Supports für die it
 
 \section{3D Austrittswelle}
 Die für 2D-Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem 3D-Objekt eingesetzt werden. Die Dreidimensionalität des Objektes wird an dieser Stelle ignoriert und die Austrittswelle analog zu den 2D-Bildern betrachtet.
-\section{Ausblick}

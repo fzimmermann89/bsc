@@ -70,6 +70,15 @@ pdfauthor={Felix Frederik Zimmermann}
 \usepackage[numbers,comma]{natbib} %bibliographie
 \usepackage{commath}
 
+
+%vor chapter weniger platz
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
+\makeatother
+
+
 %%kleinere abstände bei gleichungen
 %\setlength{\abovedisplayskip}{0pt}
 %\setlength{\belowdisplayskip}{0pt}

@@ -3,16 +3,16 @@
  
 \section{Skalare Beugungstheorie}
 
-Aus den Maxwell-Gleichungen lässt sich unter der Annahme eines sich im Vergleich zur Wellenlänge $\lambda$ nur langsam ändernden Mediums die skalare Helmholzgleichung 
+Aus den Maxwell-Gleichungen lässt sich unter der Annahme eines sich im Vergleich zur Wellenlänge $\lambda$ nur langsam ändernden Mediums die skalare Helmholzgleichung
 \begin{equation}
 (\Delta+k^2\eta^2)\phi=0
 \end{equation}
 mit der Wellenzahl $k$
 \begin{equation}
 	k=\frac{2\pi}{\lambda}
-\end{equation} und der komplexen Brechzahl des Mediums $\eta$ aufstellen. Diese Betrachtung ignoriert den vektoriellen Charakter der Elektrodynamik, insbesondere die Polarisation der Welle wird vernachlässigt. Des weiteren findet eine Separation der Zeitabhängigkeit statt, sodass nur stationäre Probleme betrachtet werden.
+\end{equation} und der komplexen Brechzahl des Mediums $\eta$ für eine elektromangetische Welle $\phi$ aufstellen. Diese Betrachtung ignoriert den vektoriellen Charakter der Elektrodynamik, insbesondere die Polarisation der Welle wird vernachlässigt. Des weiteren findet eine Separation der Zeitabhängigkeit statt, sodass nur stationäre Probleme betrachtet werden.
 
-Im Bereich der Röntgenbeugung ist aufgrund der geringfügigen Abweichungen der Brechzahlen von Medien zur Vakuumbrechzahl ($\eta=1$) hilfreich $n\eta$ als
+Im Bereich der Röntgenbeugung ist aufgrund der geringfügigen Abweichungen der Brechzahlen von Medien zur Vakuumbrechzahl ($\eta=1$) hilfreich $\eta$ als
 \begin{alignat}{2}
 \label{eq:brechzahl}
 	&\eta&&=1-\delta+i\beta=1 + \delta n \\
@@ -20,16 +20,15 @@ Im Bereich der Röntgenbeugung ist aufgrund der geringfügigen Abweichungen der 
 	&\eta^2&&\approx 1 + 2\delta n
 \end{alignat}
 darzustellen. Bei dieser Darstellung quantifiziert $\delta$ die Refraktion, $\beta$ die Absorption \cite[S. 21]{attwood1999}.
-
-Die Fouriertransformation der Wellengleichung lautet mit der Näherung \ref{eq:approxbrechzahl} und unter Beachtung des Faltungstheorems
+Mit dem Ortsvektor $\vec{r}=(x,y,z)^T$ im Realraum und $\vec{q}=(q_x,q_y,q_z)^T$ im Ortsreaum lautet die Fouriertransformation der Wellengleichung mit der Näherung \ref{eq:approxbrechzahl} und unter Beachtung des Faltungstheorems
 \begin{equation}
 	(-q^2+k^2)\tilde{\phi}=\frac{-2k^2}{(2\pi)^{\sfrac{3}{2}}}(\tilde{\delta \eta} \ast \tilde{\phi})
 \end{equation}
-Wird nun die Greensche Funktion $\tilde{G}$ als
+Hierbei bezeichnet die Notation $\tilde{f}(q)$ die Fouriertransformierte von $f(r)$. Wird nun die Greensche Funktion  $\tilde{G}$ im Fourierraum als
 \begin{equation}
 	\tilde{G}=\frac{1}{(2\pi)^{\sfrac{3}{2}}}\frac{2k^2}{q^2-k^2}
 \end{equation}
-definiert, so ist die inverse Fouriertransformation von $\tilde{G}$ divergent. Durch Hinzufügen von $\epsilon$ (mit $\epsilon\rightarrow 0^+$) im Nenner lässt sich die retardierte Greensche Funktion 
+definiert, so ist die inverse Fouriertransformation von $\tilde{G}$ divergent. Durch Hinzufügen von $\epsilon$ (mit $\epsilon\rightarrow 0^+$) im Nenner jedoch lässt sich die retardierte Greensche Funktion 
 
 
 \begin{align}
@@ -43,11 +42,11 @@ konstruieren \cite{trigg2006}. Für die Wellengleichung gilt somit im Fourier bz
 \end{align}
 
 \section{Born-Näherung}
-Eine Ansatz für  eine Lösung der Wellengleichung lässt sich in Form einer Reihe
+Eine Ansatz für eine Lösung der Wellengleichung XX lässt sich in Form einer Reihe
 \begin{equation}
 \phi=\phi_0+\phi_1+\phi_2+..
 \end{equation}
-(mit $\phi_0$ als einlaufende Welle) aufstellen. Ist die Amplitude der gestreuten Welle deutlich geringer als die der einfallenden Welle, so lässt sich in XX die Näherung $\phi\approx\phi_0$ im mit $G$ zu faltenden Term anwenden. Dies wird als Born Näherung erster Ordnung bezeichnet. Somit gilt für die Lösung der Wellengleichung
+(mit $\phi_0$ als einlaufende Welle) aufstellen. Ist die Amplitude der gestreuten Welle deutlich geringer als die der einfallenden Welle, so lässt sich in XX $\phi\approx\phi_0$ im mit $G$ zu faltenden Term anwenden. Dies wird als Born Näherung erster Ordnung bezeichnet. Somit gilt für die Lösung der Wellengleichung
 
 \begin{equation}
 \phi\approx\phi_0+G\ast({\delta \eta} \phi_0)
@@ -55,7 +54,7 @@ Eine Ansatz für  eine Lösung der Wellengleichung lässt sich in Form einer Rei
 Ist die einfallende Welle eine ebene Welle $\phi_0=e^{ik_0r}$ und wird der Betrachtungsabstand als groß gegenüber XXX angenommen, so lässt mit der Näherung
 
 \begin{equation}
-|r-r'|=\sqrt{r^2+r'-2rr'}\approx r-\frac{\vec{r'}\vec{r}}{r}=r-\frac{\vec{k}}{k_0}\vec{r'}\approx r
+|r-r'|=\sqrt{r^2+r'^2-2rr'}\approx r-\frac{\vec{r'}\vec{r}}{r}=r-\frac{\vec{k}}{k_0}\vec{r'}\approx r
 \end{equation}
 für die gestreute Welle mit dem Streuvektor $\vec{q}$ ($\vec{k}=\vec{k_0}+\vec{q}$)
 \begin{equation}
