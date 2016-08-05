@@ -1,0 +1,49 @@
+\chapter{Algorithmen zur Phasenrückgewinnung}
+Die implementierten iterativen Rekonstruktionsalgorithmen (ER, HIO und RAAR) in ihrer Projektionsschreibweise sind in \Fref{tab:ipr} dargestellt.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{ccc}
+		\hline\hline
+		Algorithmus 			&Iteration 								&alternative Darstellung\\
+		\hline
+		ER  					&$P_sP_m\rho_n$ 									&\\
+		HIO  					&$\begin{cases}	
+									P_m\rho_n  &\text{für } x\in S\\
+									\left[\mathbb{1}-\beta P_m\right]\rho_n &\text{für } x\notin S
+								   \end{cases}$										
+																					&$\left[P_sP_m+P_{\bar{s}}(\mathbb{1}-\beta P_m)\right]\rho_n$\\
+		RAAR  					&$\left[\frac{\beta}{2}\left(R_sR_m+\mathbb{1}\right)+\left(1-\beta\right) P_m\right]\rho_n $
+																				&$ $\\
+		\hline\hline
+	\end{tabular}
+	\caption[Text für Tabellenverzeichnis]{Tabellenunterschrift.}
+	\label{tab:ipr}
+\end{table}	
+ Die Äquivalenz zwischen den Darstellungen der Iterationen ist nur gegeben, sofern die Realraumbeschränkungen nur den Support beinhalten, d.h. der Realraum-Projektor $P_s$ geschrieben werden kann als 
+ \begin{align}
+ P_s\rho (x)=\begin{cases}
+  \rho (x)  &\text{für } x\in S\\
+  \mathbb{0}  &\text{für }x\notin S
+ \end{cases}&&
+   P_{\bar{s}}\rho (x)=\begin{cases}
+   	\mathbb{0} &\text{für } x\in S\\
+   	\rho (x)   &\text{für }x\notin S
+   	\end{cases}
+ \end{align}
+  Nur für den ER-Algorithmus ist zusätzlich eine Form implementiert, deren Realraum-Projektor eine reele, positive Lösung erzwingt.
+
+	Die implementierte Form des RAAR Algorithmus' basiert auf folgender Umformung:
+	\begin{align*}
+%	R_\nu&=(2P_\nu-\mathbb{1})\\
+	\frac{\beta}{2}\left(R_sR_m+\mathbb{1}\right)
+	&=\frac{\beta}{2}\left((2P_s-\mathbb{1})(2P_m-\mathbb{1})+\mathbb{1}\right)
+		=2\beta P_sP_m-\beta P_s-\beta P_m+\beta\mathbb{1}\\
+		\frac{\beta}{2}\left(R_sR_m+\mathbb{1}\right)+\left(1-\beta\right) P_m
+		&=2\beta P_sP_m+\beta (\mathbb{1}-P_s)+ (1-2\beta)P_m\\
+		&=
+		\begin{cases}
+			P_m &\text{für } r\in S\\
+			(1-2\beta)P_m+\beta\mathbb{1}  &\text{für } r\notin S
+		\end{cases}\\
+	\end{align*}

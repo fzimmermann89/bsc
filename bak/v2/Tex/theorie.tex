@@ -1,0 +1,232 @@
+\chapter{Theoretischer Hintergrund}
+\label{c_theorie}
+ 
+\section{Skalare Beugungstheorie}
+
+Aus den Maxwell-Gleichungen lässt sich unter der Annahme eines sich im Vergleich zur Wellenlänge $\lambda$ nur langsam ändernden Mediums die skalare Helmholzgleichung
+\begin{equation}
+(\Delta+k^2\eta^2)\phi=0
+\end{equation}
+mit der Wellenzahl $k$
+\begin{equation}
+	k=\frac{2\pi}{\lambda}
+\end{equation} und der komplexen Brechzahl des Mediums $\eta$ für eine elektromangetische Welle $\phi$ aufstellen. Diese Betrachtung ignoriert den vektoriellen Charakter der Elektrodynamik, insbesondere die Polarisation der Welle wird vernachlässigt. Des weiteren findet eine Separation der Zeitabhängigkeit statt, sodass nur stationäre Probleme betrachtet werden.
+
+Im Bereich der Röntgenbeugung ist aufgrund der geringfügigen Abweichungen der Brechzahlen von Medien zur Vakuumbrechzahl ($\eta=1$) hilfreich $\eta$ als
+\begin{alignat}{2}
+\label{eq:brechzahl}
+	&\eta&&=1-\delta+i\beta=1 + \delta n \\
+\label{eq:approxbrechzahl}
+	&\eta^2&&\approx 1 + 2\delta n
+\end{alignat}
+darzustellen. Bei dieser Darstellung quantifiziert $\delta$ die Refraktion, $\beta$ die Absorption \cite[S. 21]{attwood1999}.
+Mit dem Ortsvektor $\vec{r}=(x,y,z)^T$ im Realraum und $\vec{q}=(q_x,q_y,q_z)^T$ im Ortsreaum lautet die Fouriertransformation der Wellengleichung mit der Näherung \ref{eq:approxbrechzahl} und unter Beachtung des Faltungstheorems
+\begin{equation}
+	(-q^2+k^2)\tilde{\phi}=\frac{-2k^2}{(2\pi)^{\sfrac{3}{2}}}(\tilde{\delta \eta} \ast \tilde{\phi})
+\end{equation}
+Hierbei bezeichnet die Notation $\tilde{f}(q)$ die Fouriertransformierte von $f(r)$. Wird nun die Greensche Funktion  $\tilde{G}$ im Fourierraum als
+\begin{equation}
+	\tilde{G}=\frac{1}{(2\pi)^{\sfrac{3}{2}}}\frac{2k^2}{q^2-k^2}
+\end{equation}
+definiert, so ist die inverse Fouriertransformation von $\tilde{G}$ divergent. Durch Hinzufügen von $\epsilon$ (mit $\epsilon\rightarrow 0^+$) im Nenner jedoch lässt sich die retardierte Greensche Funktion 
+
+
+\begin{align}
+G&=\int_{-\infty}^{\infty} \frac{2k^2}{q^2-k^2+0^+} e^{i\vec{q}\vec{r}}\dif^3 \vec{q}\nonumber\\
+&\propto\frac{e^{iqr}}{r}
+\end{align}
+konstruieren \cite{trigg2006}. Für die Wellengleichung gilt somit im Fourier bzw. im Realraum \cite{cowley1995,thibault2007}:
+\begin{align}
+\tilde{\phi}&=\tilde{G}(\tilde{\delta \eta} \ast \tilde{\phi})\\
+\phi&={G}\ast({\delta \eta}  {\phi})
+\end{align}
+
+\section{Born-Näherung}
+Eine Ansatz für eine Lösung der Wellengleichung XX lässt sich in Form einer Reihe
+\begin{equation}
+\phi=\phi_0+\phi_1+\phi_2+..
+\end{equation}
+(mit $\phi_0$ als einlaufende Welle) aufstellen. Ist die Amplitude der gestreuten Welle deutlich geringer als die der einfallenden Welle, so lässt sich in XX $\phi\approx\phi_0$ im mit $G$ zu faltenden Term anwenden. Dies wird als Born Näherung erster Ordnung bezeichnet. Somit gilt für die Lösung der Wellengleichung
+
+\begin{equation}
+\phi\approx\phi_0+G\ast({\delta \eta} \phi_0)
+\end{equation}
+Ist die einfallende Welle eine ebene Welle $\phi_0=e^{ik_0r}$ und wird der Betrachtungsabstand als groß gegenüber XXX angenommen, so lässt mit der Näherung
+
+\begin{equation}
+|r-r'|=\sqrt{r^2+r'^2-2rr'}\approx r-\frac{\vec{r'}\vec{r}}{r}=r-\frac{\vec{k}}{k_0}\vec{r'}\approx r
+\end{equation}
+für die gestreute Welle mit dem Streuvektor $\vec{q}$ ($\vec{k}=\vec{k_0}+\vec{q}$)
+\begin{equation}
+\int G(\vec{r}-\vec{r}')\delta\eta(\vec{r}') exp^{ik_0r'}  \dif \vec{r}'\approx e^{ik_0r}\int \delta\eta(\vec{r}')e^{-i\vec{q}\vec{r}'}\dif \vec{r}'\propto \mathscr{F}[\delta\eta]
+\end{equation}
+aufstellen. Somit ist in dieser Näherung die gestreute Welle proportional zur dreidimensional fouriertransformierten Abweichung der Brechzahl von der Vakuumbrechzahl.
+
+
+
+
+\section{Angular-Spectrum Propagation}
+Wird eine elektromagnetische Welle $\phi$ durch ihre zweidimensionale Fouriertransformierte $\bar{\phi}$ als
+\begin{equation}
+\phi(x,y,z)=\frac{1}{\sqrt{2\pi}}\iint_{-\infty}^{\infty}\bar{\phi}(f_x,f_y,z)e^{i(q_xx+q_yy)} \dif q_x \dif q_y
+\end{equation}dargestellt und gefordert dass diese im Vakuum die Wellengleichung XXX erfüllt,
+so muss $\bar{\phi}$
+\begin{equation}
+	\frac{\partial ^2}{\partial z^2}\bar{\phi}(q_x,q_y,z)^2+ \left(k^2-\left(q_x+q_y\right)\right)\bar{\phi}(q_x,q_y,z)=0
+\end{equation}
+erfüllen. Eine Lösung dieser Gleichung ist
+\begin{equation}
+\bar{\phi}\left(q_x,q_y,\Delta z\right)=\bar{\phi}(q_x,q_y,0)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\, . 
+\end{equation}
+Somit lässt sich die Propagation einer Welle im Vakuum als Multiplikation mit einem Exponentialfaktor im Fourierraum beschreiben. Dieses Verfahren wird \textit{Angular-Spectrum} Propagation genannt \cite{goodman2005}. 
+Die eingehende Welle bei $z=0$ wird hierbei in ebene Wellen, die sich in verschiedene Richtungen ausbreiten (Angular Spectrum) zerlegt und deren Propagation berechnet. Die ausgehende Welle bei $z=\Delta z$ lässt sich aus $\bar{\phi}\left(q_x,q_y,\Delta z\right)$ durch eine inverse Fouriertransformation bestimmen.
+
+
+
+\section{Fresnel- und Fraunhofer-Näherung}
+Wird in XXXFormel die Taylor-Näherung 2. Ordnung
+\begin{equation}
+	\sqrt{k^2-(q_x+q_y)^2}\approx k-\frac{(q_x^2+q_y^2)}{2k}
+\end{equation}
+durchgeführt und eine zweidimensionale inverse Fouriertransformation angewendet, so erhält man mit dem Faltungstheorem die Fresnel-Näherung 
+
+\begin{align}
+\bar{\phi}(x,y, z)&=\bar{\phi}(x,y,0) e^{ik z}e^{\frac{i z}{2k}(q_x^2+q_y^2)}\\
+\phi(x,y, z)&=\phi(x,y,0) \ast \left(
+\frac{e^{ik z}}{i z \lambda } 
+e^{ik\frac{(x^2+y^2)}{2 z}}
+\right)
+\end{align}
+In dieser Näherung wird die Ausbreitung der Welle durch die Faltung dem sogenannten Fresnel-Propagator ausgedrückt. Wird die Faltung explizit ausgeschrieben, kann der Exponent aufgespalten werden
+
+
+\begin{align}
+\phi(x,y, z)&=\frac{e^{ikz}}{iz\lambda}
+\int_{-\infty}^\infty 
+\phi(\alpha,\beta,0)
+e^{\frac{ik}{2z}\left(\left(x-\alpha\right)^2+\left(y-\beta\right)^2\right)}
+\dif \alpha \dif \beta \nonumber \\
+&=\frac{e^{ikz}}{iz\lambda}e^{\frac{ik}{2z}(x^2+y^2)}
+\int_{-\infty}^\infty 
+\phi(\alpha,\beta,0)
+e^{\frac{ik}{2z}\left(\alpha^2+\beta^2\right)}
+e^{\frac{-ik}{ z}\left(x\alpha+y\beta\right)}
+\dif \alpha \dif \beta
+\end{align}
+
+
+
+Verschwindet die eingehende Welle $\phi_(x,y,0)$ außerhalb eines Bereiches $S=[-X,X]\times[-Y,Y]$ und gilt 
+\begin{equation}
+\forall \alpha,\beta \in S:	z\gg \frac{k}{2}\left(\alpha^2+\beta^2\right) \, , 
+\end{equation}
+d.h. sind die Ausmaße des Bereiches, auf dem die Welle nicht verschwindet klein gegenüber dem Beobachtungsabstand, so gilt
+\begin{equation}
+e^{\frac{ik}{2z}\left(\alpha^2+\beta^2\right)}\approx 1
+\end{equation}
+und Gleichung XXX lässt sich als Fouriertransformation der Eingangswelle ausgewertet bei $f_{x,y}=\tfrac{k}{z}(x,y)$ und multipliziert mit einem in $x,y$-Richtung reinem Phasenterm interpretieren:
+
+\begin{equation}
+\phi(x,y)=\frac{e^{ik(z+\frac{x^2+y^2}{2z})}}{iz\lambda}\mathscr{F}\left[\phi_(x,y,0)\right](f_x=\tfrac{kx}{z},f_y=\tfrac{kx}{z}) \, ,
+\end{equation}
+Diese Näherung wird als Fraunhofer-Näherung bezeichnet.
+
+\begin{comment}
+
+\subsubsection{Subsubsection}
+
+\paragraph{Paragraph}
+
+
+
+\section{Abbildungen}
+Eine Beispiel-Abbildung ist in Abb. \ref{Abb:BspAbbildung} gezeigt.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{images/SchemaErzeugungNachweis.jpg}
+\caption[Abbildungstext im Abbildungsverzeichnis]{Abbildungsunterschrift. Abbildung nach \cite{B-SViel}.}
+\label{Abb:BspAbbildung}
+\end{figure} 
+
+
+
+\section{Tabellen}
+Eine Vorlage ist in Tabelle \ref{Tab:BspTabelle} gegeben.
+ 
+\begin{table}
+\centering
+\begin{tabular}{SccrrS}
+\hline\hline
+{Druck [\si{\milli\bar}]} & Gas &  $T_0$ [K]& $\Gamma^\ast$ & $\langle N \rangle$ & {$R$ [nm]}\\
+\hline
+1000 & Ar &  300 & 2.325 & 240 & 1,3\\
+1000 & Ar &  300 & 2.971 & 426 & 1,6\\
+1000 & Xe &  300 & 7.845 & 4.177 & 3,9\\
+1000 & Xe &  300 & 10.024 & 6.337 & 4,4\\
+\hline
+5000 & Ar &  300 & 11.625 & 8.274 & 4,2\\
+5000 & Ar &  300 & 14.854 & 12.862 & 4,9\\
+5000 & Xe &  300 & 39.226 & 73.863 & 10,1\\
+5000 & Xe &  300 & 50.121 & 114.826 & 11,7\\
+\hline
+10000 & Ar & 300 & 23.250 & 28.812 & 6,3\\
+10000 & Ar & 300 & 29.708 & 44.790 & 7,4\\
+10000 & Xe & 300 & 78.452 & 257.207 & 15,3\\
+10000 & Xe & 300 & 100.243 & 399.848 & 17,7\\
+\hline
+8000 & Xe &  220 & 127.589 & 617.258 & 20,4\\
+8000 & Xe &  220 & 163.029 & 959.574 & 23,7\\
+\hline\hline
+\end{tabular}
+\caption[Text für Tabellenverzeichnis]{Tabellenunterschrift.}
+\label{Tab:BspTabelle}
+\end{table}
+
+\section{Anführungszeichen}
+Anführungszeichen werden global über das Paket \emph{csquotes} gesetzt und wie folgt eingebunden:
+
+\verb+\enquote{Text in Anführungszeichen}+
+
+Ausgabe: \enquote{Text in Anführungszeichen}.
+
+
+
+\section{Setzen von Einheiten}
+Zum Setzen von Einheiten wird das Package \emph{siunitx} verwendet:
+
+Zahlen: \num{83567}, \num{,23e-16}, \num{3,89+-0,03}
+
+Winkel: \ang{12.3}, \ang{1;2;3}
+
+Wert mit Einheit: $v_{max}=\SI{260}{\m/\s}$, $v_\infty=\SI{173}{\metre\per\second}$, $R = \SI[per-mode=symbol]{8,3144621}{\joule\per\mol\per\kelvin}$
+
+Wert mit Fehler und Einheit: $T_0=\SI{5,234(15)}{\kelvin}$
+
+Celsius: $T_S=\SI{38.6}{\celsius}$ 
+
+Minuten: $t_c=\SI{90}{\min}$
+
+Druck: $p_0=\SI{80}{\bar}$, Hintergrunddruck \SI{1,9e-9}{\torr}
+
+
+ 
+\subsection{Einheiten in Tabellen}
+Die Verwendung von Einheiten in Tabellen mit dem Paket \emph{siunitx} ist in Tabelle \ref{Tab:BspS} gezeigt.
+\begin{table}
+\centering
+\begin{tabular}{lSSSSS}
+\hline\hline
+ & {He} &  {Ne} & {Ar} & {Kr} & {Xe}\\
+\hline
+$\Gamma_{ch}$ [\SI{e16}{\metre\tothe{\num{-2.15}}\kelvin\tothe{\num{-1.2875}}}] & 36,189 & 31,07 & 3,495 & 1,9531 & 231,036\\
+$K_{ch}$ [\si{\K\tothe{\num{2.2875}}\per\milli\bar\micro\metre\tothe{\num{0.85}}}] & 34,865 & 18,5 & 16,46 & 2980,982 & 5,554\\
+\hline\hline
+\end{tabular}
+\caption[Beispiel für die \emph{siunitx}-Klasse \enquote{S} in Tabellen]{Mit der Klasse \enquote{S} des \emph{siunitx}-Pakets werden Zahlen in Tabellen am Dezimaltrennzeichen ausgerichtet. Normaler Text muss dann in geschweiften Klammern gesetzt werden.}
+\label{Tab:BspS}
+\end{table}
+
+
+\section{Blindtext}
+\end{comment}
