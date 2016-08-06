@@ -68,6 +68,7 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
     
     %% helper functions
     function run=addtorun(run,name,exitwave)
+        exitwave=gather(exitwave);
         scatter=exitwave2scatter(exitwave,dx,wavelength,padhalf,padcut,angles);
         scatter=icorrectoffsetspan(scatter,imie,angles>minangle&angles<maxangle/2);
         
@@ -76,7 +77,7 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
         [~,rerror_rel]=rprofil(error_rel,N/2);
         [~,rerror_abs]=rprofil(error_abs,N/2);
         [~,rscatter]=rprofil(scatter,N/2);
-        
+        run.exitwave.(name)=exitwave;
         run.scatter.(name)=scatter;
         run.error_rel.(name)=error_rel;
         run.error_abs.(name)=error_abs;

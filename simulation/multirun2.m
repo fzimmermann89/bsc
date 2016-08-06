@@ -75,4 +75,4 @@ for nN=1:numel(Nsteps)
 end
 %% saving
 fname=sprintf('C:\\data\\multirun2-%s-%s.mat',description,datestr(datetime('now'),'yyMMdd-HHmm'));
-save(fname,'N','wavelength','dx','dz','beta','delta','radius','profile_y','profile_x','profile_mie','profile_error_abs','profile_error_rel','error_rel','error_rel_mean','error_rel_median')
+save(fname,'N','wavelength','dx','dz','beta','delta','radius','profile_y','profile_x','profile_mie','profile_error_abs','profile_error_rel','error_rel','error_rel_mean','error_rel_median','-v7.3')
