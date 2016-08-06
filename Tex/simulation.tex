@@ -138,7 +138,7 @@ Anschließend werden die simulierten Streubilder bezüglich Verschiebung und Ska
 
 Exemplarisch dargestellt in Abb. XX.
 
-Aus den rotationssymmetrischen Streubildern können Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden (Abb.)
+Aus den rotationssymmetrischen Streubildern können Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden \ref{Abb:profil}
 
 Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund des steilen Verlaufs scharfe,nur 1-2 Datenpunkte umfassende, Maxima annimmt.
 Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen ums sie als in diesem Bereich valide anzusehen (Abb. XX)
@@ -148,10 +148,15 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/average.eps}
 	\caption[Gewichteter Mittelwert]{Die Verwendung eines gewichteten Mittelwertes zum Binning des Streubildes: Um die Intensität im links rot umrandeten Bereich zu bestimmen, wird die Intensität an den Schwarzen Punkten berechnet und ein gewichteter Mittelwert gebildet, indem die Intensität der vier Randwerte zur Hälfte, die der vier Eckpixel zu einem Viertel in dem umrandeten Bereich mitberücksichtigt werden. Der Effekt gegenüber einer Berchnung nur in den Zentren der Pixel zeigt sich rechts: Wird die Intensität bei einem schwarz dargestellten wahren Intensitätsverlauf nur an den roten Punkten bestimmt, dominiert das Minimum den Intensitätsverlauf. Eine geringere Abweichung ergibt sich bei dem gewichteten Mittelwert (blau).}
-	\label{Abb:BspAbbildung}
+	\label{Abb:average}
 \end{figure} 
 
-
+\begin{figure}
+		\centering
+		\includegraphics[width=0.9\textwidth]{images/fig_profil_edit.pdf}
+		\caption[Radiale Profile]{Radiale Intensitätsprofile für Projektion, Mutlislice Propagation, Thibaults Multislice und MSFT sowie die relative Abweichung von Mie für eine Kugel mit Radius 20 \si{nm}, $\beta=\delta=10^{-4}$ und 4096 Pixeln. Die medianen relativen Fehler bei diesen Parametern betragen 35\% (Projektion), 5,7\% (Mutlislice Propagation und MSFT) sowie 7,7\% (Thibault)}
+		\label{Abb:profil}
+\end{figure}
 
 
 
