@@ -28,10 +28,13 @@ Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjug
 Um bei ausgedehnten Referenzen eine bessere Approximation des Objektes zu erhalten, muss die Faltung zwischen Objekt und Referenz rückgängig gemacht werden. Nach  XXX entspricht die Faltung einer Multiplikation, die Inverse somit einer Division im Fourierraum. Jedoch verursachen sowohl Rauschen wie auch Singulariäten in der fouriertransformierten Referenz Probleme.
 
 Das Problem der Entfaltung tritt in verschiedenen Bereichen auf, unter anderem in der Bildverarbeitung.
-Hier ist der Prozess der Wiener Entfaltung etabliert. 
+Hier ist der Prozess der Wiener Entfaltung etabliert. Hierfür wird der Wienerfilter $G$ für ein mit $H$ gefaltetes Signal $S$ mit additiven Rauschen (mit der spektralen Stärke $N$) definiert als
+\begin{equation}
+	G=\frac{H^* S}{\left|H\right|^2 S+N}
+\end{equation}
+Für Rauschen, dass nicht mit dem Signal korreliert ist stellt minimiert eine Faltung mit $G$ die mittlere quadratischen quadratische Abweichung zum rauschfreien, nicht gefalteten Original - es handelt sich somit im Sinne des mittleren quadratischen Fehlers um die ideale Entfaltung \cite{castleman1996}.
 
-Für Rauschen, dass nicht mit dem Signal korreliert ist stellt dies die Lösung...
-Ist das Rauschen jedoch mit dem Signal korreliert, wie dies z.B. bei Poisson-Rauschen (Shot-Noise) der Fall ist, so lässt sich eine heuristische Form des Wiener-Filters mit konstantem,  XX anwenden. Hierbei muss ein Kompromiss aus Rauschunterdrückung und Entfaltung gewählt werden.
+Ist das Rauschen jedoch mit dem Signal korreliert, wie dies z.B. bei Poisson-Rauschen (Shot-Noise) der Fall ist, so lässt sich eine heuristische Form des Wiener-Filters mit konstantem $N$ anwenden. Hierbei muss bei der Wahl von $N$ ein Kompromiss aus Rauschunterdrückung und Entfaltung gewählt werden.
 
 \section{iterative Phasenrückgewinnung}
 Wäre neben der Amplitude auch Phase der Fouriertransformation der Austrittswelle bekannt, so könnte diese durch eine inverse Transformation wiederhergestellt werden. 
