@@ -7,14 +7,16 @@ classdef run2<handle
         objects;
         exitwave
         scatter
-        error
+        error_abs
+        error_rel
         mie
         exitwave_scale
         scatter_scale
         profile_scale
         profile_mie
         profile_scatter
-        profile_error
+        profile_error_abs
+        profile_error_rel
     end
     
     methods

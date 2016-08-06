@@ -60,21 +60,28 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
     clear exitwave;
     
     
-    
-    err=structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error,'UniformOutput',false);
-    fprintf('\n \n Done with N%g, dx%g, dz%g. Time: %gs. Median Errors:\n',N,dx,dz,toc);
+    %% status
+    err=structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error_rel,'UniformOutput',false);
+    fprintf('\n Done with N%g, dx%g, dz%g. Time: %gs. Median Errors:\n',N,dx,dz,toc);
     disp(struct2table(err));
+    fprintf('\n\n');
     
     %% helper functions
     function run=addtorun(run,name,exitwave)
         scatter=exitwave2scatter(exitwave,dx,wavelength,padhalf,padcut,angles);
         scatter=icorrectoffsetspan(scatter,imie,angles>minangle&angles<maxangle/2);
-        error=(scatter-imie)./imie;
-        [~,rerror]=rprofil(error,N/2);
+        
+        error_abs=scatter-imie;
+        error_rel=(error_abs)./imie;
+        [~,rerror_rel]=rprofil(error_rel,N/2);
+        [~,rerror_abs]=rprofil(error_abs,N/2);
         [~,rscatter]=rprofil(scatter,N/2);
+        
         run.scatter.(name)=scatter;
-        run.error.(name)=error;
-        run.profile_error.(name)=rerror;
+        run.error_rel.(name)=error_rel;
+        run.error_abs.(name)=error_abs;
+        run.profile_error_rel.(name)=rerror_rel;
+        run.profile_error_abs.(name)=rerror_abs;
         run.profile_scatter.(name)=rscatter;
     end
     
