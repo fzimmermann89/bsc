@@ -12,6 +12,7 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
     run=storage.run2(N,dx,dz,wavelength,objects);
     try
         gpu=parallel.gpu.GPUDevice.isAvailable;
+        g=gpuDevice();
     catch
         gpu=false;
     end
@@ -38,18 +39,21 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
     name='FTproj';
     run=addtorun(run,name,exitwave);
     clear exitwave;
+    if gpu;wait(g);end;
     
     %% multislice
     exitwave=(multislice(wavelength,objects,N,dx,dz,gpu,false));
     name='multislice';
     run=addtorun(run,name,exitwave);
     clear exitwave;
+    if gpu;wait(g);end;
     
     %% thibault
     exitwave=(thibault(wavelength,objects,N,dx,dz,gpu));
     name='thibault';
     run=addtorun(run,name,exitwave);
     clear exitwave;
+    if gpu;wait(g);end;
     
     %% msft
     msft=(msft2(wavelength,objects,N,dx,dz,gpu));
@@ -58,7 +62,7 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
     name='msft';
     run=addtorun(run,name,exitwave);
     clear exitwave;
-    
+    if gpu;wait(g);end;
     
     %% status
     err=structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error_rel,'UniformOutput',false);
@@ -84,6 +88,8 @@ function run=singlerun2(N,dx,dz,wavelength,objects)
         run.profile_error_rel.(name)=rerror_rel;
         run.profile_error_abs.(name)=rerror_abs;
         run.profile_scatter.(name)=rscatter;
+        clear scatter error_abs error_rel rerror_rel rerror_abs rscatter
+        if gpu;wait(g);end;
     end
     
 end

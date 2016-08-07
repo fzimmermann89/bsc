@@ -4,9 +4,9 @@ clear all;
 %all distances are in nm
 minangle=1;
 maxangle=20;
-description='allN2048';
+description='allN4096';
 
-Nsteps=[2].*1024;
+Nsteps=[4].*1024;
 wavelengthsteps=1;
 dxsteps=1./[2];
 dzsteps=1./[4];
