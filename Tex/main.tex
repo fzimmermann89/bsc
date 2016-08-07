@@ -23,8 +23,10 @@
 \usepackage[textwidth=145mm,textheight=235mm,left=35mm,top=30mm,headsep=10mm]{geometry}
 \usepackage{listings}
 \usepackage{fancybox}
+
 \usepackage[small,bf]{caption} %Schönere Beschriftungen für Abbildungen und Tabellen
 \captionsetup{width=.9\textwidth,skip=5pt,format=plain,indention=5pt}
+\usepackage{subcaption} %subfigures
 \usepackage{booktabs} %Schönere Tabellen
 \usepackage{fancyhdr} %Schönere Kopfzeile
 \usepackage[section]{placeins} %Abbildungen und Tabellen bleiben in ihrer Section
@@ -77,6 +79,7 @@ pdfauthor={Felix Frederik Zimmermann}
 \patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
 \patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
 \makeatother
+
 
 
 %%kleinere abstände bei gleichungen

@@ -44,8 +44,8 @@ Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel  in 
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.5\textwidth]{images/msft.eps}
-		\caption[Abbildungstext im Abbildungsverzeichnis]{Skizze zur Bezeichnung der Vektoren. $k_{ein}$ und $k_{aus}$ bezeichnen den Wellenvektor der einfallenden bzw. ausfallenden Welle mit dem dazwischenliegenden Winkel $\theta$. $q$ bezeichnet den Streuvektor mit einer zu $k_{ein}$ parallelen ($q_{||}$) und einer senkrechten ($q_\perp$) Komponente.. }
-		\label{Abb:BspAbbildung}
+		\caption[Vektoren bei MSFT]{Skizze zur Bezeichnung der Vektoren. $k_{ein}$ und $k_{aus}$ bezeichnen den Wellenvektor der einfallenden bzw. ausfallenden Welle mit dem dazwischenliegenden Winkel $\theta$. $q$ bezeichnet den Streuvektor mit einer zu $k_{ein}$ parallelen ($q_{||}$) und einer senkrechten ($q_\perp$) Komponente.. }
+		\label{Abb:msft}
 	\end{figure} 
 
 	Formel XXX beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld in der 1. Bornschen Näherung zu berechnen. Diese Methode wird als Multislice Fourier Transformation (MSFT) bezeichnet \cite{barke2015}. Bei dieser wird Mehrfachstreuung ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors XXX der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, lässt eine grobe Näherung für Absorptionseffekte einzuführen. Eine Implementation des MSFT-Algorithmus liegt in \texttt{simulation/msft.m} vor 
@@ -128,7 +128,7 @@ Die numerische Simulation dieser Methode ist in \texttt{simulation/thibault.m} i
 
 
 \section{Verifizierung}
-Zur Verifizierung der vorgestellten Simulationsalgorithmen und deren numerische Implementierungen eignet sich der Vergleich der berechneten Streubilder hinter Kugeln mit den Ergebnissen aus der Berechnung mittels Mie-Streuung. Der vergleich wird für verschiedene Brechzahlen und Kugelradien bei einer Wellenlänge von 1\si{nm} durchgeführt.
+Zur Verifizierung der vorgestellten Simulationsalgorithmen und deren numerische Implementierungen eignet sich der Vergleich der berechneten Streubilder hinter Kugeln mit den Ergebnissen aus der Berechnung mittels Mie-Streuung. Der Vergleich wird für verschiedene Brechzahlen und Kugelradien bei einer Wellenlänge von 1\si{nm} durchgeführt.
 
 Da ein realer Detektor nicht die Intensitäten bei präzise defnierten Winkelpunkten misst sondern innerhalb eines Areales, ist es zweckmäßig, die simulierte Detektorfläche in quadratische Areale zu unterteilen und die Intensität in jedem dieser Areale als gewichtetes Mittel zwischen in dem Areal liegenden Punkten zu betrachten.
 Hierbei werden an den Rändern zwischen zwei Arealen liegende Berechnungspunkte zur je zur Hälfte in beiden Arealen, in der Ecke zwischen vier Arealen liegende Berechnungspunkte je zu einem Viertel in den vier Arealen berücksichtigt.
@@ -159,7 +159,46 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \end{figure}
 
 
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}
+		\caption{Austrittswelle}
+		\label{Abb:exitwave}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}
+		\caption{Streubild}
+		\label{Abb:scatter}
+	\end{subfigure}
+	\caption{Exemplarische Austrittwelle und (logarithmiertes) Streubild einer Kugel mit Radius 100\si{nm} bei $\beta=\delta=10^{-3}$ berechnet mit Multislice Propagation. Die Intensität der Austrittswelle liegt zwischen 22\% und 108\% der Eintrittswelle und ist über die Helligkeit dargestellt, die Phase über den Farbton. Das Streubild zeigt einen Bereich bis 15°.}
+	\label{Abb:exitscatter}
+\end{figure}
 
+
+\begin{figure}
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/fig_sim_relerror_FTproj-r100-bd1e-3.pdf}
+		\caption{Projektion}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/fig_sim_relerror_msft-r100-bd1e-3.pdf}
+		\caption{MSFT}
+	\end{subfigure}
+	\\
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/fig_sim_relerror_thibault-r100-bd1e-3.pdf}
+		\caption{Thibaults Multislice}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/fig_sim_relerror_multislice-r100-bd1e-3.pdf}
+		\caption{Multislice Propagation}
+	\end{subfigure}
+	
+	\caption{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius 100\si{nm} bei $\beta=\delta=10^{-3}$. }
+	\label{Abb:relerror}
+\end{figure}
 
 XXWelche Paramerter?
 hier Bild von Austrittswellen und Streubilder
@@ -168,7 +207,7 @@ Plot der Fehler
 
 
 
-\section{Austrittswellen}
+\section{komplexe Objekte}
 Neben der Berechnung von Streubilder von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen Objekten.
 
 Als interessante Testszene wird ein Ikosaeder mit eingebetteter Kugel sowie ein davon disjunktes, kleineres Dodekaeder betrachtet (Abb.)
