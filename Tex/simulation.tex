@@ -138,7 +138,7 @@ Anschließend werden die simulierten Streubilder bezüglich Verschiebung und Ska
 
 Die relative Abbweichung von Mie ist für einen konkreten Parametersatz exemplarisch dargestellt in \fref{fig:relerror}. Aus den rotationssymmetrischen Streubildern können Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden um einen besseren Überblick zu erhalten. \fref{fig:profil}).
 Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund des steilen Verlaufs scharfe,nur 1-2 Datenpunkte umfassende, Maxima annimmt.
-Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie als in diesem Bereich valide anzusehen (Abb. XX) - (XXläuft gradeXX)
+Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie als in diesem Bereich valide anzusehen \fref{fig:var}. Es ist zu erkennen dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung die XXX bei 1\si{nm} Wellenlänge aufweisen sowohl Multislice Propagation und Thibaults Multislice als auch MSFT valide Ergebnisse liefern - der mediane Fehler überschreitet XXX nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels MSFT berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Mehrfachstreuung in Vorwärtsrichtung, die bei MSFT im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Multislice Formulierung und der Multislice Propagation kann zu einem gewissen Anteil durch die verwendete naive Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der numerischen Genauigkeit und dem Einfluss von Rundungsfehlern.
 
 
 \begin{figure}
@@ -194,13 +194,16 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 	\end{subfigure}
 	
 	\caption[relativer Fehler der Simulationen]{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius 100\si{nm} bei $\beta=\delta=10^{-3}$. }
-	\label{fig:relerror}
+	\label{fig:var}
 \end{figure}
 
-XXWelche Paramerter?
-hier Bild von Austrittswellen und Streubilder
-Radialprofile
-Plot der Fehler
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{images/fig_sim_var.pdf}
+	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichung der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung von Mie über den Parametern aufgetragen. Es ist zu erkennen XXX}
+	\label{fig:variation}
+\end{figure}
 
 
 
