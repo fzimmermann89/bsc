@@ -1,3 +1,4 @@
-# bachelor thesis fzimmermann
--simulation of scattering images
--reconstruction
+# Bachelor Thesis Felix Zimmermann
+*Simulation of scattering images  
+*Reconstruction using FTH and IPR  
+
