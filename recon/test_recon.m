@@ -42,7 +42,7 @@ else
 end
 
 %load image
-input=double(gpuArray(rgb2gray(imread('input_2.png'))))/255;
+input=double(gpuArray(rgb2gray(imread('input/input_2.png'))))/255;
 %create real Reference
 [xx,yy]=meshgrid(-refRadius:1:refRadius);
 realRefImage=xx.^2+yy.^2<refRadius^2;
