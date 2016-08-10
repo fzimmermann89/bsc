@@ -158,37 +158,40 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 
 \begin{figure}
 	\centering
-	\begin{subfigure}[b]{0.45\textwidth}
-		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}
+	\begin{subfigure}[b]{0.49\textwidth}
+		 \setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
+		  \includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
+		  
 		\caption{Austrittswelle}
 		\label{fig:exitwave}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.45\textwidth}
-		\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}
+	\begin{subfigure}[b]{0.49\textwidth}
+		 \setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}}
+	 \includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_scatter_multislice_cb-r100-bd1e-3.pdf}}}
 		\caption{Streubild}
 		\label{fig:scatter}
 	\end{subfigure}
-	\caption[Austrittswelle und Streubild einer Kugel]{Exemplarische Austrittwelle und (logarithmiertes) Streubild einer Kugel mit Radius 100\si{nm} bei $\beta=\delta=10^{-3}$ berechnet mit Multislice Propagation. Die Intensität der Austrittswelle liegt zwischen 22\% und 108\% der Eintrittswelle und ist über die Helligkeit dargestellt, die Phase über den Farbton. Das Streubild zeigt einen Bereich bis 15°.}
+	\caption[Austrittswelle und Streubild einer Kugel]{Exemplarische Multislice-Propagations Austrittwelle und (logarithmiertes) Streubild einer Kugel mit Radius 100\si{nm} bei $\beta,\delta$=$10^{-3}$. Die relative Intensität der Austrittswelle bezüglich der Eintrittswelle ist über die Helligkeit dargestellt, die Phase über den Farbton. Das Streubild zeigt einen Bereich bis 15°.}
 	\label{fig:exitscatter}
 \end{figure}
 
 
 \begin{figure}
 	\centering
-	\begin{subfigure}[b]{0.45\textwidth}
+	\begin{subfigure}[b]{0.49\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_FTproj-r100-bd1e-3.pdf}
 		\caption{Projektion}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.45\textwidth}
+	\begin{subfigure}[b]{0.49\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_msft-r100-bd1e-3.pdf}
 		\caption{MSFT}
 	\end{subfigure}
 	\\
-	\begin{subfigure}[b]{0.45\textwidth}
+	\begin{subfigure}[b]{0.49\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_thibault-r100-bd1e-3.pdf}
 		\caption{Thibaults Multislice}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.45\textwidth}
+	\begin{subfigure}[b]{0.49\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_multislice-r100-bd1e-3.pdf}
 		\caption{Multislice Propagation}
 	\end{subfigure}
