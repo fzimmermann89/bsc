@@ -1,6 +1,6 @@
 %% settings
-fname='.\Tex\Images\fig_sim_profile.pdf';
 clear all;
+fname='.\Tex\Images\fig_sim_profile.pdf';
 g=gpuDevice();
 reset(g);
 N=4*1024;
@@ -29,10 +29,6 @@ names=fieldnames(run.scatter);
 %% figure
 f=figure('visible','off');
 set(f,'defaultAxesColorOrder',[[0 0 0]; [0 0 0]]);
-f.PaperSize=3*[15,10];
-set(f, 'PaperPositionMode', 'manual');
-f.PaperPosition=3*[-1 0 17 10];
-clf
 nicenames={'Projektion','Multislice Propagation','Thibaults Multislice','MSFT'};
 for n=1:length(names)
     cur=names{n};
@@ -52,15 +48,19 @@ for n=1:length(names)
     ax.YAxis(1).Label.String='normierte Intensität';
     ax.YAxis(2).Label.String='rel. Fehler';
     ax.Title.String=nicenames{n};
-    ax.Title.FontSize=16;
+    ax.Title.FontSize=24;
+    ax.YAxis(1).Label.FontSize=16;
+    ax.YAxis(2).Label.FontSize=16;
+    ax.XAxis.Label.FontSize=16;
 end
 hL = legend([linem,linep,linee],{'Mie{      }','Simulation{      }','{ }rel. Abweichung von Mie'});
 hL.Orientation='horizontal';
-hL.FontSize=14;
-hL.Position=[0.5,0.02,0,0];
-
+hL.FontSize=16;
+hL.Position=[0.5,0.05,0,0];
+f.PaperSize=3*[15,9];
+f.PaperPosition=3*[-1 -.25 17 9.5];
 
 
 
 print(fname,'-dpdf');
-% open(fname);
+open(fname);
