@@ -9,14 +9,14 @@ dz=dx/2;
 
 objects=cell(1);
 objects{1}=scatterObjects.sphere();
-objects{1}.radius=20;
-objects{1}.beta=1e-3;
-objects{1}.delta=1e-3;
+objects{1}.radius=50;
+objects{1}.beta=1e-4;
+objects{1}.delta=1e-4;
 
-out= singlerun(N,dx,dz,wavelength,objects);
+% out= singlerun(N,dx,dz,wavelength,objects);
 
 wait(g);
 tic;
-out= singlerun(N,dx,dz,wavelength,objects);
+out= singlerun2(N,dx,dz,wavelength,objects);
 wait(g)
 toc;
