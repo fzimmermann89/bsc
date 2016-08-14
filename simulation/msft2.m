@@ -1,11 +1,12 @@
 
 
-function out=msft2(wavelength,objects,N,dx,deltaz,gpu)
+function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption)
     %calculates multislice ft of object, based on ingo barke's code
-    %output is matrix of complex amplitudes over different exit k_x,y (not scatter vectors)
+    %output is matrix of complex amplitudes over different exit k_x,y
     %constant phase shifts are ignored
-    % wavelength (in nm),objects (cell array),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
+    % wavelength (in nm),objects (cell array),N,dx,distanceDetektor,gpu (bool use gpu),sim_absorption (fake absorption/phase change)
     
+    %principle:
     %scattering
     % kout=kin+dk
     % kin_z=k
@@ -26,9 +27,11 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu)
     % -> phaseshift=z*(k-kout_z)=z*kdiff with
     % kdiff=k-sqrt(k^2-(dk_x^2+dk_y^2))
     
-%     deltaz=dx/4;
+    if nargin<7
+        sim_absorption=0;
+    end
     k=2*pi/wavelength;
-    Lz=dx*N/2; %cubic box
+    Lz=dx*N/2;
     
     if gpu
         zero=@()gpuArray.zeros(N,N);
@@ -58,13 +61,14 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu)
     mask=k^2>(dk_x.^2+dk_y.^2);
     
     %for absorption
-    interactionSum=zero();
+    if sim_absorption;interactionSum=zero();end;
+    
     for z=-Lz/2:deltaz:Lz/2
         
         %get slices
         dnSlice=zero();
         for nobj=1:length(objects)
-            bd=-objects{nobj}.delta+1i*objects{nobj}.beta;
+            bd=(-objects{nobj}.delta+1i*objects{nobj}.beta);
             dnSlice=dnSlice+slicefun{nobj}(z)*bd;
         end
         
@@ -79,8 +83,14 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu)
             %             %add with correct phase shift
             %             phaseshift=exp(1i*z*kdiff);
             %             out=out+contrib.*phaseshift.*mask.*absorption;
-            %             this is combinded to save memory to:
-            out=out+ft2(dnSlice)*(dx^2).*exp(1i*z*kdiff+1i*deltaz*k*interactionSum).*mask;
+            %             ..this is combinded to save memory to:
+            if sim_absorption
+                out=out+ft2(dnSlice)*(dx^2).*exp(1i*z*kdiff+1i*deltaz*k*interactionSum).*mask;
+                interactionSum=interactionSum+dnSlice;
+            else
+                out=out+ft2(dnSlice)*(dx^2).*exp(1i*z*kdiff).*mask;
+            end
+            
         end
     end
     
