@@ -3,7 +3,7 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
     % calculate exitWave after scene.
     % Uses algorith similar to cowley or hare
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
-    debug=false;ndebug=0;
+
     if nargin<7; filter=false;end;
 
     k=2*pi/wavelength;
@@ -20,7 +20,7 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
 
     waveF=ift2(waveR)*(dx^2);
 
-    %     %windows function bw limiting, vgl. Kirkland
+%     %windows function bw limiting, vgl. Kirkland
 %     if filter
 %         %bw limit input wave (not necessary if PW)
 %         waveF=ft2(waveR)*(dx^2);
@@ -36,28 +36,14 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
     %Propagator in fourier space for single step
     propagatorSingleStep=getPropagator(N,dx,wavelength,deltaz);
 
-        %     %bw limit propagator, allows symetrical bw limit on propagator and transission->
-        %     %better resolution, vgl kirkland
+    %bw limit propagator, allows symetrical bw limit on propagator and transission->
+    %better resolution, vgl kirkland
     if filter
         w=window(N);
         propagatorSingleStep=propagatorSingleStep.*w;
     end
     
     for z=-Lz/2:deltaz:Lz/2
-        
-        %output of progress if enabled every 100 iterations
-        if debug
-            if (ndebug==100)
-                imagesc(1:N,1:N,abs(waveR));
-                title(sprintf('%d nm',round(z)));
-                caxis([0.5 1.5]);
-                drawnow;
-                ndebug=0;
-            else
-                ndebug=ndebug+1;
-            end
-        end
-
         %get slices deltan
         dnSlice=zero();
         for nobj=1:length(objects)
@@ -84,7 +70,7 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
     waveR=ft2(waveF)/(dx^2);
 
     %check intensity, should be close to 1 without absorption
-    fprintf('Check= %f (should be ~1 w/o absorption)\n',  sum(abs(waveR(:)))/(N*N));
+    %fprintf('Check= %f (should be ~1 w/o absorption)\n',  sum(abs(waveR(:)))/(N*N));
 
     %unlock objects
     for nobj=length(objects):-1:1
