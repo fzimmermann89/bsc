@@ -95,30 +95,30 @@ function draw(handles)
             labels{end+1}='mie';
             y=handles.data.profile_y(id);
         elseif handles.rb_abserr.Value
-            y=handles.data.profile_error_abs(id);
+            y=structfun(@abs,handles.data.profile_error_abs(id),'UniformOutput',false);
         else
             y=handles.data.profile_error_rel(id);
         end
         if handles.cb_msft.Value;
-            plot(handles.axes,x,y.msft,'x');
+            plot(handles.axes,x,y.msft,'-');
             hold on;
             labels{end+1}='msft';
         end
         
         if handles.cb_thibault.Value;
-            plot(handles.axes,x,y.thibault,'x');
+            plot(handles.axes,x,y.thibault,'-');
             hold on;
             labels{end+1}='thibault';
         end
         
         if handles.cb_multislice.Value;
-            plot(handles.axes,x,y.multislice,'x');
+            plot(handles.axes,x,y.multislice,'-');
             hold on;
             labels{end+1}='multislice';
         end
         
         if handles.cb_FTproj.Value;
-            plot(handles.axes,x,y.FTproj,'x');
+            plot(handles.axes,x,y.FTproj,'-');
             hold on;
             labels{end+1}='ft proj';
         end
