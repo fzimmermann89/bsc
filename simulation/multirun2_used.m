@@ -1,15 +1,15 @@
 clear all;
-
+addpath('.','../recon/')
 %% settings
 %all distances are in nm
 minangle=1;
 maxangle=20;
-description='bata=deltaN2048';
+description='beta=deltaN2048';
 
 Nsteps=[2].*1024;
 wavelengthsteps=1;
 dxsteps=1./[2];
-dzsteps=1./[4];
+dzsteps=1./[8];
 radiussteps=10*[1:20];
 betasteps=10.^[-5.5:.25:-1];
 %% calculation
@@ -59,7 +59,7 @@ for nN=1:numel(Nsteps)
                         
                         error_rel(n)=structfun(@(x)single(x),currun.error_rel,'UniformOutput',false);
                         profile_error_abs(n)=currun.profile_error_abs;
-                        profile_error_rel(n)=currun.profile_error_abs;
+                        profile_error_rel(n)=currun.profile_error_rel;
                         
                         n=n-1;
                         fprintf('\n status %g %% \n\n',(nmax-n)/(nmax)*100);
