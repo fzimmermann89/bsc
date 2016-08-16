@@ -48,10 +48,12 @@ Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel  in 
 		\label{fig:msft}
 	\end{figure} 
 
-	Formel XXX beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld in der 1. Bornschen Näherung zu berechnen. Diese Methode wird als Multislice Fourier Transformation (MSFT) bezeichnet \cite{barke2015}. Bei dieser wird Mehrfachstreuung ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors XXX der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, lässt eine grobe Näherung für Absorptionseffekte einzuführen. Eine Implementation des MSFT-Algorithmus liegt in \texttt{simulation/msft.m} vor 
+	Formel XXX beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld in der 1. Bornschen Näherung zu berechnen. Diese Methode wird als \textit{Multislice Fourier Transformation} \textit{MSFT} bezeichnet \cite{barke2015}. 
+	Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors, der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, ließe sich nachträglich eine grobe Näherung für Absorptionseffekte einzuführen \cite{barke2015}. Da diese zum Einen jedoch nicht konsistent zur Herleitung der Methode ist und somit ihre Gültigkeit nicht abgeschätzt werden kann, zum anderen sie nicht allgemein die Güte der Simulation verbessert, ist im Weiteren mit \textit{MSFT} die Methode ohne diese Korrektur bezeichnet.
+	Eine Implementation des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor 
 
 \section{Multislice Propagation}
-	Ein alternatives Verfahren zur Simulation XX ist in der Literatur als Multislice oder Beam Propagation bekannt \cite{hare1994,cowley1957}. Dieses Verfahren basiert auf ...
+	Ein alternatives Verfahren zur Simulation XX ist in der Literatur als \text{Multislice} oder \textit{Beam Propagation} bekannt \cite{hare1994,cowley1957}. Dieses Verfahren basiert auf ...
 	Die Szene, deren Streubild zu berechnen ist, wird in einzelne Schichten zerlegt.
 	Die Ausbreitung der in Szene einfallende ebene Welle wird genähert durch eine Vakuumpropagation von Schicht zu Schicht nach Angular Spectrum Propagation
 	\begin{equation}
@@ -78,23 +80,24 @@ Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel  in 
 	\end{equation}
 	Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels Angular Spectrum Propagation berechnen lässt, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementation im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert, während bei Anwendung der Fernfeld Näherung xxx
 \section{Thibaults Multislice}
-Thibault stellt in XX einen eigene Formulierung der Multislice-Simulation auf. Ausgehend von der Wellengleichung XX
-lässt sich für die Austrittswelle XXX aufstellen.
+Thibault stellt in XX einen eigene Formulierung der Multislice-Simulation auf. Ausgehend von der Wellengleichung
+lässt sich für die Welle im Hybridraum
 \begin{equation}
 \tilde{\Phi}(z)=\tilde{G}\ast_z\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right]
 \end{equation}
+ mit
 \begin{equation}
 \tilde{G}=\frac{1}{2\pi}\frac{ik^2}{\sqrt{k^2-q_\perp^2}}e^{iz(\kappa-k)}
 \end{equation}
-unter der Vernachlässigung von Rückstreuung lässt sich das Faltungsintegral in zwei Integrationsbereiche aufspalten
+aufstellen. Hierbei sind die Faltungsoperatoren mit den Variablen über die die Faltung durchzuführen ist indiziert.
+Wird nun die Welle bei $\Delta z$ betrachtet, so lässt sich unter Vernachlässigung von Rückstreuung  das Faltungsintegral über $z$ in zwei Integrationsbereiche aufspalten (vom Ursprung bis $\delta z$ sowie von dort bis ins Unendliche):
 \begin{equation}
 \tilde{\Phi}(z+\Delta z)=
 \int_{\Delta z}^{\infty} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
 +
 \int_{0}^{\Delta z} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
 \end{equation}
-Für den ersten Summanden gilt
-
+Für den ersten Summanden gilt mit einer Substitution ($z'\rightarrow z''+\Delta z$)
 \begin{align*}
 &\stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{\hphantom{=}} 
 \int_{\Delta z}^{\infty} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'\\
@@ -103,15 +106,15 @@ Für den ersten Summanden gilt
 &\stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{=}
 e^{i\Delta z(\kappa-k)}\int_{0}^{\infty} \frac{1}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}e^{iz''(\kappa-k)}\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z-z'')\dif z''\\
 &\stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{=}
-e^{i\Delta z(\kappa-k)}\tilde{\Phi}(z) \numberthis
+e^{i\Delta z(\kappa-k)}\tilde{\Phi}(z) \numberthis \,,
 \end{align*}
-Im zweiten Summanden kann für hinreichend kleine $\Delta z$ das Integral gut durch eine Rieman-Obersumme mit einem einzigen Stützpunkt approximiert werden:
+im zweiten Summanden kann für hinreichend kleine $\Delta z$ das Integral gut durch eine Rieman-Obersumme mit einem einzigen Stützpunkt bei $\Delta z$ approximiert werden:
 \begin{equation}
 \int_{0}^{\Delta z} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
 \approx
 \Delta z \tilde{G}(\Delta z)\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z)
 \end{equation}
-Für den Fehler 
+Für den Fehler dieser Näherung gilt nach XX
 \begin{equation}
 \text{Rieman Abschätzung}
 \end{equation}
@@ -122,8 +125,9 @@ Somit lässt sich in Näherung für die Welle bei $z+\Delta z$
 e^{i\Delta z(\kappa-k)}
 \left[
 \tilde{\Phi}(z)+\frac{\Delta z}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}
-\right]
+\right] XXX
 \end{equation}
+aufstellen. Dies stellt einer iterative Beschreibung der Streuung dar - ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um ein Algorithmus der ebenfalls der Kategorie "Multislice" zuzuordnen ist. Im Gegensatz zur Multislice Propagation findet hier die XX. Unabhängig von der Gültigkeit der Näherungen besitzt XXX bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster in dem die Simulation durchgeführt hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zu tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\tilde{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
 Die numerische Simulation dieser Methode ist in \texttt{simulation/thibault.m} implementiert.
 
 
