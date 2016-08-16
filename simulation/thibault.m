@@ -4,8 +4,6 @@ function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
     % "Reconstruction of a yeast cell from X-ray diffraction data"
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
     
-    debug=false;    ndebug=0;
-%     deltaz=wavelength/2;
     k=2*pi/wavelength;
     if nargin<6
         gpu=parallel.gpu.GPUDevice.isAvailable();
@@ -30,21 +28,9 @@ function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
     end
     
     %Propagator in fourier space for single step
-    [propagator,factor]=getPropagatorAndFactor(N,dx,wavelength,deltaz);
+    [propagator,factor]=getPropagatorAndFactor;
     
     for z=-Lz/2:deltaz:Lz/2
-        
-        %output of progress if enabled every 100 iterations
-        if debug&&ndebug==100
-            waveR=gather(ift2(waveF)*dx^2);
-            imagesc(1:N,1:N,abs(waveR));
-            title(sprintf('%d nm',round(z)));
-            caxis([0.5 1.5]);
-            drawnow;
-            ndebug=0;
-        else
-            ndebug=ndebug+1;
-        end
         
         %get slices deltan
         dnSlice=zero();
@@ -65,7 +51,8 @@ function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
     exitWave=ift2(waveF)*dx^2;
     
     %check intensity, should be close to 1 without absorption
-    fprintf('Check= %f (should be ~1 w/o absorption)\n',  sum(abs(exitWave(:)))/(N*N));
+    %fprintf('Check= %f (should be ~1 w/o absorption)\n',  sum(abs(exitWave(:)))/(N*N));
+    
     if gather(any(isnan(exitWave)))
         warning 'NaN occured'
     end
@@ -75,7 +62,7 @@ function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
         objects{nobj}.unlock();
     end
     
-    function [propagator,factor]=getPropagatorAndFactor(N,dx,wavelength,deltaz)
+    function [propagator,factor]=getPropagatorAndFactor
         %propagator and factor as in thibault
         %seperate function to create namespace for tmp variables
         k=2*pi/wavelength;

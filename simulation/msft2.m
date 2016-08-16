@@ -48,17 +48,8 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption)
         slicefun{nobj}=objects{nobj}.prepareSliceMethod(N,dx,gpu);
     end
     
-    %prepare kin_z-kout_z matrix
-    if gpu
-        dk_range=gpuArray.linspace(-N/2,N/2-1,N)*(2*pi/(dx*N));
-    else
-        dk_range=linspace(-N/2,N/2-1,N)*(2*pi/(dx*N));
-    end
-    [dk_x,dk_y]=meshgrid(dk_range);
-    kdiff=k-real(sqrt(complex(k^2-(dk_x.^2+dk_y.^2))));
-    
-    %prepare mask for evanescence ("no remaining forwards k")
-    mask=k^2>(dk_x.^2+dk_y.^2);
+    %mask and kdiff
+    [mask,kdiff] =getMaskKdiff();
     
     %for absorption
     if sim_absorption;interactionSum=zero();end;
@@ -83,23 +74,36 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption)
             %             %add with correct phase shift
             %             phaseshift=exp(1i*z*kdiff);
             %             out=out+contrib.*phaseshift.*mask.*absorption;
-            %             ..this is combinded to save memory to:
+            %             ..this is combinded to save memory to with factor=exp(1i*z*kdiff).*mask;
             if sim_absorption
-                out=out+ft2(dnSlice)*(dx^2).*exp(1i*z*kdiff+1i*deltaz*k*interactionSum).*mask;
+                out=out+ft2(dnSlice)*(dx^2).*mask.*exp(1i*z*kdiff+1i*deltaz*k*interactionSum);
                 interactionSum=interactionSum+dnSlice;
             else
-                out=out+ft2(dnSlice)*(dx^2).*exp(1i*z*kdiff).*mask;
+                out=out+ft2(dnSlice)*(dx^2).*mask.*exp(1i*z*kdiff);
             end
             
         end
     end
-    
     
     %unlock objects
     for nobj=length(objects):-1:1
         objects{nobj}.unlock();
     end
     
-    
+    function [mask,kdiff]=getMaskKdiff
+        %seperate function to create namespace for tmp variables
+        %prepare kin_z-kout_z matrix
+        if gpu
+            dk_range=gpuArray.linspace(-N/2,N/2-1,N)*(2*pi/(dx*N));
+        else
+            dk_range=linspace(-N/2,N/2-1,N)*(2*pi/(dx*N));
+        end
+        [dk_x,dk_y]=meshgrid(dk_range);
+        kdiff=k-real(sqrt(complex(k^2-(dk_x.^2+dk_y.^2))));
+        
+        %prepare mask for evanescence ("no remaining forwards k")
+        mask=k^2>(dk_x.^2+dk_y.^2);
+      
+    end
 end
 
