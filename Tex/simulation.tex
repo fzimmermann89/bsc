@@ -46,7 +46,7 @@ Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{mae
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.5\textwidth]{images/msft.eps}
-		\caption[Vektoren bei MSFT]{Skizze zur Bezeichnung der Vektoren. $k_{ein}$ und $k_{aus}$ bezeichnen den Wellenvektor der einfallenden bzw. ausfallenden Welle mit dem dazwischenliegenden Winkel $\theta$. $q$ bezeichnet den Streuvektor mit einer zu $k_{ein}$ parallelen ($q_{||}$) und einer senkrechten ($q_\perp$) Komponente.. }
+		\caption[Vektoren bei MSFT]{Skizze zur Bezeichnung der Vektoren. $k_{ein}$ und $k_{aus}$ bezeichnen den Wellenvektor der einfallenden bzw. ausfallenden Welle mit dem dazwischenliegenden Winkel $\theta$. $q$ bezeichnet den Streuvektor mit einer zu $k_{ein}$ parallelen ($q_{||}$) und einer senkrechten ($q_\perp$) Komponente.}
 		\label{fig:msft}
 	\end{figure} 
 
@@ -55,8 +55,8 @@ Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{mae
 	Eine Implementation des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
 
 \section{Multislice Propagation}
-	Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \text{Multislice} oder \textit{Beam Propagation} bekannt \cite{hare1994,cowley1957}. Bei diesem Verfahren wird zunächst die Szene (ein definierter Raum in dem sich alle Objekte deren gemeinsames Streubild berechnet werden soll) in einzelne Schichten mit dem Abstand $\Delta z$zerlegt.
-	Die Ausbreitung der in Szene einfallende ebene Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach Angular Spectrum Propagation im Hybridraum
+	Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice} oder \textit{Beam Propagation} bekannt \cite{hare1994,cowley1957}. Bei diesem Verfahren wird zunächst die Szene (ein definierter Raum in dem sich alle Objekte deren gemeinsames Streubild berechnet werden soll) in einzelne Schichten mit dem Abstand $\Delta z$zerlegt.
+	Die Ausbreitung der in Szene einfallende ebene Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach Angular Spectrum Propagation im Hybridraum \footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu \cite{hare1994} auf diese Näherung verzichtet.}
 	\begin{equation}
 \bar{\phi}\left(q_x,q_y,z+\Delta z\right)=\bar{\phi}(z)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}
 	\end{equation}
@@ -66,20 +66,21 @@ Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{mae
 	\end{equation}
 	\begin{figure}
 		\centering
-		\includegraphics[width=0.75\textwidth]{images/multislice.eps}
+		\includegraphics[width=0.9\textwidth]{images/multislice.eps}
 		\caption[Prinzip Multislice Propagation]{Prinzip Multislice Propagation: Die Szene wird in einzelne Schichten zerlegt und die Wechselwirkung mit der Materie jeder einzelnen Schicht in auf eine in dieser Schicht liegenden Ebene reduziert. Zwischen diesen Ebenen wird eine Vakuumpropagation angewendet.}
 		\label{fig:multislice}
 	\end{figure} 	
-	Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu \cite{hare1994} auf diese Näherung verzichtet. 
-	
+
 	Bei diesem Verfahren wird die Annahme getroffen, dass  innerhalb einer Schicht die örtliche Verteilung der Materie konstant ist, sowie die durch die Propagation bedingte Veränderung innerhalb von $\Delta z$ ausreichend klein ist, sodass keine Anteile der Wellenfront innerhalb einer Schicht unterschiedliche Brechzahlen durchlaufen \cite{hare1994}. Dies kann durch ein hinreichend kleines $\Delta z$ gewährleistet werden. 
 	Des Weiteren wird bei der Wechselwirkung mit der Materie der Winkel mit dem ein Anteil der Wellenfront durch die Materie läuft vernachlässigt: Bei Anteilen der Welle, die durch vorangegangene Streueffekte bereits in einem deutlichen Winkel die Szene durchlaufen wird genähert, dass ihr Weg durch die Materie gleich lang wie der Weg von nicht gestreuten Anteilen ist. Somit wird Mehrfachstreuung zwar mitberücksichtigt, jedoch nur näherungsweise.
 	
 	Der Algorithmus zur Berechnung der Austrittswelle lautet somit
 	\begin{equation}
+	\label{eq:multislice}
 \Phi(z+\Delta z)= e^{i\delta n\left(z\right) \Delta z}\mathscr{F}^{-1}\left[e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\mathscr{F}\left[\Phi(z)\right]\right]
 	\end{equation}
 	Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels Angular Spectrum Propagation berechnen lässt, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementation im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert, während bei Anwendung der Fernfeld Näherung zwar der maximale Winkel in dem das Streubild berechnet werden kann von der räumlichen Auflösung der Austrittswelle sowie die Winkelauflösung von der Szenenausdehnung abhängt, dies jedoch deutlich praktikabler ist.
+	Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet und ist in \texttt{simulation/multislice.m} implementiert.
 	
 \section{Thibaults Multislice}
 Thibault stellt in \cite{thibault2007} einen eigene Formulierung der Multislice-Simulation auf. Ausgehend von der Wellengleichung
@@ -126,11 +127,11 @@ Somit lässt sich in Näherung für die Welle bei $z+\Delta z$
 \tilde{\Phi}(z+\Delta z)
 \approx
 e^{i\Delta z(\kappa-k)}
-\left[
-\tilde{\Phi}(z)+\frac{\Delta z}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}
-\right]
+\left(
+\tilde{\Phi}(z)+\frac{\Delta z}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}  \left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z)
+\right)
 \end{equation}
-aufstellen. Dies stellt einer iterative Beschreibung der Streuung dar --- ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um ein Algorithmus der ebenfalls der Kategorie "`Multislice"' zuzuordnen ist. Im Gegensatz zur \textit findet hier die die Wechselwirkung mit der Materie jedoch nicht XX. Unabhängig von der Gültigkeit der Näherungen besitzt \eqref{eq:thibault} bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster in dem die Simulation durchgeführt hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zu tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\tilde{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
+aufstellen. Dies stellt einer iterative Beschreibung der Streuung dar --- ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um ein Algorithmus der ebenfalls der Kategorie "`Multislice"' zuzuordnen ist. Im Gegensatz zur \textit{Multislice Propagation} findet hier die Wechselwirkung mit der Materie jedoch nicht in Form eines Exponentialfaktor statt, in Kleinwinkelnäherung entspricht \fref{eq:thibault} einer Taylornäherung erster Ordnung in der Exponentialfunktion von \fref{eq:multislice}. Unabhängig von der Gültigkeit der verwendeten Näherungen besitzt \eqref{eq:thibault} bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster in dem die Simulation durchgeführt hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zu tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\tilde{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
 Die numerische Simulation dieser Methode ist in \texttt{simulation/thibault.m} implementiert.
 
 
@@ -144,7 +145,7 @@ Besonders bemerkbar ist dieser Bearbeitungsschritt bei Pixeln die genau in den I
 Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf die Mie-Streubilder normiert. Hierzu wird ein Skalierungsfaktor gesucht, der die mittlere Abweichung der simulierten Streubilder vom jeweiligen Mie-Streubild innerhalb der ersten 10° minimiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streubildern betrachtet.
 Die relative Abweichung von Mie ist für einen konkreten Parametersatz exemplarisch dargestellt in \fref{fig:relerror}. Aus den rotationssymmetrischen Streubildern können Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden um einen besseren Überblick zu erhalten. \fref{fig:profil}).
 Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund des steilen Verlaufs scharfe, nur 1-2 Datenpunkte umfassende, Maxima annimmt.
-Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers bis 20° Streuwinkel genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie als in diesem Bereich valide anzusehen \fref{fig:var}. Es ist zu erkennen dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung bis $10^{-4}$ die viele Materialien bei 1\si{nm} Wellenlänge aufweisen \cite{henke} sowohl \textit{Multislice Propagation} und\textit{ Thibaults Multislice} als auch \textit{MSFT} valide Ergebnisse liefern --- der mediane Fehler überschreitet 5\% nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels \textit{MSFT} berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Mehrfachstreuung in Vorwärtsrichtung, die bei \textit{MSFT} im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Formulierung und der \textit{Multislice Propagation} kann zu einem gewissen Anteil durch die verwendete naive Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der numerischen Genauigkeit und dem Einfluss von Rundungsfehlern.
+Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers bis 20° Streuwinkel genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie als in diesem Bereich valide anzusehen \fref{fig:variation}. Es ist zu erkennen dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung bis $10^{-4}$ die viele Materialien bei 1\si{nm} Wellenlänge aufweisen \cite{henke} sowohl \textit{Multislice Propagation} und\textit{ Thibaults Multislice} als auch \textit{MSFT} valide Ergebnisse liefern --- der mediane Fehler überschreitet 5\% nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels \textit{MSFT} berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Mehrfachstreuung in Vorwärtsrichtung, die bei \textit{MSFT} im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Formulierung und der \textit{Multislice Propagation} kann zu einem gewissen Anteil durch die verwendete naive Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der numerischen Genauigkeit und dem Einfluss von Rundungsfehlern.
 
 
 \begin{figure} %mittelwert
@@ -198,7 +199,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 	\end{subfigure}
 	
 	\caption[relativer Fehler der Simulationen]{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius 100\si{nm} bei $\beta=\delta=10^{-3}$. }
-	\label{fig:var}
+	\label{fig:relerror}
 \end{figure}
 \begin{figure} %profile
 	\centering
@@ -210,7 +211,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \begin{figure} %parameter variation
 	\centering
 	\includegraphics[width=1\textwidth]{images/fig_sim_var.pdf}
-	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichung der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung bis 20° von Mie über den Parametern aufgetragen. Es somit die Bereiche erkennbar, in denen der jeweilige Simulationsalgorithmus valide Ergebnisse liefert---Gelb entspricht 20\% Abweichung und kann als obere Grenze angesehen werden. Die Auflösung der Szene im Realraum wurde als $\Delta x=\dfrac{\lambda}{2}$, $\Delta z$ als $\dfrac{\lambda}{8}$ und N=2048 gewählt.}
+	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichung der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung bis 20° von Mie über den Parametern aufgetragen. Es somit die Bereiche erkennbar, in denen der jeweilige Simulationsalgorithmus valide Ergebnisse liefert. Parameter: $\Delta x=\sfrac{\lambda}{2}$, $\Delta z$ als $\sfrac{\lambda}{8}$ und N=2048.}
 	\label{fig:variation}
 \end{figure}
 
