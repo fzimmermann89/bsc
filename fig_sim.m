@@ -1,4 +1,4 @@
-% clear all;
+clear all;
 g=gpuDevice();
 reset(g);
 addpath('recon','simulation');
@@ -7,12 +7,12 @@ addpath('recon','simulation');
 fnameprefix='.\Tex\Images\fig_sim';
 fnamepostfix='-r100-bd1e-3';
 
-N=4*1024;
+N=2*1024;
 beta=1e-3;
 delta=1e-3;
 radius=100;
 dx=1/2;
-dz=1/4;
+dz=1/8;
 wavelength=1;
 
 %% run
@@ -20,7 +20,7 @@ objects{1}=scatterObjects.sphere();
 objects{1}.radius=radius;
 objects{1}.beta=beta;
 objects{1}.delta=delta;
-% run=singlerun2(N,dx,dz,wavelength,objects);
+run=singlerun2(N,dx,dz,wavelength,objects);
 %% values
 minangle=1;
 maxangle=20;
@@ -42,9 +42,8 @@ lab=[flipud(ual);ual(2:end)];
 f=figure('visible','off');
 exitwave=run.exitwave.multislice(1+1/4*end:3/4*end,1+1/4*end:3/4*end);
 r=abs(exitwave);
-%         rmin = min(r(isfinite(r)));
 rmin=0;
-            rmax = max(r(isfinite(r)));
+rmax = max(r(isfinite(r)));
 im=compleximagesc(exitwave,[rmin,rmax]);
 axis square
 ax=gca;
@@ -61,7 +60,8 @@ gamma=.9;
 [theta, rho] = cart2pol(x, y);
 h = (theta + pi) / (2 * pi);     
 s=ones(size(rho));
-l=real((rho).^gamma);
+l=(rho.^gamma);
+l(rho>1)=0;
 rgb=hsl2rgb(cat(3,h,s,l));
 
 %show colorwheel
@@ -82,20 +82,24 @@ ax2.ThetaAxis.Label.String='Phase';
 ax2.ThetaTick=[0:0.25:2]*pi;
 ax2.RLim=[rmin,rmax];
 ax2.RTick=ticks(2:end);
-ax2.RAxis.TickLabelFormat='%.1g'
+ax2.RAxis.TickLabelFormat='%.1g';
 ax3=polaraxes('Position',[0.2,0.2,.6,.6]);
 ax3.ThetaTick=[];
 ax3.RLim=[rmin,rmax];
 ax3.RTick=ticks(1);
-ax3.RAxis.TickLabelFormat='%.1g'
+ax3.RAxis.TickLabelFormat='%.1g';
 ax3.Color='none'; 
 ax3.RAxis.Color=[1,1,1];
-ax2.ThetaColor=[0,0,0];
+ax2.ThetaAxis.Color=[0,0,0];
 ax3.ThetaAxis.Color=[0,0,0];
 f.PaperSize=[20,20];
 f.PaperPosition=[-4.5,-4,28,28];
 ax3.FontSize=28;
 ax2.FontSize=28;
+ax2.LineWidth=1;
+ax2.GridAlpha=1;
+ax2.GridColor=[0.3,0.3,0.3];
+ax2.GridLineStyle='--';
 f.Color='none';
 ax1.Color='none';
 
@@ -123,16 +127,16 @@ save_image(strcat(fnameprefix,'_scatter_multislice',fnamepostfix,'.png'));
 
 
 %% colorbar
-f=figure('colormap',parula(128),'visible','off')
-cb=colorbar('vert')
+f=figure('colormap',parula(128),'visible','off');
+cb=colorbar('vert');
 ax=gca;
-ax.Color='none'
+ax.Color='none';
 ax.FontSize=18;
 caxis([scattermin,0]);
 axis off;
 cb.TickLabels=sprintfc('\\color{white} 10^{%g}',cb.Ticks);
 fname=strcat(fnameprefix,'_scatter_multislice_cb',fnamepostfix,'.pdf');
-ax.ZColor=[1,1,1]
+ax.ZColor=[1,1,1];
 f.PaperSize=[10,10];
 f.PaperPosition=[-7.5,0,10,10];
 print(fname,'-dpdf')
@@ -146,7 +150,7 @@ for n=1:length(names);
     f.PaperPosition=[-2.5,-.75,17,13.25];
     im=imagesc(abs(run.error_rel.(name)(1+3/8*end:5/8*end,1+3/8*end:5/8*end)));
     im.AlphaData=(angles<15);
-    caxis([0,.5]);
+    caxis([0,1]);
     axis square
     ax=gca;
     ax.XAxis.TickValues=pos;
