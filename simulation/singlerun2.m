@@ -6,8 +6,9 @@ function run=singlerun2(N,dx,dz,wavelength,objects,simabs)
     padcut=false;
     maxangle=20;
     minangle=1;
+    if (nargin<6); simabs=false;end
     
-    tic
+    t=tic;
     run=storage.run2(N,dx,dz,wavelength,objects);
     try
         gpu=parallel.gpu.GPUDevice.isAvailable;
@@ -70,7 +71,7 @@ function run=singlerun2(N,dx,dz,wavelength,objects,simabs)
     
     %% status
     err=structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error_rel,'UniformOutput',false);
-    fprintf('\n Done with b%.2e, d%.2e, rad%g (N%g, dx%g, dz%g) Time: %gs. Median Errors:\n',objects{1}.beta,objects{1}.delta,objects{1}.radius,N,dx,dz,toc);
+    fprintf('\n Done with b%.2e, d%.2e, rad%g (N%g, dx%g, dz%g) Time: %gs. Median Errors:\n',objects{1}.beta,objects{1}.delta,objects{1}.radius,N,dx,dz,toc(t));
     disp(struct2table(err));
     fprintf('\n\n');
     
