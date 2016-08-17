@@ -56,9 +56,9 @@ Das Erzwingen der Nebenbedienung im Realraum kann als Projektion auf die Lösung
  \rho (x)   &\text{für }x\notin S
  \end{cases}
  \end{align}
-aufgefasst werden. Der analoge Projektor für die Erfüllung der Nebenbedingung im Fourierraum, der im Fourierraum die Amplitude von $\tilde{\rho}$ durch die bekannte Amplitude $A(q)$ ersetzt und dabei den Winkel $\Phi(q)$ beibehält lautet
+aufgefasst werden. Der analoge Projektor für die Erfüllung der Nebenbedingung im Fourierraum, der im Fourierraum die Amplitude von $\tilde{\rho}$ durch die bekannte Amplitude $A(q)$ ersetzt und dabei den Winkel $\Phi\left(\tilde{\rho}\left(q\right)\right)$ beibehält lautet
 \begin{align}
-	\tilde{P}_m \bar{\rho}(q)&=A(q)e^{i\Phi(q)} &&P_m\rho(q)=\mathscr{F}^{-1}A(q)e^{i\Phi(q)}\mathscr{F}\rho(x)
+	\tilde{P}_m \tilde{\rho}(q)&=A(q)e^{i\Phi(\tilde{\rho})}&&P_m\rho(x)=\mathscr{F}^{-1}A(q)e^{i\Phi\left(\mathscr{F}\rho\left(x\right)\right)} \,.
 \end{align}
 
 	\begin{figure}
@@ -66,7 +66,7 @@ aufgefasst werden. Der analoge Projektor für die Erfüllung der Nebenbedingung 
 		\includegraphics[width=0.75\textwidth]{images/projektor.eps}
 		\caption[Projektoren]{Verwendete Projektoren: Der Support Projektor $P_S$ projiziert auf die durch den Support beschriebene Mannigfaltigkeit, $P_{\bar{S}}$ auf das Komplement. Ein Reflektor wendet die doppelte Schrittweite wie ein Projektor an und stellt somit eine Spiegelung an der Lösungsmenge der Nebenbedingung dar. Der Fourier-Projektor stellt in Fourierraum eine Projektion auf die kreisförmige Menge der bekannten Amplituden dar.}
 		\label{fig:projektoren}
-	\end{figure}.
+	\end{figure}
 	Neben den Projektoren die, den Schritt $\rho\rightarrow (\mathbb{1}+(P-\mathbb{1}))\rho$ ausführen, können auch sogenannte Reflektoren mit doppelter Schrittweite
 	\begin{equation}
 	R_\nu= (\mathbb{1}+2(P-\mathbb{1}))=(2P_\nu-\mathbb{1})
