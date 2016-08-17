@@ -3,14 +3,16 @@ clear all;
 fname='.\Tex\Images\fig_sim_profile.pdf';
 g=gpuDevice();
 reset(g);
-N=4*1024;
+N=2*1024;
 beta=1e-4;
 delta=1e-4;
 radius=20;
 dx=1/2;
-dz=1/4;
+dz=1/8;
 wavelength=1;
-
+     green=([0,150,64]./255);
+      red=([190,22,34]./255);
+      blue=([49,39,131]./255);
 %% run
 objects{1}=scatterObjects.sphere();
 objects{1}.radius=radius;
@@ -35,12 +37,12 @@ for n=1:length(names)
     ax=subplot(2,2,n);
     
     yyaxis left
-    linem=semilogy(x,run.profile_mie,'g.');
+    linem=semilogy(x,run.profile_mie,'o','MarkerSize',4,'Color',green);
     hold on;
-    linep=semilogy(x,run.profile_scatter.(cur),'b.');
+    linep=semilogy(x,run.profile_scatter.(cur),'.','MarkerSize',8,'Color',blue);
     axis([0.2,maxangle,1e-10,1]);
     yyaxis right;
-    linee=plot(x,run.profile_error_rel.(cur),'r');
+    linee=plot(x,run.profile_error_rel.(cur),'-','Color',red);
     plot(x,0*x,'--k');
     axis([0.2,maxangle,-.5,.5]);
     ax.XAxis.TickLabelFormat = '%,.1g°';

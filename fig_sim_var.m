@@ -7,7 +7,7 @@ plotpos=[...
     .6,.6,.35,.35;...
     ];
 fname='.\Tex\images\fig_sim_var.pdf';
-datafile='C:\data\multirun2-bata=deltaN2048-163609-0608.mat';
+datafile='C:\data\multirun2-beta=deltaN2048-162217-0908.mat';
 
 
 if ~exist('data','var')||~ isstruct(data)
