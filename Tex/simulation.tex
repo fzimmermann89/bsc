@@ -92,7 +92,7 @@ lässt sich für die Welle im Hybridraum
 \tilde{G}=\frac{1}{2\pi}\frac{ik^2}{\sqrt{k^2-q_\perp^2}}e^{iz(\kappa-k)}
 \end{equation}
 aufstellen. Hierbei sind die Faltungsoperatoren mit den Variablen über die die Faltung durchzuführen ist indiziert.
-Wird nun die Welle bei $\Delta z$ betrachtet, so lässt sich unter Vernachlässigung von Rückstreuung  das Faltungsintegral über $z$ in zwei Integrationsbereiche aufspalten (vom Ursprung bis $\delta z$ sowie von dort bis ins Unendliche):
+Wird nun die Welle bei $\Delta z$ betrachtet, so lässt sich unter Vernachlässigung von Rückstreuung  das Faltungsintegral über $z$ in zwei Integrationsbereiche aufspalten (vom Ursprung bis $\Delta z$ sowie von dort bis ins Unendliche):
 \begin{equation}
 \tilde{\Phi}(z+\Delta z)=
 \int_{\Delta z}^{\infty} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
@@ -122,14 +122,15 @@ Für den Fehler dieser Näherung gilt
 \end{equation}
 Somit lässt sich in Näherung für die Welle bei $z+\Delta z$
 \begin{equation}
+\label{eq:thibault}
 \tilde{\Phi}(z+\Delta z)
 \approx
 e^{i\Delta z(\kappa-k)}
 \left[
 \tilde{\Phi}(z)+\frac{\Delta z}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}
-\right] XXX
+\right]
 \end{equation}
-aufstellen. Dies stellt einer iterative Beschreibung der Streuung dar --- ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um ein Algorithmus der ebenfalls der Kategorie "`Multislice"' zuzuordnen ist. Im Gegensatz zur \textit findet hier die die Wechselwirkung mit der Materie jedoch nicht XX. Unabhängig von der Gültigkeit der Näherungen besitzt XXX bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster in dem die Simulation durchgeführt hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zu tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\tilde{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
+aufstellen. Dies stellt einer iterative Beschreibung der Streuung dar --- ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um ein Algorithmus der ebenfalls der Kategorie "`Multislice"' zuzuordnen ist. Im Gegensatz zur \textit findet hier die die Wechselwirkung mit der Materie jedoch nicht XX. Unabhängig von der Gültigkeit der Näherungen besitzt \eqref{eq:thibault} bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster in dem die Simulation durchgeführt hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zu tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\tilde{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
 Die numerische Simulation dieser Methode ist in \texttt{simulation/thibault.m} implementiert.
 
 
@@ -142,8 +143,8 @@ Besonders bemerkbar ist dieser Bearbeitungsschritt bei Pixeln die genau in den I
 
 Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf die Mie-Streubilder normiert. Hierzu wird ein Skalierungsfaktor gesucht, der die mittlere Abweichung der simulierten Streubilder vom jeweiligen Mie-Streubild innerhalb der ersten 10° minimiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streubildern betrachtet.
 Die relative Abweichung von Mie ist für einen konkreten Parametersatz exemplarisch dargestellt in \fref{fig:relerror}. Aus den rotationssymmetrischen Streubildern können Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden um einen besseren Überblick zu erhalten. \fref{fig:profil}).
-Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund des steilen Verlaufs scharfe,nur 1-2 Datenpunkte umfassende, Maxima annimmt.
-Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie als in diesem Bereich valide anzusehen \fref{fig:var}. Es ist zu erkennen dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung die XXX bei 1\si{nm} Wellenlänge aufweisen sowohl \textit{Multislice Propagation} und\textit{ Thibaults Multislice} als auch \textit{MSFT} valide Ergebnisse liefern - der mediane Fehler überschreitet XXX nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels \textit{MSFT} berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Mehrfachstreuung in Vorwärtsrichtung, die bei \textit{MSFT} im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Formulierung und der \textit{Multislice Propagation} kann zu einem gewissen Anteil durch die verwendete naive Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der numerischen Genauigkeit und dem Einfluss von Rundungsfehlern.
+Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund des steilen Verlaufs scharfe, nur 1-2 Datenpunkte umfassende, Maxima annimmt.
+Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers bis 20° Streuwinkel genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie als in diesem Bereich valide anzusehen \fref{fig:var}. Es ist zu erkennen dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung bis $10^{-4}$ die viele Materialien bei 1\si{nm} Wellenlänge aufweisen \cite{henke} sowohl \textit{Multislice Propagation} und\textit{ Thibaults Multislice} als auch \textit{MSFT} valide Ergebnisse liefern --- der mediane Fehler überschreitet 5\% nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels \textit{MSFT} berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Mehrfachstreuung in Vorwärtsrichtung, die bei \textit{MSFT} im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Formulierung und der \textit{Multislice Propagation} kann zu einem gewissen Anteil durch die verwendete naive Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der numerischen Genauigkeit und dem Einfluss von Rundungsfehlern.
 
 
 \begin{figure} %mittelwert
@@ -156,7 +157,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 
 
 
-\begin{figure} %exitwave udn scatter
+\begin{figure} %exitwave und scatter
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
 		 \setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
@@ -209,7 +210,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \begin{figure} %parameter variation
 	\centering
 	\includegraphics[width=1\textwidth]{images/fig_sim_var.pdf}
-	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichung der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung von Mie über den Parametern aufgetragen. Es ist zu erkennen XXX}
+	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichung der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung bis 20° von Mie über den Parametern aufgetragen. Es somit die Bereiche erkennbar, in denen der jeweilige Simulationsalgorithmus valide Ergebnisse liefert---Gelb entspricht 20\% Abweichung und kann als obere Grenze angesehen werden. Die Auflösung der Szene im Realraum wurde als $\Delta x=\dfrac{\lambda}{2}$, $\Delta z$ als $\dfrac{\lambda}{8}$ und N=2048 gewählt.}
 	\label{fig:variation}
 \end{figure}
 
