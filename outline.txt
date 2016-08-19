@@ -81,3 +81,7 @@ wichtigste TODOs:
     tex
         -was meinte toli zur entfaltung?
         -algorithmen fertig beschreiben
+
+
+notes:
+ausblick: compressed sensing: http://compphotolab.northwestern.edu/project/new/
