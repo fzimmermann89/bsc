@@ -4,7 +4,6 @@ function [ output ] = wiener( input,h,noise )
     % G     =  ------------------------------
     %            |H|^2 S_signal + S_noise
     %(allows complex h)
-    %TODO pad2size
     %ft inputs
     H = ft2(h);
     Finput = ft2(input);

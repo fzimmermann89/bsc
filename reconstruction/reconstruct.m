@@ -15,6 +15,7 @@ function [curImage,errors]=reconstruct(scatterImage,support,start,mask,plan)
                 case 'hio'
                     for niter=1:step.iterations
                         [curImage,err]=HIOiter(amplitude, curImage, support, mask );
+                        figure(123);imagesc(abs(curImage+support));drawnow;
                         errors(nerror)=err;
                         nerror=nerror+1;
                     end
