@@ -1,15 +1,15 @@
-function [ start,support,crossImag ] = holoSupport( scatterImage,refImage )
+function [ start,support,crossImag ] = holoSupport( scatterImage,softmask,refImage )
     %generates Support based on holography
 
     %do ifft2 as reconstruction
-    recon=((ift2(scatterImage)));
+    recon=((ift2(scatterImage.*softmask)));
     reconAbs=abs(recon);
  
     %find auto & cross correlation
 
     %partially supress noise
     reconAbsFilt=medfilt2(reconAbs,[15,15]);
-    reconBw=reconAbsFilt>3*median(reconAbs(:));
+    reconBw=reconAbsFilt>5*median(reconAbs(:));
     
 %     thresholdRelative = 0.008%0.008;%0.002%0.001;
 %     threshold=min(reconAbs(:))+thresholdRelative*(max(reconAbs(:))-min(reconAbs(:)))
@@ -25,7 +25,7 @@ function [ start,support,crossImag ] = holoSupport( scatterImage,refImage )
     %reconBw = imopen((reconBw),strel('disk',5)); %5%25
 
     %smooth support
-    reconBw = imdilate((reconBw),strel('disk',15)); %15%25
+%     reconBw = imdilate((reconBw),strel('disk',5)); %15%25
     reconBw = imclose((reconBw),strel('disk',10));%50%60 %25
     %reconBw = imdilate((reconBw),strel('disk',5));%20 %25
     reconBw = imfill((reconBw), 'holes');
@@ -100,7 +100,7 @@ function [ start,support,crossImag ] = holoSupport( scatterImage,refImage )
         )=cross(1).Image;
 
     %dilate for loose support (XXX)
-        support=imdilate(support,strel('disk',5));
+         support=imdilate(support,strel('disk',5));
 end
 
 
