@@ -1,3 +1,4 @@
+
 function [ newImage,realError ] = ERiter(amplitude, curImage, support,mask )
     %Perform one iteration of ER
     %   Detailed explanation goes here
@@ -13,7 +14,7 @@ function [ newImage,realError ] = ERiter(amplitude, curImage, support,mask )
 
     %calculate realError (nochmal nachdenken XXX)
     if nargout>1
-     realError=norm(tmpImage.*~support,'fro');
+     realError=norm(tmpImage.*~support,'fro')./norm(tmpImage,'fro');
     end
 %   figure(8);subplot(2,1,1);imagesc(real(newImage));colorbar;subplot(2,1,2);imagesc(abs(ft2(newImage)));colorbar;drawnow;
 end

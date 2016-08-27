@@ -23,7 +23,7 @@ function [offset,val]=findTranslation2d(a,b,subpixel)
     [subx,suby]=ind2sub(size(a),gather(ind));
     offset=  [subx,suby]-[Nx/2+1,Ny/2+1];
     if nargin>2&&subpixel
-    [xF,yF] = meshgrid(rangex,rangey);
+    [yF,xF] = meshgrid(rangex,rangey);
     [offset,val]=fminsearch(@(x)-move(x(1),x(2)),offset,optimset('TolX',1e-3));
     offset=round(offset,2);
     end

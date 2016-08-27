@@ -2,84 +2,77 @@ clear all;
 g=gpuDevice(1);
 refRadius=20;
 refError=1.02;
-maskScale=128/1024;%.02%.03%.1%.03%.03%.1%0.03%.1;
+maskScale=0/1024;%.02%.03%.1%.03%.03%.1%0.03%.1;
 sigmaMask=32;%32;
 discreteBits=0;%15;
-addRandomPhase=false;
 inputfilename='./input/input_2.png';
-ToDo='sw'; %possible cases: ToDo='holo'; ToDo='sw'; ToDo='deconv'
+ToDo='holo'; %possible cases: ToDo='holo'; ToDo='sw'; ToDo='deconv'
 
 %Prepare Input
 [scatterImageHolo,refImage,mask,softmask,outermask,scatterImage]=prepareInput_sim(inputfilename,refRadius,refError,maskScale,sigmaMask,discreteBits);
 mask=gpuArray(mask);
 
-%and filtered (guessed) Reference
-refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
 
 %Reconstruct
 switch ToDo
     case 'holo' %use Holography
         %support and start
         [start,support]=holoSupport(scatterImageHolo,softmask,refImage);
-        if addRandomPhase
-            randPhase=randn(size(scatterImageHolo));
-            start=start.*exp(1i*randPhase);
-        end
         
         %Plan:
         planHolo=reconPlan();
-        planHolo.record_errors=false;
-        for n=1:40%
+        for n=1:40
             planHolo.addStep('hio',300);
-            planHolo.addStep('er',10);
+            planHolo.addStep('er',1);
             planHolo.addStep('show');
         end
         planHolo.addStep('er',100);
         planHolo.addStep('show');
         
         %Run
-        [result,errors]=reconstruct(scatterImageHolo,support,start,mask,planHolo);
+        [result,errors]=planHolo.run(scatterImageHolo,support,start,mask);
         
         
     case 'sw' %use IPR with Shrinkwrap
         %support and start
-        [start,support]=genericSupport(scatterImage,softmask);
-        if addRandomPhase
-            randPhase=randn(size(scatterImageHolo));
-            start=start.*exp(1i*randPhase);
+        [initialstart,support]=genericSupport(scatterImage,softmask);
+        
+        for n=1:5
+            start(:,:,n)=ift2(ft2(initialstart).*exp(2i*pi*rand(size(initialstart))).*softmask);
         end
         
         %Plan
         planSW=reconPlan();
-        for m=1:2
-            for n=1:25
-                planSW.addStep('hio',100);
-                planSW.addStep('errp',1);
-                planSW.addStep('sw',1);
-                planSW.addStep('show')
-            end
-            planSW.addStep('loosen')
-            
+        
+        for n=1:50
+            planSW.addStep('hio',45);
+            planSW.addStep('errp',5);
+            planSW.addStep('sw',1,[4,0.08]);
         end
-        planSW.addStep('loosen')
-        for n=1:20
-            planSW.addStep('hio',300);
+        planSW.addStep('loosen',1,5)
+        planSW.addStep('show')
+        
+        for n=1:50
+            planSW.addStep('hio',150);
             planSW.addStep('er',1);
-            planSW.addStep('show')
         end
-        planSW.addStep('er',100);
+        planSW.addStep('er',50);
         planSW.addStep('show');
         
         %Run
-        [result,errors]=reconstruct(scatterImage,support,start,mask,planSW);
+        [result,images]=planSW.runAvg(scatterImage,support,start,mask);
+        %[avg,images,errors]=planSW.runAvg(scatterImage,support,start,mask);
         
         
     case 'deconv' %wiener deconvolution
         %get cross correlation
-        [~,~,cross]=holoSupport(scatterImageHolo.*softmask,refImage);
-        
+        [~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage);
+        %and filtered (guessed) Reference
+        refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
+        crossPadded=pad2size(cross,size(scatterImageHolo));
+        refImagePadded=pad2size(refImageFiltered,size(scatterImageHolo));
         %deconvolution
-        result=wiener(gather(pad2size(cross,size(scatterImageHolo))),pad2size(refImageFiltered,size(scatterImageHolo)),10);
+        result=wiener(crossPadded,refImagePadded,10);
         
         
     otherwise

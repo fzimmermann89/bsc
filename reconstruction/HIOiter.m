@@ -16,7 +16,7 @@ function [ newImage,realError  ] = HIOiter( amplitude, curImage, support,mask  )
 
     %calculate realError (nochmal nachdenken XXX)
     if nargout>1
-        realError=norm(tmpImage.*~support,'fro');
+        realError=norm(tmpImage.*~support,'fro')./norm(tmpImage,'fro');
     end
 end
 
