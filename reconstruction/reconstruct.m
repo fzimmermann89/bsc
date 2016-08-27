@@ -2,8 +2,7 @@ function [curImage,errors]=reconstruct(scatterImage,support,start,mask,plan)
     t=tic;
     amplitude=gpuArray(sqrt(abs(scatterImage)));
     curImage=gpuArray(start);
-    sigma=3;
-    relThreshold=.3;
+    
     
     if plan.record_errors
         errors=zeros(1,plan.iterations);
@@ -38,6 +37,14 @@ function [curImage,errors]=reconstruct(scatterImage,support,start,mask,plan)
                         nerror=nerror+1;
                     end
                 case 'sw'
+                    if length(step.parameters)==2
+                          sigma=step.parameters(1);
+                        relThreshold=step.parameters(2);
+                      
+                    else
+                        sigma=3;
+                        relThreshold=.3;
+                    end
                     support=SW(curImage,relThreshold,sigma);
                     support=imfill(support,'holes');
                     fprintf('support area:%g\n',sum(support(:)));
@@ -52,8 +59,13 @@ function [curImage,errors]=reconstruct(scatterImage,support,start,mask,plan)
                     figure(2); semilogy(errors); title('error');
                     drawnow;
                 case 'loosen'
+                    if length(step.parameters)==1
+                        value=step.parameters(1);
+                    else
+                        value=15;
+                    end
                     support=imfill(support,'holes');
-                    support=imdilate(support,strel('disk',25));
+                    support=imdilate(support,strel('disk',value));
                 otherwise
                     warning('unknown plan');
             end
@@ -82,6 +94,13 @@ function [curImage,errors]=reconstruct(scatterImage,support,start,mask,plan)
                         curImage=ERiterRealPos(amplitude, curImage, support, mask);
                     end
                 case 'sw'
+                    if length(step.parameters)==2
+                        relThreshold=step.parameters(1);
+                        sigma=step.parameters(2);
+                    else
+                        sigma=3;
+                        relThreshold=.3;
+                    end
                     support=SW(curImage,relThreshold,sigma);
                     support=imfill(support,'holes');
                 case 'show'
@@ -89,8 +108,13 @@ function [curImage,errors]=reconstruct(scatterImage,support,start,mask,plan)
                     errors(end+1)=err;
                     fprintf('support area:%g error: %g\n',sum(support(:)),err);
                 case 'loosen'
+                    if length(step.parameters)==1
+                        value=step.parameters(1);
+                    else
+                        value=20;
+                    end
                     support=imfill(support,'holes');
-                    support=imdilate(support,strel('disk',25));
+                    support=imdilate(support,strel('disk',value));
                 otherwise
                     warning('unknown plan');
             end
