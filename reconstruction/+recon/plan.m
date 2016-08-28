@@ -1,4 +1,4 @@
-classdef reconPlan<handle
+classdef plan<handle
     %Plan for phase retrieval
     
     properties
@@ -9,7 +9,7 @@ classdef reconPlan<handle
         defaultSWrelThreshold=0.05;%max
         
         defaultLoosenVal=15;
-        iterFunctions=containers.Map({'hio','er','errp','raar'},{@HIOiter,@ERiter,@ERiterRealPos,@RAARiter})
+        iterFunctions=containers.Map({'hio','er','errp','raar'},{@recon.iterations.HIO,@recon.iterations.ER,@recon.iterations.ERRealPos,@recon.iterations.RAAR})
     end
     
     methods

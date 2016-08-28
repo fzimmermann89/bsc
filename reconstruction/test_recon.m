@@ -20,7 +20,7 @@ switch ToDo
         [start,support]=holoSupport(scatterImageHolo,softmask,refImage);
         
         %Plan:
-        planHolo=reconPlan();
+        planHolo=recon.plan();
         for n=1:40
             planHolo.addStep('hio',300);
             planHolo.addStep('er',1);
@@ -42,7 +42,7 @@ switch ToDo
         end
         
         %Plan
-        planSW=reconPlan();
+        planSW=recon.plan();
         
         for n=1:50
             planSW.addStep('hio',45);

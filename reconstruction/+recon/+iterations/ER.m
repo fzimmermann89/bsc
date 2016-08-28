@@ -1,5 +1,5 @@
 
-function [ newImage,realError ] = ERiter(amplitude, curImage, support,mask )
+function [ newImage,realError ] = ER(amplitude, curImage, support,mask )
     %Perform one iteration of ER
     %   Detailed explanation goes here
 

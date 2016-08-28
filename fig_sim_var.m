@@ -1,3 +1,5 @@
+addpath('reconstruction','simulation','helper');
+
 nicenames={'Projektion','Multislice Propagation','Thibaults Multislice','MSFT'};
 c=load('colormap-error.mat');
 plotpos=[...

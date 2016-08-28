@@ -1,7 +1,7 @@
 clear all;
 g=gpuDevice();
 reset(g);
-addpath('recon','simulation');
+addpath('reconstruction','simulation','helper');
 
 %% settings
 fnameprefix='.\Tex\Images\fig_sim';

@@ -6,9 +6,9 @@ data/
 fremd/
 material/
 
-##backup
+##backup und test
 bak/
-error/
+playground/error/
 
 ##komische datei
 *.tex~tx*

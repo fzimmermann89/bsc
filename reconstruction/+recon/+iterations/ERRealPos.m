@@ -1,4 +1,4 @@
-function [ newImage,realError ] = ERiter(amplitude, curImage, support,mask )
+function [ newImage,realError ] = ERRealPos(amplitude, curImage, support,mask )
     %Perform one iteration of ER
     %   Detailed explanation goes here
 
@@ -13,7 +13,7 @@ function [ newImage,realError ] = ERiter(amplitude, curImage, support,mask )
 
     %calculate realError (nochmal nachdenken XXX)
     if nargout>1
-     realError=norm(tmpImage.*~support,'fro');
+     realError=norm(tmpImage.*~support,'fro')./norm(tmpImage,'fro');
     end
 end
 
