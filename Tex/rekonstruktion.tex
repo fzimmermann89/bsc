@@ -38,8 +38,7 @@ Ist das Rauschen jedoch mit dem Signal korreliert, wie dies z.B. bei Poisson-Rau
 
 \section{iterative Phasenrückgewinnung}
 Wäre neben der Amplitude auch Phase der Fouriertransformation der Austrittswelle bekannt, so könnte diese durch eine inverse Transformation wiederhergestellt werden. 
-Da bei N komplexen Datenpunkten im Realraum die Fouriertransformation durch N Amplituden und N Phasen, also 2N Variablen dargestellt werden kann, jedoch nur N Variablen (die Fourieramplituden) gemessen werden können, ist das Problem unterbestimmt und nicht eindeutig lösbar. Kann jedoch das zu rekonstruierende Objekt im Realraum auf N/2 Bildpunkte beschränkt werden, so wird das Problem lösbar. Die räumliche Beschränkung im Realraum wird 
-durch die Wahl eines sog. Supports, außerhalb dessen der Realraum als leer angenommen wird umgesetzt.  
+Da bei N komplexen Datenpunkten im Realraum die Fouriertransformation durch N Amplituden und N Phasen, also 2N Variablen dargestellt werden kann, jedoch nur N Variablen (die Fourieramplituden) gemessen werden können, ist das Problem unterbestimmt und nicht eindeutig lösbar. Kann jedoch das zu rekonstruierende Objekt im Realraum auf weniger als N/2 Bildpunkte beschränkt werden, so wird das Problem lösbar. Die räumliche Beschränkung im Realraum wird durch die Wahl eines sog. Supports, außerhalb dessen der Realraum als leer angenommen wird umgesetzt.  
 Die Problemstellung ist nun im rauschfreien Fall eine Lösung der Gleichung $\rho(x)=\mathscr{F}^{-1}\tilde{\rho}(q)$ unter den Nebenbedingungen dass 1. $\rho$ auf den Support beschränkt ist und 2. die Amplituden von $\tilde{\rho}$ mit den bekannten Fourieramplituden $A(q)$ übereinstimmt.
 \subsection{Algorithmen}
 Ein zur Lösung der Problemstellung verwendeter Algorithmus, der Error-Reduction Algorithmus (ER) basiert auf abwechselnden Erzwingen der der Nebenbedingungen, d.h. von einem Startwert $\rho_0$ ausgehend wird zunächst $\tilde{\rho_0}$ bestimmt, die Amplitude im Fourierraum durch $A$ ersetzt, in den Realraum transformiert und dort außerhalb des Supports gleich Null gesetzt. Dies wird iterativ wiederholt, wobei sich $\rho_n$ einer beide Nebenbedingungen erfüllenden Lösung annähert.
@@ -91,8 +90,21 @@ Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzun
 		\caption[Supportgenerierung]{Erzeugung des Supports. Oben: Bei verwendung von Freiflug Holographie kann die Kreuzkorrelation aus Referenz und Objekt als Support genutzt werden. Zusätzlich muss im gleichen Abstand wie Kreuz und Autokorrelation die Referenz dem Support hinzugefügt werden. Unten: Der Shrinkwrap Alorithmus beginnt mit der Autokorrelation als initalem Support und passt diesen im laufe der Rekonstruktion an.}
 		\label{fig:support}
 	\end{figure} 
+\subsection{Eindeutigkeit der Lösung}
+Das Problem der iterativen Phasenrekonstruktion ist, dass die Algorithmen keine eindeutige Lösung bereitstellen. Neben der Möglichkeit, dass die Algorithmen in einem lokalen Minimum stagnieren und dieses nicht verlassen, existiert eine weitere Quelle der Unsicherheit: Das sogenannte Zwillingsbild-Problem. Da nach \fref{eq:zwilling} das Bild $f(x,y)$ und das komplex konjugierte, punktgespiegelte "`Zwillingsbild"'  $f^*(-x,-y)$ den gleichen Betrag der Fouriertransformation besitzen, sind beides Lösungen des Problems.
+\begin{equation}
+\label{eq:zwilling}
+	\left|\mathscr{F}[f^*(-x,-y)]\right|=\left|\mathscr{F}[f(x,y)]^*\right|=\left|\mathscr{F}[f(x,y)]\right|
+\end{equation}
+Dies führt dazu, dass bei einem punktsymmetrischen Support (oder einem Support, der so groß ist, dass Bild und Zwillingsbild in ihn hineinpassen) in einigen Regionen das Bild, in anderen das Zwillingsbild rekonstruiert wird (Abb. XX). Beide Probleme, Stagnation im Minimum und Zwillingsproblem, sind abhängig von der Wahl des Startpunktes der Rekonstruktion, bei zufälliger Wahl der Fourierwinkel ist die Rekonstruktion somit nicht deterministisch.
+
+Der Shrinkwrap-Algorithmus zur Supportgewinnung kann das Zwillingsproblem in manchen Fällen umgehen, indem bei einer Dominanz von Bild oder Zwillingsbild in einem der Randbereiche des aktuellen Supports das jeweils andere bei der nächsten Anpassung des Supports unterdrückt wird und so ein nicht-punktsymmetrischer Support gefunden werden kann.
+Die Supportgewinnung mittels Holographie löst dieses Problem vollständig. je nach Wahl der für den Support verwendeten Kreuzkorrelation und davon abhängiger Platzierung der Referenz im Support wird Bild oder Zwillingsbild rekonstruiert, da Objekt und Referenz zusammen nicht punktsymmetrisch sind.
+
+Für die iterative Phasen Rekonstruktion wird häufig mehrfach mit verschiedenen, zufälligen Fourierwinkeln gestarten und ein Mittelwert aus den Rekonstruktionen gebildet (hierbei müssen die einzelnen Rekonstruktionsergebnisse hinsichtlich Translation und Punktspiegelung angepasst werden). Die Methode der Kombination aus FTH zur Supportgewinnung und anschließender IPR beginnt jedoch mit einem definierten Start (der Kreuzkorrelation) und wird nur einmalig durchgeführt. Das Ergbnis der Rekonstruktion jedes einzelnen Streubildes ist somit eindeutig und es handelt sich um ein deterministisches Verfahren.
+
 \section{Vergleich}	
-Somit können drei unterschiedliche Arten der Rekonstruktion betrachtet werden
+Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen werden
 \begin{itemize}
 \item FTH mit Entfaltung
 \item IPR mit Shrinkwrap-Support
