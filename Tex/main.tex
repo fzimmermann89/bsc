@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%   DEFINITIONEN   %%%%%%%%%%%%%%%
-
+\pdfminorversion=4 
 \documentclass[11pt,a4paper,oneside]{book}
 
 %Packages
@@ -20,6 +20,8 @@
 
 \usepackage[small,bf]{caption} %Schönere Beschriftungen für Abbildungen und Tabellen
 \captionsetup{width=.9\textwidth,skip=5pt,format=plain,indention=5pt}
+\usepackage{sidecap}
+\sidecaptionvpos{figure}{t}
 \usepackage{subcaption} %subfigures
 \usepackage{booktabs} %Schönere Tabellen
 \usepackage{fancyhdr} %Schönere Kopfzeile
@@ -33,13 +35,17 @@
 \usepackage[printwatermark=false]{xwatermark}
 \newwatermark[allpages,textcolor=gray!70,angle=0,xpos=68,ypos=-135,fontsize=14pt,fontfamily=phv]{Entwurf\ -\ \the\day.\the\month.\the\year}
 
-\usepackage{hyperref} %pdf-Inhaltsverzeichnis und pdf-Links
+\usepackage[bookmarksdepth=subsection]{hyperref} %pdf-Inhaltsverzeichnis und pdf-Links
 \hypersetup{
 pdfborder={0 0 0}, 
 bookmarksnumbered=true,
 pdftitle={Bachelorarbeit},
 pdfauthor={Felix Frederik Zimmermann}
 }
+
+
+\usepackage{tocvsec2}
+\settocdepth{section}
 
 \setlength{\parindent}{0mm}
 
@@ -97,6 +103,10 @@ pdfauthor={Felix Frederik Zimmermann}
 %zum erzwingen von nummerierung bei formeln
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
+%%prüfe nach nicht verwendeten bib einträgen
+%\usepackage{refcheck}
+%\nocite{*}
+
 %%pygments%
 \usepackage{fancyvrb}
 \usepackage{xcolor}
@@ -139,7 +149,7 @@ pdfauthor={Felix Frederik Zimmermann}
 
 %%%%%%%%%%%%%%%%   ABSTRACT   %%%%%%%%%%%%%%%%
 
-\include{abstract}
+%\include{abstract}
 %\cleardoublepage
 
 

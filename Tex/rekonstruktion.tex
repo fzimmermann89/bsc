@@ -113,12 +113,60 @@ Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen wer
 
 Die Rekonstruktionsansätze werden bezüglich Ihrer Empfindlichkeit für Rauschen, Hochpass und Fehler in der Abschätzung der Referenz untersucht. Dies geschieht zunächst mit rein synthetischen 2D Bildern als Ersatz für Austrittswellen um die Funktion der drei Ansätze und ihre Limitationen zu überprüfen.
 
+Bei idealen Bedingungen, d.h. ohne Rauschen, ohne Hochpass und mit präzise bekannter Referenz liefern alle Ansätze ein optisch vom Ausgangsbild nicht zu unterscheidendes Ergebnis (\fref{fig:recon2d-perfect})
+
+\begin{SCfigure}
+	\includegraphics[width=.48\textwidth]{images/recon2d-perfect.png}
+	\caption{Rekonstruktion mit Zentralstrahl ohne Rauschen. Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei Streubildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch iterative Phasenrekonstruktion mit Shrinkwrap, unten links die durch Entfaltung  aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels iterativer Phasenrekonstruktion und FTH als Start und Support. Zur besseren optischen Vergleichbarkeit und Interpretation sind die Rekonstruktionen hochpassgefiltert. Alle Rekonstruktionen optisch perfekte Ergebnisse.}
+	\label{fig:recon2d-perfect}
+\end{SCfigure}
+
+\subsection{Einfluss Zentralmaske}
+Der Einfluss des in Experimenten durch die nötige Blockierung des zentralen Strahles bedingten Hochpasses zeigt sich in \fref{fig:recon2d-mask}. Durch die Festlegung eines räumlich beschränkten Supports könnten mehr Informationen rekonstruiert werden, als durch den Hochpass nahe gelegt. Für eine korrekte Betrachtung der verlorenen Informationen muss das Eingangsbild in eine Basis aus sowohl im Real- wie auch im Fourierraum räumlich beschränkte Funktionen zerlegt werden. Nur die Komponenten, die sowohl im Fourierraum vollständig im maskierten Bereich liegen wie auch im Realraum vollständig im Support liegen können nicht wieder rekonstruiert werden. Jedoch ist die optische Beurteilbarkeit so rekonstruierter Bilder eingeschränkt. Aus diesem Grund sind die dargestellten Bilder hochpassgefiltert. Die nicht hochpassgefilterten Bilder sind im Anhang dargestellt.
+\begin{figure}
+
+	\begin{subfigure}[b]{0.48\textwidth}
+		\includegraphics[width=\textwidth]{images/recon2d-mask16.png}
+		\caption{kleine Maske}
+	\end{subfigure}
+	\hspace*{\fill}
+	\begin{subfigure}[b]{0.48\textwidth}
+		\includegraphics[width=\textwidth]{images/recon2d-mask64.png}
+		\caption{große Maske}	
+	\end{subfigure}
+	\caption{Einfluss einer zentralen Maskierung des Streubildes mit Radius 16 Pixel bzw. 64 Pixel von 2048 Pixeln auf die Rekonstruktionen (gleiche Anordnung wie in \fref{fig:recon2d-perfect}). Z}
+	\label{fig:recon2d-mask}
+\end{figure}
+
 \subsection{Einfluss Rauschen}
-Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet.
-\subsection{Einfluss Hochpass}
-Der Einfluss des in Experimenten durch die nötige Blockierung des zentralen Strahles bedingten Hochpasses
+Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet. Dadurch wird das natürliche, sogenannte Shot-Rauschen bei idealer Belichtung simuliert.
+\begin{figure}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/recon2d-mask16bit16.png}
+		\caption{wenig Rauschen}
+	\end{subfigure}
+	\hspace*{\fill}
+	\begin{subfigure}[b]{0.45\textwidth}
+		\includegraphics[width=\textwidth]{images/recon2d-mask16bit14.png}
+		\caption{viel Rauschen}	
+	\end{subfigure}
+	\caption{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 15\,Bit bzw 14\,Bit diskretiesiert und Poisson-Shot-Rauschen hinzugefügt.}
+\end{figure}
 \subsection{Einfluss Referenzabschätzung}
 Sowohl für die Entfaltung wie auch für die festlegung des Supports für die iterative Rekonstruktion muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung..
-
+\begin{figure}
+	\begin{subfigure}[b]{0.45\textwidth}
+%		\includegraphics[width=\textwidth]{images/recon2d-mask16bit16error01.png}
+		\caption{1\% Abweichung des Radius}
+	\end{subfigure}
+	\hspace*{\fill}
+	\begin{subfigure}[b]{0.45\textwidth}
+%		\includegraphics[width=\textwidth]{images/recon2d-mask16bit16error05.png}
+		\caption{5\% Abweichung des Radius}	
+	\end{subfigure}
+	\caption{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem andren Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung.}
+\end{figure}
 \section{3D Austrittswelle}
 Die für 2D-Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem 3D-Objekt eingesetzt werden. Die Dreidimensionalität des Objektes wird an dieser Stelle ignoriert und die Austrittswelle analog zu den 2D-Bildern betrachtet.
+
+	

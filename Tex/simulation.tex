@@ -220,6 +220,22 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \section{komplexe Objekte}
 Neben der Berechnung von Streubilder von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen Objekten.
 
-Als interessante Testszene wird ein Ikosaeder mit eingebetteter Kugel sowie ein davon disjunktes, kleineres Dodekaeder betrachtet (Abb.)
+Als interessante Testszene wird eine Ikosaeder (Außenradius 375 \si{nm},$\beta,\delta$=$10^{-4}$) mit einer 25 dicken \si{nm} Wand ($\beta,\delta$=$10^{-4}$) um dessen Mittelpunkt vier kleinere Kugeln (Radius 90 \si{nm},$\beta,\delta$=$10^{-4}$) in den Eckpunkten eines Tetraeders angeordnet sind (\fref{fig:komplexmodel}) sowie ein disjunktes Dodekaeder mit Außenradius 100 \si{nm} ($\beta,\delta$=$10^{-4}$) betrachtet. 
 
-
+\begin{figure} %exitwave und scatter
+	\centering
+	\begin{subfigure}[b]{0.49\textwidth}
+	\includegraphics[width=\textwidth]{images/scene.png}
+		
+		\caption{3D Modell}
+		\label{fig:komplexmodel}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\textwidth}
+		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}}
+		\includegraphics[width=\textwidth]{images/fig_simholo_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_exitwave_cw.pdf}}}
+		\caption{Streubild}
+		\label{fig:komplexexit}
+	\end{subfigure}
+	\caption[Model und Austrittswelle eines komplexen Objektes]{Model und Austrittswelle eines komplexen Objektes. Bei dem 3D Modell ist der Ikosaeder entlang seiner Mitte aufgeschnitten um die im inneren liegenden Kugeln zu visualisieren. Bei der Austrittswelle ist die relative Intensität bezüglich der Eintrittswelle über die Helligkeit dargestellt, die Phase über den Farbton.}
+	\label{fig:komplex}
+\end{figure}

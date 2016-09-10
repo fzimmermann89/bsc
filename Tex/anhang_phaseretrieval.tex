@@ -15,7 +15,7 @@ Die grundlegende Iteration der iterativen Rekonstruktionsalgorithmen ER, HIO und
  \end{align}
   und somit als reiner Support-Projektor aufgefasst werden kann. In der Literatur wird unter der Bezeichnung $P_s$ teilweise auch ein Projektor bezeichnet der außerdem weitere Forderungen im Realraum beinhaltet. Im Rahmen dieser Arbeit nur für den ER-Algorithmus zusätzlich eine Form implementiert, deren Realraum-Projektor eine reele, positive Lösung erzwingt (\texttt{reconstruction/ERiterRealPos.m}), da das mittelfristige Ziel die Rekonstruktion der Austrittswelle inklusive der relativen Phasenbeziehungen darstellt.
  
-	Für den (in \texttt{reconstruction/HIOiter.m} implementierten) HIO-Algorithmus gilt mit jenem $P_s$ 
+	Für den HIO-Algorithmus gilt mit jenem $P_s$ 
 	\begin{align*}
 	\begin{rcases}	
 	P_m\rho_n  &\text{für } x\in S\\
@@ -26,7 +26,7 @@ Die grundlegende Iteration der iterativen Rekonstruktionsalgorithmen ER, HIO und
 	\end{align*}
 	Diese Form erleichtert das Verständnis von \fref{fig:recon}. Zum weiteren Verständnis ist in \fref{fig:raar} der Prozess für den RAAR-Algorithmus schrittweise dargestellt.
 	
-	Die (in \texttt{reconstruction/RAARiter.m}) implementierte Form des RAAR Algorithmus' basiert auf folgender Umformung:
+	Die implementierte Form des RAAR Algorithmus' basiert auf folgender Umformung:
 	\begin{align*}
 	\frac{\beta}{2}\left(R_sR_m+\mathbb{1}\right)
 	&=\frac{\beta}{2}\left((2P_s-\mathbb{1})(2P_m-\mathbb{1})+\mathbb{1}\right)
@@ -43,7 +43,7 @@ Die grundlegende Iteration der iterativen Rekonstruktionsalgorithmen ER, HIO und
 	\centering
 	\begin{tabular}{cc}
 		\hline\hline
-		Algorithmus 	&Iteration\\ 							
+		Algorithmus 	&$\rho_{n+1}$\\ 							
 		\hline
 		ER  			&$P_sP_m\rho_n$\\ 								
 		HIO  			&$\begin{cases}	
