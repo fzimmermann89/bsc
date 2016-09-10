@@ -99,7 +99,7 @@ classdef plan<handle
                                     relThreshold=this.defaultSWrelThreshold;
                                 end
                                 
-                                curSupport=SW(curImage,relThreshold,sigma);
+                                curSupport=recon.SW(curImage,relThreshold,sigma);
                                 curSupport=imfill(curSupport,'holes');
                                 
                             case 'loosen'
@@ -112,6 +112,8 @@ classdef plan<handle
                                 curSupport=imfill(curSupport,'holes');
                                 curSupport=imdilate(curSupport,strel('disk',value));
                                 
+                            case 'noise'
+                                curImage=curImage+0.1*randn(size(curImage))./max(curImage(:));
                             case 'show'
                                 if ~exist('f','var');f=figure();end
                                 figure(f);
