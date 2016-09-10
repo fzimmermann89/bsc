@@ -14,7 +14,7 @@ function [offset,val]=findTranslation2d(a,b,subpixel)
     else
         a=single(a);
         b=single(b);
-      rangex=(-2i*pi*linspace(-1/2+1/Nx,1/2,Nx));
+        rangex=(-2i*pi*linspace(-1/2+1/Nx,1/2,Nx));
         rangey=(-2i*pi*linspace(-1/2+1/Ny,1/2,Ny));
     end
     
@@ -32,6 +32,7 @@ function [offset,val]=findTranslation2d(a,b,subpixel)
     function out=move(x,y)
         temp=abs(ift2(ft2(a).*conj(ft2(b).*exp(xF*x+yF*y))));
         out=gather(temp(end/2+1,end/2+1));
+%         out=gather(sum(frc(a,abs(ift2(exp(xF*x+yF*y).*ft2(b))))));
     end
     
 end
