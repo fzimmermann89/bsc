@@ -7,7 +7,7 @@ function output=pad2size(input,tosize,val)
     end
     
     diff=tosize-size(input);
-    if ~(diff>0)
+    if ~(diff>=0)
         error('shrinking not supported')
     end
     pad=ceil(diff/2);
