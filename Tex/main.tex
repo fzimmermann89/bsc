@@ -161,6 +161,21 @@ pdfauthor={Felix Frederik Zimmermann}
 \tableofcontents
 \cleardoublepage
 
+%%%%%%%%   ABBILDUNGSVERZEICHNIS   %%%%%%%%%%%
+
+\listoffigures
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\vspace{1cm}
+%%%%%%%%%   TABELLENVERZEICHNIS   %%%%%%%%%%%%
+
+\begingroup
+\let\clearpage\relax
+\listoftables
+\endgroup
+\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+
+
+\cleardoublepage
 
 
 %%%%%%%%%%%%%%%%   KAPITEL   %%%%%%%%%%%%%%%%%
@@ -190,20 +205,6 @@ pdfauthor={Felix Frederik Zimmermann}
 	\include{anhang_code}
 \end{appendices}
 
-
-
-%%%%%%%%   ABBILDUNGSVERZEICHNIS   %%%%%%%%%%%
-
-\listoffigures
-\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
-\cleardoublepage
-
-
-%%%%%%%%%   TABELLENVERZEICHNIS   %%%%%%%%%%%%
-
-\listoftables
-\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
-\cleardoublepage
 
 
 %%%%%%%%%   LITERATURVERZEICHNIS   %%%%%%%%%%%
