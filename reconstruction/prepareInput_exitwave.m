@@ -1,24 +1,26 @@
-function [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,exitwaveHolo,exitwaveObj]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
+function [scatterImageHolo,scatterImageObj,refImage,mask,softmask,outermask,exitwaveHolo,exitwaveObj]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
 
     
     %load input
     input=load(inputfilename,'exitwaveHolo','exitwaveObj','exitwaveRef','settings');
-    exitwaveHolo=input.exitwaveHolo;
-    exitwaveObj=input.exitwaveObj;
-    scatterImageHolo=exitwave2scatter(exitwaveHolo,input.settings.dx,input.settings.wavelength,true,true);
-    scatterImage=exitwave2scatter(exitwaveObj,input.settings.dx,input.settings.wavelength,true,true);
-    exitwaveRef=1-(input.exitwaveRef./input.exitwaveRef(1));
-    refBw=abs(exitwaveRef)>.5*mean(abs(exitwaveRef(:)));
+
+    [scatterImageHolo,~,exitwaveHolo]=exitwave2scatter(input.exitwaveHolo,input.settings.dx,input.settings.wavelength,false,true);
+    [scatterImageObj,~,exitwaveObj]=exitwave2scatter(input.exitwaveObj,input.settings.dx,input.settings.wavelength,false,true);
+        [scatterImageRef,~,exitwaveRef]=exitwave2scatter(input.exitwaveRef,input.settings.dx,input.settings.wavelength,false,true);
+
+%     exitwaveRef=1-(input.exitwaveRef./input.exitwaveRef(1));
+    refBw=abs(exitwaveRef)>0.02*max(abs(exitwaveRef(:)));
+    refBw=imdilate(refBw,strel('disk',20));
     props=regionprops(refBw,exitwaveRef, {'SubarrayIdx','Area'});
     [~,nRef]=max([props.Area]);
     refImage=exitwaveRef(props(nRef).SubarrayIdx{1},props(nRef).SubarrayIdx{2});
-    Npadded=size(scatterImage);
+    Npadded=size(scatterImageObj);
     %create masks
     [ mask,softmask,outermask ]=circularMask(Npadded,maskScale,sigmaMask);
     
     %create masked scatterImages
     scatterImageHolo=scatterImageHolo.*mask;
-    scatterImage=scatterImage.^2.*mask;
+    scatterImageObj=scatterImageObj.*mask;
     
     %discretize and noise
     if (discreteBits~=0)
@@ -26,9 +28,9 @@ function [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,exitwav
         scatterImageHolo=scatterImageHolo./scale;
         scatterImageHolo=round(10^12*imnoise(double(scatterImageHolo),'poisson'));
         
-        scale=(max(scatterImage(:))-min(scatterImage(scatterImage~=0)))/(1e-12*2^discreteBits);
-        scatterImage=scatterImage./scale;
-        scatterImage=round(10^12*imnoise(double(scatterImage),'poisson'));
+        scale=(max(scatterImageObj(:))-min(scatterImageObj(scatterImageObj~=0)))/(1e-12*2^discreteBits);
+        scatterImageObj=scatterImageObj./scale;
+        scatterImageObj=round(10^12*imnoise(double(scatterImageObj),'poisson'));
         
     end
   

@@ -15,7 +15,7 @@ refError=1.0;
 maskScale=0/2048;%32%64 %.02%.03%.1%.03%.03%.1%0.03%.1;
 sigmaMask=24;%32;
 discreteBits=0;%15;
-wienernoise=1000;%100;
+wienernoise=1e6;%100;
 %% Prepare Input
   [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHolo,input]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
 %move to gpu
@@ -31,8 +31,8 @@ wienernoise=1000;%100;
 
 %Plan:
 planHolo=recon.plan();
-for n=1:60
-    planHolo.addStep('hio',300);
+for n=1:20%50
+    planHolo.addStep('hio',200);
     planHolo.addStep('er',1);
     planHolo.addStep('show');
 end
@@ -45,23 +45,23 @@ planHolo.addStep('show');
 
 %% use IPR with Shrinkwrap
 %support and start
-[start,support]=genericSupport(scatterImage,softmask);
+ [start,support]=genericSupport(scatterImage,softmask);
 
 %Plan
 planSW=recon.plan();
 
-for n=1:60
-    planSW.addStep('hio',95);
+for n=1:20%40
+    planSW.addStep('hio',50);
     planSW.addStep('er',5);
-    planSW.addStep('sw',1,[10,0.01]);
+     planSW.addStep('sw',1,[10,0.025]);
     planSW.addStep('show')
 end
 
-planSW.addStep('loosen',1,5)
+planSW.addStep('loosen',1,10)
 planSW.addStep('show')
 
-for n=1:30
-    planSW.addStep('hio',300);
+for n=1:10%20
+    planSW.addStep('hio',200);
     planSW.addStep('er',1);
      planSW.addStep('show');
 end
@@ -104,8 +104,8 @@ fresultSW=maskfilter(resultSW,softmask);
 fresultHolo=maskfilter(resultHolo,softmask);
 fresultDeconv=maskfilter(resultDeconv,softmask);
 
-move=@(x)moveAndMirror(finput,x);
-cut=@(x)x(end/2-end/8:end/2+end/8+1,end/2-end/8:end/2+end/8+1);
+move=@(x)moveAndMirror(abs(finput),abs(x));
+cut=@(x)x(end/2-end/4:end/2+end/4+1,end/2-end/4:end/2+end/4+1);
 
 
 f=figure();
@@ -137,7 +137,7 @@ ax(3).Units='pixels';
 ax(3).Position=[pixel+delim,pixel+delim,pixel,pixel].*scale;
 imagesc(abs(cut(move(fresultSW))));
 colormap(flipud(colormap(gray)))
-caxis([max(cmin,min(abs(fresultSW(:)))),min(cmax,max(abs(fresultSW(:))))]);
+caxis([min(cmin,min(abs(fresultSW(:)))),min(cmax,max(abs(fresultSW(:))))]);
 axis off;
 ax(3).ActivePositionProperty='position';
 
@@ -146,7 +146,7 @@ ax(4).Units='pixels';
 ax(4).Position=[pixel+delim,0,pixel,pixel].*scale;
 colormap(flipud(colormap(gray)))
 imagesc(abs(cut(move(fresultHolo))));
-caxis([max(cmin,min(abs(fresultHolo(:)))),min(cmax,max(abs(fresultHolo(:))))]);
+caxis([min(cmin,min(abs(fresultHolo(:)))),min(cmax,max(abs(fresultHolo(:))))]);
 axis off;
 ax(4).ActivePositionProperty='position';
 

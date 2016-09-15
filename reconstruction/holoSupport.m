@@ -92,7 +92,7 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
     refImage=padarray(refImage,[radDilate,radDilate],'both');
     refSize=size(refImage);
     crossImage=recon(cross(1).SubarrayIdx{1},cross(1).SubarrayIdx{2});
-    refSupport=abs(refImage)>1e-1;
+    refSupport=abs(refImage)>1e-2*max(abs(refImage(:)));%1e-1; %TODO
     refSupport = imfill((refSupport), 'holes');
     
     %set the reference
@@ -108,7 +108,7 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
         0+  ceil (end/2+refSize(1)/2)+  floor(diff(2)/2),...
         1+  ceil (end/2-refSize(2)/2)+  floor(diff(1)/2):...
         0+  ceil (end/2+refSize(2)/2)+  floor(diff(1)/2)...
-        )=refImage;%.*rand(size(refImage));
+        )=refImage./max(abs(refImage(:)));%.*rand(size(refImage));
     
     %set cross correlation
     %     crossImage=crossImage./max(abs(crossImage(:)));
@@ -117,16 +117,14 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
         0+  ceil (end/2+crossSize(1)/2)-  ceil(diff(2)/2),...
         1+  ceil (end/2-crossSize(2)/2)-  ceil(diff(1)/2):...
         0+  ceil (end/2+crossSize(2)/2)-  ceil(diff(1)/2)...
-        )=crossImage;
+        )=crossImage./max(abs(crossImage(:)));
     support(...
         1+  ceil (end/2-crossSize(1)/2)-  ceil(diff(2)/2):...
         0+  ceil (end/2+crossSize(1)/2)-  ceil(diff(2)/2),...
         1+  ceil (end/2-crossSize(2)/2)-  ceil(diff(1)/2):...
         0+  ceil (end/2+crossSize(2)/2)-  ceil(diff(1)/2)...
         )=cross(1).Image;
-    
-    start=start./max(abs(crossImage(:)));
-    
+        
     %dilate for loose support (XXX)
     support = imfill((support), 'holes');
     
