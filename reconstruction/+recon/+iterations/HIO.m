@@ -4,17 +4,17 @@ function [ newImage,realError  ] = HIO( amplitude, curImage, support,mask  )
     %Take Phase of curImag and amplitude to construct a tmpImage
     curImagF=ft2(curImage);
     curPhase=angle(curImagF);
-      tmpImage=ift2(mask.*amplitude.*(exp(1i.*curPhase))+~mask.*curImagF);
-
+    tmpImage=ift2(mask.*amplitude.*(exp(1i.*curPhase))+~mask.*curImagF);
+    
     %Force (real) constrains on tmpImage to get newImage
     %inside support
     newImage=support.*tmpImage;
     %outside support
     feedback=curImage-beta.*tmpImage;
     newImage=newImage+~support.*feedback;
-    %should be different function? XXX
-
-    %calculate realError (nochmal nachdenken XXX)
+    
+    
+    %calculate realError
     if nargout>1
         realError=norm(tmpImage.*~support,'fro')./norm(tmpImage,'fro');
     end
