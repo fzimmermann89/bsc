@@ -114,13 +114,24 @@ classdef plan<handle
                                 
                             case 'noise'
                                 curImage=curImage+0.1*randn(size(curImage))./max(curImage(:));
+                                
+                            case 'untwin'
+                                iterFunc=this.iterFunctions('hio');
+                                halfSupport=halfdiag(curSupport);
+                                for niter=1:step.iterations
+                                    curImage=iterFunc(amplitude, curImage, halfSupport, mask );
+                                end
                             case 'show'
                                 if ~exist('f','var');f=figure();end
                                 figure(f);
-                                subplot(2,2,1);imagesc(real(curImage));title('real cur. Image');colorbar;
-                                subplot(2,2,2);imagesc(imag(curImage));title('imag cur. Image');colorbar;
-                                subplot(2,2,3);imagesc(abs(curImage+curSupport)); title('support');
-                                if calcErrors;  subplot(2,2,4); semilogy(curErrors); title('error');end;
+                                subplot(2,2,1);imagesc(real(curImage));title('real cur. Image');colorbar;axis square;
+                                subplot(2,2,2);imagesc(imag(curImage));title('imag cur. Image');colorbar;axis square;
+                                subplot(2,2,3);imagesc(abs(curSupport)); title('support');axis square;
+                                if calcErrors;
+                                    subplot(2,2,4); semilogy(curErrors); title('error');
+                                else
+                                    subplot(2,2,4);imagesc(abs(curImage)); title('abs cur Image');axis square;
+                                end;
                                 drawnow;
                                 
                             otherwise
