@@ -5,9 +5,7 @@ classdef plan<handle
         steps=struct('method',{},'iterations',{},'parameters',{});
         iterations=0;
         defaultSWSigma=4;
-        %          defaultSWrelThreshold=0.01;%median
-        defaultSWrelThreshold=0.05;%max
-        
+        defaultSWrelThreshold=0.05;
         defaultLoosenVal=15;
         iterFunctions=containers.Map({'hio','er','errp','raar'},{@recon.iterations.HIO,@recon.iterations.ER,@recon.iterations.ERRealPos,@recon.iterations.RAAR})
     end
@@ -25,7 +23,7 @@ classdef plan<handle
             if exist('parameters','var')
                 step.parameters=parameters;
             else
-                step.parameters=[];
+                step.parameters={};
             end
             
             this.steps(end+1)=step;
@@ -91,9 +89,9 @@ classdef plan<handle
                         end
                         switch step.method
                             case 'sw'
-                                if length(step.parameters)==2
-                                    sigma=step.parameters(1);
-                                    relThreshold=step.parameters(2);
+                                if length(step.parameters)==2&&isscalar(step.parameters{1})&&isscalar(step.parameters{2})
+                                    sigma=step.parameters{1};
+                                    relThreshold=step.parameters{2};
                                 else
                                     sigma=this.defaultSWSigma;
                                     relThreshold=this.defaultSWrelThreshold;
@@ -103,8 +101,8 @@ classdef plan<handle
                                 curSupport=imfill(curSupport,'holes');
                                 
                             case 'loosen'
-                                if length(step.parameters)==1
-                                    value=step.parameters(1);
+                                if length(step.parameters)==1&&isscalar(step.parameters{1})
+                                    value=step.parameters{1};
                                 else
                                     value=this.defaultLoosenVal;
                                 end
@@ -134,12 +132,53 @@ classdef plan<handle
                                 end;
                                 drawnow;
                                 
-                            otherwise
+                            case 'writeFrame'
+                                %filename
+                                if length(step.parameters)>=1&&ischar(step.parameters{1})
+                                    filename=step.parameters{1};
+                                else
+                                    filename='animation.gif';
+                                end
                                 
+                                im=curImage;
+                                %ER
+                                if (length(step.parameters)>=2&&isscalar(step.parameters{2})&&step.parameters{2})
+                                    for n=1:20;im=recon.iterations.ER(amplitude, im, curSupport,mask );end
+                                end
+                               
+                                
+                                %cut
+                                if (length(step.parameters)>=3&&isscalar(step.parameters{3})&&all(step.parameters{3}<=size(im)))
+                                    im=im(end/2-step.parameters{3}/2+1:end/2+step.parameters{3}/2,end/2-step.parameters{3}/2+1:end/2+step.parameters{3}/2);
+                                end
+                                
+                                %scale
+                                im=abs(im);
+                                im=im-min(im(:));
+                                im=uint8(gather(floor(im./max(im(:))*255)));
+                                
+                                %write
+                                cm=flipud(gray(256));
+                                if ~exist('framewritten','var');
+                                    imwrite(im,cm,filename,'gif', 'Loopcount',0,'DelayTime',1);
+                                    framewritten=true;
+                                else
+                                    imwrite(im,cm,filename,'gif','WriteMode','append','DelayTime',.2);
+                                end
+                                figure(999);
+                                subplot(2,1,1);imagesc(im);colormap(cm);
+                                subplot(2,1,2);imagesc(curSupport);drawnow;
+                            otherwise
                                 warning('unknown step');
                         end
                     end
-                    if (calcErrors&&size(start,3)==1);fprintf('%.1f%% done, error:%.2f\n',nplan/length(this)*100,curErrors(nerror-1));end;
+                    if size(start,3)==1;
+                        if (calcErrors)
+                            fprintf('%.1f%% done, error:%.2f\n',nplan/length(this)*100,curErrors(nerror-1))
+                        else
+                            fprintf('%.1f%% done\n',nplan/length(this)*100)
+                        end
+                    end
                 end
                 fprintf('%.1f%% done\n',nstart/size(start,3)*100);
                 reconImage(:,:,nstart)=gather(curImage);
