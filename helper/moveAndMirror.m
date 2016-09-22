@@ -10,6 +10,7 @@ function  out  = moveAndMirror( fixed,moving )
     
     if maxXcorr(Nfixed,Nrotated)>maxXcorr(Nfixed,Nmoving)
         moving=rot90(moving,2);
+        Nmoving=rot90(Nmoving,2);
     end
     out=imwarp(gather(moving),imregcorr(Nmoving,Nfixed,'translation'),'OutputView',imref2d(size(Nfixed)));
 end
