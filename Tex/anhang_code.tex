@@ -1,5 +1,5 @@
 \chapter{Programmüberblick}
-Überblick über die erstellten Matlab-Funktionen. Der vollständige Programmcode ist unter XXX abrufbar.
+Überblick über die wichtigsten erstellten Matlab-Funktionen. Der vollständige Programmcode ist unter XXX abrufbar.
  
 %\subsection*{Hilfsfunktionen}
 %\begin{description}[style=nextline]
@@ -10,25 +10,52 @@
 %\end{description}
 \subsection*{Erzeugung von Objekten}
 \subsection*{Simulation}
-\begin{description}[style=nextline]
-	\item [\textit{[theta,Intensity,S1,S2]=\textsc{mie}(lambda,radius,beta,delta,steps)}]
-		Intensität in Mie Streuung unpolarizierten Lichtes an Sphäre mit Radius 'radius' (in nm)
-		und Brechzahl n=1-delta+ibeta bei Wellenlänge lambda (in nm), ausgewertet in
-		'steps' linearen Schritten des Winkels theta)
-\end{description}
-\begin{description}[style=nextline]
-	\item [\textit{[out]=\textsc{msft}(wavelength,objects,N,dx,gpu)}]
-\end{description}
-\begin{description}[style=nextline]
-	\item [\textit{[out]=\textsc{multislice}(wavelength,objects,N,dx,gpu)}]
-\end{description}
-\begin{description}[style=nextline]
-	\item [\textit{[out]=\textsc{thibault}(wavelength,objects,N,dx,gpu)}]
-\end{description}
 
+
+\begin{description}[style=nextline]
+	\item [\texttt{\textit{[theta,Intensity,S1,S2]}=mie\textit{(lambda,radius,beta,delta,steps)}}]
+		Intensität in Mie Streuung unpolarizierten Lichtes an Sphäre mit Radius \textit{radius} (in nm) und Brechzahl n=1-\textit{delta}+i\textit{beta} bei Wellenlänge \textit{lambda} (in nm), ausgewertet in \textit{steps} linearen Schritten des Winkels \textit{theta})
+
+	\item [\texttt{\textit{[scatter]}=msft\textit{(lambda,objects,N,dx,dz,gpu,sim\_absorption)}}]
+		Streubild nach MSFT bei Wellenlänge \textit{lambda} (in nm) der Objekte im cell-array \textit{objects} berechnet mit \textit{N}x\textit{N} Punkten im Abstand \textit{dx} pro Schicht im Abstand \textit{dz}. Ist der optionale Parameter \textit{sim\_absorption} wahr, wird eine grobe Näherung für Absorption durchgeführt.
+		
+	\item [\texttt{\textit{[exitwave]}=multislice\textit{(lambda,objects,N,dx,dz,gpu)}}]
+		Austrittswelle nach Multislice Beam Propagation.
+		
+	\item [\texttt{\textit{[exitwave]}=thibault\textit{(lambda,objects,N,dx,gpu)}}]
+		Austrittswelle nach Thibaults Multislice.
+		
+\end{description}
 
 
 \subsection*{Rekonstruktion}
+
+	
+\begin{description}[style=nextline]
+	
+	\item [\texttt{\textit{[]}=SupportGeneric\textit{()}}]
+		Erzeugt aus einem aufgenommen Streubild den Support und das Startbild
+	
+	\item [\texttt{\textit{[]}=SupportHolo\textit{()}}]
+		Erzeugt aus einem mit Holographie aufgenommen Streubild den Support und das Startbild
+	
+	\item [\texttt{recon.Plan}] Klasse für iterative Phasenrekonstruktion. 
+	\begin{description}[style=nextline]
+		\item [\texttt{addStep\textit{(step,iterations,\{parameters\})}}]
+		Schritt zur Rekonstruktion hinzufügen. Unterstützte Schritte:
+		\begin{description}
+			\item[\texttt{er, errp, hio, raar}] ER bzw ER mit postiv-realer Einschränkung
+			\item[\texttt{hio, raar}] HIO bzw. RAAR. Parameter: $\beta$
+			\item[\texttt{sw}] Shrinkwrap Suppotverfeinerung
+			\item[\texttt{loosen}] Support erweitern. Parameter: Radius Gaussfilter, Schwellenwert
+			\item[\texttt{untwin}] Fienups Ansatz zur Lösung des Zwillingsproblems duchführen
+			\item[\texttt{noise}] Rauschen zum Realraum Bild hinzufügen
+			\item[\texttt{show}] Aktuellen Stand anzeigen
+			\item[\texttt{writeFrame}] Aktuelles Realraumbild in animierte GIF schreiben. Parameter: Dateiname
+		\end{description}	
+	\end{description}
+\end{description}
+
 \begin{comment}
 
 
