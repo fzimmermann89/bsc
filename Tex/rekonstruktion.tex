@@ -167,6 +167,12 @@ Sowohl für die Entfaltung wie auch für die festlegung des Supports für die it
 	\caption[2D Rekonstruktion: Referenz]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem andren Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung.}
 \end{figure}
 \section{Rekonstruktion einer 3D Austrittswelle}
-Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem dreidimensionalen Objekt eingesetzt werden. Die Dreidimensionalität des Objektes wird an dieser Stelle ignoriert und die Austrittswelle analog zu den 2D-Bildern betrachtet.
+Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem dreidimensionalen Objekt eingesetzt werden. Die Dreidimensionalität des Objektes wird an dieser Stelle ignoriert und die Austrittswelle analog zu den 2D-Bildern betrachtet (\fref{fig:recon3d})
 
-	
+\begin{figure}
+		\includegraphics[width=\textwidth]{images/recon3d.png}
+	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle XX. Dargestellt ist jeweils der Betrag der Abweichung von der einfallenden Wellen. Links oben das optimale Ergebnis zum Vergleich, rechts oben die Rekonstruktion mittels iterativer Rekonstruktion und Shrinkwrap, links unten mittels Entfaltung, rechts unten das Ergebnis nach iterativer Phasenrekonstruktion mit Holographie}
+	\label{fig:recon3d}
+\end{figure}	
+Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz alleine durchgeführt. Dies setzt immernoch eine vollständig bekannte Referenz vorraus, trotzdem leidet das deutlich unter der irregulären Referenz. Die iterative Phasenrekonstruktion leidet sichtbar unter Zwillingsbildern, dieses Problem kann durch die Kombination von iterativer Phasenrekonstruktion und Holographie Umgangen werden. 
+Aus der so rekonstruierten komplexen Austrittswelle der Szene ließe sich durch Rückpropagation direkt hinter das Objekt die Schärfe steigern (XXX Toli MA).
