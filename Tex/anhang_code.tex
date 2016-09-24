@@ -15,7 +15,10 @@
 \begin{description}[style=nextline]
 	\item [\texttt{\textit{[theta,Intensity,S1,S2]}=mie\textit{(lambda,radius,beta,delta,steps)}}]
 		Intensität in Mie Streuung unpolarizierten Lichtes an Sphäre mit Radius \textit{radius} (in nm) und Brechzahl n=1-\textit{delta}+i\textit{beta} bei Wellenlänge \textit{lambda} (in nm), ausgewertet in \textit{steps} linearen Schritten des Winkels \textit{theta})
-
+		
+	\item [\texttt{\textit{[scatter]}=mie\_scatter\textit{(lambda,radius,beta,delta,N,dx,offset)}}]
+		Streubild nach Mie mit \textit{N}x\textit{N} Punkten und Realraumauflösung \textit{dx}.
+		
 	\item [\texttt{\textit{[scatter]}=msft\textit{(lambda,objects,N,dx,dz,gpu,sim\_absorption)}}]
 		Streubild nach MSFT bei Wellenlänge \textit{lambda} (in nm) der Objekte im cell-array \textit{objects} berechnet mit \textit{N}x\textit{N} Punkten im Abstand \textit{dx} pro Schicht im Abstand \textit{dz}. Ist der optionale Parameter \textit{sim\_absorption} wahr, wird eine grobe Näherung für Absorption durchgeführt.
 		
