@@ -20,7 +20,7 @@ function [out,angles,exitwave]=exitwave2scatter(exitwave,dx,wavelength,padhalf,p
     if padcut
         exitwave=exitwave(1+1/4*end:3/4*end,1+1/4*end:3/4*end);
     end
-%     exitwave=normalize2(exitwave);%,~isnan(angles));
+%     exitwave=normalize(exitwave);%,~isnan(angles));
     out=abs(exitwave).^2;
     if padhalf
         out=(halfimage(out));
