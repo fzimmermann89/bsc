@@ -25,7 +25,7 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
     
     %do ifft2 as reconstruction
     recon=((ift2(scatterImage.*softmask)));
-    refImage=(maskfilter(refImage,softmask,size(refImage)*1.5));
+    refImage=(maskfilter(double(refImage),softmask,size(refImage)*1.5));
     
     reconAbs=abs(recon);
     

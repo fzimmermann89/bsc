@@ -4,8 +4,6 @@ close all;
 addpath('reconstruction');
 addpath('simulation');
 addpath('helper');
-g=gpuDevice(1);
-
 
 %% settings
 refError=1.0;
@@ -22,10 +20,14 @@ outputfilename=sprintf('%s/recon3d-%s.png',outpath,caption);
 
 %% Prepare Input
 [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHolo,input]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
+
 %move to gpu
-mask=gpuArray(mask);
-scatterImageHolo=gpuArray(scatterImageHolo);
-scatterImage=gpuArray(scatterImage);
+if parallel.gpu.GPUDevice.isAvailable
+    gpu=gpuDevice(1);
+    mask=gpuArray(mask);
+    scatterImageHolo=gpuArray(scatterImageHolo);
+    scatterImage=gpuArray(scatterImage);
+end
 
 
 %% use Holography and IPR
