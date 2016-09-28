@@ -9,6 +9,9 @@
 %		GPU-optimierte Version von fftshift(ifft2(fftshift(data))) für grade N
 %\end{description}
 \subsection*{Erzeugung von Objekten}
+\begin{description}[style=nextline]
+\item[scatterObjects]
+\end{description}
 \subsection*{Simulation}
 
 
@@ -27,6 +30,9 @@
 		
 	\item [\texttt{\textit{[exitwave]}=thibault\textit{(lambda,objects,N,dx,gpu)}}]
 		Austrittswelle nach Thibaults Multislice.
+		
+			\item [\texttt{\textit{[scatter}=exitwave2scatter\textit{(exitwave,lambda,dx)}}]
+			Streubild aus Austrittswelle
 		
 \end{description}
 
