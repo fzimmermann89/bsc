@@ -6,23 +6,26 @@ addpath('simulation');
 addpath('helper');
 g=gpuDevice(1);
 
+
 %% settings
-caption='test';
-outpath='./Tex/images';
-inputfilename='./sim.mat';
-outputfilename=sprintf('%s/recon3d-%s.png',outpath,caption);
 refError=1.0;
 maskScale=0/2048;%32%64 %.02%.03%.1%.03%.03%.1%0.03%.1;
 sigmaMask=24;%32;
 discreteBits=0;%15;
 wienernoise=1e6;%100;
-%% Prepare Input
-  [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHolo,input]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
-%move to gpu
- mask=gpuArray(mask);
- scatterImageHolo=gpuArray(scatterImageHolo);
- scatterImage=gpuArray(scatterImage);
 
+caption='test';
+outpath='./Tex/images';
+inputfilename='./sim.mat';
+outputfilename=sprintf('%s/recon3d-%s.png',outpath,caption);
+
+
+%% Prepare Input
+[scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHolo,input]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
+%move to gpu
+mask=gpuArray(mask);
+scatterImageHolo=gpuArray(scatterImageHolo);
+scatterImage=gpuArray(scatterImage);
 
 
 %% use Holography and IPR
@@ -45,25 +48,22 @@ planHolo.addStep('show');
 
 %% use IPR with Shrinkwrap
 %support and start
- [start,support]=genericSupport(scatterImage,softmask);
+[start,support]=genericSupport(scatterImage,softmask);
 
 %Plan
 planSW=recon.plan();
-
-for n=1:20%40
+for n=1:40%40
     planSW.addStep('hio',50);
     planSW.addStep('er',5);
-     planSW.addStep('sw',1,[10,0.025]);
+    planSW.addStep('sw',1,{10,0.03});
     planSW.addStep('show')
 end
-
-planSW.addStep('loosen',1,10)
+planSW.addStep('loosen',1,{10})
 planSW.addStep('show')
-
-for n=1:10%20
+for n=1:20%20
     planSW.addStep('hio',200);
     planSW.addStep('er',1);
-     planSW.addStep('show');
+    planSW.addStep('show');
 end
 planSW.addStep('er',50);
 planSW.addStep('show');
@@ -77,14 +77,9 @@ planSW.addStep('show');
 %         [result,images,errors]=planSW.runAvg(scatterImage,support,multistart,mask,ceil(multi/2));
 [resultSW]=planSW.run(scatterImage,support,start,mask);
 
-figure(999);
-fresultSW=maskfilter(abs(resultSW),abs(softmask));
-imagesc(abs(fresultSW));
-colormap(flipud(colormap(gray)));
-drawnow;
+
 %% wiener deconvolution
 %get cross correlation
-
 [~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',.2,'radDilate',20);
 %and filtered (guessed) Reference
 refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
@@ -93,11 +88,7 @@ refImagePadded=pad2size(refImageFiltered,size(scatterImageHolo));
 %deconvolution
 resultDeconv=wiener(crossPadded,refImagePadded,wienernoise);
 
-figure(wienernoise);
-fresultDeconv=maskfilter(resultDeconv,softmask);
-imagesc(abs(fresultDeconv));
-colormap(flipud(colormap(gray)));
-drawnow;
+
 %% plot results
 finput=maskfilter(input,softmask);
 fresultSW=maskfilter(resultSW,softmask);
@@ -106,7 +97,6 @@ fresultDeconv=maskfilter(resultDeconv,softmask);
 
 move=@(x)moveAndMirror(abs(finput),abs(x));
 cut=@(x)x(end/2-end/4:end/2+end/4+1,end/2-end/4:end/2+end/4+1);
-
 
 f=figure();
 delim=32;
@@ -155,4 +145,4 @@ f.PaperPositionMode='manual';
 f.PaperPosition=[0,0,(2*pixel+delim)/150,(2*pixel+delim)/150];
 f.PaperSize=[(2*pixel+delim)/150, (2*pixel+delim)/150];
 f.Resize='off';
- print(outputfilename,'-dpng','-r150');
+print(outputfilename,'-dpng','-r150');

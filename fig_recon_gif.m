@@ -2,7 +2,10 @@ clear all;
 close all;
 
 addpath('reconstruction');
+addpath('simulation');
+addpath('helper');
 g=gpuDevice(1);
+
 
 %% settings
 refRadius=40;
@@ -11,6 +14,7 @@ maskScale=16/2048;
 sigmaMask=24;
 discreteBits=16;
 wienernoise=1000;
+
 caption='TU-mask16bit16error1.01';
 outpath='./animation';
 inputfilename='./reconstruction/input/input_tu2.png';
@@ -19,13 +23,13 @@ outputfilenameFiltered=sprintf('%s/recon2d-filtered-%s.png',outpath,caption);
 filenameSW=sprintf('%s/animationSW-%s.gif',outpath,caption);
 filenameHolo=sprintf('%s/animationHolo-%s.gif',outpath,caption);
 
+
 %% Prepare Input
 [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHolo,input]=prepareInput_sim(inputfilename,refRadius,refError,maskScale,sigmaMask,discreteBits);
 %move to gpu
 mask=gpuArray(mask);
 scatterImageHolo=gpuArray(scatterImageHolo);
 scatterImage=gpuArray(scatterImage);
-
 
 
 %% use Holography and IPR
@@ -54,7 +58,6 @@ planHolo.addStep('writeFrame',1,{filenameHolo,false,1280});
 
 %Plan
 planSW=recon.plan();
-
 for n=1:50
     planSW.addStep('hio',45);
     planSW.addStep('errp',4);
@@ -62,20 +65,18 @@ for n=1:50
     planSW.addStep('writeFrame',1,{filenameSW,false,1280});   
 end
 planSW.addStep('loosen',1,{5})
-
 for n=1:15
     planSW.addStep('hio',49);
     planSW.addStep('er',1);
     planSW.addStep('writeFrame',1,{filenameSW,false,1280});
     planSW.addStep('hio',49);
     planSW.addStep('writeFrame',1,{filenameSW,false,1280});
-
 end
 planSW.addStep('er',100);
 planSW.addStep('writeFrame',1,{filenameSW,false,1280});
 
-
 [resultSW]=planSW.run(scatterImage,support,start,mask);
+
 
 %% wiener deconvolution
 %get cross correlation
@@ -91,7 +92,6 @@ resultDeconv=wiener(crossPadded,refImagePadded,wienernoise);
 %% plot results 
 move=@(x)moveAndMirror(abs(input),abs(x));
 cut=@(x)x(end/2-end/8:end/2+end/8+1,end/2-end/8:end/2+end/8+1);
-
 
 f=figure();
 delim=32;
@@ -150,7 +150,6 @@ fresultDeconv=maskfilter(resultDeconv,softmask);
 
 move=@(x)moveAndMirror(abs(finput),abs(x));
 cut=@(x)x(end/2-end/4:end/2+end/4+1,end/2-end/4:end/2+end/4+1);
-
 
 f=figure();
 delim=32;

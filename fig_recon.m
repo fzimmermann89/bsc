@@ -2,7 +2,10 @@ clear all;
 close all;
 
 addpath('reconstruction');
+addpath('simulation');
+addpath('helper');
 g=gpuDevice(1);
+
 
 %% settings
 refRadius=40;
@@ -11,10 +14,12 @@ maskScale=16/2048;%32%64 %.02%.03%.1%.03%.03%.1%0.03%.1;
 sigmaMask=24;%32;
 discreteBits=16;%15;
 wienernoise=1000;%100;
+
 caption='mask16bit16error05';
 outpath='./Tex/images';
 inputfilename='./reconstruction/input/input_tu2.png';
 outputfilename=sprintf('%s/recon2d-%s.png',outpath,caption);
+
 
 %% Prepare Input
 [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHolo,input]=prepareInput_sim(inputfilename,refRadius,refError,maskScale,sigmaMask,discreteBits);
@@ -22,7 +27,6 @@ outputfilename=sprintf('%s/recon2d-%s.png',outpath,caption);
 mask=gpuArray(mask);
 scatterImageHolo=gpuArray(scatterImageHolo);
 scatterImage=gpuArray(scatterImage);
-
 
 
 %% use Holography and IPR
@@ -49,21 +53,18 @@ planHolo.addStep('show');
 
 %Plan
 planSW=recon.plan();
-
 for n=1:60
     planSW.addStep('hio',95);
     planSW.addStep('errp',5);
-    planSW.addStep('sw',1,[5,0.025]);
+    planSW.addStep('sw',1,{5,0.025});
     planSW.addStep('show')
 end
-
-planSW.addStep('loosen',1,5)
+planSW.addStep('loosen',1,{5})
 planSW.addStep('show')
-
 for n=1:30
     planSW.addStep('hio',300);
     planSW.addStep('er',1);
-     planSW.addStep('show');
+    planSW.addStep('show');
 end
 planSW.addStep('er',50);
 planSW.addStep('show');
@@ -77,14 +78,9 @@ planSW.addStep('show');
 %         [result,images,errors]=planSW.runAvg(scatterImage,support,multistart,mask,ceil(multi/2));
 [resultSW]=planSW.run(scatterImage,support,start,mask);
 
-figure(999);
-fresultSW=maskfilter(abs(resultSW),abs(softmask));
-imagesc(abs(fresultSW));
-colormap(flipud(colormap(gray)));
-drawnow;
+
 %% wiener deconvolution
 %get cross correlation
-
 [~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',.2,'radDilate',20);
 %and filtered (guessed) Reference
 refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
@@ -93,11 +89,6 @@ refImagePadded=pad2size(refImageFiltered,size(scatterImageHolo));
 %deconvolution
 resultDeconv=wiener(crossPadded,refImagePadded,wienernoise);
 
-figure(wienernoise);
-fresultDeconv=maskfilter(resultDeconv,softmask);
-imagesc(abs(fresultDeconv));
-colormap(flipud(colormap(gray)));
-drawnow;
 %% plot results
 finput=maskfilter(input,softmask);
 fresultSW=maskfilter(resultSW,softmask);
@@ -106,7 +97,6 @@ fresultDeconv=maskfilter(resultDeconv,softmask);
 
 move=@(x)moveAndMirror(finput,x);
 cut=@(x)x(end/2-end/8:end/2+end/8+1,end/2-end/8:end/2+end/8+1);
-
 
 f=figure();
 delim=32;
@@ -155,4 +145,4 @@ f.PaperPositionMode='manual';
 f.PaperPosition=[0,0,(2*pixel+delim)/150,(2*pixel+delim)/150];
 f.PaperSize=[(2*pixel+delim)/150, (2*pixel+delim)/150];
 f.Resize='off';
- print(outputfilename,'-dpng','-r150');
+print(outputfilename,'-dpng','-r150');
