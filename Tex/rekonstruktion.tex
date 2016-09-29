@@ -62,7 +62,7 @@ aufgefasst werden. Der analoge Projektor für die Erfüllung der Nebenbedingung 
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\textwidth]{images/projektor.eps}
+	\includegraphics[width=1\textwidth]{images/projektor.pdf}
 	\caption[Projektoren]{Verwendete Projektoren: Der Support Projektor $P_S$ projiziert auf die durch den Support beschriebene Mannigfaltigkeit, $P_{\bar{S}}$ auf das Komplement. Ein Reflektor wendet die doppelte Schrittweite wie ein Projektor an und stellt somit eine Spiegelung an der Lösungsmenge der Nebenbedingung dar. Der Fourier-Projektor stellt in Fourierraum eine Projektion auf die kreisförmige Menge der bekannten Amplituden dar.}
 	\label{fig:projektoren}
 \end{figure}
@@ -75,21 +75,31 @@ In dieser Schreibweise können auch Weiterentwicklungen wie der Hybrid Input Out
 Ein Rauschen im Fourierraum, wie unvermeidbar bei der Rekonstruktion aus aufgenommenen Streubildern, bewirkt, dass keine eindeutige, exakte Lösung existieren muss, sondern nur die ein globales Minumum aufgefunden werden kann. 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\textwidth]{images/algorithmen.eps}
+	\includegraphics[width=1\textwidth]{images/algorithmen.pdf}
 	\caption[Rekonstruktionsalgorithmen]{Darstellung der Algorithmen ER, RAAR und HIO. Bei ER findet eine abwechselnde Projektion auf die Lösungsmengen der Nebenbedinungen statt. Bei ER und HIO ist der einzelne Iterationsschritt komplexer und abhängig von einem Parameter $\beta$. Abbildung für ER und HIO nach \cite{marchesini2007}, für RAAR siehe Anhang.}
 	\label{fig:recon}
 \end{figure} 
 \subsection{Support}
 Üblicherweise ist der Bereich auf den das Objekt im Realraum beschränkt ist nicht bekannt, der für die iterativen Rekonstruktionsalgorithmen benötigten Supports muss zunächst bestimmt werden. Hierfür existieren verschiedene Möglichkeiten. Die triviale Methode besteht aus einer Festlegung aus zuvor bekannten Dimensionen des Experiments. Jedoch kann nur in Ausnahmefällen so der Support ausreichend eng gewählt werden um die Bedingung XXX zur erfüllen.
 Eine verbreitete Methode, bezeichnet als Shrink-Wrap Algorithmus, ist durch eine Anpassung des Supports während der Rekonstruktion gekennzeichnet: Der zunächst geratene (für eine eindeutige Lösung des Problems  zu große) Support wird nach einer festgelegten Anzahl an Rekonstruktionsiterationen auf den Bereich beschränkt, in dem die Rekonstruierte Intensität höher als ein festgelegter Schwellwert ist. Dieser aktualisierte Support wird für weitere Iterationen genutzt und erneut aktualisiert\cite{marchesini2003}.
-Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Der nötige Abstandsvektor dieser Supportteile ist der  Abstandsvektor zwischen Auto- und Kreuzkorrelation (XXX).
+Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (XXX).
 
 \begin{figure}
 	\centering
-	\includegraphics[width=.9\textwidth]{images/support.eps}
-	\caption[Supportgenerierung]{Erzeugung des Supports. Oben: Bei verwendung von Freiflug Holographie kann die Kreuzkorrelation aus Referenz und Objekt als Support genutzt werden. Zusätzlich muss im gleichen Abstand wie Kreuz und Autokorrelation die Referenz dem Support hinzugefügt werden. Unten: Der Shrinkwrap Alorithmus beginnt mit der Autokorrelation als initalem Support und passt diesen im laufe der Rekonstruktion an.}
+	\begin{subfigure}[b]{0.9\textwidth}
+		\includegraphics[width=\textwidth]{images/support_holo.pdf}
+		\caption{Holographie}
+	\end{subfigure}\\
+
+	\begin{subfigure}[b]{0.9\textwidth}
+		\includegraphics[width=\textwidth]{images/support_sw.pdf}
+		\caption{Shrinkwrap}	
+	\end{subfigure}
+	
+	\caption[Supportgenerierung]{Erzeugung des Supports. Bei Verwendung von Holographie kann die Kreuzkorrelation aus Referenz und Objekt als Support genutzt werden. Zusätzlich muss im gleichen Abstand wie Kreuz und Autokorrelation die Referenz dem Support hinzugefügt werden. Der Shrinkwrap Algorithmus beginnt mit der Autokorrelation als initialem Support und passt diesen im laufe der Rekonstruktion an.}
 	\label{fig:support}
 \end{figure} 
+
 \subsection{Eindeutigkeit der Lösung}
 Das Problem der iterativen Phasenrekonstruktion ist, dass die Algorithmen keine eindeutige Lösung bereitstellen. Neben der Möglichkeit, dass die Algorithmen in einem lokalen Minimum stagnieren und dieses nicht verlassen, existiert eine weitere Quelle der Unsicherheit: Das sogenannte Zwillingsbild-Problem. Da nach \fref{eq:zwilling} das Bild $f(x,y)$ und das komplex konjugierte, punktgespiegelte "`Zwillingsbild"'  $f^*(-x,-y)$ den gleichen Betrag der Fouriertransformation besitzen, sind beides Lösungen des Problems.
 \begin{equation}
