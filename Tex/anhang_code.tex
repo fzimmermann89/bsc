@@ -8,11 +8,39 @@
 %	\item [\textit{[data]=\textsc{ift2}(data)}]
 %		GPU-optimierte Version von fftshift(ifft2(fftshift(data))) für grade N
 %\end{description}
-\subsection*{Erzeugung von Objekten}
-\begin{description}[style=nextline]
-	\item[scatterObjects]
-\end{description}
 \subsection*{Simulation}
+\begin{description}
+	\item[scatterObjects]Erzeugung von Streuobjekten
+	\begin{description}
+		\item[\texttt{.cube}] Würfel
+		\item[\texttt{.dodecahedron}] Dodekaeder
+		\item[\texttt{.icosahedron}] Ikosaeder
+		\item[\texttt{.octahedron}] Oktaeder
+		\item[\texttt{.tetrahedron}] Tetraeder
+		\item[\normalfont Eigenschaften:]$ $
+		\begin{description}
+			\item[\texttt{beta,delta,radius,positionX/Y/Z,rotationX/Y/Z}]
+		\end{description}
+		
+		\item[\texttt{.sphere}] Kugel
+		\item[\normalfont Eigenschaften:]$ $
+		\begin{description}
+			\item[\texttt{beta,delta,radius,positionX/Y/Z}]
+		\end{description}
+		
+		\item[\texttt{.matrix}] aus Matlab-Matrix laden. Keine weiteren Eigenschaften.
+		\item[\normalfont Funktion aller Streuobjekte:]$ $
+			\begin{description}
+				\item[\texttt{\textit{[getSlice]}=prepareSliceMethod\textit{(this,N,dx,gpu)})}] Gibt eine \texttt{getSlice} Funktion initialisiert für die räumliche Auflösung \textit{dx} und \textit{N}x\textit{N} Pixel des Streuobjektes zurück
+				\begin{description}
+					\item [\texttt{\textit{[slice]}=getSlice\textit{(this,z)}}] Die bei \textit{z} liegende Schicht des Streuobjektes
+				\end{description}
+				
+				\item[\texttt{\textit{[matrix]}=toMatrix\textit{(objects,N,dx,gpu)}}] Logische \textit{N}x\textit{N}x\textit{N} Matrix der Streuobjekte \textit{objects}
+				\item[\texttt{\textit{[projection]}=projection\textit{(objects,N,dx,gpu)}}] Projektion der Streuobjekte \textit{objects}.
+			\end{description}
+	\end{description}	
+\end{description}
 
 
 \begin{description}[style=nextline]
@@ -32,7 +60,7 @@
 	Austrittswelle nach Thibaults Multislice.
 			
 	\item [\texttt{\textit{[scatter}=exitwave2scatter\textit{(exitwave,lambda,dx)}}]
-	      Streubild aus Austrittswelle
+	Streubild aus Austrittswelle
 	      		
 \end{description}
 
@@ -50,7 +78,7 @@
 		
 	\item [\texttt{recon.Plan}] Klasse für iterative Phasenrekonstruktion. 
 	\begin{description}[style=nextline]
-		\item [\texttt{addStep\textit{(step,iterations,\{parameters\})}}]
+		\item [\texttt{addStep\textit{(this,step,iterations,\{parameters\})}}]
 		Schritt zur Rekonstruktion hinzufügen. Unterstützte Schritte:
 		\begin{description}
 			\item[\texttt{er, errp, hio, raar}] ER bzw ER mit postiv-realer Einschränkung
@@ -61,8 +89,11 @@
 			\item[\texttt{noise}] Rauschen zum Realraum Bild hinzufügen
 			\item[\texttt{show}] Aktuellen Stand anzeigen
 			\item[\texttt{writeFrame}] Aktuelles Realraumbild in animierte GIF schreiben. Parameter: Dateiname
-		\end{description}	
+		\end{description}
+		\item[\texttt{\textit{[reconImage,errors]}=run\textit{(this,scatterImage,support,start,mask)}}]	Rekonstruktion des Streubildes \textit{scatterImage} mit \textit{support} durchführen. Ist \textit{start} eine NxNxA Matrix werden A unabhängige Rekonstruktionen durchgeführt. Nur in \textit{mask} wahre Bereiche des Streubildes werden beachtet. Werden zwei Ausgabevariablen genutzt, werden die Realraumfehler mit berechnet.
+		\item[\texttt{\textit{[avg,recons,errors]}=runAvg\textit{(this,scatterImage,support,start,mask,useOnlyBest)}}]	Führt je nach Größe der dritten Dimension von \textit{start} eine Anzahl unabhängige Rekonstruktionen durch und nutzt die \textit{useOnlyBest} (optional) am besten übereinstimmenden Rekonstruktionen um einen Mittelwert nach Korrektur von Spiegelung und Translation zu berechnen.
 	\end{description}
+	\item [\texttt{\textit{[deconvolution]} = wiener\textit{(input,h,noise)}}] Wiener-Entfaltung des komplexen \textit{input} mit \textit{h} unter Berücksichtigung des Rauschspektrums oder skalaren Wertes \textit{noise}.
 \end{description}
 
 \begin{comment}
