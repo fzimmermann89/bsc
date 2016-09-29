@@ -170,8 +170,9 @@ Sowohl für die Entfaltung wie auch für die festlegung des Supports für die it
 Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem dreidimensionalen Objekt eingesetzt werden. Die Dreidimensionalität des Objektes wird an dieser Stelle ignoriert und die Austrittswelle analog zu den 2D-Bildern betrachtet (\fref{fig:recon3d})
 
 \begin{figure}
-		\includegraphics[width=\textwidth]{images/recon3d.png}
-	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle XX. Dargestellt ist jeweils der Betrag der Abweichung von der einfallenden Wellen. Links oben das optimale Ergebnis zum Vergleich, rechts oben die Rekonstruktion mittels iterativer Rekonstruktion und Shrinkwrap, links unten mittels Entfaltung, rechts unten das Ergebnis nach iterativer Phasenrekonstruktion mit Holographie}
+	\centering
+\quadimage{[width=.75\textwidth,trim=30 30 30 30,clip]{images/recon3d.png}}
+	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle XX. Dargestellt ist jeweils der Betrag der Abweichung von der einfallenden Wellen. a) optimale Ergebnis zum Vergleich, b) die Rekonstruktion mittels iterativer Rekonstruktion und Shrinkwrap, c) mittels Entfaltung, d) das Ergebnis nach iterativer Phasenrekonstruktion mit Holographie}
 	\label{fig:recon3d}
 \end{figure}	
 Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz alleine durchgeführt. Dies setzt immernoch eine vollständig bekannte Referenz vorraus, trotzdem leidet das deutlich unter der irregulären Referenz. Die iterative Phasenrekonstruktion leidet sichtbar unter Zwillingsbildern, dieses Problem kann durch die Kombination von iterativer Phasenrekonstruktion und Holographie Umgangen werden. 

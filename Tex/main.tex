@@ -112,7 +112,16 @@ pdfauthor={Felix Frederik Zimmermann}
 \usepackage{xcolor}
 \include{pygments}
 
-
+%%text über bilder
+\usepackage[percent]{overpic}
+\newcommand{\quadimage}[1]{
+	\begin{overpic}#1
+		\put (0,100)  {\bf \small (a)}
+		\put (50,100) {\bf \small (b)}
+		\put (0,50)   {\bf \small (c)}
+		\put (50,50)  {\bf \small (d)}
+	\end{overpic}
+}
 
 %%%%%%%%%%%%%%%%%   BEGINN  %%%%%%%%%%%%%%%%%%
 \begin{document}
