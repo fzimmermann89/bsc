@@ -7,7 +7,7 @@ Angenommen neben dem Objekt, über das Informationen gewonnen werden sollen befi
 \end{equation}
 mit $O$,$R$ den Austrittswellen von Objekt und Referenz. Für die aufgenommene Intensität $I$ im Fernfeld gilt
 \begin{equation}
-I=\left|\mathscr{F}\left[O\right]+\mathscr{F}\left[R\right]\right|^2=\left|\tilde{O}+\tilde{R}\right|^2
+	I=\left|\mathscr{F}\left[O\right]+\mathscr{F}\left[R\right]\right|^2=\left|\tilde{O}+\tilde{R}\right|^2
 \end{equation}
 Wird nun auf $I$ eine inverse Fouriertransformation angewendet,
 
@@ -16,11 +16,11 @@ Wird nun auf $I$ eine inverse Fouriertransformation angewendet,
 	\mathscr{F}^{-1}\left[\tilde{O}\tilde{O}^*\right]+
 	\mathscr{F}^{-1}\left[\tilde{R}\tilde{R}^*\right]+
 	\mathscr{F}^{-1}\left[\tilde{R}\tilde{O}^*\right]+
-		\mathscr{F}^{-1}\left[\tilde{O}\tilde{R}^*\right]
+	\mathscr{F}^{-1}\left[\tilde{O}\tilde{R}^*\right]
 \end{equation}
 so ergibt sich mit Hilfe der komplexen Konjugation der Fouriertransformation XX und des Korrelationstheorems XX
 \begin{equation}
-\mathscr{F}^{-1}[I]\propto \underbrace{O \otimes O + R\otimes R}_{\text{Autokorrelationen}}+\underbrace{R\otimes O+ O\otimes R}_{\text {Kreuzkorrelationen}}
+	\mathscr{F}^{-1}[I]\propto \underbrace{O \otimes O + R\otimes R}_{\text{Autokorrelationen}}+\underbrace{R\otimes O+ O\otimes R}_{\text {Kreuzkorrelationen}}
 \end{equation}
 Die Autokorrelationen, d.h. die Korrelation von Objekt und Objekt bzw Referenz mit Referenz liegen hierbei um den Ursprung des Koordinatensystems und können in jede Richtung maximal die doppelte Größe von Objekt bzw Referenz haben. Die Kreuzkorrelationen aus Objekt und Referenz sind punktsymmetrisch zum Ursprung und haben von diesem den gleichen Abstand wie Objekt- und Referenzaustrittswelle voneinander.
 Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjugierten Referenz bzw der Referenz mit einem gespiegelten, komplex konjugierten Objekt.  Ist die Referenz in guter Näherung punktförmig und lässt sich durch eine Delta-Funktion beschreiben, so ist die Kreuzkorrelation näherungsweise die Austrittswelle des Objektes. Somit können trotz der verlorenen Phaseninformationen die Austrittswelle des Objektes inklusiver der Phase wieder gewonnen werden. Dieses Verfahren wird als im weiteren als Fouriertransformations-Holografie (FTH) bezeichnet.
@@ -45,55 +45,55 @@ Ein zur Lösung der Problemstellung verwendeter Algorithmus, der Error-Reduction
 
 Das Erzwingen der Nebenbedienung im Realraum kann als Projektion auf die Lösungsmenge $S$ der Nebenbedingung  mit dem Komplement $\bar{S}$ durch den Projektor $P_s$ 
 
- \begin{align}
- P_s\rho (x)=\begin{cases}
- \rho (x)  &\text{für } x\in S\\
- \mathbb{0}  &\text{für }x\notin S
- \end{cases}&&
- P_{\bar{s}}\rho (x)=\begin{cases}
- \mathbb{0} &\text{für } x\in S\\
- \rho (x)   &\text{für }x\notin S
- \end{cases}
- \end{align}
+\begin{align}
+	P_s\rho (x)=\begin{cases}
+	\rho (x)  &\text{für } x\in S\\
+	\mathbb{0}  &\text{für }x\notin S
+	\end{cases} &   &   
+	P_{\bar{s}}\rho (x)=\begin{cases}
+	\mathbb{0} &\text{für } x\in S\\
+	\rho (x)   &\text{für }x\notin S
+	\end{cases}
+\end{align}
 aufgefasst werden. Der analoge Projektor für die Erfüllung der Nebenbedingung im Fourierraum, der im Fourierraum die Amplitude von $\tilde{\rho}$ durch die bekannte Amplitude $A(q)$ ersetzt und dabei den Winkel $\Phi\left(\tilde{\rho}\left(q\right)\right)$ beibehält lautet
 \begin{align}
-	\tilde{P}_m \tilde{\rho}(q)&=A(q)e^{i\Phi(\tilde{\rho})}&&P_m\rho(x)=\mathscr{F}^{-1}A(q)e^{i\Phi\left(\mathscr{F}\rho\left(x\right)\right)} \,.
+	\tilde{P}_m \tilde{\rho}(q) & =A(q)e^{i\Phi(\tilde{\rho})} &   & P_m\rho(x)=\mathscr{F}^{-1}A(q)e^{i\Phi\left(\mathscr{F}\rho\left(x\right)\right)} \,. 
 \end{align}
 
-	\begin{figure}
-		\centering
-		\includegraphics[width=1\textwidth]{images/projektor.eps}
-		\caption[Projektoren]{Verwendete Projektoren: Der Support Projektor $P_S$ projiziert auf die durch den Support beschriebene Mannigfaltigkeit, $P_{\bar{S}}$ auf das Komplement. Ein Reflektor wendet die doppelte Schrittweite wie ein Projektor an und stellt somit eine Spiegelung an der Lösungsmenge der Nebenbedingung dar. Der Fourier-Projektor stellt in Fourierraum eine Projektion auf die kreisförmige Menge der bekannten Amplituden dar.}
-		\label{fig:projektoren}
-	\end{figure}
-	Neben den Projektoren die, den Schritt $\rho\rightarrow (\mathbb{1}+(P-\mathbb{1}))\rho$ ausführen, können auch sogenannte Reflektoren mit doppelter Schrittweite
-	\begin{equation}
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{images/projektor.eps}
+	\caption[Projektoren]{Verwendete Projektoren: Der Support Projektor $P_S$ projiziert auf die durch den Support beschriebene Mannigfaltigkeit, $P_{\bar{S}}$ auf das Komplement. Ein Reflektor wendet die doppelte Schrittweite wie ein Projektor an und stellt somit eine Spiegelung an der Lösungsmenge der Nebenbedingung dar. Der Fourier-Projektor stellt in Fourierraum eine Projektion auf die kreisförmige Menge der bekannten Amplituden dar.}
+	\label{fig:projektoren}
+\end{figure}
+Neben den Projektoren die, den Schritt $\rho\rightarrow (\mathbb{1}+(P-\mathbb{1}))\rho$ ausführen, können auch sogenannte Reflektoren mit doppelter Schrittweite
+\begin{equation}
 	R_\nu= (\mathbb{1}+2(P-\mathbb{1}))=(2P_\nu-\mathbb{1})
-	\end{equation}
-	eingeführt werden.
+\end{equation}
+eingeführt werden.
 In dieser Schreibweise können auch Weiterentwicklungen wie der Hybrid Input Output (HIO) und Relaxed Averaged Alternating Reflections (RAAR) Algorithmus dargestellt werden (Anhang \ref{chap:anhang_algos}). Ihre Prinzip ist in \fref{fig:recon} graphisch dargestellt. Die Algorithmen unterscheiden sich bezüglich ihres Konvergenzverhaltens und insbesondere bezüglich ihrer Anfälligkeit für Stagnation in lokalen Minima. 
 Ein Rauschen im Fourierraum, wie unvermeidbar bei der Rekonstruktion aus aufgenommenen Streubildern, bewirkt, dass keine eindeutige, exakte Lösung existieren muss, sondern nur die ein globales Minumum aufgefunden werden kann. 
-	\begin{figure}
-		\centering
-		\includegraphics[width=1\textwidth]{images/algorithmen.eps}
-		\caption[Rekonstruktionsalgorithmen]{Darstellung der Algorithmen ER, RAAR und HIO. Bei ER findet eine abwechselnde Projektion auf die Lösungsmengen der Nebenbedinungen statt. Bei ER und HIO ist der einzelne Iterationsschritt komplexer und abhängig von einem Parameter $\beta$. Abbildung für ER und HIO nach \cite{marchesini2007}, für RAAR siehe Anhang.}
-		\label{fig:recon}
-	\end{figure} 
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{images/algorithmen.eps}
+	\caption[Rekonstruktionsalgorithmen]{Darstellung der Algorithmen ER, RAAR und HIO. Bei ER findet eine abwechselnde Projektion auf die Lösungsmengen der Nebenbedinungen statt. Bei ER und HIO ist der einzelne Iterationsschritt komplexer und abhängig von einem Parameter $\beta$. Abbildung für ER und HIO nach \cite{marchesini2007}, für RAAR siehe Anhang.}
+	\label{fig:recon}
+\end{figure} 
 \subsection{Support}
 Üblicherweise ist der Bereich auf den das Objekt im Realraum beschränkt ist nicht bekannt, der für die iterativen Rekonstruktionsalgorithmen benötigten Supports muss zunächst bestimmt werden. Hierfür existieren verschiedene Möglichkeiten. Die triviale Methode besteht aus einer Festlegung aus zuvor bekannten Dimensionen des Experiments. Jedoch kann nur in Ausnahmefällen so der Support ausreichend eng gewählt werden um die Bedingung XXX zur erfüllen.
 Eine verbreitete Methode, bezeichnet als Shrink-Wrap Algorithmus, ist durch eine Anpassung des Supports während der Rekonstruktion gekennzeichnet: Der zunächst geratene (für eine eindeutige Lösung des Problems  zu große) Support wird nach einer festgelegten Anzahl an Rekonstruktionsiterationen auf den Bereich beschränkt, in dem die Rekonstruierte Intensität höher als ein festgelegter Schwellwert ist. Dieser aktualisierte Support wird für weitere Iterationen genutzt und erneut aktualisiert\cite{marchesini2003}.
 Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Der nötige Abstandsvektor dieser Supportteile ist der  Abstandsvektor zwischen Auto- und Kreuzkorrelation (XXX).
 
-	\begin{figure}
-		\centering
-		\includegraphics[width=.9\textwidth]{images/support.eps}
-		\caption[Supportgenerierung]{Erzeugung des Supports. Oben: Bei verwendung von Freiflug Holographie kann die Kreuzkorrelation aus Referenz und Objekt als Support genutzt werden. Zusätzlich muss im gleichen Abstand wie Kreuz und Autokorrelation die Referenz dem Support hinzugefügt werden. Unten: Der Shrinkwrap Alorithmus beginnt mit der Autokorrelation als initalem Support und passt diesen im laufe der Rekonstruktion an.}
-		\label{fig:support}
-	\end{figure} 
+\begin{figure}
+	\centering
+	\includegraphics[width=.9\textwidth]{images/support.eps}
+	\caption[Supportgenerierung]{Erzeugung des Supports. Oben: Bei verwendung von Freiflug Holographie kann die Kreuzkorrelation aus Referenz und Objekt als Support genutzt werden. Zusätzlich muss im gleichen Abstand wie Kreuz und Autokorrelation die Referenz dem Support hinzugefügt werden. Unten: Der Shrinkwrap Alorithmus beginnt mit der Autokorrelation als initalem Support und passt diesen im laufe der Rekonstruktion an.}
+	\label{fig:support}
+\end{figure} 
 \subsection{Eindeutigkeit der Lösung}
 Das Problem der iterativen Phasenrekonstruktion ist, dass die Algorithmen keine eindeutige Lösung bereitstellen. Neben der Möglichkeit, dass die Algorithmen in einem lokalen Minimum stagnieren und dieses nicht verlassen, existiert eine weitere Quelle der Unsicherheit: Das sogenannte Zwillingsbild-Problem. Da nach \fref{eq:zwilling} das Bild $f(x,y)$ und das komplex konjugierte, punktgespiegelte "`Zwillingsbild"'  $f^*(-x,-y)$ den gleichen Betrag der Fouriertransformation besitzen, sind beides Lösungen des Problems.
 \begin{equation}
-\label{eq:zwilling}
+	\label{eq:zwilling}
 	\left|\mathscr{F}[f^*(-x,-y)]\right|=\left|\mathscr{F}[f(x,y)]^*\right|=\left|\mathscr{F}[f(x,y)]\right|
 \end{equation}
 Dies führt dazu, dass bei einem punktsymmetrischen Support (oder einem Support, der so groß ist, dass Bild und Zwillingsbild in ihn hineinpassen) in einigen Regionen das Bild, in anderen das Zwillingsbild rekonstruiert wird (Abb. XX). Beide Probleme, Stagnation im Minimum und Zwillingsproblem, sind abhängig von der Wahl des Startpunktes der Rekonstruktion, bei zufälliger Wahl der Fourierwinkel ist die Rekonstruktion somit nicht deterministisch.
@@ -106,9 +106,9 @@ Für die iterative Phasen Rekonstruktion wird häufig mehrfach mit verschiedenen
 \section{Vergleich in 2D}	
 Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen werden
 \begin{itemize}
-\item FTH mit Entfaltung
-\item IPR mit Shrinkwrap-Support
-\item IPR mit FTH Support
+	\item FTH mit Entfaltung
+	\item IPR mit Shrinkwrap-Support
+	\item IPR mit FTH Support
 \end{itemize}
 
 Die Rekonstruktionsansätze werden bezüglich Ihrer Empfindlichkeit für Rauschen, Hochpass und Fehler in der Abschätzung der Referenz untersucht. Dies geschieht zunächst mit rein synthetischen 2D Bildern als Ersatz für Austrittswellen um die Funktion der drei Ansätze und ihre Limitationen zu überprüfen.
@@ -124,7 +124,7 @@ Bei idealen Bedingungen, d.h. ohne Rauschen, ohne Hochpass und mit präzise beka
 \subsection{Einfluss Zentralmaske}
 Der Einfluss des in Experimenten durch die nötige Blockierung des zentralen Strahles bedingten Hochpasses zeigt sich in \fref{fig:recon2d-mask}. Durch die Festlegung eines räumlich beschränkten Supports könnten mehr Informationen rekonstruiert werden, als durch den Hochpass nahe gelegt. Für eine korrekte Betrachtung der verlorenen Informationen muss das Eingangsbild in eine Basis aus sowohl im Real- wie auch im Fourierraum räumlich beschränkte Funktionen zerlegt werden. Nur die Komponenten, die sowohl im Fourierraum vollständig im maskierten Bereich liegen wie auch im Realraum vollständig im Support liegen können nicht wieder rekonstruiert werden. Jedoch ist die optische Beurteilbarkeit so rekonstruierter Bilder eingeschränkt. Aus diesem Grund sind die dargestellten Bilder hochpassgefiltert. Die nicht hochpassgefilterten Bilder sind im Anhang dargestellt.
 \begin{figure}
-
+	
 	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{images/recon2d-mask16.png}
 		\caption{kleine Maske}
@@ -171,7 +171,7 @@ Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstrukt
 
 \begin{figure}
 	\centering
-\quadimage{[width=.75\textwidth,trim=30 30 30 30,clip]{images/recon3d.png}}
+	\quadimage{[width=.75\textwidth,trim=30 30 30 30,clip]{images/recon3d.png}}
 	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle XX. Dargestellt ist jeweils der Betrag der Abweichung von der einfallenden Wellen. a) optimale Ergebnis zum Vergleich, b) die Rekonstruktion mittels iterativer Rekonstruktion und Shrinkwrap, c) mittels Entfaltung, d) das Ergebnis nach iterativer Phasenrekonstruktion mit Holographie}
 	\label{fig:recon3d}
 \end{figure}	

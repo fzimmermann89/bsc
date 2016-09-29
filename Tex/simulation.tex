@@ -6,130 +6,130 @@ Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{mae
 
 \section{Projektions- und Rayleigh-Gans-Näherung}
 	
-	Um dreidimensionalen Streuobjekte durch zweidimensionale Blenden zu nähern, lässt sich die Projektion ihrer Dichteverteilung auf eine Ebene direkt hinter ihnen betrachten. In Näherung verhält sich eine elektromagnetische Welle nach Durchlaufen des Objektes gleich wie nach Durchlaufen einer Blende mit dieser durch Projektion gewonnenen Absorption und Refraktion, sodass in Fraunhofer-Fernfeldnäherung das Streubild durch die Fouriertransformierte der Projektion genähert werden kann.
+Um dreidimensionalen Streuobjekte durch zweidimensionale Blenden zu nähern, lässt sich die Projektion ihrer Dichteverteilung auf eine Ebene direkt hinter ihnen betrachten. In Näherung verhält sich eine elektromagnetische Welle nach Durchlaufen des Objektes gleich wie nach Durchlaufen einer Blende mit dieser durch Projektion gewonnenen Absorption und Refraktion, sodass in Fraunhofer-Fernfeldnäherung das Streubild durch die Fouriertransformierte der Projektion genähert werden kann.
 	
-	Für eine kreisförmige Blende existiert eine analytische Darstellung der Fouriertransformation in Form der sogenannten Airy-Scheibe und das Streubild eines Objektes mit kreisförmiger Projektion lässt sich somit mittels der Besselfunktion 1. Ordnung $J_n$ als
-	\begin{equation}
+Für eine kreisförmige Blende existiert eine analytische Darstellung der Fouriertransformation in Form der sogenannten Airy-Scheibe und das Streubild eines Objektes mit kreisförmiger Projektion lässt sich somit mittels der Besselfunktion 1. Ordnung $J_n$ als
+\begin{equation}
 	I(\theta) \propto \left ( \frac{2 J_1(kr \sin \theta)}{kr \sin \theta} \right )^2 
-	\end{equation}
-	nähern\cite{born1980}. Für nicht kreisförmige Projektionen der Dichte lässt sich die Fouriertransformation diskret numerisch auswerten.
-	Eine weitere gebräuchliche Näherung für kugelförmige Objekte ist die Rayleigh-Gans Näherung (gültig für kleine Radien und Brechzahlen nahe Vakuum). In dieser nimmt die Intensität die Form
-	\begin{equation}
-	    I(\theta)\propto\left ( \frac{j_1(2kr\sin(\theta/2))}{2kr\sin(\theta/2)} \right )^2 
-	\end{equation}
-	mit der sphärischen Besselfunktion $j_n$ an \cite{bohren2008}. 
+\end{equation}
+nähern\cite{born1980}. Für nicht kreisförmige Projektionen der Dichte lässt sich die Fouriertransformation diskret numerisch auswerten.
+Eine weitere gebräuchliche Näherung für kugelförmige Objekte ist die Rayleigh-Gans Näherung (gültig für kleine Radien und Brechzahlen nahe Vakuum). In dieser nimmt die Intensität die Form
+\begin{equation}
+	I(\theta)\propto\left ( \frac{j_1(2kr\sin(\theta/2))}{2kr\sin(\theta/2)} \right )^2 
+\end{equation}
+mit der sphärischen Besselfunktion $j_n$ an \cite{bohren2008}. 
 
 
 \section{Multislice Fourier Transformation}
-	Nach \fref{eq:born} gilt in der ersten Bornschen Näherung für die Amplitude der gestreuten Welle
-	\begin{equation}
-		\phi\propto\int \delta\eta(\vec{r}) e^{-i\vec{q}\cdot \vec{r}} \dif \vec{r}
-	\end{equation}
-    Wird das Skalarprodukt $\vec{q}\cdot \vec{r}=xq_x+yq_y+zq_z$ ausgeschrieben und die Integration über $x$ und $y$ als zweidimensionale Fouriertransformation interpretiert
-	\begin{equation}
+Nach \fref{eq:born} gilt in der ersten Bornschen Näherung für die Amplitude der gestreuten Welle
+\begin{equation}
+	\phi\propto\int \delta\eta(\vec{r}) e^{-i\vec{q}\cdot \vec{r}} \dif \vec{r}
+\end{equation}
+Wird das Skalarprodukt $\vec{q}\cdot \vec{r}=xq_x+yq_y+zq_z$ ausgeschrieben und die Integration über $x$ und $y$ als zweidimensionale Fouriertransformation interpretiert
+\begin{equation}
 	\phi\propto\int \mathscr{F}\left[\delta\eta\right](q_x,q_y,z) e^{-zq_z} \dif z \, ,
-	\end{equation}
+\end{equation}
 
-	so lässt sich das Integral in z-Richtung als Summe interpretieren sofern sich $q_z$ als $q_z=q_\parallel(k,q_\perp)$ ausdrücken lässt.
+so lässt sich das Integral in z-Richtung als Summe interpretieren sofern sich $q_z$ als $q_z=q_\parallel(k,q_\perp)$ ausdrücken lässt.
 	
-	Aufgrund der Impulserhaltung muss $k_{ein}^2=k_{aus}^2=k^2$ gelten. Nach Abbildung \fref{fig:msft} ist
-	\begin{align}
-	k^2=(k-q_\parallel)^2+q_{\perp}^2
-	\Leftrightarrow q_\parallel=k-\sqrt{k^2-q_\perp^2}
-	\end{align}
-	Somit
-	\begin{equation}
+Aufgrund der Impulserhaltung muss $k_{ein}^2=k_{aus}^2=k^2$ gelten. Nach Abbildung \fref{fig:msft} ist
+\begin{align}
+	k^2=(k-q_\parallel)^2+q_{\perp}^2                  
+	\Leftrightarrow q_\parallel=k-\sqrt{k^2-q_\perp^2} 
+\end{align}
+Somit
+\begin{equation}
 	\label{eq:msft}
 	\phi\approx\sum_n{\mathscr{F}\left[\delta\eta\right] e^{-in\delta_z\left(k-\sqrt{k^2-q_\perp^2}\right) }}
-	\end{equation}
+\end{equation}
 
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.5\textwidth]{images/msft.eps}
-		\caption[Vektoren bei MSFT]{Skizze zur Bezeichnung der Vektoren. $k_{ein}$ und $k_{aus}$ bezeichnen den Wellenvektor der einfallenden bzw. ausfallenden Welle mit dem dazwischenliegenden Winkel $\theta$. $q$ bezeichnet den Streuvektor mit einer zu $k_{ein}$ parallelen ($q_{||}$) und einer senkrechten ($q_\perp$) Komponente.}
-		\label{fig:msft}
-	\end{figure} 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{images/msft.eps}
+	\caption[Vektoren bei MSFT]{Skizze zur Bezeichnung der Vektoren. $k_{ein}$ und $k_{aus}$ bezeichnen den Wellenvektor der einfallenden bzw. ausfallenden Welle mit dem dazwischenliegenden Winkel $\theta$. $q$ bezeichnet den Streuvektor mit einer zu $k_{ein}$ parallelen ($q_{||}$) und einer senkrechten ($q_\perp$) Komponente.}
+	\label{fig:msft}
+\end{figure} 
 
-	Formel \fref{eq:msft} beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld in der ersten Bornschen Näherung zu berechnen. Diese Methode wird als \textit{Multislice Fourier Transformation} \textit{MSFT} bezeichnet \cite{barke2015}. 
-	Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors, der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, ließe sich nachträglich eine grobe Näherung für Absorptionseffekte einführen, die in einigen Fällen die subjektive Qualität der Simulation verbessern kann \cite{barke2015}. Da diese zum Einen jedoch nicht konsistent zur Herleitung der Methode ist und somit ihre Gültigkeit nicht abgeschätzt werden kann, zum anderen sie nicht allgemein die Güte der Simulation verbessert, ist im Weiteren mit \textit{MSFT} die Methode ohne diese Korrektur bezeichnet.
-	Eine Implementation des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
+Formel \fref{eq:msft} beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld in der ersten Bornschen Näherung zu berechnen. Diese Methode wird als \textit{Multislice Fourier Transformation} \textit{MSFT} bezeichnet \cite{barke2015}. 
+Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors, der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, ließe sich nachträglich eine grobe Näherung für Absorptionseffekte einführen, die in einigen Fällen die subjektive Qualität der Simulation verbessern kann \cite{barke2015}. Da diese zum Einen jedoch nicht konsistent zur Herleitung der Methode ist und somit ihre Gültigkeit nicht abgeschätzt werden kann, zum anderen sie nicht allgemein die Güte der Simulation verbessert, ist im Weiteren mit \textit{MSFT} die Methode ohne diese Korrektur bezeichnet.
+Eine Implementation des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
 
 \section{Multislice Propagation}
-	Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice} oder \textit{Beam Propagation} bekannt \cite{hare1994,cowley1957}. Bei diesem Verfahren wird zunächst die Szene (ein definierter Raum in dem sich alle Objekte deren gemeinsames Streubild berechnet werden soll) in einzelne Schichten mit dem Abstand $\Delta z$zerlegt.
-	Die Ausbreitung der in Szene einfallende ebene Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach Angular Spectrum Propagation im Hybridraum \footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu \cite{hare1994} auf diese Näherung verzichtet.}
-	\begin{equation}
-\bar{\phi}\left(q_x,q_y,z+\Delta z\right)=\bar{\phi}(z)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}
-	\end{equation}
-	sowie eine Wechselwirkung mit der Materie der Schicht in einer einzelnen Ebene im Realraum
-	\begin{equation}
-		\phi(x,y,z+\Delta z)=\phi e^{i\delta n\left(z\right) \Delta z} \, .
-	\end{equation}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.9\textwidth]{images/multislice.eps}
-		\caption[Prinzip Multislice Propagation]{Prinzip Multislice Propagation: Die Szene wird in einzelne Schichten zerlegt und die Wechselwirkung mit der Materie jeder einzelnen Schicht in auf eine in dieser Schicht liegenden Ebene reduziert. Zwischen diesen Ebenen wird eine Vakuumpropagation angewendet.}
-		\label{fig:multislice}
-	\end{figure} 	
+Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice} oder \textit{Beam Propagation} bekannt \cite{hare1994,cowley1957}. Bei diesem Verfahren wird zunächst die Szene (ein definierter Raum in dem sich alle Objekte deren gemeinsames Streubild berechnet werden soll) in einzelne Schichten mit dem Abstand $\Delta z$zerlegt.
+Die Ausbreitung der in Szene einfallende ebene Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach Angular Spectrum Propagation im Hybridraum \footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu \cite{hare1994} auf diese Näherung verzichtet.}
+\begin{equation}
+	\bar{\phi}\left(q_x,q_y,z+\Delta z\right)=\bar{\phi}(z)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}
+\end{equation}
+sowie eine Wechselwirkung mit der Materie der Schicht in einer einzelnen Ebene im Realraum
+\begin{equation}
+	\phi(x,y,z+\Delta z)=\phi e^{i\delta n\left(z\right) \Delta z} \, .
+\end{equation}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/multislice.eps}
+	\caption[Prinzip Multislice Propagation]{Prinzip Multislice Propagation: Die Szene wird in einzelne Schichten zerlegt und die Wechselwirkung mit der Materie jeder einzelnen Schicht in auf eine in dieser Schicht liegenden Ebene reduziert. Zwischen diesen Ebenen wird eine Vakuumpropagation angewendet.}
+	\label{fig:multislice}
+\end{figure} 	
 
-	Bei diesem Verfahren wird die Annahme getroffen, dass  innerhalb einer Schicht die örtliche Verteilung der Materie konstant ist, sowie die durch die Propagation bedingte Veränderung innerhalb von $\Delta z$ ausreichend klein ist, sodass keine Anteile der Wellenfront innerhalb einer Schicht unterschiedliche Brechzahlen durchlaufen \cite{hare1994}. Dies kann durch ein hinreichend kleines $\Delta z$ gewährleistet werden. 
-	Des Weiteren wird bei der Wechselwirkung mit der Materie der Winkel mit dem ein Anteil der Wellenfront durch die Materie läuft vernachlässigt: Bei Anteilen der Welle, die durch vorangegangene Streueffekte bereits in einem deutlichen Winkel die Szene durchlaufen wird genähert, dass ihr Weg durch die Materie gleich lang wie der Weg von nicht gestreuten Anteilen ist. Somit wird Mehrfachstreuung zwar mitberücksichtigt, jedoch nur näherungsweise.
+Bei diesem Verfahren wird die Annahme getroffen, dass  innerhalb einer Schicht die örtliche Verteilung der Materie konstant ist, sowie die durch die Propagation bedingte Veränderung innerhalb von $\Delta z$ ausreichend klein ist, sodass keine Anteile der Wellenfront innerhalb einer Schicht unterschiedliche Brechzahlen durchlaufen \cite{hare1994}. Dies kann durch ein hinreichend kleines $\Delta z$ gewährleistet werden. 
+Des Weiteren wird bei der Wechselwirkung mit der Materie der Winkel mit dem ein Anteil der Wellenfront durch die Materie läuft vernachlässigt: Bei Anteilen der Welle, die durch vorangegangene Streueffekte bereits in einem deutlichen Winkel die Szene durchlaufen wird genähert, dass ihr Weg durch die Materie gleich lang wie der Weg von nicht gestreuten Anteilen ist. Somit wird Mehrfachstreuung zwar mitberücksichtigt, jedoch nur näherungsweise.
 	
-	Der Algorithmus zur Berechnung der Austrittswelle lautet somit
-	\begin{equation}
+Der Algorithmus zur Berechnung der Austrittswelle lautet somit
+\begin{equation}
 	\label{eq:multislice}
-\Phi(z+\Delta z)= e^{i\delta n\left(z\right) \Delta z}\mathscr{F}^{-1}\left[e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\mathscr{F}\left[\Phi(z)\right]\right]
-	\end{equation}
-	Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels Angular Spectrum Propagation berechnen lässt, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementation im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert, während bei Anwendung der Fernfeld Näherung zwar der maximale Winkel in dem das Streubild berechnet werden kann von der räumlichen Auflösung der Austrittswelle sowie die Winkelauflösung von der Szenenausdehnung abhängt, dies jedoch deutlich praktikabler ist.
-	Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet und ist in \texttt{simulation/multislice.m} implementiert.
+	\Phi(z+\Delta z)= e^{i\delta n\left(z\right) \Delta z}\mathscr{F}^{-1}\left[e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\mathscr{F}\left[\Phi(z)\right]\right]
+\end{equation}
+Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels Angular Spectrum Propagation berechnen lässt, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementation im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert, während bei Anwendung der Fernfeld Näherung zwar der maximale Winkel in dem das Streubild berechnet werden kann von der räumlichen Auflösung der Austrittswelle sowie die Winkelauflösung von der Szenenausdehnung abhängt, dies jedoch deutlich praktikabler ist.
+Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet und ist in \texttt{simulation/multislice.m} implementiert.
 	
 \section{Thibaults Multislice}
 Thibault stellt in \cite{thibault2007} einen eigene Formulierung der Multislice-Simulation auf. Ausgehend von der Wellengleichung
 lässt sich für die Welle im Hybridraum
 \begin{equation}
-\tilde{\Phi}(z)=\tilde{G}\ast_z\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right]
+	\tilde{\Phi}(z)=\tilde{G}\ast_z\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right]
 \end{equation}
- mit
+mit
 \begin{equation}
-\tilde{G}=\frac{1}{2\pi}\frac{ik^2}{\sqrt{k^2-q_\perp^2}}e^{iz(\kappa-k)}
+	\tilde{G}=\frac{1}{2\pi}\frac{ik^2}{\sqrt{k^2-q_\perp^2}}e^{iz(\kappa-k)}
 \end{equation}
 aufstellen. Hierbei sind die Faltungsoperatoren mit den Variablen über die die Faltung durchzuführen ist indiziert.
 Wird nun die Welle bei $\Delta z$ betrachtet, so lässt sich unter Vernachlässigung von Rückstreuung  das Faltungsintegral über $z$ in zwei Integrationsbereiche aufspalten (vom Ursprung bis $\Delta z$ sowie von dort bis ins Unendliche):
 \begin{equation}
-\tilde{\Phi}(z+\Delta z)=
-\int_{\Delta z}^{\infty} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
-+
-\int_{0}^{\Delta z} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
+	\tilde{\Phi}(z+\Delta z)=
+	\int_{\Delta z}^{\infty} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
+	+
+	\int_{0}^{\Delta z} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
 \end{equation}
 Für den ersten Summanden gilt mit einer Substitution ($z'\rightarrow z''+\Delta z$)
 \begin{align*}
-&\stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{\hphantom{=}} 
-\int_{\Delta z}^{\infty} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'\\
-&\stackrel{z'\rightarrow z''+\Delta z}{=}
-\int_{0}^{\infty} \tilde{G}(z''+\Delta z)\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z-z'')\dif z''\\
-&\stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{=}
-e^{i\Delta z(\kappa-k)}\int_{0}^{\infty} \frac{1}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}e^{iz''(\kappa-k)}\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z-z'')\dif z''\\
-&\stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{=}
-e^{i\Delta z(\kappa-k)}\tilde{\Phi}(z) \numberthis \,,
+	  & \stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{\hphantom{=}} 
+	\int_{\Delta z}^{\infty} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'\\
+	  & \stackrel{z'\rightarrow z''+\Delta z}{=}                       
+	\int_{0}^{\infty} \tilde{G}(z''+\Delta z)\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z-z'')\dif z''\\
+	  & \stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{=}            
+	e^{i\Delta z(\kappa-k)}\int_{0}^{\infty} \frac{1}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}e^{iz''(\kappa-k)}\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z-z'')\dif z''\\
+	  & \stackrel{\hphantom{z'\rightarrow z''+\Delta z}}{=}            
+	e^{i\Delta z(\kappa-k)}\tilde{\Phi}(z) \numberthis \,,
 \end{align*}
 im zweiten Summanden kann für hinreichend kleine $\Delta z$ das Integral gut durch eine Rieman-Obersumme mit einem einzigen Stützpunkt bei $\Delta z$ approximiert werden:
 \begin{equation}
-\int_{0}^{\Delta z} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
-\approx
-\Delta z \tilde{G}(\Delta z)\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z)
+	\int_{0}^{\Delta z} \tilde{G}(z')\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z+\Delta z-z')\dif z'
+	\approx
+	\Delta z \tilde{G}(\Delta z)\left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z)
 \end{equation}
 Für den Fehler dieser Näherung gilt
 \begin{equation}
-\text{Rieman AbschätzungXX}
+	\text{Rieman AbschätzungXX}
 \end{equation}
 Somit lässt sich in Näherung für die Welle bei $z+\Delta z$
 \begin{equation}
-\label{eq:thibault}
-\tilde{\Phi}(z+\Delta z)
-\approx
-e^{i\Delta z(\kappa-k)}
-\left(
-\tilde{\Phi}(z)+\frac{\Delta z}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}  \left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z)
-\right)
+	\label{eq:thibault}
+	\tilde{\Phi}(z+\Delta z)
+	\approx
+	e^{i\Delta z(\kappa-k)}
+	\left(
+	\tilde{\Phi}(z)+\frac{\Delta z}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}  \left[\tilde{\delta\eta}\ast_{q_\perp} \tilde{\Phi}\right](z)
+	\right)
 \end{equation}
 aufstellen. Dies stellt einer iterative Beschreibung der Streuung dar --- ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um ein Algorithmus der ebenfalls der Kategorie "`Multislice"' zuzuordnen ist. Im Gegensatz zur \textit{Multislice Propagation} findet hier die Wechselwirkung mit der Materie jedoch nicht in Form eines Exponentialfaktor statt, in Kleinwinkelnäherung entspricht \fref{eq:thibault} einer Taylornäherung erster Ordnung in der Exponentialfunktion von \fref{eq:multislice}. Unabhängig von der Gültigkeit der verwendeten Näherungen besitzt \eqref{eq:thibault} bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster in dem die Simulation durchgeführt hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zu tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\tilde{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
 Die numerische Simulation dieser Methode ist in \texttt{simulation/thibault.m} implementiert.
@@ -161,15 +161,15 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \begin{figure} %exitwave und scatter
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
-		 \setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
-		  \includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
-		  
+		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
+		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
+				  
 		\caption{Austrittswelle}
 		\label{fig:exitwave}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.49\textwidth}
-		 \setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}}
-	 \includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_scatter_multislice_cb-r100-bd1e-3.pdf}}}
+		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}}
+		\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_scatter_multislice_cb-r100-bd1e-3.pdf}}}
 		\caption{Streubild}
 		\label{fig:scatter}
 	\end{subfigure}
@@ -188,7 +188,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_msft-r100-bd1e-3.pdf}
 		\caption{MSFT}
 	\end{subfigure}
-%	\par\bigskip
+	%	\par\bigskip
 	\begin{subfigure}[b]{0.49\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_thibault-r100-bd1e-3.pdf}
 		\caption{Thibaults Multislice}
@@ -197,7 +197,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_multislice-r100-bd1e-3.pdf}
 		\caption{Multislice Propagation}
 	\end{subfigure}
-	
+		
 	\caption[relativer Fehler der Simulationen]{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius 100\si{nm} bei $\beta=\delta=10^{-3}$. }
 	\label{fig:relerror}
 \end{figure}
@@ -225,8 +225,8 @@ Als interessante Testszene wird eine Ikosaeder (Außenradius 375 \si{nm},$\beta,
 \begin{figure} %exitwave und scatter
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
-	\includegraphics[width=\textwidth]{images/scene.png}
-		
+		\includegraphics[width=\textwidth]{images/scene.png}
+				
 		\caption{3D Modell}
 		\label{fig:komplexmodel}
 	\end{subfigure}

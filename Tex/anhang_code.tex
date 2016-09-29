@@ -10,30 +10,30 @@
 %\end{description}
 \subsection*{Erzeugung von Objekten}
 \begin{description}[style=nextline]
-\item[scatterObjects]
+	\item[scatterObjects]
 \end{description}
 \subsection*{Simulation}
 
 
 \begin{description}[style=nextline]
 	\item [\texttt{\textit{[theta,Intensity,S1,S2]}=mie\textit{(lambda,radius,beta,delta,steps)}}]
-		Intensität in Mie Streuung unpolarizierten Lichtes an Sphäre mit Radius \textit{radius} (in nm) und Brechzahl n=1-\textit{delta}+i\textit{beta} bei Wellenlänge \textit{lambda} (in nm), ausgewertet in \textit{steps} linearen Schritten des Winkels \textit{theta})
-		
+	Intensität in Mie Streuung unpolarizierten Lichtes an Sphäre mit Radius \textit{radius} (in nm) und Brechzahl n=1-\textit{delta}+i\textit{beta} bei Wellenlänge \textit{lambda} (in nm), ausgewertet in \textit{steps} linearen Schritten des Winkels \textit{theta})
+			
 	\item [\texttt{\textit{[scatter]}=mie\_scatter\textit{(lambda,radius,beta,delta,N,dx,offset)}}]
-		Streubild nach Mie mit \textit{N}x\textit{N} Punkten und Realraumauflösung \textit{dx}.
-		
+	Streubild nach Mie mit \textit{N}x\textit{N} Punkten und Realraumauflösung \textit{dx}.
+			
 	\item [\texttt{\textit{[scatter]}=msft\textit{(lambda,objects,N,dx,dz,gpu,sim\_absorption)}}]
-		Streubild nach MSFT bei Wellenlänge \textit{lambda} (in nm) der Objekte im cell-array \textit{objects} berechnet mit \textit{N}x\textit{N} Punkten im Abstand \textit{dx} pro Schicht im Abstand \textit{dz}. Ist der optionale Parameter \textit{sim\_absorption} wahr, wird eine grobe Näherung für Absorption durchgeführt.
-		
+	Streubild nach MSFT bei Wellenlänge \textit{lambda} (in nm) der Objekte im cell-array \textit{objects} berechnet mit \textit{N}x\textit{N} Punkten im Abstand \textit{dx} pro Schicht im Abstand \textit{dz}. Ist der optionale Parameter \textit{sim\_absorption} wahr, wird eine grobe Näherung für Absorption durchgeführt.
+			
 	\item [\texttt{\textit{[exitwave]}=multislice\textit{(lambda,objects,N,dx,dz,gpu)}}]
-		Austrittswelle nach Multislice Beam Propagation.
-		
+	Austrittswelle nach Multislice Beam Propagation.
+			
 	\item [\texttt{\textit{[exitwave]}=thibault\textit{(lambda,objects,N,dx,gpu)}}]
-		Austrittswelle nach Thibaults Multislice.
-		
-			\item [\texttt{\textit{[scatter}=exitwave2scatter\textit{(exitwave,lambda,dx)}}]
-			Streubild aus Austrittswelle
-		
+	Austrittswelle nach Thibaults Multislice.
+			
+	\item [\texttt{\textit{[scatter}=exitwave2scatter\textit{(exitwave,lambda,dx)}}]
+	      Streubild aus Austrittswelle
+	      		
 \end{description}
 
 
@@ -41,13 +41,13 @@
 
 	
 \begin{description}[style=nextline]
-	
+		
 	\item [\texttt{\textit{[]}=SupportGeneric\textit{()}}]
-		Erzeugt aus einem aufgenommen Streubild den Support und das Startbild
-	
+	Erzeugt aus einem aufgenommen Streubild den Support und das Startbild
+		
 	\item [\texttt{\textit{[]}=SupportHolo\textit{()}}]
-		Erzeugt aus einem mit Holographie aufgenommen Streubild den Support und das Startbild
-	
+	Erzeugt aus einem mit Holographie aufgenommen Streubild den Support und das Startbild
+		
 	\item [\texttt{recon.Plan}] Klasse für iterative Phasenrekonstruktion. 
 	\begin{description}[style=nextline]
 		\item [\texttt{addStep\textit{(step,iterations,\{parameters\})}}]
@@ -69,23 +69,23 @@
 
 
 Hilfmittel
-	ft2
-	ift2
-	maskfilter
-	pad2size
+ft2
+ift2
+maskfilter
+pad2size
 Simulation
-	Erzeugun von Objekten
+Erzeugun von Objekten
 		
-	-msft
-	-multislice
-	-thibault
+-msft
+-multislice
+-thibault
 
 Rekonstruktion
-	-wiener
-	-reconstruct
-	SW
-	holo\_support
-	ERiter
-	RAARiter
-	HIOiter
-	\end{comment}
+-wiener
+-reconstruct
+SW
+holo\_support
+ERiter
+RAARiter
+HIOiter
+\end{comment}
