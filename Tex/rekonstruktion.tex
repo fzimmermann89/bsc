@@ -133,6 +133,7 @@ Bei idealen Bedingungen, d.h. ohne Rauschen, ohne Hochpass und mit präzise beka
 
 \subsection{Einfluss Zentralmaske}
 Der Einfluss des in Experimenten durch die nötige Blockierung des zentralen Strahles bedingten Hochpasses zeigt sich in \fref{fig:recon2d-mask}. Durch die Festlegung eines räumlich beschränkten Supports könnten mehr Informationen rekonstruiert werden, als durch den Hochpass nahe gelegt. Für eine korrekte Betrachtung der verlorenen Informationen muss das Eingangsbild in eine Basis aus sowohl im Real- wie auch im Fourierraum räumlich beschränkte Funktionen zerlegt werden. Nur die Komponenten, die sowohl im Fourierraum vollständig im maskierten Bereich liegen wie auch im Realraum vollständig im Support liegen können nicht wieder rekonstruiert werden. Jedoch ist die optische Beurteilbarkeit so rekonstruierter Bilder eingeschränkt. Aus diesem Grund sind die dargestellten Bilder hochpassgefiltert. Die nicht hochpassgefilterten Bilder sind im Anhang dargestellt.
+Sowohl die Wiener-Entfaltung als auch die iterative Phasenrekonstruktion mit Support aus der Holographie erzeugen optisch ideale Rekonstruktionen, die Erzeugung des Supports mittels Shrink-Wrap ist stärker beeinflusst, liefert jedoch ebenfalls gute Ergebnisse in Abwesenheit von Rauschen.
 \begin{figure}
 	
 	\begin{subfigure}[b]{0.48\textwidth}
@@ -149,7 +150,7 @@ Der Einfluss des in Experimenten durch die nötige Blockierung des zentralen Str
 \end{figure}
 
 \subsection{Einfluss Rauschen}
-Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet. Dadurch wird das natürliche, sogenannte Shot-Rauschen bei idealer Belichtung simuliert.
+Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet (\fref{fig:recon2d-noise}). Dadurch wird das natürliche, sogenannte Shot-Rauschen bei idealer Belichtung simuliert. Hier zeigt sich die eine Unempfindlichkeit der Wiener-Entfaltung gegenüber Rauschen -- durch den Rauschterm in der Entfaltung kann der störende Einfluss minimiert und gleichzeitig eine ausreichende Entfaltung bewirkt werden. Insbesondere die iterative Phasenrekonstruktion mit Shrink-Wrap Support leidet unter Rauschen, da kein geeigneter Support aufgefunden werden kann. Durch die Erzeugung des Supports mittels Holographie kann dieses Problem umgangen werden.
 \begin{figure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{images/recon2d-mask16bit16.png}
@@ -161,9 +162,10 @@ Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die 
 		\caption{viel Rauschen}	
 	\end{subfigure}
 	\caption[2D Rekonstruktion:Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 15\,Bit bzw 14\,Bit diskretisiert und Poisson-Shot-Rauschen hinzugefügt.}
+	\label{fig:recon2d-noise}
 \end{figure}
 \subsection{Einfluss Referenzabschätzung}
-Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die iterative Rekonstruktion muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung..
+Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die iterative Rekonstruktion muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung lässt sich in \fref{fig:recon2d-ref} betrachten. Schon eine Abweichung des Radius von 5\% von der wahren Größe bewirkt ein Scheitern der Entfaltung. Die iterativen Algorithmen sind hingegen unempfindlich gegenüber diesem Einfluss.
 \begin{figure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{images/recon2d-mask16bit16error01.png}
@@ -175,6 +177,7 @@ Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die it
 		\caption{5\% Abweichung des Radius}	
 	\end{subfigure}
 	\caption[2D Rekonstruktion: Referenz]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem andren Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung.}
+	\label{fig:recon2d-ref}
 \end{figure}
 \section{Rekonstruktion einer 3D Austrittswelle}
 Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem dreidimensionalen Objekt eingesetzt werden. Die Dreidimensionalität des Objektes wird an dieser Stelle ignoriert und die Austrittswelle analog zu den 2D-Bildern betrachtet (\fref{fig:recon3d})
