@@ -22,10 +22,10 @@ so ergibt sich mit Hilfe der komplexen Konjugation der Fouriertransformation XX 
 \begin{equation}
 	\mathscr{F}^{-1}[I]\propto \underbrace{O \otimes O + R\otimes R}_{\text{Autokorrelationen}}+\underbrace{R\otimes O+ O\otimes R}_{\text {Kreuzkorrelationen}}
 \end{equation}
-Die Autokorrelationen, d.h. die Korrelation von Objekt und Objekt bzw Referenz mit Referenz liegen hierbei um den Ursprung des Koordinatensystems und können in jede Richtung maximal die doppelte Größe von Objekt bzw Referenz haben. Die Kreuzkorrelationen aus Objekt und Referenz sind punktsymmetrisch zum Ursprung und haben von diesem den gleichen Abstand wie Objekt- und Referenzaustrittswelle voneinander.
-Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjugierten Referenz bzw der Referenz mit einem gespiegelten, komplex konjugierten Objekt.  Ist die Referenz in guter Näherung punktförmig und lässt sich durch eine Delta-Funktion beschreiben, so ist die Kreuzkorrelation näherungsweise die Austrittswelle des Objektes. Somit können trotz der verlorenen Phaseninformationen die Austrittswelle des Objektes inklusiver der Phase wieder gewonnen werden. Dieses Verfahren wird als im weiteren als Fouriertransformations-Holografie (FTH) bezeichnet.
+Die Autokorrelationen, d.h. die Korrelation von Objekt und Objekt bzw. Referenz mit Referenz liegen hierbei um den Ursprung des Koordinatensystems und können in jede Richtung maximal die doppelte Größe von Objekt bzw. Referenz haben. Die Kreuzkorrelationen aus Objekt und Referenz sind punktsymmetrisch zum Ursprung und haben von diesem den gleichen Abstand wie Objekt- und Referenzaustrittswelle voneinander.
+Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjugierten Referenz bzw. der Referenz mit einem gespiegelten, komplex konjugierten Objekt.  Ist die Referenz in guter Näherung punktförmig und lässt sich durch eine Delta-Funktion beschreiben, so ist die Kreuzkorrelation näherungsweise die Austrittswelle des Objektes. Somit können trotz der verlorenen Phaseninformationen die Austrittswelle des Objektes inklusiver der Phase wieder gewonnen werden. Dieses Verfahren wird als im weiteren als Fouriertransformations-Holografie (FTH) bezeichnet.
 \subsection{Entfaltung}
-Um bei ausgedehnten Referenzen eine bessere Approximation des Objektes zu erhalten, muss die Faltung zwischen Objekt und Referenz rückgängig gemacht werden. Nach  XXX entspricht die Faltung einer Multiplikation, die Inverse somit einer Division im Fourierraum. Jedoch verursachen sowohl Rauschen wie auch Singulariäten in der fouriertransformierten Referenz Probleme.
+Um bei ausgedehnten Referenzen eine bessere Approximation des Objektes zu erhalten, muss die Faltung zwischen Objekt und Referenz rückgängig gemacht werden. Nach  XXX entspricht die Faltung einer Multiplikation, die Inverse somit einer Division im Fourierraum. Jedoch verursachen sowohl Rauschen wie auch Singularitäten in der fouriertransformierten Referenz Probleme.
 
 Das Problem der Entfaltung tritt in verschiedenen Bereichen auf, unter anderem in der Bildverarbeitung.
 Hier ist der Prozess der Wiener Entfaltung etabliert. Hierfür wird der Wienerfilter $G$ für ein mit $H$ gefaltetes Signal $S$ mit additiven Rauschen (mit der spektralen Stärke $N$) definiert als
@@ -72,11 +72,11 @@ Neben den Projektoren die, den Schritt $\rho\rightarrow (\mathbb{1}+(P-\mathbb{1
 \end{equation}
 eingeführt werden.
 In dieser Schreibweise können auch Weiterentwicklungen wie der Hybrid Input Output (HIO) und Relaxed Averaged Alternating Reflections (RAAR) Algorithmus dargestellt werden (Anhang \ref{chap:anhang_algos}). Ihre Prinzip ist in \fref{fig:recon} graphisch dargestellt. Die Algorithmen unterscheiden sich bezüglich ihres Konvergenzverhaltens und insbesondere bezüglich ihrer Anfälligkeit für Stagnation in lokalen Minima. 
-Ein Rauschen im Fourierraum, wie unvermeidbar bei der Rekonstruktion aus aufgenommenen Streubildern, bewirkt, dass keine eindeutige, exakte Lösung existieren muss, sondern nur die ein globales Minumum aufgefunden werden kann. 
+Ein Rauschen im Fourierraum, wie unvermeidbar bei der Rekonstruktion aus aufgenommenen Streubildern, bewirkt, dass keine eindeutige, exakte Lösung existieren muss, sondern nur die ein globales Minimum aufgefunden werden kann. 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/algorithmen.pdf}
-	\caption[Rekonstruktionsalgorithmen]{Darstellung der Algorithmen ER, RAAR und HIO. Bei ER findet eine abwechselnde Projektion auf die Lösungsmengen der Nebenbedinungen statt. Bei ER und HIO ist der einzelne Iterationsschritt komplexer und abhängig von einem Parameter $\beta$. Abbildung für ER und HIO nach \cite{marchesini2007}, für RAAR siehe Anhang.}
+	\caption[Rekonstruktionsalgorithmen]{Darstellung der Algorithmen ER, RAAR und HIO. Bei ER findet eine abwechselnde Projektion auf die Lösungsmengen der Nebenbedingungen statt. Bei ER und HIO ist der einzelne Iterationsschritt komplexer und abhängig von einem Parameter $\beta$. Abbildung für ER und HIO nach \cite{marchesini2007}, für RAAR siehe Anhang.}
 	\label{fig:recon}
 \end{figure} 
 \subsection{Support}
@@ -93,10 +93,10 @@ Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzun
 
 	\begin{subfigure}[b]{0.9\textwidth}
 		\includegraphics[width=\textwidth]{images/support_sw.pdf}
-		\caption{Shrinkwrap}	
+		\caption{Shrink-Wrap}	
 	\end{subfigure}
 	
-	\caption[Supportgenerierung]{Erzeugung des Supports. Bei Verwendung von Holographie kann die Kreuzkorrelation aus Referenz und Objekt als Support genutzt werden. Zusätzlich muss im gleichen Abstand wie Kreuz und Autokorrelation die Referenz dem Support hinzugefügt werden. Der Shrinkwrap Algorithmus beginnt mit der Autokorrelation als initialem Support und passt diesen im laufe der Rekonstruktion an.}
+	\caption[Supportgenerierung]{Erzeugung des Supports. Bei Verwendung von Holographie kann die Kreuzkorrelation aus Referenz und Objekt als Support genutzt werden. Zusätzlich muss im gleichen Abstand wie Kreuz und Autokorrelation die Referenz dem Support hinzugefügt werden. Der Shrink-Wrap Algorithmus beginnt mit der Autokorrelation als initialem Support und passt diesen im laufe der Rekonstruktion an.}
 	\label{fig:support}
 \end{figure} 
 
@@ -108,16 +108,16 @@ Das Problem der iterativen Phasenrekonstruktion ist, dass die Algorithmen keine 
 \end{equation}
 Dies führt dazu, dass bei einem punktsymmetrischen Support (oder einem Support, der so groß ist, dass Bild und Zwillingsbild in ihn hineinpassen) in einigen Regionen das Bild, in anderen das Zwillingsbild rekonstruiert wird (Abb. XX). Beide Probleme, Stagnation im Minimum und Zwillingsproblem, sind abhängig von der Wahl des Startpunktes der Rekonstruktion, bei zufälliger Wahl der Fourierwinkel ist die Rekonstruktion somit nicht deterministisch.
 
-Der Shrinkwrap-Algorithmus zur Supportgewinnung kann das Zwillingsproblem in manchen Fällen umgehen, indem bei einer Dominanz von Bild oder Zwillingsbild in einem der Randbereiche des aktuellen Supports das jeweils andere bei der nächsten Anpassung des Supports unterdrückt wird und so ein nicht-punktsymmetrischer Support gefunden werden kann.
+Der Shrink-Wrap-Algorithmus zur Supportgewinnung kann das Zwillingsproblem in manchen Fällen umgehen, indem bei einer Dominanz von Bild oder Zwillingsbild in einem der Randbereiche des aktuellen Supports das jeweils andere bei der nächsten Anpassung des Supports unterdrückt wird und so ein nicht-punktsymmetrischer Support gefunden werden kann.
 Die Supportgewinnung mittels Holographie löst dieses Problem vollständig. je nach Wahl der für den Support verwendeten Kreuzkorrelation und davon abhängiger Platzierung der Referenz im Support wird Bild oder Zwillingsbild rekonstruiert, da Objekt und Referenz zusammen nicht punktsymmetrisch sind.
 
-Für die iterative Phasen Rekonstruktion wird häufig mehrfach mit verschiedenen, zufälligen Fourierwinkeln gestarten und ein Mittelwert aus den Rekonstruktionen gebildet (hierbei müssen die einzelnen Rekonstruktionsergebnisse hinsichtlich Translation und Punktspiegelung angepasst werden). Die Methode der Kombination aus FTH zur Supportgewinnung und anschließender IPR beginnt jedoch mit einem definierten Start (der Kreuzkorrelation) und wird nur einmalig durchgeführt. Das Ergbnis der Rekonstruktion jedes einzelnen Streubildes ist somit eindeutig und es handelt sich um ein deterministisches Verfahren.
+Für die iterative Phasen Rekonstruktion wird häufig mehrfach mit verschiedenen, zufälligen Fourierwinkeln gestartet und ein Mittelwert aus den Rekonstruktionen gebildet (hierbei müssen die einzelnen Rekonstruktionsergebnisse hinsichtlich Translation und Punktspiegelung angepasst werden). Die Methode der Kombination aus FTH zur Supportgewinnung und anschließender IPR beginnt jedoch mit einem definierten Start (der Kreuzkorrelation) und wird nur einmalig durchgeführt. Das Ergebnis der Rekonstruktion jedes einzelnen Streubildes ist somit eindeutig und es handelt sich um ein deterministisches Verfahren.
 
 \section{Vergleich in 2D}	
 Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen werden
 \begin{itemize}
 	\item FTH mit Entfaltung
-	\item IPR mit Shrinkwrap-Support
+	\item IPR mit Shrink-Wrap Support
 	\item IPR mit FTH Support
 \end{itemize}
 
@@ -127,7 +127,7 @@ Bei idealen Bedingungen, d.h. ohne Rauschen, ohne Hochpass und mit präzise beka
 
 \begin{SCfigure}
 	\includegraphics[width=.48\textwidth]{images/recon2d-perfect.png}
-	\caption[2D Rekonstruktion: Ideal]{Rekonstruktion mit Zentralstrahl ohne Rauschen. Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei Streubildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch iterative Phasenrekonstruktion mit Shrinkwrap, unten links die durch Entfaltung  aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels iterativer Phasenrekonstruktion und FTH als Start und Support. Zur besseren optischen Vergleichbarkeit und Interpretation sind die Rekonstruktionen hochpassgefiltert. Alle Rekonstruktionen optisch perfekte Ergebnisse.}
+	\caption[2D Rekonstruktion: Ideal]{Rekonstruktion mit Zentralstrahl ohne Rauschen. Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei Streubildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch iterative Phasenrekonstruktion mit Shrink-Wrap, unten links die durch Entfaltung  aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels iterativer Phasenrekonstruktion und FTH als Start und Support. Zur besseren optischen Vergleichbarkeit und Interpretation sind die Rekonstruktionen hochpassgefiltert. Alle Rekonstruktionen optisch perfekte Ergebnisse.}
 	\label{fig:recon2d-perfect}
 \end{SCfigure}
 
@@ -160,10 +160,10 @@ Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die 
 		\includegraphics[width=\textwidth]{images/recon2d-mask16bit14.png}
 		\caption{viel Rauschen}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion:Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 15\,Bit bzw 14\,Bit diskretiesiert und Poisson-Shot-Rauschen hinzugefügt.}
+	\caption[2D Rekonstruktion:Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 15\,Bit bzw 14\,Bit diskretisiert und Poisson-Shot-Rauschen hinzugefügt.}
 \end{figure}
 \subsection{Einfluss Referenzabschätzung}
-Sowohl für die Entfaltung wie auch für die festlegung des Supports für die iterative Rekonstruktion muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung..
+Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die iterative Rekonstruktion muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung..
 \begin{figure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\includegraphics[width=\textwidth]{images/recon2d-mask16bit16error01.png}
@@ -182,8 +182,8 @@ Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstrukt
 \begin{figure}
 	\centering
 	\quadimage{[width=.75\textwidth,trim=30 30 30 30,clip]{images/recon3d.png}}
-	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle XX. Dargestellt ist jeweils der Betrag der Abweichung von der einfallenden Wellen. a) optimale Ergebnis zum Vergleich, b) die Rekonstruktion mittels iterativer Rekonstruktion und Shrinkwrap, c) mittels Entfaltung, d) das Ergebnis nach iterativer Phasenrekonstruktion mit Holographie}
+	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle in \fref{fig:komplex}. Dargestellt ist jeweils der Betrag der Abweichung von der einfallenden Wellen. a) optimale Ergebnis zum Vergleich, b) die Rekonstruktion mittels iterativer Rekonstruktion und Shrink-Wrap, c) mittels Entfaltung, d) das Ergebnis nach iterativer Phasenrekonstruktion mit Holographie}
 	\label{fig:recon3d}
 \end{figure}	
-Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz alleine durchgeführt. Dies setzt immernoch eine vollständig bekannte Referenz vorraus, trotzdem leidet das deutlich unter der irregulären Referenz. Die iterative Phasenrekonstruktion leidet sichtbar unter Zwillingsbildern, dieses Problem kann durch die Kombination von iterativer Phasenrekonstruktion und Holographie Umgangen werden. 
+Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz alleine durchgeführt. Obwohl dies von einer vollständig bekannte Referenz ausgeht, leidet die Rekonstruktion deutlich unter deren Irregularität. Die iterative Phasenrekonstruktion leidet sichtbar unter Zwillingsbildern, dieses Problem kann durch die Kombination von iterativer Phasenrekonstruktion und Holographie Umgangen werden. 
 Aus der so rekonstruierten komplexen Austrittswelle der Szene ließe sich durch Rückpropagation direkt hinter das Objekt die Schärfe steigern (XXX Toli MA).
