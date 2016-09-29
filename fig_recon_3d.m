@@ -97,7 +97,7 @@ fresultSW=maskfilter(resultSW,softmask);
 fresultHolo=maskfilter(resultHolo,softmask);
 fresultDeconv=maskfilter(resultDeconv,softmask);
 
-move=@(x)moveAndMirror(abs(finput),abs(x));
+move=@(x)moveAndMirror(finput,x);
 cut=@(x)x(end/2-end/4:end/2+end/4+1,end/2-end/4:end/2+end/4+1);
 
 f=figure();

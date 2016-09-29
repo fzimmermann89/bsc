@@ -92,7 +92,7 @@ refImagePadded=pad2size(refImageFiltered,size(scatterImageHolo));
 resultDeconv=wiener(crossPadded,refImagePadded,wienernoise);
 
 %% plot results 
-move=@(x)moveAndMirror(abs(input),abs(x));
+move=@(x)moveAndMirror(input,x);
 cut=@(x)x(end/2-end/8:end/2+end/8+1,end/2-end/8:end/2+end/8+1);
 
 f=figure();
@@ -150,7 +150,7 @@ fresultSW=maskfilter(resultSW,softmask);
 fresultHolo=maskfilter(resultHolo,softmask);
 fresultDeconv=maskfilter(resultDeconv,softmask);
 
-move=@(x)moveAndMirror(abs(finput),abs(x));
+move=@(x)moveAndMirror(finput,x);
 cut=@(x)x(end/2-end/4:end/2+end/4+1,end/2-end/4:end/2+end/4+1);
 
 f=figure();
