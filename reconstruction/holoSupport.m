@@ -3,14 +3,14 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
     % correlation.
     % Parameters: scatterImage, softmask (mask softend to reduce ringing),
     %             refImage(image of the used reference)
-    % Optional Parameters: 
+    % Optional Parameters:
     %             radFilter (default:15)    radius of median filter
     %             radClose  (default:40)    radius of morphologically closing
     %             radDilate (default:15)    radius of dilation of support
     %             threshold (default:0.5)   threshold for detecting
     %                                       crosscorrelation in times of stddev.
     %             debug     (default:false) show debug figures
-   
+    
     parser = inputParser;
     parser.addOptional('radFilter',15,@isscalar);
     parser.addOptional('radClose',40,@isscalar)
@@ -54,9 +54,9 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
     
     reconBw=imdilate(reconBw,strel('disk',radDilate));
     if parser.Results.debug
-    figure(22);imagesc(reconAbs);
-    figure(11);subplot(211);imagesc(reconBw.*(reconAbs+1));caxis([0,2]);title('supp holo');
-    figure(11);subplot(212);imagesc(~reconBw.*(reconAbs));caxis([0,1]);title('not sup');
+        figure(22);imagesc(reconAbs);
+        figure(11);subplot(211);imagesc(reconBw.*((reconAbs./max(reconAbs(:)))+1));caxis([0,2]);title('supp holo');
+        figure(11);subplot(212);imagesc(~reconBw.*((reconAbs./max(reconAbs(:)))));caxis([0,1]);title('not sup');
     end
     props=regionprops(reconBw,reconAbs, {'Area','Centroid','SubarrayIdx','Image'});%
     
@@ -89,10 +89,10 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
     end
     
     crossSize=size(cross(1).Image);
-    refImage=padarray(refImage,[radDilate,radDilate],'both');
+    refImage=padarray(refImage,[radDilate,radDilate],refImage(1),'both');
     refSize=size(refImage);
-    crossImage=recon(cross(1).SubarrayIdx{1},cross(1).SubarrayIdx{2});
-    refSupport=abs(refImage)>1e-2*max(abs(refImage(:)));%1e-1; %TODO
+    crossImage=recon(cross(1).SubarrayIdx{1},cross(1).SubarrayIdx{2});%.*imdilate(cross(1).Image,strel('disk',2*radDilate));
+    refSupport=abs(refImage-refImage(1))>1e-3*max(max(abs(refImage-refImage(1))));
     refSupport = imfill((refSupport), 'holes');
     
     %set the reference
@@ -124,7 +124,7 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
         1+  ceil (end/2-crossSize(2)/2)-  ceil(diff(1)/2):...
         0+  ceil (end/2+crossSize(2)/2)-  ceil(diff(1)/2)...
         )=cross(1).Image;
-        
+    
     %dilate for loose support (XXX)
     support = imfill((support), 'holes');
     
