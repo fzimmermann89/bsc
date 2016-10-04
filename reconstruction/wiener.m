@@ -1,9 +1,11 @@
-function [ output ] = wiener( input,h,noise )
+function [ output ] = wiener( input,h,noise,normalize )
     %Wiener deconvolution
     %                   H* S_signal
     % G     =  ------------------------------
     %            |H|^2 S_signal + S_noise
     %(allows complex h)
+    %if normalize (default:false) normalize output to input
+   
     %ft inputs
     H = ft2(h);
     Finput = ft2(input);
@@ -25,7 +27,10 @@ function [ output ] = wiener( input,h,noise )
     %deconvolution
     Foutput = Finput.*G;
     output = ift2(Foutput);
-
-
+    
+    %normalize
+    if nargin>3&&normalize
+    output=output.*(sum(abs(input(:)))/sum(abs(output(:))));
+    end
 end
 
