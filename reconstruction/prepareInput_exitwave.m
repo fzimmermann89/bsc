@@ -1,15 +1,15 @@
 function [scatterImageHolo,scatterImageObj,refImage,mask,softmask,outermask,exitwaveHolo,exitwaveObj]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
-
+    
     
     %load input
     input=load(inputfilename,'exitwaveHolo','exitwaveObj','exitwaveRef','settings');
-
+    
     [scatterImageHolo,~,exitwaveHolo]=exitwave2scatter(input.exitwaveHolo,input.settings.dx,input.settings.wavelength,false,true);
-    [scatterImageObj,~,exitwaveObj]=exitwave2scatter(input.exitwaveObj,input.settings.dx,input.settings.wavelength,false,true);
-        [scatterImageRef,~,exitwaveRef]=exitwave2scatter(input.exitwaveRef,input.settings.dx,input.settings.wavelength,false,true);
-
-%     exitwaveRef=1-(input.exitwaveRef./input.exitwaveRef(1));
-    refBw=abs(exitwaveRef)>0.02*max(abs(exitwaveRef(:)));
+    [scatterImageObj,~,exitwaveObj]  =exitwave2scatter(input.exitwaveObj ,input.settings.dx,input.settings.wavelength,false,true);
+    [scatterImageRef,~,exitwaveRef]  =exitwave2scatter(input.exitwaveRef ,input.settings.dx,input.settings.wavelength,false,true);
+    
+    %     exitwaveRef=1-(input.exitwaveRef./input.exitwaveRef(1));
+    refBw=abs(exitwaveRef-exitwaveRef(1))>0.02*max(abs(exitwaveRef(:)-exitwaveRef(1)));
     refBw=imdilate(refBw,strel('disk',20));
     props=regionprops(refBw,exitwaveRef, {'SubarrayIdx','Area'});
     [~,nRef]=max([props.Area]);
@@ -33,5 +33,5 @@ function [scatterImageHolo,scatterImageObj,refImage,mask,softmask,outermask,exit
         scatterImageObj=round(10^12*imnoise(double(scatterImageObj),'poisson'));
         
     end
-  
+    
 end
