@@ -9,16 +9,17 @@ function [out,angles,exitwave]=exitwave2scatter(exitwave,dx,wavelength,padhalf,p
     Npad=N;
     if padhalf; Npad=2*Npad;end
     if padcut; Npad=2*Npad;end
-    exitwave=(exitwave-exitwave(1));
+%     exitwave=(exitwave-exitwave(1));
     if nargin<6
         angles=anglemap(N,dx+dx*padcut,wavelength)*180/pi;
     end
     angles=gather(angles);
-    exitwave=pad2size(exitwave,Npad);
+    exitwave=pad2size(exitwave,Npad,exitwave(1));
     exitwave=ft2(exitwave)*(dx^2);
 %     out=(abs(ft2(out)).^2*(dx^2));
     if padcut
         exitwave=exitwave(1+1/4*end:3/4*end,1+1/4*end:3/4*end);
+        dx=dx*2;
     end
 %     exitwave=normalize(exitwave);%,~isnan(angles));
     out=abs(exitwave).^2;
@@ -27,6 +28,6 @@ function [out,angles,exitwave]=exitwave2scatter(exitwave,dx,wavelength,padhalf,p
         phase=halfimage(angle(exitwave));
         exitwave=sqrt(out).*exp(1i*phase);     
     end
-    exitwave=ift2(exitwave)/(dx^2);
+    exitwave=ift2(exitwave)/((dx)^2);
     
 end
