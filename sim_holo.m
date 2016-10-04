@@ -1,19 +1,32 @@
-fnameprefix='.\Tex\Images\fig_simholo';
+clear all; close all;
+addpath('./simulation');
+addpath('./helper');
+
+fnameprefix='.\Tex\Images\fig_simholo_v2';
 N=4096;
 dx=1/2;
 dz=1/4;
 wavelength=1;
-output_image=false;
+
+output_image=true;
 output_mat=true;
 
-coreDelta=1.5e-4
-coreBeta=1.5e-4
-innerBeta=.5e-4
-innerDelta=.5e-4
-membraneBeta=2e-4
-membraneDelta=2e-4
-referenceBeta=1e-3
-referenceDelta=1e-3
+%
+coreDelta=1.78e-4;
+coreBeta =1.34e-5;
+
+%Water
+innerDelta=1.55e-4; 
+innerBeta =1.84e-5;
+
+%phosphatidylcholin, 1.1g/cm3
+membraneDelta=1.69e-4;
+membraneBeta =1.15e-5;
+
+%Xenon
+referenceDelta=4.37e-4;
+referenceBeta =2.51e-4;
+
 rotationXObj=31.7/180*pi;
 rotationYObj=0/180*pi;
 rotationZObj=0/180*pi;
@@ -136,7 +149,7 @@ if output_mat
 end
 %%
 if output_image
-    if exists('exitwaveHolo','var')
+    if exist('exitwaveHolo','var')
         exitwave=exitwaveHolo;
     else
         clear objects;

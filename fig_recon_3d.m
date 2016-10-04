@@ -7,15 +7,15 @@ addpath('helper');
 
 %% settings
 refError=1.0;
-maskScale=0/2048;%32%64 %.02%.03%.1%.03%.03%.1%0.03%.1;
-sigmaMask=24;%32;
+maskScale=0/4096;%32%64 %.02%.03%.1%.03%.03%.1%0.03%.1;
+sigmaMask=12;%32;
 discreteBits=0;%15;
-wienernoise=1e6;%100;
+wienernoise=1e3;%100;
 
 caption='test';
 outpath='./Tex/images';
 inputfilename='./sim.mat';
-outputfilename=sprintf('%s/recon3d-%s.png',outpath,caption);
+outputfilename=sprintf('%s/recon3d-v2-%s.png',outpath,caption);
 
 
 %% Prepare Input
@@ -32,14 +32,17 @@ end
 
 %% use Holography and IPR
 %support and start
-[start,support]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',1,'debug',true);
+[start,support]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',0,'debug',true); %threshold 2
 
 %Plan:
 planHolo=recon.plan();
-for n=1:20%50
+for m=1:10
+for n=1:5%50
     planHolo.addStep('hio',200);
     planHolo.addStep('er',1);
-    planHolo.addStep('show');
+end
+planHolo.addStep('sw',1,{10,0.05});
+planHolo.addStep('show');
 end
 planHolo.addStep('er',50);
 planHolo.addStep('show');
@@ -57,12 +60,12 @@ planSW=recon.plan();
 for n=1:40%40
     planSW.addStep('hio',50);
     planSW.addStep('er',5);
-    planSW.addStep('sw',1,{10,0.03});
+    planSW.addStep('sw',1,{10,0.075});
     planSW.addStep('show')
 end
 planSW.addStep('loosen',1,{10})
 planSW.addStep('show')
-for n=1:20%20
+for n=1:40%20
     planSW.addStep('hio',200);
     planSW.addStep('er',1);
     planSW.addStep('show');
@@ -82,15 +85,23 @@ planSW.addStep('show');
 
 %% wiener deconvolution
 %get cross correlation
-[~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',.2,'radDilate',20);
+[~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',0,'radDilate',15,'radClose',15);
+
 %and filtered (guessed) Reference
 refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
-crossPadded=pad2size(cross,size(scatterImageHolo));
-refImagePadded=pad2size(refImageFiltered,size(scatterImageHolo));
-%deconvolution
-resultDeconv=wiener(crossPadded,refImagePadded,wienernoise);
+crossPadded=pad2size(cross-cross(1),size(scatterImageHolo));
+refImagePadded=pad2size(refImageFiltered-refImageFiltered(1),size(scatterImageHolo));
+%% deconvolution
+ 
+     wienernoise=1e4;
 
-
+resultDeconv=wiener(crossPadded,refImagePadded,wienernoise,true);
+norm=@(x,y)x.*(max(y(:)-y(1))./max(x(:)))+y(1);
+t=norm(resultDeconv,input);
+figure(9);
+clf;compleximagesc(t)
+title(num2str(wienernoise));
+ 
 %% plot results
 finput=maskfilter(input,softmask);
 fresultSW=maskfilter(resultSW,softmask);
@@ -110,35 +121,35 @@ f.Position=[0,0,(2*pixel+delim),(2*pixel+delim)].*scale;
 ax(1)=subplot(2,2,1);
 ax(1).Units='pixels';
 ax(1).Position=[0,pixel+delim,pixel,pixel].*scale;
-imagesc(abs(cut(finput)));
-colormap(flipud(colormap(gray)))
-caxis([cmin,cmax]);
+compleximagesc((cut(finput)));
+% colormap(flipud(colormap(gray)))
+% caxis([cmin,cmax]);
 axis off;
 ax(1).ActivePositionProperty='position';
 
 ax(2)=subplot(2,2,3);
 ax(2).Units='pixels';
 ax(2).Position=[0,0,pixel,pixel].*scale;
-imagesc(abs(cut(move(fresultDeconv))));
-colormap(flipud(colormap(gray)))
+compleximagesc(norm(cut(move(fresultDeconv)),input));
+% colormap(flipud(colormap(gray)))
 axis off;
 ax(2).ActivePositionProperty='position';
 
 ax(3)=subplot(2,2,2);
 ax(3).Units='pixels';
 ax(3).Position=[pixel+delim,pixel+delim,pixel,pixel].*scale;
-imagesc(abs(cut(move(fresultSW))));
-colormap(flipud(colormap(gray)))
-caxis([min(cmin,min(abs(fresultSW(:)))),min(cmax,max(abs(fresultSW(:))))]);
+compleximagesc(norm(cut(move(fresultSW)),input));
+% colormap(flipud(colormap(gray)))
+% caxis([min(cmin,min(abs(fresultSW(:)))),min(cmax,max(abs(fresultSW(:))))]);
 axis off;
 ax(3).ActivePositionProperty='position';
 
 ax(4)=subplot(2,2,4);
 ax(4).Units='pixels';
 ax(4).Position=[pixel+delim,0,pixel,pixel].*scale;
-colormap(flipud(colormap(gray)))
-imagesc(abs(cut(move(fresultHolo))));
-caxis([min(cmin,min(abs(fresultHolo(:)))),min(cmax,max(abs(fresultHolo(:))))]);
+% colormap(flipud(colormap(gray)))
+compleximagesc(norm(cut(move(fresultHolo)),inputHolo));
+% caxis([min(cmin,min(abs(fresultHolo(:)))),min(cmax,max(abs(fresultHolo(:))))]);
 axis off;
 ax(4).ActivePositionProperty='position';
 
@@ -147,4 +158,4 @@ f.PaperPositionMode='manual';
 f.PaperPosition=[0,0,(2*pixel+delim)/150,(2*pixel+delim)/150];
 f.PaperSize=[(2*pixel+delim)/150, (2*pixel+delim)/150];
 f.Resize='off';
-print(outputfilename,'-dpng','-r150');
+% print(outputfilename,'-dpng','-r150');
