@@ -3,6 +3,8 @@ addpath('./simulation');
 addpath('./helper');
 
 fnameprefix='.\Tex\Images\fig_simholo_v2';
+fnamemat='sim_complexobject.mat';
+
 N=4096;
 dx=1/2;
 dz=1/4;
@@ -11,21 +13,21 @@ wavelength=1;
 output_image=true;
 output_mat=true;
 
-%
-coreDelta=1.78e-4;
-coreBeta =1.34e-5;
+%Protein, H86C52N13O15S, 1.35 g/cm3
+coreDelta=2.03e-4;
+coreBeta =1.63e-5;
 
 %Water
 innerDelta=1.55e-4; 
 innerBeta =1.84e-5;
 
-%phosphatidylcholin, 1.1g/cm3
+%phosphatidylcholin, C44H82NO8P, 1.1g/cm3
 membraneDelta=1.69e-4;
 membraneBeta =1.15e-5;
 
-%Xenon
-referenceDelta=4.37e-4;
-referenceBeta =2.51e-4;
+%Xenon 2.9g/cm3
+referenceDelta=2.54e-4;
+referenceBeta =1.46e-4;
 
 rotationXObj=31.7/180*pi;
 rotationYObj=0/180*pi;
@@ -145,7 +147,7 @@ if output_mat
     settings.N=N;
     settings.dz=dz;
     settings.wavelength=wavelength;
-    save('sim.mat','exitwaveHolo','exitwaveRef','exitwaveObj','projHolo','projRef','projObj','reference','settings','-v7.3');
+    save(fnamemat,'exitwaveHolo','exitwaveRef','exitwaveObj','projHolo','projRef','projObj','reference','settings','-v7.3');
 end
 %%
 if output_image
