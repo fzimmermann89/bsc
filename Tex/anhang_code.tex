@@ -1,5 +1,5 @@
 \chapter{Programmüberblick}
-Überblick über die wichtigsten erstellten Matlab-Funktionen. Der vollständige Programmcode ist unter XXX abrufbar.
+Überblick über die wichtigsten erstellten Matlab-Funktionen. Der vollständige Programmcode ist unter XXX abrufbar und liegt der gedruckten Version dieser Arbeit in Form einer CD-ROM bei.
  
 %\subsection*{Hilfsfunktionen}
 %\begin{description}[style=nextline]
@@ -33,7 +33,7 @@
 			\begin{description}
 				\item[\texttt{\textit{[getSlice]}=prepareSliceMethod\textit{(this,N,dx,gpu)})}] Gibt eine \texttt{getSlice} Funktion initialisiert für die räumliche Auflösung \textit{dx} und \textit{N}x\textit{N} Pixel des Streuobjektes zurück
 				\begin{description}
-					\item [\texttt{\textit{[slice]}=getSlice\textit{(this,z)}}] Die bei \textit{z} liegende Schicht des Streuobjektes
+					\item [\texttt{\textit{[slice]}=getSlice\textit{(this,z)}}] Die bei \textit{z} liegende Schicht des Streuobjektes berechnet durch Ermittlung der die Ebenen schneidenden Kantenlängen und einem optimierten Punkt-in-Polygon Algorithmus \cite{pnpoly}.
 				\end{description}
 				
 				\item[\texttt{\textit{[matrix]}=toMatrix\textit{(objects,N,dx,gpu)}}] Logische \textit{N}x\textit{N}x\textit{N} Matrix der Streuobjekte \textit{objects}

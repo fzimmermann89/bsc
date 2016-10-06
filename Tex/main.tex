@@ -43,6 +43,8 @@ pdftitle={Bachelorarbeit},
 pdfauthor={Felix Frederik Zimmermann}
 }
 
+%%prüfe nach nicht verwendeten bib einträgen
+\usepackage{refcheck}
 
 \usepackage{tocvsec2}
 \settocdepth{section}
@@ -102,10 +104,6 @@ pdfauthor={Felix Frederik Zimmermann}
 
 %zum erzwingen von nummerierung bei formeln
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
-
-%%prüfe nach nicht verwendeten bib einträgen
-\usepackage{refcheck}
-\nocite{*}
 
 
 %%pygments%
@@ -233,6 +231,7 @@ pdfauthor={Felix Frederik Zimmermann}
 
 
 %%%%%%%%%   LITERATURVERZEICHNIS   %%%%%%%%%%%
+\nocite{*}
 
 \bibliography{ffz}
 \bibliographystyle{unsrt-mod}

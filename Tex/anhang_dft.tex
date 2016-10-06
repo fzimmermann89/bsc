@@ -21,10 +21,17 @@ mit der inversen Fouriertransformation
 \end{equation}
 Für diese gilt unter anderem das 
 \paragraph{Faltungstheorem}
-\begin{align}
+\begin{align*}
 	\mathscr{F} [f\ast g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]     \\
-	\mathscr{F}[fg]       & =(2\pi)^\frac{n}{2}\mathscr{F}[f]\ast \mathscr{F}[g] 
-\end{align}
+	\mathscr{F}[fg]       & =(2\pi)^\frac{n}{2}\mathscr{F}[f]\ast \mathscr{F}[g] \numberthis
+	\label{eq:faltung}
+\end{align*}
 
+\paragraph{Korrelationstheorem}
+\begin{align*}
+\mathscr{F} [f\otimes g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]^*     \\
+\mathscr{F}[fg]       & =(2\pi)^\frac{n}{2}\mathscr{F}[f]\ast \mathscr{F}[g] \numberthis
+\label{eq:korrelation}
+\end{align*}
 relevante Eigenschaften der diskreten Fourier Transformation
 stichwort: periodisch, aliasing im vgl zur kontinuierlichen, matlab shift nötig

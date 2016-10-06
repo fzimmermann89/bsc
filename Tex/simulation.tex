@@ -2,7 +2,7 @@
 Das Problem der Berechnung synthetischer Streubilder besitzt verschiedene Lösungsansätze. Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3d-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die möglichen Objekte deren Streubilder berechnet werden soll limitiert, existieren verschiedene Ansätze. 
 
 \section{Mie Streuung}
-Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen \cite{bohren2008}. Die unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe Anhang XX).
+Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen \cite{bohren2008}. Die unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{chap:anhang_mie}).
 Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{maetzler2002} basierenden Matlab Funktionen \texttt{simulation/mie.m} für winkelabhängige Radialprofile sowie \texttt{simulation/mie\_scatter.m} für Streubilder vor und dient der Verifizierung der Simulationsverfahren.
 
 \section{Projektions- und Rayleigh-Gans-Näherung}
