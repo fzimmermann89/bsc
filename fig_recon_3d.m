@@ -141,3 +141,29 @@ f.PaperPosition=[0,0,(2*pixel+delim)/150,(2*pixel+delim)/150];
 f.PaperSize=[(2*pixel+delim)/150, (2*pixel+delim)/150];
 f.Resize='off';
 print(outputfilename,'-dpng','-r150');
+
+%% write scatter image
+f=figure('visible','off');
+scatter=(abs(scatterImageHolo(1+1/4*end:3/4*end,1+1/4*end:3/4*end))); %(1+1/4*end:3/4*end,1+1/4*end:3/4*end)
+scatter=log10(scatter./max(scatter(:)));
+scattermin=gather(min(scatter(isfinite(scatter))).*.6);
+im=imagesc(scatter);
+colormap parula
+caxis([scattermin,0]);
+axis square
+outputfilename_scatter=sprintf('%s/fig_simholo_%s_scatter.png',outpath,caption);
+save_image(outputfilename_scatter);
+
+f=figure('colormap',parula(128),'visible','off');
+cb=colorbar('vert');
+ax=gca;
+ax.Color='none';
+ax.FontSize=18;
+caxis([scattermin,0]);
+axis off;
+cb.TickLabels=sprintfc('\\color{white} 10^{%g}',cb.Ticks);
+outputfilename_cb=sprintf('%s/fig_simholo_%s_scatter_cb.pdf',outpath,caption);
+ax.ZColor=[1,1,1];
+f.PaperSize=[10,10];
+f.PaperPosition=[-7.5,0,10,10];
+print(outputfilename_cb,'-dpdf')
