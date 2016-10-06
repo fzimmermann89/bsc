@@ -43,8 +43,8 @@ pdftitle={Bachelorarbeit},
 pdfauthor={Felix Frederik Zimmermann}
 }
 
-%%prüfe nach nicht verwendeten bib einträgen
-\usepackage{refcheck}
+%%%prüfe nach nicht verwendeten bib einträgen
+%\usepackage{refcheck}
 
 \usepackage{tocvsec2}
 \settocdepth{section}
@@ -74,6 +74,8 @@ pdfauthor={Felix Frederik Zimmermann}
 \usepackage[numbers,comma,sort&compress]{natbib} %bibliographie
 \usepackage{commath}
 \usepackage{mathtools}
+%\usepackage{floatrow}
+%\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
 %vor chapter weniger platz
 \usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
@@ -125,7 +127,7 @@ pdfauthor={Felix Frederik Zimmermann}
 
 %float positionierung
  \renewcommand{\topfraction}{0.9}	% max fraction of floats at top
- \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+ \renewcommand{\bottomfraction}{0.9}	% max fraction of floats at bottom
  %   Parameters for TEXT pages (not float pages):
  \setcounter{topnumber}{2}
  \setcounter{bottomnumber}{2}
@@ -137,6 +139,9 @@ pdfauthor={Felix Frederik Zimmermann}
  \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
  % N.B.: floatpagefraction MUST be less than topfraction !!
  \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+%chemische summenformel
+\newcommand*\chem[1]{\ensuremath{\mathrm{#1}}}
 
 
 %%%%%%%%%%%%%%%%%   BEGINN  %%%%%%%%%%%%%%%%%%
@@ -231,7 +236,7 @@ pdfauthor={Felix Frederik Zimmermann}
 
 
 %%%%%%%%%   LITERATURVERZEICHNIS   %%%%%%%%%%%
-\nocite{*}
+%\nocite{*}
 
 \bibliography{ffz}
 \bibliographystyle{unsrt-mod}

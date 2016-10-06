@@ -204,8 +204,8 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \end{figure}
 \begin{figure} %profile
 	\centering
-	\includegraphics[width=1\textwidth]{images/fig_sim_profile.pdf}
-	\caption[Radiale Profile]{Radiale Intensitätsprofile berechnet mit den verschiedenen Algorithmen sowie die relative Abweichung von Mie für eine Kugel mit Radius 20 \si{nm} und $\beta,\delta$=$10^{-4}$.}
+	\includegraphics[width=1\textwidth,trim=60 5 30 10,clip]{images/fig_sim_profile.pdf}
+	\caption[Radiale Profile]{Radiale logarithmierte Intensitätsprofile berechnet mit den verschiedenen Algorithmen sowie die relative Abweichung von Mie für eine Kugel mit Radius 20 \si{nm} und $\beta,\delta$=$10^{-4}$. Es ist bei kleinen Streuwinkeln eine gute Übereinstimmung aller Algorithmen zu erkennen, bei höheren Winkeln versagt die Projektion. Über den gesamten Bereich besitzt bei diesen Parametern die Multislice Propagation die beste Übereinstimmung. Die relativen Fehler der Simulationen besitzen in den Intensitätsminima aufgrund der dort deutlich Abfallenden Referenzintensität deutliche Maxima.}
 	\label{fig:profil}
 \end{figure}
 
@@ -221,38 +221,47 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \section{Streubilder komplexer Objekte}
 Neben der Berechnung von Streubilder von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen Objekten.
 
-Als interessante Testszene wird eine wassergefüllte ikosaederförmige Lecithin-Membran mit dem Außenradius 375 \si{nm} und einer Dicke von 25 \si{nm} um deren Mittelpunkt vier kleinere Protein-Kugeln (Radius 90 \si{nm}) in den Eckpunkten eines Tetraeders angeordnet sind (\fref{fig:komplexmodel}) sowie ein disjunktes Xenon-Dodekaeder mit Außenradius 100 \si{nm} betrachtet. Die komplexen Brechzahlen sind in \fref{tab:brechzahl} aufgeführt.
+Als interessante Testszene wird eine wassergefüllte ikosaederförmige Lecithin-Membran mit dem Außenradius 375 \si{nm} und einer Dicke von 25 \si{nm} um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius 90 \si{nm}) in den Eckpunkten eines Tetraeders angeordnet sind (\fref{fig:komplexmodel}) sowie ein disjunktes Xenon-Dodekaeder mit Außenradius 100 \si{nm} betrachtet. Die komplexen Brechzahlen sind in \fref{tab:brechzahl} aufgeführt \cite{henke,berg2008,milo2015}. Die so berechnete Austrittswelle ist in \fref{fig:komplexexit} dargestellt, das zugehörige Streubild ist in \fref{fig:komplexscatter} und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar und lässt sich für den Vergleich von Rekonstruktionsansätzen nutzen.
 
+  
 \begin{table}
-	\centering
-	\begin{tabular}{lllll}
-		\hline\hline
-		Material						&Summenformel				&Dichte 			&$\beta$				&$\delta$ 	\\
-		\hline
-		Lecithin					 	&							& 					&						&			\\ 					
-		Wasser						  	&							& 					&						&			\\
-		Protein  						&							& 					&						&			\\ 
-		Xenon						  	&							& 					&						&			\\
-		\hline\hline
-	\end{tabular}
-	\caption[Materialen für komplexe Austrittswelle]{Brechzahlen der Materialien, die für die Simulation der Austrittswelle eines komplexen Modellobjektes verwendet werden.}
-	\label{tab:brechzahl}
-\end{table}	
+	\begin{minipage}[b]{.64\textwidth }%
+	 	\begin{small}
+ 			\begin{tabular}{lll}
+ 				\hline\hline
+ 				Material													&Brechzahl bei 1 \si{nm} \cite{henke}\\
+ 				\hline
+ 				Lecithin (\chem{C_{44}H_{82}NO_8P}) \cite{milo2015}			&$1-(1.69-0.12i)\times10^{-4}$			\\ 					
+ 				Wasser														&$1-(1.55-0.18i)\times10^{-4}$			\\
+ 				Protein (\chem{H_{86}C_{52}N_{13}O_{15}S}) \cite{bergh2008}	&$1-(2.03-0.16i)\times10^{-4}$			\\
+ 				Xenon-Cluster												&$1-(2.54-1.46i)\times10^{-4}$			\\
+ 				\hline\hline
+ 			\end{tabular}
+		\end{small}
+		\centering
+		\caption[Materialen für komplexe Austrittswelle]{Brechzahlen der Materialien}   \label{tab:brechzahl}
+	\end{minipage}
+	\begin{minipage}[b]{.35\textwidth}
+				\hspace*{0pt}\includegraphics[width=.8\textwidth]{images/scene.png}%
+				\captionof{figure}{3D-Modell\label{fig:komplexmodel}}%
+	\end{minipage}
+\end{table}
+
 
 \begin{figure} %exitwave und scatter
-	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
-		\includegraphics[width=\textwidth]{images/scene.png}
-				
-		\caption{3D Modell}
-		\label{fig:komplexmodel}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.49\textwidth}
-		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}}
+		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}}
 		\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_v2_exitwave_cw.pdf}}}
-		\caption{Streubild}
+		\caption{Austrittswelle}
 		\label{fig:komplexexit}
 	\end{subfigure}
-	\caption[Model und Austrittswelle eines komplexen Objektes]{Model und Austrittswelle eines komplexen Objektes. Bei dem 3D Modell ist der Ikosaeder entlang seiner Mitte aufgeschnitten um die im inneren liegenden Kugeln zu visualisieren. Bei der Austrittswelle ist die relative Intensität bezüglich der Eintrittswelle über die Helligkeit dargestellt, die Phase über den Farbton.}
+	\begin{subfigure}[b]{0.49\textwidth}
+		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_scatter.png}}
+		\includegraphics[width=\textwidth]{images/fig_simholo_v2_scatter.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_v2_scatter_cb.pdf}}}
+			\caption{Streubild}
+			\label{fig:komplexscatter}
+	\end{subfigure}		
+	\caption[Austrittswelle und Streubild eines komplexen Objektes]{Austrittswelle und logarithmiertes Streubild eines komplexen Objektes. Bei der Austrittswelle ist die relative Intensität bezüglich der Eintrittswelle über die Helligkeit dargestellt, die Phase über den Farbton.}
 	\label{fig:komplex}
 \end{figure}
+
