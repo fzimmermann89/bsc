@@ -3,7 +3,7 @@ addpath('./simulation');
 addpath('./helper');
 
 fnameprefix='.\Tex\Images\fig_simholo_v2';
-fnamemat='sim_complexobject.mat';
+fnamemat='.\data\sim_complexobject.mat';
 
 N=4096;
 dx=1/2;

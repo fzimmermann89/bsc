@@ -14,7 +14,7 @@ wienernoise=1e4;
 
 caption='v2';
 outpath='./Tex/images';
-inputfilename='./sim.mat';
+inputfilename='.\data\sim_complexobject.mat';
 outputfilename=sprintf('%s/recon3d-%s.png',outpath,caption);
 
 
@@ -80,7 +80,7 @@ planSW.addStep('show');
 
 %% wiener deconvolution
 %get cross correlation
-[~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',1,'radDilate',15,'radClose',15);
+[~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',0.5,'radDilate',30,'radClose',30);
 
 %and filtered (guessed) Reference
 refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
