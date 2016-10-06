@@ -37,7 +37,7 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
     %Create BW mask
     idx=true(size(recon));
     idx(end/2+1-end/4:end/2+1+end/4,end/2+1-end/4:end/2+1+end/4)=false;
-    reconBw=reconAbsFilt>(mean((reconAbsFilt(idx)))+threshold*std(reconAbsFilt(idx)));
+    reconBw=abs(reconAbsFilt-(mean((reconAbsFilt(idx)))))>(threshold*std(reconAbsFilt(idx)));
     
     %     reconBw=reconAbsFilt>threshold*median(reconAbsFilt(idx));
     
