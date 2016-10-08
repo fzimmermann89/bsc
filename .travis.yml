@@ -20,4 +20,4 @@ deploy:
   file: main.pdf
   on:
     repo: fzimmermann89/bsc
-tags: true
+    tags: true
