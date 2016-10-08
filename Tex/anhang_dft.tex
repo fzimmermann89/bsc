@@ -20,16 +20,23 @@ mit der inversen Fouriertransformation
 	\dif  \vec{q} \, .
 \end{equation}
 Für diese gilt unter anderem: 
+\paragraph{komplexe Konjugation}
+\begin{align}
+	\label{eq:ft_konjugation}
+	\mathscr{F}[f(x)]^*=\mathscr{F}[f(-x)]
+\end{align}
+$\rightarrow$eine komplexe Konjugation im Realraum entspricht einer Speigelung im Fourierraum
+
 \paragraph{Faltungstheorem}
 \begin{align*}
+	\label{eq:ft_faltung}
 	\mathscr{F} [f\ast g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]     \\
 	\mathscr{F}[fg]       & =(2\pi)^\frac{n}{2}\mathscr{F}[f]\ast \mathscr{F}[g] \numberthis
-	\label{eq:faltung}
 \end{align*}
-Eine Faltung im Realraum entspricht einer Multiplikation im Fourierraum.
+$\rightarrow$eine Faltung im Realraum entspricht einer Multiplikation im Fourierraum.
 \paragraph{Korrelationstheorem}
 \begin{align}
-\mathscr{F} [f\otimes g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]^*     \\
-\label{eq:korrelation}
+	\label{eq:ft_korrelation}
+	\mathscr{F} [f\otimes g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]^*     \\
 \end{align}
-Eine Korrelation im Realraum entspricht im Fourierraum einer Multiplikation mit dem komplex konjugierten.
+$\rightarrow$eine Korrelation mit einer Funktion im Realraum entspricht im Fourierraum einer Multiplikation mit dem komplex-konjugierten der Funktion.

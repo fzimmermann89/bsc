@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%   DEFINITIONEN   %%%%%%%%%%%%%%%
 %\pdfminorversion=5 
-\documentclass[11pt,a4paper,oneside]{book}
+\documentclass[11pt,a4paper,twoside]{book}
 
 %Packages
 \usepackage[utf8]{inputenc}
@@ -29,7 +29,7 @@
 \usepackage{blindtext} %Einfügen von Blindtext über \blindtext
 \usepackage{siunitx} %Einstellungen für Dezimaltrennzeichen und Definitionen in siunitx.cfg
 \usepackage[autostyle=true,german=quotes]{csquotes} %Verwendung von Anführungszeichen über \enquote{Text}
-\usepackage[titletoc]{appendix} %um eine Titelseite "Anhang" vor dem eigentlichen Anhang einfügen zu können
+\usepackage[toc,page]{appendix} %um eine Titelseite "Anhang" vor dem eigentlichen Anhang einfügen zu können
 
 %Druckt den Hinweis "Entwurf" mit Datum auf jede Seite. Zum deaktivieren printwatermark=false setzen
 \usepackage[printwatermark=false]{xwatermark}
@@ -43,8 +43,8 @@ pdftitle={Bachelorarbeit},
 pdfauthor={Felix Frederik Zimmermann}
 }
 
-%%%prüfe nach nicht verwendeten bib einträgen
-%\usepackage{refcheck}
+%%prüfe nach nicht verwendeten bib einträgen
+\usepackage{refcheck}
 
 \usepackage{tocvsec2}
 \settocdepth{section}
@@ -74,8 +74,6 @@ pdfauthor={Felix Frederik Zimmermann}
 \usepackage[numbers,comma,sort&compress]{natbib} %bibliographie
 \usepackage{commath}
 \usepackage{mathtools}
-%\usepackage{floatrow}
-%\newfloatcommand{capbtabbox}{table}[][\FBwidth]
 
 %vor chapter weniger platz
 \usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
@@ -86,9 +84,9 @@ pdfauthor={Felix Frederik Zimmermann}
 
 
 
-%%kleinere abstände bei gleichungen
-%\setlength{\abovedisplayskip}{0pt}
-%\setlength{\belowdisplayskip}{0pt}
+%kleinere abstände bei gleichungen
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
 
 
 %bold capital
@@ -97,12 +95,13 @@ pdfauthor={Felix Frederik Zimmermann}
 %function beschreibung
 \usepackage{enumitem}
 
-%\newenvironment{desc}
-%{\vspace{-3ex}\begin{quote}}
-%	{\vspace{-1ex}\end{quote}}
-
 %abb. zu referenzen hinzufügen
 \usepackage[german,plain]{fancyref}
+\newcommand*{\fancyrefappendixlabelprefix}{app}
+
+\frefformat{plain}{\fancyrefappendixlabelprefix}{%
+	\appendixtocname\fancyrefdefaultspacing#1%
+}%
 
 %zum erzwingen von nummerierung bei formeln
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
@@ -163,7 +162,7 @@ pdfauthor={Felix Frederik Zimmermann}
 \begin{minipage}[b][12cm]{\textwidth}
 	\begin{center}
 		\begin{tabular}{m{12cm}}
-			\textbf{Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und eigenhändig sowie ohne unerlaubte fremde Hilfe und ausschließlich unter Verwendung der aufgeführten Quellen und Hilfsmitte angefertigt habe. }				\\
+			\large{Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und eigenhändig sowie ohne unerlaubte fremde Hilfe und ausschließlich unter Verwendung der aufgeführten Quellen und Hilfsmitte angefertigt habe. }				\\
 											\\
 											\\
 			\midrule
@@ -225,19 +224,29 @@ pdfauthor={Felix Frederik Zimmermann}
 \include{fazit}
 
 %%%%%%%%%%%%%%%%   ANHANG   %%%%%%%%%%%%%%%%%%
+
+
+
 \begin{appendices}
-	\include{anhang_abbildungen}
-	\include{anhang_dft}
-	\include{anhang_mie}
-	\include{anhang_phaseretrieval}
-	\include{anhang_code}
+	\addtocontents{toc}{\protect\setcounter{tocdepth}{1}}
+	\makeatletter
+	\addtocontents{toc}{%
+		\begingroup
+		\let\protect\l@chapter\protect\l@section
+		\let\protect\l@section\protect\l@subsection
+	}
+	\makeatother
+\input{anhang_dft}
+\input{anhang_mie}
+\input{anhang_phaseretrieval}
+\input{anhang_code}
+	\addtocontents{toc}{\endgroup}
 \end{appendices}
 
 
-
 %%%%%%%%%   LITERATURVERZEICHNIS   %%%%%%%%%%%
-%\nocite{*}
 
+\nocite{*}
 \bibliography{ffz}
 \bibliographystyle{unsrt-mod}
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}

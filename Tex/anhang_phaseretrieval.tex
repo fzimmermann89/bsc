@@ -1,5 +1,5 @@
 \chapter{Algorithmen zur Phasenrückgewinnung}
-\label{chap:anhang_algos}
+\label{app:algos}
 Die grundlegende Iteration der iterativen Rekonstruktionsalgorithmen ER, HIO und RAAR in ihrer Projektionsschreibweise sind in \Fref{tab:ipr} dargestellt \cite{fienup1978,luke2004,marchesini2007}.
 
 Aus Gründen der Simplizität wird davon ausgegangen, dass die Realraumbeschränkungen nur den Support beinhalten, d.h. der Realraum-Projektor $P_s$ geschrieben werden kann als 
@@ -42,7 +42,7 @@ Die implementierte Form des RAAR Algorithmus' basiert auf folgender Umformung:
 \begin{table}
 	\centering
 	\begin{tabular}{cc}
-		\hline\hline
+		\hline
 		Algorithmus                             & $\rho_{n+1}$                                                                               \\ 							
 		\hline
 		ER                                      & $P_sP_m\rho_n$                                                                             \\ 								
@@ -51,7 +51,7 @@ Die implementierte Form des RAAR Algorithmus' basiert auf folgender Umformung:
 		\left[\mathbb{1}-\beta P_m\right]\rho_n & \text{für } x\notin S                                                                     
 		\end{cases}$\\
 		RAAR                                    & $\left[\frac{\beta}{2}\left(R_sR_m+\mathbb{1}\right)+\left(1-\beta\right)P_m\right]\rho_n$ \\																
-		\hline\hline
+		\hline
 	\end{tabular}
 	\caption[IPR-Algorithmen]{Iterationsschritte der implementierten IPR-Algorithmen.}
 	\label{tab:ipr}

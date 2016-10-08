@@ -2,7 +2,7 @@
 Das Problem der Berechnung synthetischer Streubilder besitzt verschiedene Lösungsansätze. Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3d-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die möglichen Objekte deren Streubilder berechnet werden soll limitiert, existieren verschiedene Ansätze. 
 
 \section{Mie Streuung}
-Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen \cite{bohren2008}. Die unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{chap:anhang_mie}).
+Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen \cite{bohren2008}. Die unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{app:mie}).
 Eine vektorisierte Version dieser Berechnung liegt in der auf Mätzler \cite{maetzler2002} basierenden Matlab Funktionen \texttt{simulation/mie.m} für winkelabhängige Radialprofile sowie \texttt{simulation/mie\_scatter.m} für Streubilder vor und dient der Verifizierung der Simulationsverfahren.
 
 \section{Projektions- und Rayleigh-Gans-Näherung}
@@ -51,7 +51,7 @@ Somit
 	\label{fig:msft}
 \end{figure} 
 
-Formel \fref{eq:msft} beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld in der ersten Bornschen Näherung zu berechnen. Diese Methode wird als \textit{Multislice Fourier Transformation} \textit{MSFT} bezeichnet \cite{barke2015}. 
+\fref{eq:msft} beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld in der ersten Bornschen Näherung zu berechnen. Diese Methode wird als \textit{Multislice Fourier Transformation} \textit{MSFT} bezeichnet \cite{barke2015}. 
 Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors, der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, ließe sich nachträglich eine grobe Näherung für Absorptionseffekte einführen, die in einigen Fällen die subjektive Qualität der Simulation verbessern kann \cite{barke2015}. Da diese zum Einen jedoch nicht konsistent zur Herleitung der Methode ist und somit ihre Gültigkeit nicht abgeschätzt werden kann, zum anderen sie nicht allgemein die Güte der Simulation verbessert, ist im Weiteren mit \textit{MSFT} die Methode ohne diese Korrektur bezeichnet.
 Eine Implementation des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
 
@@ -221,21 +221,21 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \section{Streubilder komplexer Objekte}
 Neben der Berechnung von Streubilder von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen Objekten.
 
-Als interessante Testszene wird eine wassergefüllte ikosaederförmige Lecithin-Membran mit dem Außenradius 375 \si{nm} und einer Dicke von 25 \si{nm} um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius 90 \si{nm}) in den Eckpunkten eines Tetraeders angeordnet sind (\fref{fig:komplexmodel}) sowie ein disjunktes Xenon-Dodekaeder mit Außenradius 100 \si{nm} betrachtet. Die komplexen Brechzahlen sind in \fref{tab:brechzahl} aufgeführt \cite{henke,berg2008,milo2015}. Die so berechnete Austrittswelle ist in \fref{fig:komplexexit} dargestellt, das zugehörige Streubild ist in \fref{fig:komplexscatter} und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar und lässt sich für den Vergleich von Rekonstruktionsansätzen nutzen.
+Als interessante Testszene wird eine wassergefüllte ikosaederförmige Lecithin-Membran mit dem Außenradius 375 \si{nm} und einer Dicke von 25 \si{nm} um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius 90 \si{nm}) in den Eckpunkten eines Tetraeders angeordnet sind (\fref{fig:komplexmodel}) sowie ein disjunktes Xenon-Dodekaeder mit Außenradius 100 \si{nm} betrachtet. Die komplexen Brechzahlen sind in \fref{tab:brechzahl} aufgeführt \cite{henke,bergh2008,milo2015}. Die so berechnete Austrittswelle ist in \fref{fig:komplexexit} dargestellt, das zugehörige Streubild ist in \fref{fig:komplexscatter} und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar und lässt sich für den Vergleich von Rekonstruktionsansätzen nutzen.
 
   
 \begin{table}
 	\begin{minipage}[b]{.64\textwidth }%
 	 	\begin{small}
  			\begin{tabular}{lll}
- 				\hline\hline
+ 				\hline
  				Material													&Brechzahl bei 1 \si{nm} \cite{henke}\\
  				\hline
  				Lecithin (\chem{C_{44}H_{82}NO_8P}) \cite{milo2015}			&$1-(1.69-0.12i)\times10^{-4}$			\\ 					
  				Wasser														&$1-(1.55-0.18i)\times10^{-4}$			\\
  				Protein (\chem{H_{86}C_{52}N_{13}O_{15}S}) \cite{bergh2008}	&$1-(2.03-0.16i)\times10^{-4}$			\\
  				Xenon-Cluster												&$1-(2.54-1.46i)\times10^{-4}$			\\
- 				\hline\hline
+ 				\hline
  			\end{tabular}
 		\end{small}
 		\centering
