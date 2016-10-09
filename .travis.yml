@@ -21,7 +21,7 @@ addons:
 
 before_script:
   - wget -qO- https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs920/ghostscript-9.20-linux-x86_64.tgz|tar xvz --strip=1&&mv gs-920-linux_x86_64 gs&&chmod +x gs
-  - PATH=$PATH:$PWD
+  - PATH=$PWD:$PATH
 
 script:
   - cd $DIR
@@ -29,7 +29,7 @@ script:
   - bibtex $FILE
   - pdflatex -interaction=nonstopmode -halt-on-error $FILE
   - pdflatex -interaction=nonstopmode -halt-on-error $FILE
-  - ./gs -o compressed.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dNOPAUSE -dBATCH $FILE.pdf&&mv compressed.pdf $FILE.pdf
+  - gs -o compressed.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dNOPAUSE -dBATCH $FILE.pdf&&mv compressed.pdf $FILE.pdf
 
 deploy:
   skip_cleanup: true
