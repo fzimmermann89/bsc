@@ -39,4 +39,4 @@ deploy:
   file: $FILE.pdf
   on:
     repo: fzimmermann89/bsc
-#    tags: true
+    tags: true
