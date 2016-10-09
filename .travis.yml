@@ -2,8 +2,7 @@ dist: trusty
 sudo: false
 
 env:
-- DIR=Tex
-- FILE=main
+- DIR=Tex FILE=main
 
 addons:
   apt:
