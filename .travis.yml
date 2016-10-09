@@ -1,5 +1,6 @@
-sudo: false
+sudo: required
 dist: trusty
+#sudo not required, but without this option dist will be ignored and ubuntu precise will be used..
 
 env:
 - DIR=Tex FILE=main
