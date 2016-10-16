@@ -11,7 +11,7 @@ Die in dieser Arbeit verwendete Form der Fouriertransformation lautet
 \end{equation}
 mit der inversen Fouriertransformation
 \begin{equation}
-	\mathscr{F}^-1 [\tilde{f}(\vec{q})] (\vec{x})
+	\mathscr{F}^{-1} [\tilde{f}(\vec{q})] (\vec{x})
 	=
 	\frac{1}{(2\pi)^\frac{n}{2}}
 	\int_{-\infty}^{\infty}
@@ -23,20 +23,31 @@ Für diese gilt unter anderem:
 \paragraph{komplexe Konjugation}
 \begin{align}
 	\label{eq:ft_konjugation}
-	\mathscr{F}[f(x)]^*=\mathscr{F}[f(-x)]
+\mathscr{F}^{-1}\left[ \left(\mathscr{F}\left[f(x)\right]\right)^*  \right]	=f(-x)
 \end{align}
-$\rightarrow$eine komplexe Konjugation im Realraum entspricht einer Speigelung im Fourierraum
-
+$\rightarrow$eine komplexe Konjugation im Fourierraum entspricht einer Spiegelung im Realraum
+\paragraph{doppelte Fouriertransformation}
+\begin{align}
+	\mathscr{F}\left[\mathscr{F}\left[f(x)\right]  \right]	=f(-x)
+\end{align}
+$\rightarrow$die zweimalige Anwendung der Fouriertransformation entspricht einer Spiegelung
 \paragraph{Faltungstheorem}
 \begin{align*}
 	\label{eq:ft_faltung}
-	\mathscr{F} [f\ast g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]     \\
-	\mathscr{F}[fg]       & =(2\pi)^\frac{n}{2}\mathscr{F}[f]\ast \mathscr{F}[g] \numberthis
+	\mathscr{F} [f\ast g] & =(2\pi)^{\sfrac{n}{2}}\mathscr{F}[f] \mathscr{F}[g]     \\
+	\mathscr{F}[fg]       & =\frac{1}{(2\pi)^{\sfrac{n}{2}}}\mathscr{F}[f]\ast \mathscr{F}[g] \numberthis
 \end{align*}
 $\rightarrow$eine Faltung im Realraum entspricht einer Multiplikation im Fourierraum.
 \paragraph{Korrelationstheorem}
 \begin{align}
 	\label{eq:ft_korrelation}
-	\mathscr{F} [f\otimes g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] \mathscr{F}[g]^*     \\
+	\mathscr{F} [f\otimes g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] (\mathscr{F}[g])^*     \\
 \end{align}
-$\rightarrow$eine Korrelation mit einer Funktion im Realraum entspricht im Fourierraum einer Multiplikation mit dem komplex-konjugierten der Funktion.
+$\rightarrow$eine Korrelation mit einer Funktion im Realraum entspricht im Fourierraum einer Multiplikation mit der komplex-konjugierten Funktion.
+
+\paragraph{Ableitung}
+\begin{align}
+\label{eq:ft_ableitung}
+	\mathscr{F} [\pd{f(x)}{x}] (q)=-iq	\mathscr{F} [f] (q)=   \\
+\end{align}
+$\rightarrow$Eine Ableitung  im Realraum wird zu einer Multiplikation im Fourierraum

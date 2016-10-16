@@ -83,7 +83,6 @@ pdfauthor={Felix Frederik Zimmermann}
 \makeatother
 
 
-
 %kleinere abstände bei gleichungen
 \setlength{\abovedisplayskip}{0pt}
 \setlength{\belowdisplayskip}{0pt}
@@ -103,9 +102,18 @@ pdfauthor={Felix Frederik Zimmermann}
 	\appendixtocname\fancyrefdefaultspacing#1%
 }%
 
+\frefformat{plain}{\fancyrefeqlabelprefix}{%
+  	\frefeqname\fancyrefdefaultspacing#1%
+}%
+
 %zum erzwingen von nummerierung bei formeln
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
+%vektoren fett
+\renewcommand\vec{\mathbf}
+
+%dreifach differential
+\DeclareMathOperator{\dift}{d^3 \!}
 
 %%pygments%
 \usepackage{fancyvrb}
@@ -141,7 +149,8 @@ pdfauthor={Felix Frederik Zimmermann}
 
 %chemische summenformel
 \newcommand*\chem[1]{\ensuremath{\mathrm{#1}}}
-
+%%%Worttrennung $$$
+\input{trennung}
 
 %%%%%%%%%%%%%%%%%   BEGINN  %%%%%%%%%%%%%%%%%%
 \begin{document}
