@@ -14,7 +14,7 @@
 \usepackage{xfrac}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[textwidth=150mm,textheight=250mm,left=37.5mm,top=25mm,headsep=10mm]{geometry}
+\usepackage[textwidth=160mm,bottom=20mm,top=20mm,headsep=8mm,bindingoffset=10mm]{geometry}
 \usepackage{listings}
 \usepackage{fancybox}
 
@@ -94,14 +94,16 @@ pdfauthor={Felix Frederik Zimmermann}
 %function beschreibung
 \usepackage{enumitem}
 
-%abb. zu referenzen hinzufügen
+%schönerer referenzierungen
 \usepackage[german,plain]{fancyref}
+%app für appendix zu referenzen hinzufügen
 \newcommand*{\fancyrefappendixlabelprefix}{app}
 
 \frefformat{plain}{\fancyrefappendixlabelprefix}{%
 	\appendixtocname\fancyrefdefaultspacing#1%
 }%
 
+%gleichungen ohne klammer referenzieren
 \frefformat{plain}{\fancyrefeqlabelprefix}{%
   	\frefeqname\fancyrefdefaultspacing#1%
 }%
@@ -221,8 +223,8 @@ pdfauthor={Felix Frederik Zimmermann}
 \fancyhf{} 
 \pagestyle{fancy} 
 %\fancyhead[LE,RO]{\sc\thepage} 
-\fancyhead[LO]{\sc\nouppercase\rightmark} 
-\fancyhead[RE]{\sc\nouppercase\leftmark}
+\fancyhead[RO]{\sc\nouppercase\rightmark} 
+\fancyhead[LE]{\sc\nouppercase\leftmark}
 \cfoot{\thepage}
 \renewcommand{\headheight}{14pt}
 
