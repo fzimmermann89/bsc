@@ -20,7 +20,7 @@ objects{1}=scatterObjects.sphere();
 objects{1}.radius=radius;
 objects{1}.beta=beta;
 objects{1}.delta=delta;
-run=singlerun2(N,dx,dz,wavelength,objects);
+run=singlerun(N,dx,dz,wavelength,objects);
 %% values
 minangle=1;
 maxangle=20;
