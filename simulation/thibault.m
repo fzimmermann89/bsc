@@ -1,16 +1,12 @@
-
-function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
+function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin,debug)
     % calculate exitWave after scene following Thibault 2006
     % "Reconstruction of a yeast cell from X-ray diffraction data"
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
+  
+    if nargin<6||isempty(gpu);gpu=parallel.gpu.GPUDevice.isAvailable();end
+    if nargin<7||isempty(margin);margin=0.95;end
     
     k=2*pi/wavelength;
-    if nargin<6
-        gpu=parallel.gpu.GPUDevice.isAvailable();
-    end
-    if nargin<7
-        margin=0.95;
-    end
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
       
     if gpu
@@ -45,6 +41,10 @@ function exitWave=thibault(wavelength,objects,N,dx,deltaz,gpu,margin)
             waveF=(waveF+factor.*(ft2(delta)/dx^2)).*propagator;
         else
             waveF=(waveF.*propagator);
+        end
+        
+        if nargin>7&&isa(debug,'function_handle')
+            debug(ift2(waveF)*dx^2,z);
         end
     end
     

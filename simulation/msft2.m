@@ -1,6 +1,4 @@
-
-
-function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption)
+function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption,debug)
     %calculates multislice ft of object, based on ingo barke's code
     %output is matrix of complex amplitudes over different exit k_x,y
     %constant phase shifts are ignored
@@ -27,9 +25,9 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption)
     % -> phaseshift=z*(k-kout_z)=z*kdiff with
     % kdiff=k-sqrt(k^2-(dk_x^2+dk_y^2))
     
-    if nargin<7
-        sim_absorption=0;
-    end
+    if nargin<6||isempty(gpu);gpu=parallel.gpu.GPUDevice.isAvailable();end
+    if nargin<7||isempty(sim_absorption);sim_absorption=0;end
+    
     k=2*pi/wavelength;
     Lz=dx*N/2;
     
@@ -83,6 +81,9 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption)
             end
             
         end
+        if nargin>7&&isa(debug,'function_handle')
+            debug(out,z);
+        end
     end
     
     %unlock objects
@@ -102,8 +103,8 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption)
         kdiff=k-real(sqrt(complex(k^2-(dk_x.^2+dk_y.^2))));
         
         %prepare mask for evanescence ("no remaining forwards k")
-        mask=k^2>(dk_x.^2+dk_y.^2);
-      
+        mask=k^2>(dk_x.^2+dk_y.^2);    
     end
+    
 end
 

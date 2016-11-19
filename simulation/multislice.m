@@ -1,10 +1,10 @@
-
-function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
+function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter,debug)
     % calculate exitWave after scene.
     % Uses algorith similar to cowley or hare
     % wavelength (in nm),objects (cell arra),N,dx,distanceDetektor,gpu (bool use gpu),debug (bool show progress)
-
-    if nargin<7; filter=false;end;
+    
+    if nargin<6||isempty(gpu);gpu=parallel.gpu.GPUDevice.isAvailable();end
+    if nargin<7||isempty(filter); filter=false;end;
 
     k=2*pi/wavelength;
     Lz=dx*N/2; %max z values are half of N because Nx,Ny must be padded
@@ -65,7 +65,10 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
         end
 
         waveF=waveF.*propagatorSingleStep;
-
+        
+        if nargin>7&&isa(debug,'function_handle')
+            debug(ft2(waveF)/(dx^2),z);
+        end
     end
     waveR=ft2(waveF)/(dx^2);
 
@@ -101,8 +104,6 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter)
         wt = 0.33*N;
         out = exp(-nsq.^8/wt^16);
     end
-
-
-
+    
 end
 
