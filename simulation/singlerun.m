@@ -1,5 +1,5 @@
 
-function run=singlerun2(N,dx,dz,wavelength,objects,simabs)
+function run=singlerun(N,dx,dz,wavelength,objects,simabs)
     % runs all algorithms for a single set of parameters
     %% setup
     padhalf=true;
