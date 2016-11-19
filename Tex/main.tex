@@ -44,7 +44,7 @@ pdfauthor={Felix Frederik Zimmermann}
 }
 
 %%prüfe nach nicht verwendeten bib einträgen
-\usepackage{refcheck}
+%\usepackage{refcheck}
 
 \usepackage{tocvsec2}
 \settocdepth{section}
@@ -68,6 +68,7 @@ pdfauthor={Felix Frederik Zimmermann}
 \usepackage[numbers,comma,sort&compress]{natbib} %bibliographie
 \usepackage{commath}
 \usepackage{mathtools}
+\usepackage{rotating} %seite quer
 
 %vor chapter weniger platz
 \usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
@@ -132,9 +133,9 @@ pdfauthor={Felix Frederik Zimmermann}
 \newcommand{\reconimage}[1]{
 	\begin{overpic}#1
 		\put (0,100)  {Original}
-		\put (50,100) {IPR}
-		\put (0,50)   {Wiener}
-		\put (50,50)  {Holo}
+		\put (50,100) {IPR (Shrinkwrap)}
+		\put (0,50)   {Wiener-Entfaltung}
+		\put (50,50)  {IPR (Holographie)}
 	\end{overpic}
 }
 
@@ -262,7 +263,7 @@ pdfauthor={Felix Frederik Zimmermann}
 
 %%%%%%%%%   LITERATURVERZEICHNIS   %%%%%%%%%%%
 
-\nocite{*}
+%\nocite{*}
 \bibliography{ffz}
 \bibliographystyle{unsrt-mod}
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}

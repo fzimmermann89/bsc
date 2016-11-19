@@ -177,6 +177,7 @@ Besonders bemerkbar ist dieser Bearbeitungsschritt bei Pixeln die genau in den I
 Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf die Mie-Streubilder normiert. Hierzu wird ein Skalierungsfaktor gesucht, der die mittlere Abweichung der simulierten Streubilder vom jeweiligen Mie-Streubild innerhalb der ersten 10° minimiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streubildern betrachtet. Für die \textit{Multislice Propagation} ist in \fref{fig:exitscatter} für einen konkreten Parametersatz exemplarisch Austrittswelle und Streubild dargestellt, die relative Abweichung von Mie ist für diesen Parametersatz in \fref{fig:relerror} für alle Simulationsansätze dargestellt. Aus den rotationssymmetrischen Streubildern können nun Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden um einen besseren Überblick zu erhalten (\fref{fig:profil}). Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund dessen steilen Verlaufs scharfe, nur 1-2 Datenpunkte umfassende, Maxima annimmt.
 
 Um eine quantifizierende Größe für die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu haben, wird deshalb der Median des relativen Fehlers bis 20° Streuwinkel genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie als in diesem Bereich valide anzusehen. In \fref{fig:variation} wird deutlich, dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung bis $10^{-4}$ (die viele Materialien bei \SI{1}{nm} Wellenlänge aufweisen~\cite{henke}) sowohl \textit{Multislice Propagation} und\textit{Thibaults Multislice} als auch \textit{MSFT} valide Ergebnisse liefern -- der mediane Fehler überschreitet 5\% nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels \textit{MSFT} berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Mehrfachstreuung in Vorwärtsrichtung, die bei \textit{MSFT} im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Formulierung und der \textit{Multislice Propagation} kann zu einem gewissen Anteil durch die hier verwendete naive Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der numerischen Genauigkeit und dem Einfluss von Rundungsfehlern.
+
 \begin{figure} %exitwave und scatter
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
@@ -194,6 +195,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 	\caption[Austrittswelle und Streubild einer Kugel]{Exemplarische Multislice-Propagations Austrittwelle (a) und (logarithmiertes) Streubild (b) einer Kugel mit Radius \SI{100}{nm} bei $\beta,\delta$=$10^{-3}$. Die relative Intensität der Austrittswelle bezüglich der Eintrittswelle ist über die Helligkeit dargestellt, die Phase über den Farbton. Das Streubild zeigt einen Bereich bis 15°.}
 	\label{fig:exitscatter}
 \end{figure}%
+
 \begin{figure} %rel error
 	\centering
 	\begin{subfigure}[b]{0.48\textwidth}
@@ -216,12 +218,17 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 	\caption[Relativer Fehler der Simulationen]{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius \SI{100}{nm} bei $\beta=\delta=10^{-3}$. }
 	\label{fig:relerror}
 \end{figure}
-\begin{figure} %profile
+
+\clearpage
+\begin{sidewaysfigure} %profile
 	\centering
 	\includegraphics[width=1\textwidth]{images/fig_sim_profile.pdf}
+	\captionsetup{width=0.95\textwidth}
 	\caption[Radiale Profile]{Radiale logarithmierte Intensitätsprofile berechnet mit den verschiedenen Algorithmen sowie die relative Abweichung von Mie für eine Kugel mit Radius \SI{20}{nm} und $\beta,\delta$=$10^{-4}$. Es ist bei kleinen Streuwinkeln eine gute Übereinstimmung aller Algorithmen zu erkennen, bei höheren Winkeln versagt die Projektion. Über den gesamten Bereich besitzt bei diesen Parametern die Multislice Propagation die beste Übereinstimmung. Die relativen Fehler der Simulationen sind in den Intensitätsminima aufgrund der dort deutlich abfallenden Referenzintensität bei allen Verfahren deutlicher ausgeprägt.}
 	\label{fig:profil}
-\end{figure}
+\end{sidewaysfigure}
+\clearpage
+
 \begin{figure} %parameter variation
 	\centering
 	\includegraphics[width=1\textwidth]{images/fig_sim_var.pdf}
