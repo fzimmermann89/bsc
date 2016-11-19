@@ -34,6 +34,13 @@ Dort ist der Prozess der sogenannten \textit{Wiener Entfaltung} etabliert. Hierf
 \end{equation}
 Für Rauschen, dass nicht mit dem Signal korreliert ist, minimiert eine Faltung mit $G$ die mittlere quadratischen quadratische Abweichung zum rauschfreien, nicht gefalteten Original - es handelt sich somit im Sinne des mittleren quadratischen Fehlers um die ideale Entfaltung~\cite{castleman1996}. Ist das Rauschen jedoch mit dem Signal korreliert, wie dies z.B. bei Poisson-Rauschen (Shot-Noise) der Fall ist, so lässt sich eine heuristische Form des Wiener-Filters mit konstantem $N$ anwenden~\cite{he2004}. Hierbei muss bei der Wahl von $N$ ein Kompromiss aus Rauschunterdrückung und Entfaltung gewählt werden.
 
+\begin{SCfigure}
+	\centering
+	\includegraphics[width=.65\textwidth]{images/wiener.pdf}
+	\caption[Prinzip Wiener-Enfaltung]{Prinzip der Wiener Entfaltung. Das Betragsquadrat im Fourierraum entspricht einer Faltung des Signals mit der Referenz im Realraum. Zur Entfaltung wird im Fourierraum durch die Referenz geteilt. XXX TODO}
+	\label{fig:wiener}
+\end{SCfigure} 
+
 \section{Iterative Phasenrückgewinnung}
 Wäre neben der Amplitude auch Phase der Fouriertransformation der Austrittswelle bekannt, so könnte diese durch eine inverse Transformation wiederhergestellt werden. 
 Da bei $N$ komplexen Datenpunkten im Realraum die Fouriertransformation durch $N$ Amplituden und $N$ Phasen, also $2N$ Variablen dargestellt werden kann, jedoch nur $N$ Variablen (die Fourieramplituden) gemessen werden können, ist das Problem unterbestimmt und nicht eindeutig lösbar. Kann jedoch das zu rekonstruierende Objekt im Realraum auf weniger als $\sfrac{N}{2}$ Bildpunkte beschränkt werden, so wird das Problem lösbar. Die räumliche Beschränkung im Realraum wird durch die Wahl eines sog. Supports, außerhalb dessen der Realraum als leer angenommen wird umgesetzt.  
