@@ -1,6 +1,6 @@
 \chapter{Theoretischer Hintergrund}
 \label{chap:theorie}
-Zur Betrachtung von Streuung ist es zweckmäßig zunächst die benötigten Grundlagen zu definieren, um aus diesen dann die Simulationsansätze sowie die Grundlagen der Rekonstruktion aus Streubildern abzuleiten. Sofern nicht anderweitig gekennzeichnet folgen die Herleitungen Standardwerken \cite{goodman2005,cowley1995,born1980}.
+Zur Betrachtung von Streuung ist es zweckmäßig, zunächst die benötigten Grundlagen zu definieren, um aus diesen dann die Simulationsansätze sowie die Grundlagen der Rekonstruktion aus Streubildern abzuleiten. Sofern nicht anderweitig gekennzeichnet folgen die Herleitungen Standardwerken~\cite{goodman2005,cowley1995,born1980}.
 \section{Skalare Beugungstheorie}
 Aus den Maxwell-Gleichungen lässt sich unter der Annahme eines sich im Vergleich zur Wellenlänge $\lambda$ räumlich nur langsam ändernden Mediums die skalare Helmholzgleichung
 \begin{equation}
@@ -12,15 +12,16 @@ mit der Wellenzahl $k$
 	k=\frac{2\pi}{\lambda}
 \end{equation} und der komplexen Brechzahl des Mediums $\eta$ für eine elektromagnetische Welle $\phi$ aufstellen. Diese Betrachtung ignoriert den vektoriellen Charakter der Elektrodynamik, insbesondere die Polarisation der Welle wird vernachlässigt. Des Weiteren findet eine Separation der Zeitabhängigkeit statt, sodass nur stationäre Probleme betrachtet werden.
 
-Im Bereich der Röntgenbeugung ist es aufgrund der geringfügigen Abweichungen der Brechzahlen von Medien zur Vakuumbrechzahl ($\eta=1$) hilfreich, $\eta$ als
+Im Bereich der Röntgenbeugung kann es aufgrund der geringfügigen Abweichungen der Brechzahlen von Medien zur Vakuumbrechzahl ($\eta=1$) hilfreich sein, $\eta$ als
 \begin{alignat}{2}
 	\label{eq:brechzahl}
 	  & \eta   &   & =1-\delta+i\beta=1 + \delta n \\
 	\label{eq:approxbrechzahl}
 	  & \eta^2 &   & \approx 1 + 2\delta n         
 \end{alignat}
-darzustellen. Bei dieser Darstellung quantifiziert $\delta$ die Refraktion, $\beta$ die Absorption \cite{attwood1999}.
-Mit dem Ortsvektor $\vec{r}=(x,y,z)^T$ im Realraum und $\vec{q}=(q_x,q_y,q_z)^T$ im Ortsraum lautet die Fouriertransformation der Wellengleichung mit der Näherung \ref{eq:approxbrechzahl} und unter Beachtung des Faltungstheorems (\fref{eq:ft_faltung}) und der Ableitung (\fref{eq:ft_ableitung}) 
+darzustellen. Bei dieser Darstellung quantifiziert $\delta$ die Refraktion, $\beta$ die Absorption~\cite{attwood1999}.
+
+Eine für die Betrachtung von Streuvorgängen hilfreiche Form der Wellengleichung lässt sich durch Darstellung mittels einer Greenschen Funktion finden. Hierfür zunächst die wird die Fouriertransformierte der Wellengleichung betrachtet. Mit dem Ortsvektor $\vec{r}=(x,y,z)^T$ im Realraum und $\vec{q}=(q_x,q_y,q_z)^T$ im Ortsraum lautet diese mit der Näherung \ref{eq:approxbrechzahl} und unter Beachtung des Faltungstheorems (\fref{eq:ft_faltung}) und der Ableitung (\fref{eq:ft_ableitung}) 
 \begin{equation}
 	\label{eq:wellengleichung_f}
 	(-q^2+k^2)\tilde{\phi}=\frac{-2k^2}{{(2\pi)}^{\sfrac{3}{2}}}(\tilde{\delta \eta} \ast \tilde{\phi}) \,.
@@ -29,14 +30,14 @@ Hierbei bezeichnet die Notation $\tilde{f}(q)$ die Fouriertransformierte von $f(
 \begin{equation}
 	\tilde{G}=\frac{1}{(2\pi)^{\sfrac{3}{2}}}\frac{2k^2}{q^2-k^2}
 \end{equation}
-definiert, so lässt sich daraus nicht direkt die Greensche Funktion im Realraum gewinnen, da das Integral der inversen Fouriertransformation von $\tilde{G}$ divergiert. Dieses Problem lässt sich durch Hinzufügen eines infinitesimalen imaginären  $i\epsilon$ (mit $\epsilon\rightarrow 0^+$) zu $k$ im Nenner lösen (\fref{eq:green_ft}) \cite{trigg2006,griffiths2005}.
+definiert, so lässt sich daraus nicht direkt die Greensche Funktion im Realraum gewinnen, da das Integral der inversen Fouriertransformation von $\tilde{G}$ divergiert. Dieses Problem lässt sich durch Hinzufügen eines infinitesimalen imaginären  $i\epsilon$ (mit $\epsilon\rightarrow 0^+$) zu $k$ im Nenner lösen (\fref{eq:green_ft})~\cite{trigg2006,griffiths2005}.
 
 \begin{align}
 	G & =\frac{1}{(2\pi)^{3}}\int_{-\infty}^{\infty} \frac{2k^2}{q^2-(k+i0^+)^2} e^{i\vec{q}\vec{r}}\dif^3 \vec{q}\nonumber \\
 	  & = \frac{k^2}{2\pi}\frac{e^{iqr}}{r}
 	  \label{eq:green_ft}                                                                     
 \end{align}
-Die so konstruierte Greensche Funktion lässt sich in den Realraum transformieren, stellt weiterhin eine Greensche Funktion der Wellengleichung dar und wird als \textit{retardierte Greensche Funktion} bezeichnet. Für die Wellengleichung gilt mit ihr somit im Fourier- bzw. im Realraum \cite{cowley1995,thibault2007}:
+Die so konstruierte Greensche Funktion lässt sich in den Realraum transformieren, stellt weiterhin eine Greensche Funktion der Wellengleichung dar und wird als \textit{retardierte Greensche Funktion} bezeichnet. Für die Wellengleichung gilt mit ihr somit im Fourier- bzw. im Realraum~\cite{cowley1995,thibault2007}:
 \begin{align*}
 	\label{eq:wellengleichung_green} \numberthis
 	\tilde{\phi} & =\tilde{G}(\tilde{\delta \eta} \ast \tilde{\phi}) \\
@@ -44,7 +45,7 @@ Die so konstruierte Greensche Funktion lässt sich in den Realraum transformiere
 \end{align*}
 Diese Formulierung erweist sich im Folgenden für die Herleitung der Born-Näherung als hilfreich.
 \section{Born-Näherung}
-Eine häufige Näherung bei Streuproblemen ist die sogenannte \textit{Born-Näherung}. Sei zunächst das streuende Objekt bei $\vec{r'}$ räumlich um den Koordinatenursprung beschränkt (und somit auch $\delta\eta(\vec{r'})$). Zur Berechnung der Welle am Beobachtungsort $\vec{r}$ wird nun davon ausgegangen, dass $|\vec{r}| \gg |\vec{r'}|$ für alle Punkte an denen $\delta\eta$ von Null verschieden ist, gilt, d.h. dass der Beobachtungsabstand groß gegenüber den Ausmaßen des Streuobjektes ist \cite{griffiths2005}. In diesem Fall gilt die Näherung
+Eine häufige Näherung bei Streuproblemen ist die sogenannte \textit{Born-Näherung}. Sei zunächst mit den in \fref{fig:bornr}  dargestellten Bezeichnungen für die Vektoren das streuende Objekt bei $\vec{r'}$ räumlich um den Koordinatenursprung beschränkt (und somit auch $\delta\eta(\vec{r'})$). Zur Berechnung der Welle am Beobachtungsort $\vec{r}$ wird nun davon ausgegangen, dass gilt $|\vec{r}| \gg |\vec{r'}|$ für alle Punkte an denen $\delta\eta$ von Null verschieden ist, d.h. dass der Beobachtungsabstand groß gegenüber den Ausmaßen des Streuobjektes ist~\cite{griffiths2005}. In diesem Fall gilt die Näherung
 \begin{equation}
 	\abs{\vec{r}-\vec{r'}} = \sqrt{r^2+r'^2-2\vec{r}\cdot\vec{r'}} \approx r-\frac{\vec{r}}{r}\cdot\vec{r'} \,.
 	\label{eq:born_r_approx}
@@ -54,7 +55,7 @@ In \fref{eq:wellengleichung_green} kann nun die Faltung ausgeschrieben und die G
 \phi(\vec{r})=\int G(\vec{r}-\vec{r'})\delta\eta(\vec{r'})\phi(\vec{r}') \dift \vec{r'} \propto \int \frac{e^{ik(r-\vec{k}\vec{r'})}}{r}\delta\eta(\vec{r}')\phi(\vec{r}') \dift \vec{r'} \,.
 \label{eq:born_ort}
 \end{equation}
-Hierbei wird die Näherung aus \fref{eq:born_r_approx} im Exponenten angewendet, im Nenner kann $\abs{\vec{r}-\vec{r'}}\approx r$ genähert werden. Wird nun $\phi$ als Reihe $\phi=\phi_0+\phi_1+\phi_2+..$ mit $\phi_0(\vec{r'})=e^{i\vec{k_0}\vec{r'}}$ als einlaufende ebene Welle dargestellt und ist der Einfluss des Streuobjektes auf die einfallende Welle gering, so lässt sich in \fref{eq:born_ort} $\phi(\vec{r'})\approx\phi_0(\vec{r'})$ im Integral anwenden \cite{cowley1995}. Dies wird als \textit{Born-Näherung erster Ordnung} bezeichnet. In dieser gilt mit dem Streuvektor $\vec{q}=\vec{k}-\vec{k_0}$ für die Lösung der Wellengleichung
+Hierbei wird die Näherung aus \fref{eq:born_r_approx} im Exponenten angewendet, im Nenner kann $\abs{\vec{r}-\vec{r'}}\approx r$ genähert werden. Wird nun $\phi$ als Reihe $\phi=\phi_0+\phi_1+\phi_2+..$ mit $\phi_0(\vec{r'})=e^{i\vec{k_0}\vec{r'}}$ als einlaufende ebene Welle dargestellt und ist der Einfluss des Streuobjektes auf die einfallende Welle gering, so lässt sich in \fref{eq:born_ort} $\phi(\vec{r'})\approx\phi_0(\vec{r'})$ im Integral anwenden~\cite{cowley1995}. Dies wird als \textit{Born-Näherung erster Ordnung} bezeichnet. In dieser gilt mit dem Streuvektor $\vec{q}=\vec{k}-\vec{k_0}$ (vgl. \fref{fig:bornq}) für die Lösung der Wellengleichung
 \begin{equation}
 	\label{eq:born}
 	\int G(\vec{r}-\vec{r}')\delta\eta(\vec{r}') e^{i\vec{k_0}\vec{r'}}  \dift \vec{r}'\approx e^{ik_0r}\int \delta\eta(\vec{r}')e^{-i\vec{q}\vec{r}'}\dif \vec{r}'\propto \mathscr{F}[\delta\eta] \,.
@@ -94,7 +95,7 @@ erfüllen. Eine Lösung dieser Gleichung ist
 	\label{eq:angularspectrum}
 	\bar{\phi}\left(q_x,q_y,\Delta z\right)=\bar{\phi}(q_x,q_y,0)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\, . 
 \end{equation}
-Somit lässt sich die Propagation einer Welle im Vakuum als Multiplikation mit einem Exponentialfaktor im Fourierraum beschreiben. Dieses Verfahren wird \textit{Angular-Spectrum} Propagation genannt \cite{goodman2005}. 
+Somit lässt sich die Propagation einer Welle im Vakuum als Multiplikation mit einem Exponentialfaktor im Fourierraum beschreiben. Dieses Verfahren wird \textit{Angular-Spectrum} Propagation genannt~\cite{goodman2005}. 
 
 Die eingehende Welle bei $z=0$ wird hierbei in ebene Wellen, die sich in verschiedene Richtungen ausbreiten (Angular Spectrum) zerlegt und deren Propagation berechnet. Die ausgehende Welle bei $z=\Delta z$ im Realraum, $\phi\left(x,y,\Delta z\right)$, lässt sich aus $\bar{\phi}\left(q_x,q_y,\Delta z\right)$ durch eine inverse Fouriertransformation bestimmen.
 

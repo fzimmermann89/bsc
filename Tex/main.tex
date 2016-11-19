@@ -14,7 +14,7 @@
 \usepackage{xfrac}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[textwidth=160mm,bottom=20mm,top=20mm,headsep=8mm,bindingoffset=10mm]{geometry}
+\usepackage[textwidth=160mm,bottom=20mm,top=25mm,headsep=8mm,bindingoffset=10mm]{geometry}
 \usepackage{listings}
 \usepackage{fancybox}
 
@@ -58,12 +58,6 @@ pdfauthor={Felix Frederik Zimmermann}
 \newlength{\txtwi}
 \setlength{\txtwi}{145mm}
 
-%Tabellenabstände
-\renewcommand{\textfraction}{0}
-\renewcommand{\topfraction}{.75}
-\renewcommand{\bottomfraction}{.75}
-\renewcommand{\floatpagefraction}{.70}
-\renewcommand{\arraystretch}{1.3}
 
 %Appendices -> Anhang
 \renewcommand*\appendixpagename{Anhang}
@@ -82,7 +76,9 @@ pdfauthor={Felix Frederik Zimmermann}
 \patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
 \makeatother
 
-
+%kleiner abstände bei captions
+\setlength{\abovecaptionskip}{10pt plus 3pt minus 2pt}
+\captionsetup[subfigure]{aboveskip=1pt}
 %kleinere abstände bei gleichungen
 \setlength{\abovedisplayskip}{0pt}
 \setlength{\belowdisplayskip}{0pt}
@@ -133,6 +129,15 @@ pdfauthor={Felix Frederik Zimmermann}
 		\put (50,50)  {\bf \small (d)}
 	\end{overpic}
 }
+\newcommand{\reconimage}[1]{
+	\begin{overpic}#1
+		\put (0,100)  {Original}
+		\put (50,100) {IPR}
+		\put (0,50)   {Wiener}
+		\put (50,50)  {Holo}
+	\end{overpic}
+}
+
 
 %float positionierung
  \renewcommand{\topfraction}{0.9}	% max fraction of floats at top
