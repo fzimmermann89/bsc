@@ -28,7 +28,7 @@ Im Weiteren wird die Projektion der Dichte und anschließende diskrete Fouriertr
 
 
 \section{Multislice Fouriertransformation}
-Das Grundprinzip der in mehreren Schichten arbeitenden \textit{Multislice} Algorithmen ist in \fref{fig:mutlislice_prinzip} dargestellt: Das Streuobjekt (in diesem Beispiel eine Kugel) wird zunächst diskretisiert. Hierbei können unterschiedliche Auflösungen in x,y und z-Richtung gewählt werden. Bei der Simulation werden nun einzelne Schichten gleichen z-Wertes betrachtet.
+Das Grundprinzip der in mehreren Schichten arbeitenden \textit{Multislice} Algorithmen ist in \fref{fig:multislice_prinzip} dargestellt: Das Streuobjekt (in diesem Beispiel eine Kugel) wird zunächst diskretisiert. Hierbei können unterschiedliche Auflösungen in x,y und z-Richtung gewählt werden. Bei der Simulation werden nun einzelne Schichten gleichen z-Wertes betrachtet.
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/multislice_sphere.png}
@@ -40,7 +40,7 @@ Einer dieser Algorithmen ist die \textit{Multislice Fouriertransformation}. Nach
 \begin{equation}
 	\phi\propto\int \delta\eta(\vec{r}) e^{-i\vec{q}\cdot \vec{r}} \dif \vec{r} \, .
 \end{equation}
-Um die Komplexität zu reduzieren, wird nun versucht auf eine schichtweise Berechnung überzugehen: Wird das Skalarprodukt $\vec{q}\cdot \vec{r}=xq_x+yq_y+zq_z$ ausgeschrieben und die Integration über $x$ und $y$ als zweidimensionale Fouriertransformation interpretiert,
+Um die Komplexität zu reduzieren, wird nun versucht auf eine (in \fref{fig:slice_msft} skizzierte) schichtweise Berechnung überzugehen: Wird das Skalarprodukt $\vec{q}\cdot \vec{r}=xq_x+yq_y+zq_z$ ausgeschrieben und die Integration über $x$ und $y$ als zweidimensionale Fouriertransformation interpretiert,
 \begin{equation}
 	\phi\propto\int \mathscr{F}\left[\delta\eta\right](q_x,q_y,z) e^{-zq_z} \dif z \, ,
 \end{equation}
@@ -71,8 +71,8 @@ Somit kann $q_z=q_\parallel$ eingesetzt werden und es gilt
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/slice_msft.png}
-	\caption[Prinzip MSFT]{Prinzip MSFT}
-	\label{fig:msft}
+	\caption[Prinzip MSFT]{Prinzip MSFT: Das Streubild wird berechnet in dem schichtweise der jeweilige Beitrag der Bornschen Näherung phasenkorrekt aufaddiert wird.}
+	\label{fig:slice_msft}
 \end{figure} 
 
 Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors, der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, ließe sich nachträglich eine grobe Näherung für Absorptionseffekte einführen, die in einigen Fällen die subjektive Qualität der Simulation zu verbessern scheint~\cite{barke2015}. Da zum Einen die Gültigkeit dieser Absorptionsnäherung nicht direkt abgeschätzt werden kann und sie zum Anderen nicht in allen Fällen die Güte der Simulation verbessert, ist im Weiteren mit \textit{MSFT} die Methode ohne diese Korrektur bezeichnet~\cite{fennel}.
