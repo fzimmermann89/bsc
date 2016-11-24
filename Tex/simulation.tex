@@ -2,7 +2,7 @@
 Es ist sinnvoll, die Evaluierung von Rekonstruktionsansätzen zunächst mit synthetischen Streubilder durchzuführen, da so das ideale Rekonstruktionsergebnis bekannt ist und für einen direkten optischen Vergleich zur Verfügung steht\footnote{\textit{"`To our
 	knowledge there is no reliable objective metric for image quality. Ultimately, the quality
 	comparison between algorithms is based on what looks good to the user"'}, D. R. Luke in der Vorstellung des \textit{RAAR}-Algorithmus~\cite{luke2004}.}. 
-Das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3D-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die Objekte, deren Streubilder berechnet werden können, limitiert, existieren weitere Ansätze, die im Folgenden betrachtet werden.
+Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3D-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die Objekte, deren Streubilder berechnet werden können, limitiert, existieren weitere Ansätze, die im Folgenden betrachtet werden.
 
 \section{Mie-Streuung}
 Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe, basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen~\cite{bohren2008}. Diese unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{app:mie}).
@@ -32,7 +32,7 @@ Das Grundprinzip der in mehreren Schichten arbeitenden \textit{Multislice} Algor
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/multislice_sphere.png}
-	\caption[Prinzip Multislice]{Prinzip der Multislice-Simulation: Das zu simulierende Streuobjekt (in diesem Fall eine einfache Kugel) wird zunächst diskretisiert. Üblicherweise wird hierbei eine feiner Auflösung in Strahlrichtung gewählt. Bei der Simulation werden nun einzelne Schichten betrachtet.}
+	\caption[Prinzip Multislice]{Prinzip der Multislice-Simulation: Das zu simulierende Streuobjekt (in diesem Fall eine einfache Kugel) wird in eine quaderförmige Szene eingebettet (wobei für die Berechnung eine größere x,y-Ausdehnung als z-Ausdehnung gewählt wird) und diskretisiert. Üblicherweise wird hierbei eine feiner Auflösung $\Delta z$ in Strahlrichtung gewählt. Bei der Simulation werden nun einzelne Schichten betrachtet.}
 	\label{fig:multislice_prinzip}
 \end{figure} 
 
@@ -232,7 +232,7 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 \begin{figure} %parameter variation
 	\centering
 	\includegraphics[width=1\textwidth]{images/fig_sim_var.pdf}
-	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichung der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung bis 20° von Mie über den Parametern aufgetragen. Es somit die Bereiche erkennbar, in denen der jeweilige Simulationsalgorithmus valide Ergebnisse liefert. Parameter: $\Delta x=\sfrac{\lambda}{2}$, $\Delta z$ als $\sfrac{\lambda}{8}$ und N=2048.}
+	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichung der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung bis 20° von Mie über den Parametern aufgetragen. Es somit die Bereiche erkennbar, in denen der jeweilige Simulationsalgorithmus valide Ergebnisse liefert. Es ist insbesondere zu erkennen, dass bei größeren Brechzahlen sowie größeren Abweichungen von der Vakuumbrechzahl \textit{MSFT} nur eingeschränkt valide ist, sowie dass die \textit{Multislice Propagation} und \textit{Thibaults Multislice} über den gesammten dargestellten Bereich gute Ergebnisse liefern. Parameter: $\Delta x=\sfrac{\lambda}{2}$, $\Delta z$ und $\sfrac{\lambda}{8}$ und N=2048.}
 	\label{fig:variation}
 \end{figure}
 
@@ -244,7 +244,7 @@ Neben der bislang zur Validierung erfolgten Berechnung von Streubilder von Kugel
 
 Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Modell einer wassergefüllte ikosaederförmige Lecithin-Membran (Außenradius \SI{375}{nm}, Dicke \SI{25}{nm}) um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius \SI{90}{nm}) in den Eckpunkten eines Tetraeders angeordnet sind als biologisches Objekt betrachtet. Als Referenz dient ein disjunktes Xenon-Dodekaeder mit Außenradius \SI{100}{nm}. Die komplexen Brechzahlen der simulierten Materialien sind in \fref{tab:brechzahl} aufgeführt~\cite{henke,bergh2008,milo2015}.
 
-Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplexexit} gezeigt. Es sind sowohl die Wirkung der Absorption in Form der Intensitätsabnahme hinter den Streuobjekten wie auch der Brechung in Form einer geringen Intensitätszunahme um die Streuobjekte sowie einer Phasenänderung zu erkennen. Das zugehörige Streubild in \fref{fig:komplexscatter} gezeigt und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar. Im Folgenden wird dies für den Vergleich der Rekonstruktionsansätze genutzt, indem zunächst deren Eignung zur Rekonstruktion der Austrittswelle betrachtet wird.
+Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplexexit} gezeigt. Es sind sowohl die Wirkung der Absorption in Form der Intensitätsabnahme hinter den Streuobjekten wie auch der Brechung in Form einer geringen Intensitätszunahme um die Streuobjekte sowie einer Phasenänderung zu erkennen. Das zugehörige Streubild in \fref{fig:komplexscatter} gezeigt und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar. Im Folgenden wird dies für den Vergleich der Rekonstruktionsansätze genutzt, indem deren Eignung zur Rekonstruktion der Austrittswelle betrachtet wird.
 
   
 \begin{table}

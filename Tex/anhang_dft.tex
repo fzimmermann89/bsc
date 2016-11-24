@@ -3,7 +3,7 @@ Die in dieser Arbeit verwendete Form der Fouriertransformation lautet
 \begin{equation}
 	\mathscr{F} [f(\vec{x})] (\vec{q})
 	=
-	\frac{1}{(2\pi)^\frac{n}{2}}
+	\frac{1}{(2\pi)^{\sfrac{n}{2}}}
 	\int_{-\infty}^{\infty}
 	f(\vec{x})
 	e^{-i\vec{q} \cdot \vec{x} } 
@@ -13,7 +13,7 @@ mit der inversen Fouriertransformation
 \begin{equation}
 	\mathscr{F}^{-1} [\tilde{f}(\vec{q})] (\vec{x})
 	=
-	\frac{1}{(2\pi)^\frac{n}{2}}
+	\frac{1}{(2\pi)^{\sfrac{n}{2}}}
 	\int_{-\infty}^{\infty}
 	\tilde{f}(\vec{q})
 	e^{i\vec{q} \cdot \vec{x} } 
@@ -41,13 +41,13 @@ $\rightarrow$eine Faltung im Realraum entspricht einer Multiplikation im Fourier
 \paragraph{Korrelationstheorem}
 \begin{align}
 	\label{eq:ft_korrelation}
-	\mathscr{F} [f\otimes g] & =(2\pi)^\frac{n}{2}\mathscr{F}[f] (\mathscr{F}[g])^*     \\
+	\mathscr{F} [f\otimes g] & =(2\pi)^{\sfrac{n}{2}}\mathscr{F}[f] (\mathscr{F}[g])^*     \\
 \end{align}
 $\rightarrow$eine Korrelation mit einer Funktion im Realraum entspricht im Fourierraum einer Multiplikation mit der komplex-konjugierten Funktion.
 
 \paragraph{Ableitung}
 \begin{align}
 \label{eq:ft_ableitung}
-	\mathscr{F} [\pd{f(x)}{x}] (q)=-iq	\mathscr{F} [f] (q)=   \\
+	\mathscr{F} [\pd{f(x)}{x}] (q)=-iq	\mathscr{F} [f] (q)   \\
 \end{align}
 $\rightarrow$Eine Ableitung  im Realraum wird zu einer Multiplikation im Fourierraum

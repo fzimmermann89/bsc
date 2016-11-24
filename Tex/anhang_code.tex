@@ -1,5 +1,5 @@
 \chapter{Programmüberblick}
-Überblick über die wichtigsten erstellten Matlab-Funktionen. Der vollständige Programmcode ist unter {\url{http://github.com/fzimmermann89/bsc}} abrufbar und liegt der gedruckten Version dieser Arbeit in Form einer CD-ROM bei.
+Überblick über die wichtigsten im Rahmen dieser Arbeit erstellten Matlab-Funktionen. Der vollständige Programmcode ist unter {\url{http://github.com/fzimmermann89/bsc}} abrufbar und liegt der gedruckten Version dieser Arbeit in Form einer CD-ROM bei.
  
 %\subsection*{Hilfsfunktionen}
 %\begin{description}[style=nextline]
@@ -50,17 +50,17 @@
 	\item [\texttt{\textit{[scatter]}=mie\_scatter\textit{(lambda,radius,beta,delta,N,dx,offset)}}]
 	Streubild nach Mie mit \textit{N}x\textit{N} Punkten und Realraumauflösung \textit{dx}.
 			
-	\item [\texttt{\textit{[scatter]}=msft\textit{(lambda,objects,N,dx,dz,gpu,sim\_absorption)}}]
+	\item [\texttt{\textit{[scatter]}=msft\textit{(lambda,objects,N,dx,dz,gpu,sim\_absorption,debug)}}]
 	Streubild nach MSFT bei Wellenlänge \textit{lambda} (in nm) der Objekte im cell-array \textit{objects} berechnet mit \textit{N}x\textit{N} Punkten im Abstand \textit{dx} pro Schicht im Abstand \textit{dz}. Ist der optionale Parameter \textit{sim\_absorption} wahr, wird eine grobe Näherung für Absorption durchgeführt.
+	In \textit{@debug(data,z)} kann eine Funktion übergeben werden, die in jedem Berechnungsschritt mit den aktuellen Daten aufgerufen wird. 		
+	\item [\texttt{\textit{[exitwave]}=multislice\textit{(lambda,objects,N,dx,dz,gpu,debug)}}]
+	Austrittswelle nach Multislice Beam Propagation, die Parameter entsprechen den jeweiligen Parametern bei \texttt{msft}.
 			
-	\item [\texttt{\textit{[exitwave]}=multislice\textit{(lambda,objects,N,dx,dz,gpu)}}]
-	Austrittswelle nach Multislice Beam Propagation.
-			
-	\item [\texttt{\textit{[exitwave]}=thibault\textit{(lambda,objects,N,dx,gpu)}}]
-	Austrittswelle nach Thibaults Multislice.
+	\item [\texttt{\textit{[exitwave]}=thibault\textit{(lambda,objects,N,dx,gpu,debug)}}]
+	Austrittswelle nach Thibaults Multislice, die Parameter entsprechen den jeweiligen Parametern bei \texttt{msft}.
 			
 	\item [\texttt{\textit{[scatter}=exitwave2scatter\textit{(exitwave,lambda,dx)}}]
-	Streubild aus Austrittswelle
+	Streubild aus Austrittswelle.
 	      		
 \end{description}
 
