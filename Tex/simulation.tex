@@ -2,7 +2,7 @@
 Es ist sinnvoll, die Evaluierung von Rekonstruktionsansätzen zunächst mit synthetischen Streubilder durchzuführen, da so das ideale Rekonstruktionsergebnis bekannt ist und für einen direkten optischen Vergleich zur Verfügung steht\footnote{\textit{"`To our
 	knowledge there is no reliable objective metric for image quality. Ultimately, the quality
 	comparison between algorithms is based on what looks good to the user"'}, D. R. Luke in der Vorstellung des \textit{RAAR}-Algorithmus~\cite{luke2004}.}. 
-Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3D-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die Objekte, deren Streubilder berechnet werden können, limitiert, existieren weitere Ansätze, die im Folgenden betrachtet werden.
+Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3D-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die Objekte, deren Streubilder berechnet werden können, limitiert, existieren weitere Ansätze, die im Folgenden vorgestellt und bezüglich ihrer Gültigkeit überprüft werden.
 
 \section{Mie-Streuung}
 Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe, basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen~\cite{bohren2008}. Diese unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{app:mie}).
@@ -24,7 +24,7 @@ Eine weitere gebräuchliche Näherung für kugelförmige Objekte ist die \textit
 \end{equation}
 mit der sphärischen Besselfunktion $j_n$ an~\cite{bohren2008}. 
 
-Im Weiteren wird die Projektion der Dichte und anschließende diskrete Fouriertransformation dieser als \textit{Projektions-Näherung} bezeichnet und, aufgrund des geringen Rechenaufwandes bei gleichzeitiger Möglichkeit auch nicht-kugelförmige Objekte zu behandeln, mitbetrachtet.
+Im Weiteren wird die Projektion der Dichte und anschließende diskrete Fouriertransformation dieser als \textit{Projektions-Näherung} bezeichnet. Diese Näherung wird bei dem Vergleich der Simulationsansätze mit betrachtet aufgrund des geringen Rechenaufwandes und Möglichkeit, auch nicht-kugelförmige Objekte zu behandeln (im Gegensatz zur Rayleigh-Gans-Näherung).
 
 
 \section{Multislice Fouriertransformation}
@@ -97,7 +97,7 @@ sowie eine Wechselwirkung mit der Materie der Schicht in einer einzelnen Ebene i
 Bei diesem Verfahren wird die Annahme getroffen, dass  innerhalb einer Schicht die örtliche Verteilung der Materie konstant ist, sowie die durch die Propagation bedingte Veränderung innerhalb von $\Delta z$ ausreichend klein ist, sodass keine Anteile der Wellenfront innerhalb einer Schicht unterschiedliche Brechzahlen durchlaufen~\cite{hare1994}. Dies kann durch ein hinreichend kleines $\Delta z$ gewährleistet werden. 
 Des Weiteren wird bei der Wechselwirkung mit der Materie der Winkel mit dem ein Anteil der Wellenfront durch die Materie läuft vernachlässigt: Bei Anteilen der Welle, die durch vorangegangene Streueffekte bereits in einem deutlichen Winkel die Szene durchlaufen, wird genähert, dass ihr Weg durch die Materie gleich lang wie der Weg von nicht gestreuten Anteilen ist. Somit wird Mehrfachstreuung zwar mitberücksichtigt, jedoch nur näherungsweise.
 	
-Der Algorithmus zur Berechnung der Austrittswelle lautet somit
+Der Algorithmus zur Berechnung der Austrittswelle, d.h. der Welle hinter der Szene bzw. dem Streuobjekt, lautet somit
 \begin{equation}
 	\label{eq:multislice}
 	\Phi(z+\Delta z)= e^{i\delta n\left(z\right) \Delta z}\mathscr{F}^{-1}\left[e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\mathscr{F}\left[\Phi(z)\right]\right]
@@ -180,13 +180,14 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 
 \begin{figure} %exitwave und scatter
 	\centering
-	\begin{subfigure}[b]{0.49\textwidth}
+	\begin{subfigure}[b]{0.45\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
 		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:exitwave}
 	\end{subfigure}
-	\begin{subfigure}[b]{0.49\textwidth}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}}
 		\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_scatter_multislice_cb-r100-bd1e-3.pdf}}}
 		\caption{Streubild}
@@ -196,26 +197,27 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 	\label{fig:exitscatter}
 \end{figure}%
 
+
 \begin{figure} %rel error
 	\centering
 	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_FTproj-r100-bd1e-3.pdf}
-		\caption{Projektion}
+		\subcaption{Projektion}
 	\end{subfigure}\hfill
 	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_msft-r100-bd1e-3.pdf}
-		\caption{MSFT}
+		\subcaption{MSFT}
 	\end{subfigure}
-	\par\bigskip
+	\par \vspace{1.5\bigskipamount}
 	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_thibault-r100-bd1e-3.pdf}
-		\caption{Thibaults Multislice}
+		\subcaption{Thibaults Multislice}
 	\end{subfigure}\hfill
 	\begin{subfigure}[b]{0.48\textwidth}
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_multislice-r100-bd1e-3.pdf}
-		\caption{Multislice Propagation}
+		\subcaption{Multislice Propagation}
 	\end{subfigure}
-	\caption[Relativer Fehler der Simulationen]{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius \SI{100}{nm} bei $\beta=\delta=10^{-3}$. }
+	\caption[Relativer Fehler der Simulationen]{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius \SI{100}{nm} bei $\beta=\delta=10^{-3}$. Es ist bei allen Simulationsmethoden der Trend zu ansteigenden Abweichung bei höheren Streuwinkel sowie konzentrische Zonen höherer Abweichungen zu erkennen. Bei den hier verwendeten Parametern zeigt die Projektionsnäherung ein deutlich schlechteres Ergebnis als die Multislice Ansätze.}
 	\label{fig:relerror}
 \end{figure}
 
@@ -242,12 +244,10 @@ Mit der \textit{Multislice Propagation} ist somit ein effizienter, schichtweise 
 \section{Streubilder komplexer Objekte}
 Neben der bislang zur Validierung erfolgten Berechnung von Streubilder von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen, komplexeren Objekten.
 
-Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Modell einer wassergefüllte ikosaederförmige Lecithin-Membran (Außenradius \SI{375}{nm}, Dicke \SI{25}{nm}) um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius \SI{90}{nm}) in den Eckpunkten eines Tetraeders angeordnet sind als biologisches Objekt betrachtet. Als Referenz dient ein disjunktes Xenon-Dodekaeder mit Außenradius \SI{100}{nm}. Die komplexen Brechzahlen der simulierten Materialien sind in \fref{tab:brechzahl} aufgeführt~\cite{henke,bergh2008,milo2015}.
-
-Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplexexit} gezeigt. Es sind sowohl die Wirkung der Absorption in Form der Intensitätsabnahme hinter den Streuobjekten wie auch der Brechung in Form einer geringen Intensitätszunahme um die Streuobjekte sowie einer Phasenänderung zu erkennen. Das zugehörige Streubild in \fref{fig:komplexscatter} gezeigt und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar. Im Folgenden wird dies für den Vergleich der Rekonstruktionsansätze genutzt, indem deren Eignung zur Rekonstruktion der Austrittswelle betrachtet wird.
+Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Modell einer wassergefüllte ikosaederförmige Lecithin-Membran (Außenradius \SI{375}{nm}, Dicke \SI{25}{nm}) um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius \SI{90}{nm}) in den Eckpunkten eines Tetraeders angeordnet sind als biologisches Objekt betrachtet. Als Referenz dient ein disjunktes Xenon-Dodekaeder mit Außenradius \SI{100}{nm}. Die komplexen Brechzahlen der simulierten Materialien sind in \fref{tab:brechzahl} aufgeführt~\cite{henke,bergh2008,milo2015}. Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplexexit} gezeigt. Es sind sowohl die Wirkung der Absorption in Form der Intensitätsabnahme hinter den Streuobjekten wie auch der Brechung in Form einer geringen Intensitätszunahme um die Streuobjekte sowie einer Phasenänderung zu erkennen. Das zugehörige Streubild in \fref{fig:komplexscatter} gezeigt und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar. Im Folgenden wird dies für den Vergleich der Rekonstruktionsansätze genutzt, indem deren Eignung zur Rekonstruktion der Austrittswelle betrachtet wird.
 
   
-\begin{table}
+\begin{table}[b]
 	\begin{minipage}[b]{.64\textwidth }%
 	 	\begin{small}
  			\begin{tabular}{lll}
@@ -272,14 +272,14 @@ Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplex
 \end{table}
 
 
-\begin{figure} %exitwave und scatter
-	\begin{subfigure}[b]{0.49\textwidth}
+\begin{figure}[b] %exitwave und scatter
+	\begin{subfigure}[b]{0.45\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}}
 		\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_v2_exitwave_cw.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:komplexexit}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.49\textwidth}
+	\end{subfigure}	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_scatter.png}}
 		\includegraphics[width=\textwidth]{images/fig_simholo_v2_scatter.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_v2_scatter_cb.pdf}}}
 			\caption{Streubild}
