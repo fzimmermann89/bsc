@@ -18,7 +18,7 @@ function [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHo
     
     input=padarray(input,(size(inputHolo)-N)/2,0,'both');
     Npadded=size(input);
-    figure(9); imagesc(abs(ift2(abs(ft2(inputHolo)).^2)));
+
     %create masks
     [ mask,softmask,outermask ]=circularMask(Npadded,maskScale,sigmaMask);
     
