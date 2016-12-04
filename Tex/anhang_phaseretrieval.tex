@@ -1,9 +1,9 @@
-\chapter{Algorithmen zur Phasenrückgewinnung}
+\chapter{Algorithmen zur Phasenrekonstruktion}
 \label{app:algos}
-Die grundlegende Iteration der iterativen Rekonstruktionsalgorithmen ER, HIO und RAAR in ihrer Projektionsschreibweise sind in \Fref{tab:ipr} dargestellt \cite{fienup1978,luke2004,marchesini2007}.
+Die grundlegende Iteration der Rekonstruktionsalgorithmen ER, HIO und RAAR in ihrer Projektionsschreibweise sind in \Fref{tab:ipr} dargestellt \cite{fienup1978,luke2004,marchesini2007}.
 
-Aus Gründen der Simplizität wird davon ausgegangen, dass die Realraumbeschränkungen nur den Support beinhalten, d.h. der Realraum-Projektor $P_s$ geschrieben werden kann als 
-\begin{align}
+Es wird an dieser Stelle davon ausgegangen, dass die Realraumbeschränkungen nur aus der Beschränkung auf den Support bestehen, d.h. dass der Realraum-Projektor $P_s$ geschrieben werden kann als 
+\begin{align*}
 	P_s\rho (x)=\begin{cases}
 	\rho (x)  &\text{für } x\in S\\
 	\mathbb{0}  &\text{für }x\notin S
@@ -12,8 +12,8 @@ Aus Gründen der Simplizität wird davon ausgegangen, dass die Realraumbeschrän
 	\mathbb{0} &\text{für } x\in S\\
 	\rho (x)   &\text{für }x\notin S
 	\end{cases}
-\end{align}
-und somit als reiner Support-Projektor aufgefasst werden kann. In der Literatur wird unter der Bezeichnung $P_s$ teilweise auch ein Projektor bezeichnet der außerdem weitere Forderungen im Realraum beinhaltet. Im Rahmen dieser Arbeit nur für den ER-Algorithmus zusätzlich eine Form implementiert, deren Realraum-Projektor eine reele, positive Lösung erzwingt (\texttt{reconstruction/ERiterRealPos.m}), da das mittelfristige Ziel die Rekonstruktion der Austrittswelle inklusive der relativen Phasenbeziehungen darstellt.
+\end{align*}
+und somit als reiner Support-Projektor aufgefasst werden kann. In der Literatur wird unter der Bezeichnung $P_s$ teilweise auch ein Projektor bezeichnet der außerdem weitere Forderungen im Realraum beinhaltet. Im Rahmen dieser Arbeit ist nur für den ER-Algorithmus zusätzlich eine Form implementiert, deren Realraum-Projektor eine reele, positive Lösung erzwingt, da das mittelfristige Ziel die Rekonstruktion der Austrittswelle inklusive der relativen Phasenbeziehungen darstellt.
  
 Für den HIO-Algorithmus gilt mit jenem $P_s$ 
 \begin{align*}
@@ -26,7 +26,7 @@ Für den HIO-Algorithmus gilt mit jenem $P_s$
 \end{align*}
 Diese Form erleichtert das Verständnis von \fref{fig:recon}. Zum weiteren Verständnis ist in \fref{fig:raar} der Prozess für den RAAR-Algorithmus schrittweise dargestellt.
 	
-Die implementierte Form des RAAR Algorithmus' basiert auf folgender Umformung:
+Die implementierte Form des RAAR Algorithmus basiert auf folgender Umformung:
 \begin{align*}
 	\frac{\beta}{2}\left(R_sR_m+\mathbb{1}\right)
 	                              & =\frac{\beta}{2}\left((2P_s-\mathbb{1})(2P_m-\mathbb{1})+\mathbb{1}\right) 

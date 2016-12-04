@@ -31,12 +31,12 @@
 		\item[\texttt{.matrix}] aus Matlab-Matrix laden. Keine weiteren Eigenschaften.
 		\item[\normalfont Funktion aller Streuobjekte:]$ $
 			\begin{description}
-				\item[\texttt{\textit{[getSlice]}=prepareSliceMethod\textit{(this,N,dx,gpu)})}] Gibt eine \texttt{getSlice} Funktion initialisiert für die räumliche Auflösung \textit{dx} und \textit{N}x\textit{N} Pixel des Streuobjektes zurück
+				\item[\texttt{\textit{[getSlice]}=prepareSliceMethod\textit{(this,N,dx,gpu)})}] Gibt eine \texttt{getSlice} Funktion initialisiert für die räumliche Auflösung \textit{dx} und \textit{N}x\textit{N} Pixel des Streuobjektes zurück.
 				\begin{description}
 					\item [\texttt{\textit{[slice]}=getSlice\textit{(this,z)}}] Die bei \textit{z} liegende Schicht des Streuobjektes berechnet durch Ermittlung der die Ebenen schneidenden Kantenlängen und einem optimierten Punkt-in-Polygon Algorithmus \cite{pnpoly}.
 				\end{description}
 				
-				\item[\texttt{\textit{[matrix]}=toMatrix\textit{(objects,N,dx,gpu)}}] Logische \textit{N}x\textit{N}x\textit{N} Matrix der Streuobjekte \textit{objects}
+				\item[\texttt{\textit{[matrix]}=toMatrix\textit{(objects,N,dx,gpu)}}] Logische \textit{N}x\textit{N}x\textit{N} Matrix der Streuobjekte \textit{objects}.
 				\item[\texttt{\textit{[projection]}=projection\textit{(objects,N,dx,gpu)}}] Projektion der Streuobjekte \textit{objects}.
 			\end{description}
 	\end{description}	
@@ -45,7 +45,7 @@
 
 \begin{description}[style=nextline]
 	\item [\texttt{\textit{[theta,Intensity,S1,S2]}=mie\textit{(lambda,radius,beta,delta,steps)}}]
-	Intensität in Mie Streuung unpolarizierten Lichtes an Sphäre mit Radius \textit{radius} (in nm) und Brechzahl n=1-\textit{delta}+i\textit{beta} bei Wellenlänge \textit{lambda} (in nm), ausgewertet in \textit{steps} linearen Schritten des Winkels \textit{theta})
+	Intensität in Mie Streuung unpolarizierten Lichtes an Sphäre mit Radius \textit{radius} (in nm) und Brechzahl n=1-\textit{delta}+i\textit{beta} bei Wellenlänge \textit{lambda} (in nm), ausgewertet in \textit{steps} linearen Schritten des Winkels \textit{theta}.
 			
 	\item [\texttt{\textit{[scatter]}=mie\_scatter\textit{(lambda,radius,beta,delta,N,dx,offset)}}]
 	Streubild nach Mie mit \textit{N}x\textit{N} Punkten und Realraumauflösung \textit{dx}.
