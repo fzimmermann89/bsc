@@ -10,12 +10,13 @@ addpath('helper');
 ldiscreteBits=[0,0,0,16,14,16,16];
 lmaskScale=[0,16,64,16,16,16,16]./2048;
 lrefError=[1,1,1,1,1,1.01,1.05];
-lthreshold=[.45,.5,.5,.5,.5,.5,.5];
+lthreshold=[.45,.47,.5,.5,.5,.5,.475];
+lswthreshold=[0.025,0.025,0.03,0.025,0.025,0.025,0.025];
 lwienernoise=[0,0,0,0,0,0,0]; %0 means find optimal
 nmax=numel(ldiscreteBits);
-if ~isequal(numel(ldiscreteBits),numel(lmaskScale),numel(lrefError),numel(lthreshold),numel(lwienernoise))
+if ~isequal(numel(ldiscreteBits),numel(lmaskScale),numel(lrefError),numel(lthreshold),numel(lwienernoise),numel(lswthreshold))
     error('settings must have equal size')
-end    
+end
 refRadius=40;
 sigmaMask=24;
 fastscale=1; %setting this to a value higher than 1 reduces iterations
@@ -23,11 +24,13 @@ outpath='./Tex/images2';
 inputfilename='./reconstruction/input/input_tu2.png';
 
 for nrun=1:nmax
+% for nrun=3:3
     %% Settings for current run
     discreteBits=ldiscreteBits(nrun);
     maskScale=lmaskScale(nrun);
     refError=lrefError(nrun);
     threshold=lthreshold(nrun);
+    swthreshold=lswthreshold(nrun);
     wienernoise=lwienernoise(nrun);
     
     caption=sprintf('mask%ibit%ierror%g',maskScale*2048,discreteBits,refError-1);
@@ -46,16 +49,20 @@ for nrun=1:nmax
     
     %% use Holography and IPR
     %support and start
+    f=nrun*10+1; %figure to use
+    
     [start,support]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',threshold,'debug',false);
     
     %Plan:
     planHolo=recon.plan();
-    for n=1:ceil(90/fastscale)
-        planHolo.addStep('hio',ceil(199/fastscale));
-        planHolo.addStep('er',1);
+    for n=1:ceil(100/fastscale)
+        planHolo.addStep('hio',ceil(148/fastscale));
+        planHolo.addStep('errp',2);
+        planHolo.addStep('show',[],f);
+        
     end
     planHolo.addStep('er',ceil(100/fastscale));
-    %planHolo.addStep('show');
+    planHolo.addStep('show',[],f);
     
     %Run
     [resultHolo]=planHolo.run(scatterImageHolo,support,start,mask);
@@ -63,23 +70,27 @@ for nrun=1:nmax
     
     %% use IPR with Shrinkwrap
     %support and start
+    f=nrun*10+2; %figure to use
     [start,support]=genericSupport(scatterImage,softmask);
     
     %Plan
     planSW=recon.plan();
-    for n=1:ceil(60/fastscale)
-        planSW.addStep('hio',ceil(95/fastscale));
+    for n=1:100
+        planSW.addStep('hio',194);
         planSW.addStep('errp',5);
-        planSW.addStep('sw',1,{5,0.025});
+        planSW.addStep('sw',1,{5,swthreshold});
+        planSW.addStep('show',[],f)
+        
     end
     planSW.addStep('loosen',1,{5})
-    %planSW.addStep('show')
-    for n=1:ceil(60/fastscale)
-        planSW.addStep('hio',ceil(199/fastscale));
-        planSW.addStep('er',1);
+    
+    planSW.addStep('show',[],f)
+    for n=1:ceil(100/fastscale)
+        planSW.addStep('hio',ceil(148/fastscale));
+        planSW.addStep('errp',2);
     end
     planSW.addStep('er',ceil(100/fastscale));
-    %planSW.addStep('show');
+    planSW.addStep('show',[],f)
     
     %Run multiple times and average
     %         multi=10;
@@ -107,13 +118,13 @@ for nrun=1:nmax
         mse=@(in)abs(gather(mean(((abs(finput(:)))-(in(:))).^2)));
         options = optimset('Display','off');
         r=fminsearch(@(p)mse(deconvt(p(1))),[1],options);
-        wienernoise=round(r(1),2,'significant');
+        wienernoise=round(r(1),1,'significant');
         lwienernoise(nrun)=wienernoise;
     end
     
     %deconvolution
     resultDeconv=wiener(crossPadded,refImagePadded,wienernoise,[],false);
-    %figure;imagesc(abs(resultDeconv));colormap(flipud(colormap(gray)));caxis([0,1]);title('deconv');title(sprintf('wiener with %g',wienernoise));
+    figure(nrun*10+3);imagesc(abs(resultDeconv));colormap(flipud(colormap(gray)));caxis([0,1]);title('deconv');title(sprintf('wiener with %g',wienernoise));
     
     
     %% plot results
@@ -125,7 +136,7 @@ for nrun=1:nmax
     move=@(x)moveAndMirror(finput,x);
     cut=@(x)x(end/2-end/8:end/2+end/8+1,end/2-end/8:end/2+end/8+1);
     
-    f=figure();
+    f=figure(10*nrun);
     delim=32;
     pixel=512;
     scale=1/2;
@@ -175,4 +186,8 @@ for nrun=1:nmax
     print(outputfilename,'-dpng','-r150');
 end
 
-save(fullfile(outpath,'recon2d-params.mat'),ldiscreteBits,lmaskScale,lrefError,lthreshold,lwienernoise);
+%% save used parameters
+save(fullfile(outpath,'recon2d-params.mat'),'ldiscreteBits','lmaskScale','lrefError','lthreshold','lswthreshold','lwienernoise');
+tex=tab_param({'ideal','kleine Maske','groﬂe Maske','kleines Rauschen','groﬂes Rauschen','kleiner Fehler','groﬂer Fehler'},ldiscreteBits,lmaskScale,lrefError,lthreshold,lswthreshold,lwienernoise);
+texfile = fopen('.\Tex\tab_param.tex','w');
+fprintf(texfile,'%s',tex);
