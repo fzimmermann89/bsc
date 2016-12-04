@@ -14,14 +14,18 @@ classdef plan<handle
         function addStep(this,method,iterations,parameters)
             step.method=method;
             
-            if exist('iterations','var')
+            if exist('iterations','var')&&~isempty(iterations)
                 step.iterations=iterations;
             else
                 step.iterations=1;
             end
             
-            if exist('parameters','var')
-                step.parameters=parameters;
+            if exist('parameters','var')&&~isempty(parameters)
+                if iscell(parameters)
+                    step.parameters=parameters;
+                else
+                    step.parameters={parameters};
+                end
             else
                 step.parameters={};
             end
@@ -31,7 +35,7 @@ classdef plan<handle
         end
         
         function step=getStep(this,n)
-            if n<=length(this.steps);
+            if n<=length(this.steps)
                 step=this.steps(n);
             else
                 step=false;
@@ -120,12 +124,16 @@ classdef plan<handle
                                     curImage=iterFunc(amplitude, curImage, halfSupport, mask );
                                 end
                             case 'show'
-                                if ~exist('f','var');f=figure();end
-                                figure(f);
+                                if numel(step.parameters)&&step.parameters{1}~=0
+                                    figure(step.parameters{1})
+                                else
+                                    if ~exist('f','var');f=figure();end
+                                    figure(f);
+                                end
                                 subplot(2,2,1);imagesc(real(curImage));title('real cur. Image');colorbar;axis square;
                                 subplot(2,2,2);imagesc(imag(curImage));title('imag cur. Image');colorbar;axis square;
                                 subplot(2,2,3);imagesc(abs(curSupport)); title('support');axis square;
-                                if calcErrors;
+                                if calcErrors
                                     subplot(2,2,4); semilogy(curErrors); title('error');
                                 else
                                     subplot(2,2,4);imagesc(abs(curImage)); title('abs cur Image');axis square;
@@ -145,7 +153,7 @@ classdef plan<handle
                                 if (length(step.parameters)>=2&&isscalar(step.parameters{2})&&step.parameters{2})
                                     for n=1:20;im=recon.iterations.ER(amplitude, im, curSupport,mask );end
                                 end
-                               
+                                
                                 
                                 %cut
                                 if (length(step.parameters)>=3&&isscalar(step.parameters{3})&&all(step.parameters{3}<=size(im)))
@@ -159,7 +167,7 @@ classdef plan<handle
                                 
                                 %write
                                 cm=flipud(gray(256));
-                                if ~exist('framewritten','var');
+                                if ~exist('framewritten','var')
                                     imwrite(im,cm,filename,'gif', 'Loopcount',0,'DelayTime',1);
                                     framewritten=true;
                                 else
@@ -172,7 +180,7 @@ classdef plan<handle
                                 warning('unknown step');
                         end
                     end
-                    if size(start,3)==1;
+                    if size(start,3)==1
                         if (calcErrors)
                             fprintf('%.1f%% done, error:%.2f\n',nplan/length(this)*100,curErrors(nerror-1))
                         else
