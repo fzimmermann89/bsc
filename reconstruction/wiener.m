@@ -50,7 +50,7 @@ function [ output ] = wiener( input,h,noise,ps_signal,normalize )
     
     %normalize G
     if nargin>4&&normalize
-        G=G./sum(abs(G(:)));
+        G(end/2+1,end/2+1)=1;
     end
     
     %deconvolution
