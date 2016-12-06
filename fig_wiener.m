@@ -94,7 +94,7 @@ zeroline = refline([0 0]);zeroline.Color = 'black';
 
 subplot(323);hold on;axis off;
 plot(abs(holo),'Color',red);
-legend({'$\mathcal{F}^{-1}\left({\left|\mathcal{F}\left(\textrm{Objekt}\right)\right|}^2\right)$'},'Interpreter','latex');
+legend({'$\mathcal{F}^{-1}\left({\left|\mathcal{F}\left(\textrm{Objekt}+\textrm{Referenz}\right)\right|}^2\right)$'},'Interpreter','latex');
 legend boxoff
 zeroline = refline([0 0]);zeroline.Color = 'black';
 
