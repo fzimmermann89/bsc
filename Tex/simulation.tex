@@ -71,7 +71,7 @@ Somit kann $q_z=q_\parallel$ eingesetzt werden und es gilt
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/slice_msft.png}
-	\caption[Prinzip MSFT]{Prinzip MSFT: Das Streubild wird berechnet in dem schichtweise der jeweilige Beitrag der Bornschen Näherung phasenkorrekt aufaddiert wird.}
+	\caption[Illustration MSFT]{Illustration zur MSFT: Das Streubild wird berechnet indem schichtweise der jeweilige Beitrag der Bornschen Näherung phasenkorrekt aufaddiert wird (dargestellt von links nach rechts). Das rechteste Bild ist somit das Streubild des Objektes und das Ergebnis des Algorithmus.}
 	\label{fig:slice_msft}
 \end{figure} 
 
@@ -108,7 +108,7 @@ Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet un
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/slice_multislice.png}
-	\caption[Prinzip MSFT]{Prinzip Multislice Propagation}
+	\caption[Illustration Multislice Propagation]{Illustration zur Multislice Propagation: Dargestellt ist der Betrag der komplexen Wellenfront, die Strahlrichtung ist von links nach rechts. Das rechteste Bild ist die Austrittswelle hinter der Szene und das Ergebnis des Algorithmus.}
 	\label{fig:msft}
 \end{figure} 
 	
@@ -170,7 +170,7 @@ Besonders bemerkbar ist dieser Bearbeitungsschritt bei Pixeln die genau in den I
 \begin{figure} %mittelwert
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/average.pdf}
-	\caption[Gewichteter Mittelwert]{Die Verwendung von Überabtastung und gewichteten Mittelwertes bei den Streubildern: Um die Intensität im links rot umrandeten Bereich zu bestimmen, wird die Intensität an den Schwarzen Punkten berechnet und ein gewichteter Mittelwert gebildet, indem die Intensität der vier Randwerte zur Hälfte, die der vier Eckpixel zu einem Viertel in dem umrandeten Bereich mitberücksichtigt werden. Der Effekt gegenüber einer Berechnung nur in den Zentren der Pixel zeigt sich rechts: Wird die Intensität bei einem schwarz dargestellten wahren Intensitätsverlauf nur an den roten Punkten bestimmt, dominiert das Minimum den Intensitätsverlauf. Eine geringere Abweichung ergibt sich bei Berechnung auch an den blauen Punkten und Bildung des gewichteten Mittelwert (grün).}
+	\caption[Gewichteter Mittelwert]{Die Verwendung von Überabtastung und gewichteten Mittelwertes bei den Streubildern: Um die Intensität im links rot umrandeten Bereich zu bestimmen, wird die Intensität an den schwarzen Punkten berechnet und ein gewichteter Mittelwert gebildet, indem die Intensität der vier Randwerte zur Hälfte, die der vier Eckpixel zu einem Viertel in dem umrandeten Bereich mitberücksichtigt werden. Der Effekt gegenüber einer Berechnung nur in den Zentren der Pixel zeigt sich rechts: Wird die Intensität bei einem schwarz dargestellten wahren Intensitätsverlauf nur an den roten Punkten bestimmt, dominiert das Minimum den Intensitätsverlauf. Eine geringere Abweichung ergibt sich bei Berechnung auch an den blauen Punkten und Bildung des gewichteten Mittelwert (grün).}
 	\label{fig:average}
 \end{figure}% 
 
@@ -180,14 +180,14 @@ Um eine quantifizierende Größe für die Güte einer Simulation bei einem besti
 
 \begin{figure} %exitwave und scatter
 	\centering
-	\begin{subfigure}[b]{0.45\textwidth}
+	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
 		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:exitwave}
 	\end{subfigure}
-	\hfill
-	\begin{subfigure}[b]{0.45\textwidth}
+	\hspace{1.5cm}
+	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}}
 		\includegraphics[width=\textwidth]{images/fig_sim_scatter_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_scatter_multislice_cb-r100-bd1e-3.pdf}}}
 		\caption{Streubild}
