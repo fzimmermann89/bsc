@@ -29,7 +29,7 @@ script:
   - bibtex $FILE
   - pdflatex -interaction=nonstopmode -halt-on-error $FILE
   - pdflatex -interaction=nonstopmode -halt-on-error $FILE
-  - gs -o compressed.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dNOPAUSE -dBATCH $FILE.pdf&&mv compressed.pdf $FILE.pdf
+  - gs -o compressed.pdf -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dColorConversionStrategy=/LeaveColorUnchanged -dDownsampleColorImages=false -dNOPAUSE -dBATCH $FILE.pdf&&mv compressed.pdf $FILE.pdf
 
 deploy:
   skip_cleanup: true
