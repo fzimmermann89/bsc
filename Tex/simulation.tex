@@ -2,7 +2,7 @@
 Es ist sinnvoll, die Evaluierung von Rekonstruktionsansätzen zunächst mit synthetischen Streubilder durchzuführen, da so das ideale Rekonstruktionsergebnis bekannt ist und für einen direkten optischen Vergleich zur Verfügung steht\footnote{\textit{"`To our
 	knowledge there is no reliable objective metric for image quality. Ultimately, the quality
 	comparison between algorithms is based on what looks good to the user"'}, D. R. Luke in der Vorstellung des \textit{RAAR}-Algorithmus~\cite{luke2004}.}. 
-Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3D-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die Objekte, deren Streubilder berechnet werden können, limitiert, existieren weitere Ansätze, die im Folgenden vorgestellt und bezüglich ihrer Gültigkeit überprüft werden.
+Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3D-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die Objekte, deren Streubilder berechnet werden können, limitiert, existieren weitere Ansätze, die im Folgenden vorgestellt und bezüglich ihrer Gültigkeit überprüft werden~\cite{kunz1993,sander2014,hantke2016}.
 
 \section{Mie-Streuung}
 Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe, basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen~\cite{bohren2008}. Diese unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{app:mie}).
@@ -28,7 +28,7 @@ Im Weiteren wird die Projektion der Dichte und anschließende diskrete Fouriertr
 
 
 \section{Multislice Fouriertransformation}
-Das Grundprinzip der in mehreren Schichten arbeitenden \textit{Multislice} Algorithmen ist in \fref{fig:multislice_prinzip} dargestellt: Das Streuobjekt (in diesem Beispiel eine Kugel) wird zunächst diskretisiert. Hierbei können unterschiedliche Auflösungen in x,y und z-Richtung gewählt werden. Bei der Simulation werden nun einzelne Schichten gleichen z-Wertes betrachtet.
+Das Grundprinzip der in mehreren Schichten arbeitenden \textit{Multislice} Algorithmen ist in \fref{fig:multislice_prinzip} dargestellt: Die Streuobjekte (in diesem Beispiel eine Kugel) werden zunächst in eine quaderförmige \textit{Szene} eingebettet und diskretisiert. Hierbei können unterschiedliche Auflösungen in x,y und z-Richtung gewählt werden. Bei der Simulation werden nun einzelne Schichten gleichen z-Wertes betrachtet.
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/multislice_sphere.png}
@@ -40,7 +40,7 @@ Einer dieser Algorithmen ist die \textit{Multislice Fouriertransformation}. Nach
 \begin{equation}
 	\phi\propto\int \delta\eta(\vec{r}) e^{-i\vec{q}\cdot \vec{r}} \dif \vec{r} \, .
 \end{equation}
-Um die Komplexität zu reduzieren, wird nun versucht auf eine (in \fref{fig:slice_msft} skizzierte) schichtweise Berechnung überzugehen: Wird das Skalarprodukt $\vec{q}\cdot \vec{r}=xq_x+yq_y+zq_z$ ausgeschrieben und die Integration über $x$ und $y$ als zweidimensionale Fouriertransformation interpretiert,
+Um die Komplexität zu reduzieren, wird nun versucht auf eine schichtweise Berechnung überzugehen: Wird das Skalarprodukt $\vec{q}\cdot \vec{r}=xq_x+yq_y+zq_z$ ausgeschrieben und die Integration über $x$ und $y$ als zweidimensionale Fouriertransformation interpretiert,
 \begin{equation}
 	\phi\propto\int \mathscr{F}\left[\delta\eta\right](q_x,q_y,z) e^{-zq_z} \dif z \, ,
 \end{equation}
@@ -58,7 +58,7 @@ Aufgrund der Impulserhaltung muss für die Wellenvektoren $\vec{k_0}^2=\vec{k}^2
 	\label{fig:vec_msft}
 \end{figure} 
 
-Somit kann $q_z=q_\parallel$ eingesetzt werden und es gilt 
+Somit kann $q_z=q_\parallel$ eingesetzt werden und es gilt für die Welle im Fernfeld wie in \fref{fig:slice_msft} illustriert
 \begin{equation}
 	\label{eq:msft}
 	\phi\approx\sum_n{\mathscr{F}\left[\delta\eta\right] e^{-in\delta_z\left(k-\sqrt{k^2-q_\perp^2}\right) }} \, .
@@ -79,7 +79,7 @@ Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträg
 Eine Implementation des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
 
 \section{Multislice Propagation}
-Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice Propagation} oder \textit{Beam Propagation} bekannt~\cite{hare1994,cowley1957}. Bei diesem Verfahren wird zunächst die Szene (ein definierter Raum in dem sich alle Objekte deren gemeinsames Streubild berechnet werden soll) in einzelne Schichten mit dem Abstand $\Delta z$ zerlegt. Die Ausbreitung der in Szene einfallende ebene Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach \textit{Angular Spectrum Propagation} im Hybridraum\footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu~\cite{hare1994} auf diese Näherung verzichtet.},
+Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice Propagation} oder \textit{Beam Propagation} bekannt~\cite{hare1994,cowley1957}. Bei diesem in \fref{fig:multislice} skizzierten Verfahren wird zunächst die Szene in einzelne Schichten mit dem Abstand $\Delta z$ zerlegt. Die Ausbreitung der in die Szene einfallende ebene Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach \textit{Angular Spectrum Propagation} im Hybridraum\footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu~\cite{hare1994} auf diese Näherung verzichtet.},
 \begin{equation}
 	\bar{\phi}\left(q_x,q_y,z+\Delta z\right)=\bar{\phi}(z)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}} \, ,
 \end{equation}
