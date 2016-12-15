@@ -21,7 +21,7 @@ Im Bereich der Röntgenbeugung kann es aufgrund der geringfügigen Abweichungen 
 \end{alignat}
 darzustellen. Bei dieser Darstellung quantifiziert $\delta$ die Refraktion, $\beta$ die Absorption~\cite{attwood1999}.
 
-Eine für die Betrachtung von Streuvorgängen hilfreiche Form der Wellengleichung lässt sich durch Darstellung mittels einer Greenschen Funktion finden. Hierfür  wird zunächst die Fouriertransformierte der Wellengleichung betrachtet. Mit dem Ortsvektor $\vec{r}=(x,y,z)^T$ im Realraum und $\vec{q}=(q_x,q_y,q_z)^T$ im Ortsraum lautet diese mit der Näherung \ref{eq:approxbrechzahl} und unter Beachtung des Faltungstheorems (\fref{eq:ft_faltung}) und der Ableitung (\fref{eq:ft_ableitung}) 
+Eine für die Betrachtung von Streuvorgängen hilfreiche Form der Wellengleichung lässt sich durch Darstellung mittels einer Greenschen Funktion finden. Hierfür  wird zunächst die Fouriertransformierte der Wellengleichung betrachtet. Mit dem Ortsvektor $\vec{r}=(x,y,z)^T$ im Realraum und $\vec{q}=(q_x,q_y,q_z)^T$ im Frequenzraum lautet diese mit der Näherung \ref{eq:approxbrechzahl} und unter Beachtung des Faltungstheorems (\fref{eq:ft_faltung}) und der Ableitung (\fref{eq:ft_ableitung}) 
 \begin{equation}
 	\label{eq:wellengleichung_f}
 	(-q^2+k^2)\tilde{\phi}=\frac{-2k^2}{{(2\pi)}^{\sfrac{3}{2}}}(\tilde{\delta \eta} \ast \tilde{\phi}) \,.
@@ -34,7 +34,7 @@ definiert, so lässt sich daraus nicht direkt die Greensche Funktion im Realraum
 
 \begin{align}
 	G & =\frac{1}{(2\pi)^{3}}\int_{-\infty}^{\infty} \frac{2k^2}{q^2-(k+i0^+)^2} e^{i\vec{q}\vec{r}}\dif^3 \vec{q}\nonumber \\
-	  & = \frac{k^2}{2\pi}\frac{e^{iqr}}{r}
+	  & = \frac{k^2}{2\pi}\frac{e^{ikr}}{r}
 	  \label{eq:green_ft}                                                                     
 \end{align}
 Die so konstruierte Greensche Funktion lässt sich in den Realraum transformieren, stellt weiterhin eine Greensche Funktion der Wellengleichung dar und wird als \textit{retardierte Greensche Funktion} bezeichnet. Für die Wellengleichung gilt mit ihr somit im Fourier- bzw. im Realraum~\cite{cowley1995,thibault2007}:
@@ -52,13 +52,15 @@ Eine häufige Näherung bei Streuproblemen ist die sogenannte \textit{Born-Nähe
 \end{equation}
 In \fref{eq:wellengleichung_green} kann nun die Faltung ausgeschrieben und die Greensche Funktion genähert werden (mit $\vec{k}$ als ausgehenden Wellenvektor nach dem Streuvorgang in $\vec{r}$-Richtung):
 \begin{equation}
-\phi(\vec{r})=\int G(\vec{r}-\vec{r'})\delta\eta(\vec{r'})\phi(\vec{r}') \dift \vec{r'} \propto \int \frac{e^{ik(r-\vec{k}\vec{r'})}}{r}\delta\eta(\vec{r}')\phi(\vec{r}') \dift \vec{r'} \,.
-\label{eq:born_ort}
+	\phi(\vec{r})=\int G(\vec{r}-\vec{r'})\delta\eta(\vec{r'})\phi(\vec{r}') \dift \vec{r'} 
+	\propto \int \frac{e^{ik(r-\vec{k}\vec{r'})}}{r}\delta\eta(\vec{r}')\phi(\vec{r}') \dift \vec{r'} \,.
+	\label{eq:born_ort}
 \end{equation}
-Hierbei wird die Näherung aus \fref{eq:born_r_approx} im Exponenten angewendet, im Nenner kann $\abs{\vec{r}-\vec{r'}}\approx r$ genähert werden. Wird nun $\phi$ als Reihe $\phi=\phi_0+\phi_1+\phi_2+..$ mit $\phi_0(\vec{r'})=e^{i\vec{k_0}\vec{r'}}$ als einlaufende ebene Welle dargestellt und ist der Einfluss des Streuobjektes auf die einfallende Welle gering, so lässt sich in \fref{eq:born_ort} $\phi(\vec{r'})\approx\phi_0(\vec{r'})$ im Integral anwenden~\cite{cowley1995}. Dies wird als \textit{Born-Näherung erster Ordnung} bezeichnet. In dieser gilt mit dem Streuvektor $\vec{q}=\vec{k}-\vec{k_0}$ (vgl. \fref{fig:bornq}) für die Lösung der Wellengleichung
+Hierbei wird die Näherung aus \fref{eq:born_r_approx} im Exponenten angewendet, im Nenner kann $\abs{\vec{r}-\vec{r'}}\approx r$ genähert werden. Wird nun $\phi$ als Reihe $\phi=\phi_0+\phi_1+\phi_2+..$ mit $\phi_0(\vec{r'})=e^{i\vec{k_0}\vec{r'}}$ als einlaufende ebene Welle dargestellt und ist der Einfluss des Streuobjektes auf die einfallende Welle gering, so lässt sich in \fref{eq:born_ort} $\phi(\vec{r'})\approx\phi_0(\vec{r'})$ im Integral anwenden~\cite{cowley1995}. Dies wird als \textit{Born-Näherung erster Ordnung} bezeichnet. In dieser gilt mit dem Streuvektor $\vec{q}=\vec{k}-\vec{k_0}$ (vgl. \fref{fig:bornq}) und dem Erhalt der Wellenzahl $|\vec{k_0}|=|\vec{k}|$ (elastische Streuung) für die Lösung der Wellengleichung
 \begin{equation}
 	\label{eq:born}
-	\int G(\vec{r}-\vec{r}')\delta\eta(\vec{r}') e^{i\vec{k_0}\vec{r'}}  \dift \vec{r}'\approx e^{ik_0r}\int \delta\eta(\vec{r}')e^{-i\vec{q}\vec{r}'}\dif \vec{r}'\propto \mathscr{F}[\delta\eta] \,.
+	\int G(\vec{r}-\vec{r}')\delta\eta(\vec{r}') e^{i\vec{k_0}\vec{r'}}  \dift \vec{r}'
+	\approx \frac{e^{ik_0r}}{r}\int \delta\eta(\vec{r}')e^{-i\vec{q}\vec{r}'}\dift \vec{r}'\propto \mathscr{F}[\delta\eta] \,.
 \end{equation} 
 Dies hat die Form einer Fouriertransformation -- in Näherung ist die gestreute Welle proportional zur dreidimensional fouriertransformierten Abweichung der Brechzahl von der Vakuumbrechzahl.
 
@@ -88,12 +90,12 @@ Wird eine elektromagnetische Welle $\phi$ durch ihre zweidimensionale Fouriertra
 so muss $\bar{\phi}$ im Hybridraum ($q_x,q_y$ im Fourierraum, in z-Richtung jedoch im Realraum)
 \begin{equation}
 	\label{eq:wellengleichung_h}
-	\frac{\partial ^2}{\partial z^2}\bar{\phi}(q_x,q_y,z)^2+ \left(k^2-\left(q_x+q_y\right)\right)\bar{\phi}(q_x,q_y,z)=0
+	\frac{\partial ^2}{\partial z^2}\bar{\phi}(q_x,q_y,z)+ \left(k^2-\left(q_x^2+q_y^2\right)\right)\bar{\phi}(q_x,q_y,z)=0
 \end{equation}
 erfüllen. Eine Lösung dieser Gleichung ist
 \begin{equation}
 	\label{eq:angularspectrum}
-	\bar{\phi}\left(q_x,q_y,\Delta z\right)=\bar{\phi}(q_x,q_y,0)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\, . 
+	\bar{\phi}\left(q_x,q_y,\Delta z\right)=\bar{\phi}(q_x,q_y,0)e^{i\Delta z\sqrt{k^2-(q_x^2+q_y^2)}}\, . 
 \end{equation}
 Somit lässt sich die Propagation einer Welle im Vakuum als Multiplikation mit einem Exponentialfaktor im Fourierraum beschreiben. Dieses Verfahren wird \textit{Angular-Spectrum} Propagation genannt~\cite{goodman2005}. Die eingehende Welle bei $z=0$ wird hierbei in ebene Wellen, die sich in verschiedene Richtungen ausbreiten (Angular Spectrum) zerlegt und deren Propagation berechnet. Die ausgehende Welle bei $z=\Delta z$ im Realraum, $\phi\left(x,y,\Delta z\right)$, lässt sich aus $\bar{\phi}\left(q_x,q_y,\Delta z\right)$ durch eine inverse Fouriertransformation bestimmen.
 
@@ -107,12 +109,9 @@ Wird in \fref{eq:angularspectrum} die Taylor-Näherung 2. Ordnung
 durchgeführt (\fref{eq:fresnel_fourier}) und eine zweidimensionale inverse Fouriertransformation angewendet, so erhält man mit dem Faltungstheorem die Fresnel-Näherung im Realraum (\fref{eq:fresnel_real}).
 
 \begin{align}
-	\bar{\phi}(x,y, z) & =\bar{\phi}(x,y,0) e^{ik z}e^{\frac{i z}{2k}(q_x^2+q_y^2)} 
+	\bar{\phi}(x,y, z) &=\bar{\phi}(x,y,0) e^{ik z}e^{\frac{i z}{2k}(q_x^2+q_y^2)} 
 	\label{eq:fresnel_fourier}\\
-	\phi(x,y, z)       & =\phi(x,y,0) \ast \left(                                   
-	\frac{e^{ik z}}{i z \lambda } 
-	e^{ik\frac{(x^2+y^2)}{2 z}}
-	\right)
+	\xRightarrow{\mathscr{F}^{-1}}  \phi(x,y, z) &=\phi(x,y,0) \ast \left( \frac{e^{ik z}}{i z \lambda } e^{ik\frac{(x^2+y^2)}{2 z}} \right)
 	\label{eq:fresnel_real}
 \end{align}
 In dieser Näherung wird die Ausbreitung der Welle durch die Faltung mit dem sogenannten Fresnel-Propagator ausgedrückt. Wird die Faltung explizit ausgeschrieben, kann der Exponent aufgespalten werden
@@ -130,7 +129,7 @@ In dieser Näherung wird die Ausbreitung der Welle durch die Faltung mit dem sog
 	e^{\frac{-ik}{ z}\left(x\alpha+y\beta\right)}
 	\dif \alpha \dif \beta \,.
 \end{align}
-Verschwindet nun die eingehende Welle $\phi_(x,y,z=0)$ außerhalb eines Bereiches $S=[-X,X]\times[-Y,Y]$ und gilt 
+Verschwindet nun die eingehende Welle $\phi(x,y,z=0)$ außerhalb eines Bereiches $S=[-X,X]\times[-Y,Y]$ und gilt 
 \begin{equation}
 	\forall \alpha,\beta \in S:	z\gg \frac{k}{2}\left(\alpha^2+\beta^2\right) \, , 
 \end{equation}
@@ -142,7 +141,7 @@ So lässt sich \fref{eq:fresnel_explizit} als Fouriertransformation der Eingangs
 
 \begin{equation}
 \label{eq:fraunhofer}
-	\phi(x,y,z)=\frac{e^{ik(z+\frac{x^2+y^2}{2z})}}{iz\lambda}\mathscr{F}\left[\phi_(x,y,0)\right](f_x=\tfrac{kx}{z},f_y=\tfrac{kx}{z})
+	\phi(x,y,z)=\frac{e^{ik(z+\frac{x^2+y^2}{2z})}}{iz\lambda}\mathscr{F}\left[\phi(x,y,0)\right](f_x=\tfrac{kx}{z},f_y=\tfrac{kx}{z})
 \end{equation}
 
 

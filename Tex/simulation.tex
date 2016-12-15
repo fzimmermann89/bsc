@@ -10,7 +10,7 @@ Eine vektorisierte Version dieser Berechnung ist in den auf Mätzler~\cite{maetz
 
 \section{Projektions- und Rayleigh-Gans-Näherung}
 	
-Um dreidimensionale Streuobjekte durch zweidimensionale Blenden zu nähern, lässt sich die Projektion ihrer Dichteverteilung auf eine Ebene direkt hinter ihnen betrachten. In Näherung verhält sich eine elektromagnetische Welle nach Durchlaufen eines hinreichend dünnen Objektes gleich wie nach Durchlaufen einer Blende mit dieser durch Projektion gewonnenen Absorption und Refraktion, sodass in Fraunhofer-Fernfeldnäherung das Streubild durch die Fouriertransformierte der Projektion genähert werden kann.
+Um dreidimensionale Streuobjekte durch zweidimensionale Blenden zu nähern, lässt sich die Projektion ihrer Dichteverteilung auf eine Ebene direkt hinter ihnen betrachten. In Näherung verhält sich eine elektromagnetische Welle nach Durchlaufen eines hinreichend dünnen Objektes gleich wie nach Durchlaufen einer Blende mit dieser durch Projektion gewonnenen Absorption und Refraktion, sodass in Fraunhofer-Fernfeldnäherung das Streubild durch die zweidimensionale Fouriertransformierte der Projektion genähert werden kann.
 	
 Für eine kreisförmige Blende existiert eine analytische Darstellung der Fouriertransformation in Form der sogenannten Airy-Scheibe. Das Streubild eines Objektes mit kreisförmiger Projektion lässt sich somit mittels der Besselfunktion 1. Ordnung $J_n$ als
 \begin{equation}
@@ -36,13 +36,13 @@ Das Grundprinzip der in mehreren Schichten arbeitenden \textit{Multislice} Algor
 	\label{fig:multislice_prinzip}
 \end{figure} 
 
-Einer dieser Algorithmen ist die \textit{Multislice Fouriertransformation}. Nach \fref{eq:born} gilt in der ersten Bornschen Näherung für die Amplitude der gestreuten Welle
+Einer dieser Algorithmen ist die \textit{Multislice Fouriertransformation} (MSFT). Nach \fref{eq:born} gilt in der ersten Bornschen Näherung für die Amplitude der gestreuten Welle
 \begin{equation}
 	\phi\propto\int \delta\eta(\vec{r}) e^{-i\vec{q}\cdot \vec{r}} \dif \vec{r} \, .
 \end{equation}
 Um die Komplexität zu reduzieren, wird nun versucht auf eine schichtweise Berechnung überzugehen: Wird das Skalarprodukt $\vec{q}\cdot \vec{r}=xq_x+yq_y+zq_z$ ausgeschrieben und die Integration über $x$ und $y$ als zweidimensionale Fouriertransformation interpretiert,
 \begin{equation}
-	\phi\propto\int \mathscr{F}\left[\delta\eta\right](q_x,q_y,z) e^{-zq_z} \dif z \, ,
+	\phi\propto\int \mathscr{F}\left[\delta\eta\right](q_x,q_y,z) e^{-izq_z} \dif z \, ,
 \end{equation}
 
 so lässt sich das Integral in z-Richtung als Summe interpretieren:
@@ -64,19 +64,17 @@ Somit kann $q_z=q_\parallel$ eingesetzt werden und es gilt für die Welle im Fer
 	\phi\approx\sum_n{\mathscr{F}\left[\delta\eta\right] e^{-in\delta_z\left(k-\sqrt{k^2-q_\perp^2}\right) }} \, .
 \end{equation}
 
-
-
-\fref{eq:msft} beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld schichtweise in der ersten Bornschen Näherung zu berechnen. Diese Methode wird als \textit{Multislice Fourier Transformation} \textit{MSFT} bezeichnet~\cite{barke2015}. 
+\fref{eq:msft} beschreibt einen Algorithmus um das Streubild eines dreidimensionalen Objektes im Fernfeld schichtweise in der ersten Bornschen Näherung zu berechnen~\cite{barke2015}. 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/slice_msft.png}
-	\caption[Illustration MSFT]{Illustration zur MSFT: Das Streubild wird berechnet indem schichtweise der jeweilige Beitrag der Bornschen Näherung phasenkorrekt aufaddiert wird (dargestellt von links nach rechts). Das rechteste Bild ist somit das Streubild des Objektes und das Ergebnis des Algorithmus.}
+	\caption[Illustration MSFT]{Illustration zur MSFT: Das Streubild wird berechnet indem schichtweise der jeweilige Beitrag der Bornschen Näherung phasenkorrekt aufaddiert wird (dargestellt von links nach rechts). Das Bild rechts außen ist somit das Streubild des Objektes und das Ergebnis des Algorithmus.}
 	\label{fig:slice_msft}
 \end{figure} 
 
 Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträgliches Einführen eines zusätzlichen Faktors, der die Absorption und Phasenänderung der Welle beim Durchlaufen des Objektes beschreibt, ließe sich nachträglich eine grobe Näherung für Absorptionseffekte einführen, die in einigen Fällen die subjektive Qualität der Simulation zu verbessern scheint~\cite{barke2015}. Da zum Einen die Gültigkeit dieser Absorptionsnäherung nicht direkt abgeschätzt werden kann und sie zum Anderen nicht in allen Fällen die Güte der Simulation verbessert, ist im Weiteren mit \textit{MSFT} die Methode ohne diese Korrektur bezeichnet~\cite{fennel}.
-Eine Implementation des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
+Eine Implementierung des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
 
 \section{Multislice Propagation}
 Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice Propagation} oder \textit{Beam Propagation} bekannt~\cite{hare1994,cowley1957}. Bei diesem in \fref{fig:multislice} skizzierten Verfahren wird zunächst die Szene in einzelne Schichten mit dem Abstand $\Delta z$ zerlegt. Die Ausbreitung der in die Szene einfallende ebene Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach \textit{Angular Spectrum Propagation} im Hybridraum\footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu~\cite{hare1994} auf diese Näherung verzichtet.},
@@ -102,13 +100,13 @@ Der Algorithmus zur Berechnung der Austrittswelle, d.h. der Welle hinter der Sze
 	\label{eq:multislice}
 	\Phi(z+\Delta z)= e^{i\delta n\left(z\right) \Delta z}\mathscr{F}^{-1}\left[e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\mathscr{F}\left[\Phi(z)\right]\right]
 \end{equation}
-Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels \textit{Angular Spectrum Propagation} berechnen lässt, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementation im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert. Bei Anwendung der Fernfeld Näherung ist zwar der maximale Winkel in dem das Streubild berechnet werden kann von der räumlichen Auflösung der Austrittswelle sowie die Winkelauflösung von der Szenenausdehnung abhängig, dies ist jedoch deutlich praktikabler.
+Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels \textit{Angular Spectrum Propagation} berechnen lässt, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementierung im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert. Bei Anwendung der Fernfeld Näherung ist zwar der maximale Winkel in dem das Streubild berechnet werden kann von der räumlichen Auflösung der Austrittswelle sowie die Winkelauflösung von der Szenenausdehnung abhängig, dies ist jedoch deutlich praktikabler.
 Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet und ist in \texttt{simulation/multislice.m} implementiert.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/slice_multislice.png}
-	\caption[Illustration Multislice Propagation]{Illustration zur Multislice Propagation: Dargestellt ist der Betrag der komplexen Wellenfront, die Strahlrichtung ist von links nach rechts. Das rechteste Bild ist die Austrittswelle hinter der Szene und das Ergebnis des Algorithmus.}
+	\caption[Illustration Multislice Propagation]{Illustration zur Multislice Propagation: Dargestellt ist der Betrag der komplexen Wellenfront, die Strahlrichtung ist von links nach rechts. Das Bild rechts außen ist die Austrittswelle hinter der Szene und das Ergebnis des Algorithmus.}
 	\label{fig:msft}
 \end{figure} 
 	
