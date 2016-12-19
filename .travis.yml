@@ -12,6 +12,7 @@ addons:
       - texlive-fonts-recommended
       - texlive-latex-extra
       - texlive-fonts-extra
+      - cm-super
       - dvipng
       - texlive-latex-recommended
       - texlive-lang-german
