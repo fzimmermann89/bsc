@@ -31,13 +31,13 @@
 		\item[\texttt{.matrix}] aus Matlab-Matrix laden. Keine weiteren Eigenschaften.
 		\item[\normalfont Funktion aller Streuobjekte:]$ $
 			\begin{description}
-				\item[\texttt{\textit{[getSlice]}=prepareSliceMethod\textit{(this,N,dx,gpu)})}] Gibt eine \texttt{getSlice} Funktion initialisiert für die räumliche Auflösung \textit{dx} und \textit{N}x\textit{N} Pixel des Streuobjektes zurück.
+				\item[\texttt{\textit{[getSlice]}=prepareSliceMethod\textit{(this,N,dx,gpu)})}] Gibt eine \texttt{getSlice} Funktion initialisiert für die räumliche Auflösung \textit{dx} und \textit{N}x\textit{N} Pixel des Streuobjektes zurück. Nutzt bei wahrem \textit{gpu} CUDA um auf der Grafikkarte zu rechnen.
 				\begin{description}
 					\item [\texttt{\textit{[slice]}=getSlice\textit{(this,z)}}] Die bei \textit{z} liegende Schicht des Streuobjektes berechnet durch Ermittlung der die Ebenen schneidenden Kantenlängen und einem optimierten Punkt-in-Polygon Algorithmus \cite{pnpoly}.
 				\end{description}
 				
 				\item[\texttt{\textit{[matrix]}=toMatrix\textit{(objects,N,dx,gpu)}}] Logische \textit{N}x\textit{N}x\textit{N} Matrix der Streuobjekte \textit{objects}.
-				\item[\texttt{\textit{[projection]}=projection\textit{(objects,N,dx,gpu)}}] Projektion der Streuobjekte \textit{objects}.
+				\item[\texttt{\textit{[projection]}=projection\textit{(objects,N,dx,gpu)}}] Projektion der Streuobjekte \textit{objects}. Nutzt bei wahrem \textit{gpu} CUDA um auf der Grafikkarte zu rechnen.
 			\end{description}
 	\end{description}	
 \end{description}
@@ -51,10 +51,11 @@
 	Streubild nach Mie mit \textit{N}x\textit{N} Punkten und Realraumauflösung \textit{dx}.
 			
 	\item [\texttt{\textit{[scatter]}=msft\textit{(lambda,objects,N,dx,dz,gpu,sim\_absorption,debug)}}]
-	Streubild nach MSFT bei Wellenlänge \textit{lambda} (in nm) der Objekte im cell-array \textit{objects} berechnet mit \textit{N}x\textit{N} Punkten im Abstand \textit{dx} pro Schicht im Abstand \textit{dz}. Ist der optionale Parameter \textit{sim\_absorption} wahr, wird eine grobe Näherung für Absorption durchgeführt.
-	In \textit{@debug(data,z)} kann eine Funktion übergeben werden, die in jedem Berechnungsschritt mit den aktuellen Daten aufgerufen wird. 		
+	Streubild nach MSFT bei Wellenlänge \textit{lambda} (in nm) der Objekte im cell-array \textit{objects} berechnet mit \textit{N}x\textit{N} Punkten im Abstand \textit{dx} pro Schicht im Abstand \textit{dz}. Ist der optionale Parameter \textit{sim\_absorption} wahr, wird eine grobe Näherung für Absorption durchgeführt. Nutzt bei wahrem \textit{gpu} CUDA um auf der Grafikkarte zu rechnen.
+	In \textit{@debug(data,z)} kann eine Funktion übergeben werden, die in jedem Berechnungsschritt mit den aktuellen Daten aufgerufen wird. 
+			
 	\item [\texttt{\textit{[exitwave]}=multislice\textit{(lambda,objects,N,dx,dz,gpu,debug)}}]
-	Austrittswelle nach Multislice Beam Propagation, die Parameter entsprechen den jeweiligen Parametern bei \texttt{msft}.
+	Austrittswelle nach Multislice Beam Propagation, die Parameter entsprechen den jeweiligen Parametern bei \texttt{msft}
 			
 	\item [\texttt{\textit{[exitwave]}=thibault\textit{(lambda,objects,N,dx,gpu,debug)}}]
 	Austrittswelle nach Thibaults Multislice, die Parameter entsprechen den jeweiligen Parametern bei \texttt{msft}.
@@ -74,7 +75,7 @@
 	Erzeugt aus einem aufgenommen Streubild den Support und das Startbild
 		
 	\item [\texttt{\textit{[]}=SupportHolo\textit{()}}]
-	Erzeugt aus einem mit Holographie aufgenommen Streubild den Support und das Startbild
+	Erzeugt aus einem mit Holographie aufgenommen Streubild den Support und das Startbild. Nutzt CUDA um auf der Grafikkarte zu rechnen.
 		
 	\item [\texttt{recon.Plan}] Klasse für iterative Phasenrekonstruktion. 
 	\begin{description}[style=nextline]
@@ -90,10 +91,10 @@
 			\item[\texttt{show}] Aktuellen Stand anzeigen
 			\item[\texttt{writeFrame}] Aktuelles Realraumbild in animierte GIF schreiben. Parameter: Dateiname
 		\end{description}
-		\item[\texttt{\textit{[reconImage,errors]}=run\textit{(this,scatterImage,support,start,mask)}}]	Rekonstruktion des Streubildes \textit{scatterImage} mit \textit{support} durchführen. Ist \textit{start} eine NxNxA Matrix werden A unabhängige Rekonstruktionen durchgeführt. Nur in \textit{mask} wahre Bereiche des Streubildes werden beachtet. Werden zwei Ausgabevariablen genutzt, werden die Realraumfehler mit berechnet.
+		\item[\texttt{\textit{[reconImage,errors]}=run\textit{(this,scatterImage,support,start,mask)}}]	Rekonstruktion des Streubildes \textit{scatterImage} mit \textit{support} durchführen. Ist \textit{start} eine NxNxA Matrix werden A unabhängige Rekonstruktionen durchgeführt. Nur in \textit{mask} wahre Bereiche des Streubildes werden beachtet. Werden zwei Ausgabevariablen genutzt, werden die Realraumfehler mit berechnet. Nutzt CUDA um auf der Grafikkarte zu rechnen.
 		\item[\texttt{\textit{[avg,recons,errors]}=runAvg\textit{(this,scatterImage,support,start,mask,useOnlyBest)}}]	Führt je nach Größe der dritten Dimension von \textit{start} eine Anzahl unabhängige Rekonstruktionen durch und nutzt die \textit{useOnlyBest} (optional) am besten übereinstimmenden Rekonstruktionen um einen Mittelwert nach Korrektur von Spiegelung und Translation zu berechnen.
 	\end{description}
-	\item [\texttt{\textit{[deconvolution]} = wiener\textit{(input,h,noise)}}] Wiener-Entfaltung des komplexen \textit{input} mit \textit{h} unter Berücksichtigung des Rauschspektrums oder skalaren Wertes \textit{noise}.
+	\item [\texttt{\textit{[deconvolution]} = wiener\textit{(input,h,noise)}}] Wiener-Entfaltung des komplexen \textit{input} mit \textit{h} unter Berücksichtigung des Rauschspektrums oder skalaren Wertes \textit{noise}. 
 \end{description}
 
 \begin{comment}

@@ -17,11 +17,12 @@ und somit als reiner Support-Projektor aufgefasst werden kann. In der Literatur 
  
 Für den HIO-Algorithmus gilt mit jenem $P_s$ 
 \begin{align*}
-	\begin{rcases}	
+	\rho_{n+1}=\left.
+	\begin{cases}	
 	P_m\rho_n                               & \text{für } x\in S    \\
 	\left[\mathbb{1}-\beta P_m\right]\rho_n & \text{für } x\notin S 
-	\end{rcases}	
-	=\left[P_sP_m+\left(P_{\bar{s}}-\beta P_{\bar{s}} P_m\right)\right]\rho_n
+	\end{cases}	
+	\right\}=\left[P_sP_m+\left(P_{\bar{s}}-\beta P_{\bar{s}} P_m\right)\right]\rho_n
 	\,.
 \end{align*}
 Diese Form erleichtert das Verständnis von \fref{fig:recon}. Zum weiteren Verständnis ist in \fref{fig:raar} der Prozess für den RAAR-Algorithmus schrittweise dargestellt.

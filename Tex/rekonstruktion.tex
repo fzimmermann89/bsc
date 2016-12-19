@@ -8,14 +8,15 @@ Zur Verwendung von CDI zur Untersuchung von Proben sind aus dem aufgenommenen St
 	\label{fig:phaseswap}
 \end{figure}
 \section{Holographie}
-Angenommen neben dem Objekt, über das Informationen gewonnen werden sollen, befindet sich ein weiteres Objekt (im Folgenden als Referenz bezeichnet) im Strahl, sodass die eingehende Welle an beiden gestreut wird. Dies wurde in der Vergangenheit üblicherweise realisiert, indem die Probe auf eine Membran mit einer zusätzlichen Öffnung aufgebracht wurde~\cite{eisebitt2004}. Eine elegante Methode, die sog. \textit{In-Flight Holography}, bei der freie Edelgascluster mit in den Strahl eingebracht werden, wurde kürzlich u.a. von Gorkhover und Ulmer vorgestellt~\cite{gorkhover2016,ulmer2015}. 
-Sind Objekt und Referenz näherungsweise 2D-Objekte in einer gemeinsamen Ebene, wie in \fref{fig:fth} dargestellt, so gilt für die Austrittswelle $\phi_1$
+Bei der Holographie wird versucht, Informationen über die Phase mit aufzuzeichnen. Hierzu wird ein zusätzliches, bekanntes Objekt (im Folgenden als Referenz bezeichnet) in den Strahl eingebracht, sodass die eingehende Welle an beiden gestreut wird. Die Interferenz der beiden gestreuten Wellen kodiert in diesem Fall die relativen Phaseninformationen in der Amplitude.
+Das Einbringen einer Referenz wurde in der Vergangenheit üblicherweise realisiert, indem die Probe auf eine Membran mit einer zusätzlichen Öffnung aufgebracht wurde~\cite{eisebitt2004}. Eine elegante Methode, die sog. \textit{In-Flight Holography}, bei der freie Edelgascluster mit in den Strahl eingebracht werden, wurde kürzlich u.a. von Gorkhover und Ulmer vorgestellt~\cite{gorkhover2016,ulmer2015}. 
+Sind $O$,$R$ die Austrittswellen von Objekt bzw. Referenz, so gilt für die gemeinsame Austrittswelle $\phi_1$
 \begin{equation}
-	\phi_1=O+R
+	\phi_1=O+R 
 \end{equation}
-mit $O$,$R$ den Austrittswellen von Objekt und Referenz. Für die aufgenommene Intensität $I$ im Fernfeld gilt
+und für die aufgenommene Intensität $I$ im Fernfeld gilt
 \begin{equation}
-	I=\left|\mathscr{F}\left[O\right]+\mathscr{F}\left[R\right]\right|^2=\left|\tilde{O}+\tilde{R}\right|^2
+	I=\left|\mathscr{F}\left[O\right]+\mathscr{F}\left[R\right]\right|^2=\left|\tilde{O}+\tilde{R}\right|^2\,.
 \end{equation}
 Wird nun auf $I$ eine inverse Fouriertransformation angewendet,
 
@@ -30,8 +31,8 @@ so ergibt sich mit Hilfe der komplexen Konjugation der Fouriertransformation (\r
 \begin{equation}
 	\mathscr{F}^{-1}[I]\propto \underbrace{O \otimes O + R\otimes R}_{\text{Autokorrelationen}}+\underbrace{R\otimes O+ O\otimes R}_{\text {Kreuzkorrelationen}}\,.
 \end{equation}
-Die Autokorrelationen, d.h. die Korrelation von Objekt mit Objekt bzw. Referenz mit Referenz liegen hierbei um den Ursprung des Koordinatensystems und können in jede Richtung maximal die doppelte Größe von Objekt bzw. Referenz haben. Die Kreuzkorrelationen aus Objekt und Referenz sind punktsymmetrisch zum Ursprung und haben von diesem den gleichen Abstand wie Objekt- und Referenzaustrittswelle voneinander.
-Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjugierten Referenz bzw. der Referenz mit einem gespiegelten, komplex konjugierten Objekt.  Ist die Referenz in guter Näherung punktförmig und lässt sich durch eine Delta-Funktion beschreiben, so ist die Kreuzkorrelation näherungsweise die Austrittswelle des Objektes. Somit können trotz der verlorenen Phaseninformationen die Austrittswelle des Objektes inklusive der Phase wiedergewonnen werden. Dieses Verfahren wird im Weiteren als Fouriertransformations-Holografie (FTH) bezeichnet.
+Die Autokorrelationen, d.h. die Korrelation der Austrittswelle von Objekt mit Objekt bzw. Referenz mit Referenz liegen hierbei um den Ursprung des Koordinatensystems und können in jede Richtung maximal die doppelte Größe von Objekt bzw. Referenz haben. Die Kreuzkorrelationen aus den Austrittswellen von Objekt und Referenz sind punktsymmetrisch zum Ursprung und haben von diesem den gleichen Abstand wie Objekt- und Referenzaustrittswelle voneinander.
+Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjugierten Referenz bzw. der Referenz mit einem gespiegelten, komplex konjugierten Objekt. Ist die Referenz in guter Näherung punktförmig und lässt sich durch eine Delta-Funktion beschreiben, so ist die Kreuzkorrelation näherungsweise die Austrittswelle des Objektes. Somit können trotz der verlorenen Phaseninformationen die Austrittswelle des Objektes inklusive der Phase wiedergewonnen werden. Dieses Verfahren wird im Weiteren als \textit{Fouriertransformations-Holografie (FTH)} bezeichnet.
 
 \begin{figure}
 	\centering
