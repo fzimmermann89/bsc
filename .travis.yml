@@ -3,6 +3,9 @@ sudo: false
 #sudo: required
 #sudo not required, but without this option dist was beeing ignored and ubuntu precise used.
 
+language: r
+# r has latex support already installed
+
 env:
 - DIR=Tex FILE=main
 
