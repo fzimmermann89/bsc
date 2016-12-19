@@ -2,13 +2,13 @@
 Es ist sinnvoll, die Evaluierung von Rekonstruktionsansätzen zunächst mit synthetischen Streubilder durchzuführen, da so das ideale Rekonstruktionsergebnis bekannt ist und für einen direkten optischen Vergleich zur Verfügung steht\footnote{\textit{"`To our
 	knowledge there is no reliable objective metric for image quality. Ultimately, the quality
 	comparison between algorithms is based on what looks good to the user"'}, D. R. Luke in der Vorstellung des \textit{RAAR}-Algorithmus~\cite{luke2004}.}. 
-Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen und der 3D-Fouriertransformierten, die zwar mit weniger Punkten noch valide Ergebnisse liefern kann, bei der jedoch ebenfalls der Berechnungsaufwand die Objekte, deren Streubilder berechnet werden können, limitiert, existieren weitere Ansätze, die im Folgenden vorgestellt und bezüglich ihrer Gültigkeit überprüft werden~\cite{kunz1993,sander2014,hantke2016}.
+Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen, kann zum einen die 3D-Fouriertransformierte, die auch mit weniger Punkten noch valide Ergebnisse liefern kann, genutzt werden~\cite{kunz1993,sander2014,hantke2016}. Diese vernachlässigt jedoch Mehrfachstreuung und Absorption und wird ebenfalls durch den Berechnungsaufwand hinsichtlich der Ausmaße der Objekte, deren Streubilder berechnet werden können, limitiert. Von besonderem Interesse sind deshalb die verschiedene schichtweise arbeitende Ansätze, die im Folgenden vorgestellt und bezüglich ihrer Gültigkeit überprüft werden.
 
 \section{Mie-Streuung}
 Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe, basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen~\cite{bohren2008}. Diese unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{app:mie}).
 Eine vektorisierte Version dieser Berechnung ist in den auf Mätzler~\cite{maetzler2002} basierenden Matlab Funktionen \texttt{simulation/mie.m} für winkelabhängige Radialprofile sowie \texttt{simulation/mie\_scatter.m} für Streubilder implementiert. Diese für eine homogene Kugel im Vakuum korrekte Lösung dient im Rahmen dieser Arbeit der Verifizierung der Simulationsverfahren.
 
-\section{Projektions- und Rayleigh-Gans-Näherung}
+\section{Projektions-Näherung}
 	
 Um dreidimensionale Streuobjekte durch zweidimensionale Blenden zu nähern, lässt sich die Projektion ihrer Dichteverteilung auf eine Ebene direkt hinter ihnen betrachten. In Näherung verhält sich eine elektromagnetische Welle nach Durchlaufen eines hinreichend dünnen Objektes gleich wie nach Durchlaufen einer Blende mit dieser durch Projektion gewonnenen Absorption und Refraktion, sodass in Fraunhofer-Fernfeldnäherung das Streubild durch die zweidimensionale Fouriertransformierte der Projektion genähert werden kann.
 	
@@ -17,12 +17,6 @@ Für eine kreisförmige Blende existiert eine analytische Darstellung der Fourie
 	I(\theta) \propto \left ( \frac{2 J_1(kr \sin \theta)}{kr \sin \theta} \right )^2 
 \end{equation}
 nähern~\cite{born1980}. Für nicht kreisförmige Projektionen der Dichte lässt sich die Fouriertransformation diskret numerisch auswerten.
-
-Eine weitere gebräuchliche Näherung für kugelförmige Objekte ist die \textit{Rayleigh-Gans} Näherung (gültig für kleine Radien und Brechzahlen nahe Vakuum). In dieser nimmt die Intensität die Form
-\begin{equation}
-	I(\theta)\propto\left ( \frac{j_1(2kr\sin(\theta/2))}{2kr\sin(\theta/2)} \right )^2 
-\end{equation}
-mit der sphärischen Besselfunktion $j_n$ an~\cite{bohren2008}. 
 
 Im Weiteren wird die Projektion der Dichte und anschließende diskrete Fouriertransformation dieser als \textit{Projektions-Näherung} bezeichnet. Diese Näherung wird bei dem Vergleich der Simulationsansätze mit betrachtet aufgrund des geringen Rechenaufwandes und Möglichkeit, auch nicht-kugelförmige Objekte zu behandeln (im Gegensatz zur Rayleigh-Gans-Näherung).
 
@@ -100,7 +94,7 @@ Der Algorithmus zur Berechnung der Austrittswelle, d.h. der Welle hinter der Sze
 	\label{eq:multislice}
 	\Phi(z+\Delta z)= e^{i\delta n\left(z\right) \Delta z}\mathscr{F}^{-1}\left[e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}}\mathscr{F}\left[\Phi(z)\right]\right] \,.
 \end{equation}
-Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels \textit{Angular Spectrum Propagation} berechnen, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementierung im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert. Bei Anwendung der Fernfeld Näherung ist zwar der maximale Winkel in dem das Streubild berechnet werden kann von der räumlichen Auflösung der Austrittswelle sowie die Winkelauflösung von der Szenenausdehnung abhängig, dies ist jedoch deutlich praktikabler.
+Ist die Austrittswelle bekannt, so ist die weitere Ausbreitung zum Detektor eine Vakuumpropagation, die sich entweder mittels \textit{Angular Spectrum Propagation} berechnen, oder sich durch eine einfache Fouriertransformation in Fraunhofer-Näherung bestimmen lässt. Ersteres Verfahren hat den Nachteil, das es bei einer numerischen Implementierung im Bereich der Szene die gleiche räumliche Rastergröße wie im Bereich des Detektors erfordert. Bei Anwendung der Fernfeldnäherung ist zwar der maximale Winkel in dem das Streubild berechnet werden kann von der räumlichen Auflösung der Austrittswelle sowie die Winkelauflösung von der Szenenausdehnung abhängig, dies ist jedoch deutlich praktikabler.
 Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet und ist in \texttt{simulation/multislice.m} implementiert.
 
 \begin{figure}

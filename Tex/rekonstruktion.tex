@@ -48,7 +48,7 @@ Dort ist der Prozess der sogenannten \textit{Wiener-Entfaltung}, deren Prinzip f
 \begin{equation}
 	G=\frac{H^* S}{\left|H\right|^2 S+N}
 \end{equation}
-Für Rauschen, dass nicht mit dem Signal korreliert ist, minimiert eine Faltung mit $G$ die mittlere quadratische Abweichung zum rauschfreien, nicht gefalteten Original - es handelt sich somit im Sinne des mittleren quadratischen Fehlers um die ideale Entfaltung~\cite{castleman1996}. Ist das Rauschen jedoch mit dem Signal korreliert, wie dies z.B. bei Poisson-Rauschen (in Form von Shot-Noise der größte Rauschbeitrag bei realen Streubildern) der Fall ist, so lässt sich eine heuristische Form des Wiener-Filters mit konstantem $N$ anwenden~\cite{he2004}. Hierbei muss bei der Wahl von $N$ ein Kompromiss aus Rauschunterdrückung und Entfaltung gewählt werden.
+Für Rauschen, dass nicht mit dem Signal korreliert ist, minimiert eine Faltung mit $G$ die mittlere quadratische Abweichung zum rauschfreien, nicht gefalteten Original - es handelt sich somit im Sinne des mittleren quadratischen Fehlers um die ideale Entfaltung~\cite{castleman1996}. Ist das Rauschen jedoch mit dem Signal korreliert, wie dies z.B. bei Poisson-Rauschen (in Form von Schrotrauschen der größte Rauschbeitrag bei realen Streubildern) der Fall ist, so lässt sich eine heuristische Form des Wiener-Filters mit konstantem $N$ anwenden~\cite{he2004}. Hierbei muss bei der Wahl von $N$ ein Kompromiss aus Rauschunterdrückung und Entfaltung gewählt werden.
 
 \begin{figure}
 	\centering
@@ -62,7 +62,8 @@ Wäre neben der Amplitude auch die Phase der Fouriertransformation der Austritts
 Da bei $N$ komplexen Datenpunkten im Realraum die Fouriertransformation durch $N$ Amplituden und $N$ Phasen, also $2N$ Variablen dargestellt werden kann, jedoch nur $N$ Variablen (die Fourieramplituden) gemessen werden können, ist das Problem unterbestimmt und nicht eindeutig lösbar. Kann jedoch das zu rekonstruierende Objekt im Realraum auf weniger als $\sfrac{N}{2}$ Bildpunkte beschränkt werden, so wird das Problem lösbar. Die räumliche Beschränkung im Realraum wird durch die Wahl eines sog. Supports umgesetzt, außerhalb dessen der Realraum als leer angenommen wird.  
 Die Problemstellung ist nun im rauschfreien Fall eine Lösung der Gleichung $\rho(x)=\mathscr{F}^{-1}\tilde{\rho}(q)$ unter den Nebenbedingungen, dass i) $\rho$ auf den Support beschränkt ist und ii) die Amplituden von $\tilde{\rho}$ mit den gemessenen Fourieramplituden $A(q)$ übereinstimmen. Eine Lösung wird üblicherweise iterativ gefunden und stellt eine Wiederherstellung der Phase dar -- dieses Vorgehen wird deshalb als iterative Phasenrückgewinnung (IPR) bezeichnet.
 \subsection{Algorithmen}
-Ein zur Lösung der Problemstellung verwendeter Algorithmus, der Error-Reduction Algorithmus (ER) basiert auf dem abwechselnden Erzwingen der Nebenbedingungen, d.h. von einem Startwert $\rho_0$ ausgehend wird zunächst $\tilde{\rho_0}$ bestimmt, die Amplitude im Fourierraum durch die gemessenen Amplituden $A$ ersetzt, in den Realraum transformiert und dort außerhalb des Supports gleich Null gesetzt. Dies wird iterativ wiederholt, wobei sich $\rho_n$ einer Lösung annähert, die beide Nebenbedingungen erfüllt~\cite{fienup1978}.
+Für die Lösung der Problemstellung existieren verschiedene Algorithmen, die im Folgenden vorgestellt werden. Eine detailliertere Beschreibung kann z.B. von Fienup oder Marchesini nachgelesen werden~\cite{marchesini2007,fienup1982}.
+Der Prototyp der verwendeten Algorithmen, der Error-Reduction Algorithmus (ER) basiert auf dem abwechselnden Erzwingen der Nebenbedingungen, d.h. von einem Startwert $\rho_0$ ausgehend wird zunächst $\tilde{\rho_0}$ bestimmt, die Amplitude im Fourierraum durch die gemessenen Amplituden $A$ ersetzt, in den Realraum transformiert und dort außerhalb des Supports gleich Null gesetzt. Dies wird iterativ wiederholt, wobei sich $\rho_n$ einer Lösung annähert, die beide Nebenbedingungen erfüllt~\cite{fienup1978}.
 
 Eine Möglichkeit, sowohl den ER-Algorithmus wie auch die übrigen häufig verwendeten Algorithmen zu formulieren, sodass eine einheitliche Notation sowie graphische Darstellung möglich ist bietet die Notation mittels Projektionsoperatoren, die in \fref{fig:projektoren} skizziert sind:
 Das Erzwingen der Nebenbedingung im Realraum kann als Projektion auf die Lösungsmenge $S$ der Nebenbedingung  (mit dem Komplement $\bar{S}$) durch den Projektor $P_s$ 
@@ -105,7 +106,7 @@ Ein Rauschen im Fourierraum bewirkt, dass keine eindeutige, exakte Lösung exist
 Üblicherweise ist der Bereich auf den das Objekt im Realraum beschränkt ist nicht bekannt, der für die iterativen Rekonstruktionsalgorithmen benötigte Support muss also zunächst bestimmt werden. Hierfür existieren verschiedene Möglichkeiten. Die triviale Methode besteht aus einer Festlegung aus zuvor bekannten Dimensionen des Experiments. Jedoch kann so nur in Ausnahmefällen der Support ausreichend eng gewählt werden, um die Bedingung, dass dieser weniger als $N/2$ Bildpunkte beinhalten muss, zu erfüllen.
 Eine verbreitete Methode, bezeichnet als \textit{Shrink-Wrap} Algorithmus, ist durch eine Anpassung des Supports während der Rekonstruktion gekennzeichnet: Der zunächst geratene (für eine eindeutige Lösung des Problems  zu große) Support wird nach einer festgelegten Anzahl an Rekonstruktionsiterationen auf den Bereich beschränkt, in dem die rekonstruierte Intensität höher als ein festgelegter Schwellwert ist. Dieser aktualisierte Support wird für weitere Iterationen genutzt und erneut aktualisiert~\cite{marchesini2003}.
 
-Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
+Die Nutzung der Holographie bietet eine weitere Methode der Bestimmung des Supports: Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
 In beiden Fällen ist darauf zu achten, dass der Support nicht zu klein gewählt wird, da es sonst keine Lösung unter dieser Nebenbedingung geben kann und somit die Algorithmen keine guten Rekonstruktion liefern, ein größerer als notwendiger Support bereitet hingegen (solange er weniger als $N/2$ Bildpunkte beinhaltet) kein Problem, es kann somit sinnvoll sein, den gewonnenen Support künstlich zu vergrößern~\cite{huang2010}.
 
 \begin{figure}
@@ -135,7 +136,7 @@ Dies führt dazu, dass bei einem punktsymmetrischen Support (oder einem Support,
 Der Shrink-Wrap-Algorithmus zur Supportgewinnung kann das Zwillingsproblem in manchen Fällen umgehen, indem bei einer Dominanz von Bild oder Zwillingsbild in einem der Randbereiche des aktuellen Supports das jeweils andere bei der nächsten Anpassung des Supports unterdrückt wird und so ein nicht-punktsymmetrischer Support gefunden werden kann.
 Die Supportgewinnung mittels Holographie löst dieses Problem vollständig. Je nach Wahl der für den Support verwendeten Kreuzkorrelation und davon abhängiger Platzierung der Referenz im Support wird Bild oder Zwillingsbild rekonstruiert, da Objekt und Referenz zusammen nicht punktsymmetrisch sind.
 
-Für die iterative Phasenrekonstruktion wird häufig mehrfach mit verschiedenen, zufälligen Fourierwinkeln gestartet und ein Mittelwert aus den Rekonstruktionen gebildet (hierbei müssen die einzelnen Rekonstruktionsergebnisse hinsichtlich Translation und Punktspiegelung angepasst werden). Die Methode der Kombination aus FTH zur Supportgewinnung und anschließender IPR beginnt jedoch mit einem definierten Start (der Kreuzkorrelation) und wird nur einmalig durchgeführt. Das Ergebnis der Rekonstruktion jedes einzelnen Streubildes ist somit eindeutig und es handelt sich um ein deterministisches Verfahren.
+Für die iterative Phasenrekonstruktion wird häufig mehrfach mit verschiedenen, zufälligen Fourierphasen gestartet und ein Mittelwert aus den Rekonstruktionen gebildet (hierbei müssen die einzelnen Rekonstruktionsergebnisse hinsichtlich Translation und Punktspiegelung angepasst werden). Die Methode der Kombination aus FTH zur Supportgewinnung und anschließender IPR beginnt jedoch mit einem definierten Start (der Kreuzkorrelation) und wird nur einmalig durchgeführt. Das Ergebnis der Rekonstruktion jedes einzelnen Streubildes ist somit eindeutig und es handelt sich um ein deterministisches Verfahren.
 
 \section{Vergleich in 2D}	
 Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen werden:
@@ -173,7 +174,7 @@ Sowohl die Wiener-Entfaltung als auch die iterative Phasenrekonstruktion mit Sup
 \end{figure}
 
 \subsection{Einfluss des Rauschens}
-Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet (\fref{fig:recon2d-noise}). Dadurch wird das natürliche, sogenannte Shot-Rauschen bei idealer Belichtung simuliert. Hier zeigt sich eine Unempfindlichkeit der Wiener-Entfaltung gegenüber Rauschen -- durch den Rauschterm in der Entfaltung kann der störende Einfluss minimiert und gleichzeitig eine ausreichende Entfaltung bewirkt werden. Insbesondere die iterative Phasenrekonstruktion mit Shrink-Wrap Support leidet unter Rauschen, da kein geeigneter Support gefunden werden kann. Durch die Erzeugung des Supports mittels Holographie kann dieses Problem umgangen werden.
+Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet (\fref{fig:recon2d-noise}). Dadurch wird das natürliche, sogenannte \textit{Schrotrauschen} (engl. \textit{Shot Noise}) bei idealer Belichtung simuliert. Hier zeigt sich eine Unempfindlichkeit der Wiener-Entfaltung gegenüber Rauschen -- durch den Rauschterm in der Entfaltung kann der störende Einfluss minimiert und gleichzeitig eine ausreichende Entfaltung bewirkt werden. Insbesondere die iterative Phasenrekonstruktion mit Shrink-Wrap Support leidet unter Rauschen, da kein geeigneter Support gefunden werden kann. Durch die Erzeugung des Supports mittels Holographie kann dieses Problem umgangen werden.
 \begin{figure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16.png}}
@@ -184,20 +185,20 @@ Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die 
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit14.png}}
 		\caption{viel Rauschen}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion: Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 16\,Bit bzw. 14\,Bit diskretisiert und Poisson-Shot-Rauschen hinzugefügt.}
+	\caption[2D Rekonstruktion: Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 16\,Bit bzw. 14\,Bit diskretisiert und Poisson-Rauschen hinzugefügt.}
 	\label{fig:recon2d-noise}
 \end{figure}
 \subsection{Einfluss der Referenzabschätzung}
-Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die iterative Rekonstruktion muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung lässt sich in \fref{fig:recon2d-ref} betrachten. Schon eine Abweichung des Radius von 5\~\% von der wahren Größe bewirkt ein Scheitern der Entfaltung. Die iterativen Algorithmen sind hingegen unempfindlich gegenüber diesem Einfluss.
+Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die iterative Rekonstruktion muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung lässt sich in \fref{fig:recon2d-ref} betrachten. Schon eine Abweichung des Radius von 5~\% von der wahren Größe bewirkt ein Scheitern der Entfaltung. Die iterativen Algorithmen sind hingegen unempfindlich gegenüber diesem Einfluss.
 \begin{figure}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16error01.png}}
-		\caption{1\~\% Abweichung des Radius}
+		\caption{1~\% Abweichung des Radius}
 	\end{subfigure}
 	\hspace*{\fill}
 	\begin{subfigure}[b]{0.45\textwidth}
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16error05.png}}
-		\caption{5\~\% Abweichung des Radius}	
+		\caption{5~\% Abweichung des Radius}	
 	\end{subfigure}
 	\caption[2D Rekonstruktion: Referenz]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem anderen Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung.}
 	\label{fig:recon2d-ref}
