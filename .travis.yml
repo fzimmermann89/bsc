@@ -1,7 +1,6 @@
+sudo: required
 dist: trusty
-sudo: false
-#sudo: required
-#sudo not required, but without this option dist was beeing ignored and ubuntu precise used.
+#sudo not required, but without this option dist will be ignored and ubuntu precise will be used..
 
 env:
 - DIR=Tex FILE=main
@@ -21,7 +20,7 @@ addons:
       - latex-xcolor
 
 before_script:
-  - wget -qO- https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs920/ghostscript-9.20-linux-x86_64.tgz|tar xvz --strip=1&&mv gs-920-linux_x86_64 gs&&chmod +x gs
+  - wget -qO- http://ftp.icm.edu.pl/packages/ghostscript/binaries/ghostscript-9.15-linux-x86_64.tgz|tar xvz --strip=1&&mv gs-915-linux_x86_64 gs&&chmod +x gs
   - PATH=$PWD:$PATH
 
 script:
@@ -35,7 +34,6 @@ script:
 deploy:
   skip_cleanup: true
   provider: releases
-  overwrite: true
   api_key:
     secure: T89M0704TLSCtQVF1dczBXn0z9vWZn7oBHmLlFjvXoEUzZ/FPwIdQVrwPKHeFCZeqB0oq4m5dzKn7xONAx0Xbn08S/yBqW8a0iD2SZwZAQZbQT0o8Dw63daXNtcuJiRiK4f7GFXkkgPqYBeYevAy5rj2hfu1V2TDrvtd3BG9XDtsQMIiiNjwrnt/ejFgEV1bCpuwVJKH3eeCtR8iqMrclxfKStkXW6ZWiD3zMvGPGQ8vRZAw80i05Tmexi5oAJAw2D+iaJYpk5YdgDon3YswJJW2RPW6gSoHkIUA+V/pqbTk2OQYQXfgl5ZkGssC71ecKgF+gnOfkGIRbQ/yLtZ9O70xfQrFCD4PtxnWy/GxGmNOdP7rK0MkDZIxfXATF7X5CH/L5sV6DsnVnbY7WCNnYPuYTk2UroA9QQmAs9hBnLOyBLxDwDxXDvJh7k8GjVWfgUPS1M375/36zphQqsEt/Kv60/S9CcgyqA1k2TEl/johVebsm4D0CIZvfE0Jbps+OT7eV3FDWd77UU49cLE0BFX1uLynPQVtvN/F4F8x2yeD9jfJcV3dzNN1b5vaoLfy5TmAcapSBDCzaYx9Q91nst4HT8eIHWo5XVX9l5G80c+KFat8usjIqy4hOS8MuGAYAJE6XL/ACYy3RwQaTTtTnC3mzA2Flkx+9jaMFQsNRwg=
   file: $FILE.pdf
