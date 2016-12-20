@@ -18,11 +18,11 @@ und $a_n$,$b_n$ über
 	b_n=\frac{(\eta D_n+n/x)\psi_n-\psi_{n-1}}{(\eta D_n+n/x)\chi_n-\chi_{n-1}}
 \end{align} definiert werden. $D_n$ lässt sich rekursiv über
 \begin{align}
-	D_{N+15}=0 &   & D_{n-1}=\frac{n}{\eta*x}-\frac{1}{D_n+n/(\eta x)} 
-\end{align}
-und $\psi_n$,$\chi_n$ mittels sphärischer Besselfunktionen 1. Art ($j_n$) und 2. Art ($y_n$) als 
+	D_{n-1}=\frac{n}{\eta*x}-\frac{1}{D_n+n/(\eta x)} 
+\end{align} 
+berechnen. Dabei kann ausgenutzt werden, dass bei dieser Berechnung der Fehler strikt monoton fallend ist, d.h. wird $D_{N'}$ für ein hinreichend großes $N'>N$ abgeschätzt, so ist der Fehler von $D_n$ für $n<N$ hinreichend genau. Hierbei hat sich $N'=N+15$ und die Abschätzung $D_{N'}=0$ bewährt. Mittels sphärischer Besselfunktionen 1. Art ($j_n$) und 2. Art ($y_n$) können und $\psi_n$ und $\chi_n$ m als 
 \begin{align}
 	\psi_n=x j_n &   & \chi_n=x j_n+ixy_n 
 \end{align}
-berechnen~\cite{bohren1983,maetzler2002}.
+berechnen werden~\cite{bohren1983,maetzler2002}.
 
