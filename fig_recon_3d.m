@@ -90,8 +90,13 @@ refImagePadded=pad2size(refImageFiltered-refImageFiltered(1),size(scatterImageHo
 % deconvolution
 resultDeconv=wiener(crossPadded,refImagePadded,wienernoise,true);
 
+%% focus input
+cut=@(x)x(end/2-end/4:end/2+end/4+1,end/2-end/4:end/2+end/4+1);
+focus=findFocus(cut(input),settings.dx,settings.wavelength,true);
+
 %% plot results
 finput=maskfilter(input,softmask);
+ffocus=maskfilter(focus,softmask);
 fresultSW=maskfilter(resultSW,softmask);
 fresultHolo=maskfilter(resultHolo,softmask);
 fresultDeconv=maskfilter(resultDeconv,softmask);
@@ -110,7 +115,7 @@ f.Position=[0,0,(2*pixel+delim),(2*pixel+delim)].*scale;
 ax(1)=subplot(2,2,1);
 ax(1).Units='pixels';
 ax(1).Position=[0,pixel+delim,pixel,pixel].*scale;
-compleximagesc(norm(cut(finput),input),cscale);
+compleximagesc(norm(ffocus,input),cscale);
 axis off;
 ax(1).ActivePositionProperty='position';
 
