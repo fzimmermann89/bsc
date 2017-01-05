@@ -1,21 +1,32 @@
-% Plot complex-valued images in color.
+% Plot complex-valued images in color. Modified by FZimmermann for using
+% hsl
 % 
-% The phase is mapped to color/hue (0 degrees to red, 60 degrees to yellow,
-%  120 degrees to green, and so on), and the magnitude is mapped to
-%  brightness.
-%
-% The magnitude range is determined automatically from the range of
-%  magnitudes in the image, or can be specified manually by including an
-%  rlim parameter at the end of the argument list.
-%
 % COMPLEXIMAGESC supports all the syntax supported by imagesc:
 %
-% h = COMPLEXIMAGESC(C)
-% h = COMPLEXIMAGESC(x,y,C)
-% h = COMPLEXIMAGESC(..., rlim)
-% h = COMPLEXIMAGESC(..., 'Property1', Value1, ... 'PropertyN', ValueN)
-%
-% If no image C is provided, COMPLEXIMAGESC is the same as image.
+% Copyright (c) 2014, Peter Caday
+% All rights reserved.
+% 
+% Redistribution and use in source and binary forms, with or without
+% modification, are permitted provided that the following conditions are
+% met:
+% 
+%     * Redistributions of source code must retain the above copyright
+%       notice, this list of conditions and the following disclaimer.
+%     * Redistributions in binary form must reproduce the above copyright
+%       notice, this list of conditions and the following disclaimer in
+%       the documentation and/or other materials provided with the distribution
+% 
+% THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+% AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+% IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+% ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+% LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+% CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+% SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+% INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+% CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+% ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+% POSSIBILITY OF SUCH DAMAGE.
 
 function ih = compleximagesc(varargin)
     rlim = [];
