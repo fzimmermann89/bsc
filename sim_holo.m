@@ -1,3 +1,5 @@
+% Simulation of an exitwave behind a modell "cell" and reference
+
 clear all; close all;
 addpath('./simulation');
 addpath('./helper');
@@ -231,62 +233,3 @@ if output_image
     print(fname,'-dpdf')
     open(fname)
 end
-
-
-
-
-
-%
-% %% figure scatter multislice
-% f=figure('visible','off');
-% scatter=log10(abs(run.scatter.multislice(1+3/8*end:5/8*end,1+3/8*end:5/8*end)));
-% scattermin=min(scatter(:)).*.75;
-% im=imagesc(scatter);
-% colormap parula
-% caxis([scattermin,0]);
-% axis square
-% ax=gca;
-% ax.XAxis.TickValues=pos;
-% ax.XAxis.TickLabels=sprintf('%g°\n',lab);
-% ax.YAxis.TickValues=pos;
-% ax.YAxis.TickLabels=sprintf('%g°\n',lab);
-% ax.XAxis.Label.FontSize=12;
-% ax.YAxis.Label.FontSize=12;
-%
-% save_image(strcat(fnameprefix,'_scatter_multislice',fnamepostfix,'.png'));
-%
-%
-%
-%
-
-
-
-
-
-
-
-
-%  scatter=exitwave2scatter(exitwave);
-%  figure(3);
-%  imagesc(scatter);
-%
-%  figure(4)
-%  imagesc(abs(ift2(scatter)));
-%  %
-%
-% figure(1)
-%   model=scatterObjects.toMatrix({membrane},N/16,dx*16,gpu );
-%
-% clf
-% [px,py,pz] = ind2sub(size(model),find(model));
-% points = [px py pz];
-% DT = DelaunayTri(points);  %# Create the tetrahedral mesh
-% hullFacets = convexHull(DT);       %# Find the facets of the convex hull
-% trisurf(hullFacets,DT.X(:,1),DT.X(:,2),DT.X(:,3),'FaceColor','c','LineStyle','none')
-% l=light('Position',[0 0 -1],'Style','local')
-% l.Position=[130,130,400]
-% mArrow3([N/32,N/32,N/32-N/64],[N/32,N/32,N/32-N/128]);
-% axis square;
-% view(90,90);
-% title(' hull');
-% lighting gouraud
