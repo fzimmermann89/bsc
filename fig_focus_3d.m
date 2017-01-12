@@ -1,3 +1,5 @@
+% Focuses and draws 3d exitwave
+
 clear all;
 close all;
 
@@ -22,7 +24,7 @@ fnameprefix='.\Tex\Images\fig_simholo_v2';
 
 %% focus
 cut=@(x)x(1+end/2-end/4:end/2+end/4,1+end/2-end/4:end/2+end/4);
-focus=gather(findFocus(cut(inputHolo),settings.dx,settings.wavelength,true));
+focus=gather(focusExitwave(cut(inputHolo),settings.dx,settings.wavelength,true));
 
 %% output
 f=figure('visible','off');
