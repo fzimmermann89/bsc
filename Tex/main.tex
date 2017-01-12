@@ -123,22 +123,28 @@ pdfauthor={Felix Frederik Zimmermann}
 %%text über bilder
 \usepackage[percent]{overpic}
 
+\newcommand{\dualimage}[1]{
+	\begin{overpic}#1
+		\put (0,49)  {\bf \small (a)}
+		\put (50,49) {\bf \small (b)}
+	\end{overpic}
+}
 \newcommand{\quadimage}[1]{
 	\begin{overpic}#1
 		\put (0,100)  {\bf \small (a)}
 		\put (50,100) {\bf \small (b)}
-		\put (0,50)   {\bf \small (c)}
-		\put (50,50)  {\bf \small (d)}
+		\put (0,47)   {\bf \small (c)}
+		\put (50,47)  {\bf \small (d)}
 	\end{overpic}
 }
 \newcommand{\heximage}[1]{
 	\begin{overpic}#1
-		\put (0,75)  {\bf \small (a)}
-		\put (50,75) {\bf \small (b)}
-		\put (0,50)   {\bf \small (c)}
-		\put (50,50)  {\bf \small (d)}
-		\put (0,25)   {\bf \small (e)}
-		\put (50,25)  {\bf \small (f)}
+		\put (0,72)  {\bf \small (a)}
+		\put (52,72) {\bf \small (b)}
+		\put (0,47)   {\bf \small (c)}
+		\put (52,47)  {\bf \small (d)}
+		\put (0,22)   {\bf \small (e)}
+		\put (52,22)  {\bf \small (f)}
 	\end{overpic}
 }
 \newcommand{\reconimage}[1]{
@@ -265,10 +271,11 @@ pdfauthor={Felix Frederik Zimmermann}
 		\let\protect\l@section\protect\l@subsection
 	}
 	\makeatother
-\input{anhang_dft}
-\input{anhang_mie}
-\input{anhang_phaseretrieval}
-\input{anhang_code}
+	\input{anhang_dft}
+	\input{anhang_mie}
+	\input{anhang_phaseretrieval}
+	\input{anhang_code}
+	\input{anhang_parameter}
 	\addtocontents{toc}{\endgroup}
 \end{appendices}
 

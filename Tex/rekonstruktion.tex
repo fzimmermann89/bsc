@@ -1,5 +1,5 @@
 \chapter{Rekonstruktion}
-Zur Verwendung von CDI zur Untersuchung von Proben sind aus dem aufgenommenen Streubild Informationen über die Probe zu rekonstruieren. Wie in \fref{chap:fraunhofer} gezeigt entspricht die im Fernfeld aufgenommene Welle der Fouriertransformierten der Austrittswelle. Könnte sowohl Amplitude als auch Phase des Streubildes aufgenommen werden, so ließe sich durch eine einfache Rücktransformation die Austrittswelle rekonstruieren und somit die Informationen über das Objekt gewinnen. Jedoch wird mittels eines Sensors nur die Intensität der Welle aufgezeichnet, die Informationen über die Phase gehen somit verloren. Diese trägt jedoch wie \fref{fig:phaseswap} ersichtlicht einen Großteil der Informationen. Das Problem, aus dieser unvollständigen Messung die Austrittswelle zu rekonstruieren wird als das Phasenproblem bezeichnet. Zur Lösung existiert die Methode der iterativen Phasenrekonstruktion sowie seit kurzem der Ansatz der Freiflug-Holographie.
+Zur Verwendung von CDI zur Untersuchung von Proben sind aus dem aufgenommenen Streubild Informationen über die Probe zu rekonstruieren. Wie in \fref{chap:fraunhofer} gezeigt, entspricht die im Fernfeld aufgenommene Welle der Fouriertransformierten der Austrittswelle. Könnte nun sowohl Amplitude als auch Phase des Streubildes aufgenommen werden, so ließe sich durch eine einfache Rücktransformation die Austrittswelle rekonstruieren und somit die gewünschten Informationen über das Objekt gewinnen. Jedoch wird mittels eines Sensors nur die Intensität der Welle aufgezeichnet, die Informationen über die Phase gehen somit verloren. Diese trägt jedoch wie \fref{fig:phaseswap} ersichtlicht einen Großteil der Informationen. Das Problem, aus dieser unvollständigen Messung die Austrittswelle zu rekonstruieren, wird als das Phasenproblem bezeichnet. Zur Lösung existiert die Methode der iterativen Phasenrekonstruktion sowie seit kurzem der Ansatz der Freiflug-Holographie, die beide im Folgenden betrachtet werden.
 
 \begin{figure}
 	\centering
@@ -107,7 +107,7 @@ Ein Rauschen im Fourierraum bewirkt, dass keine eindeutige, exakte Lösung exist
 Üblicherweise ist der Bereich auf den das Objekt im Realraum beschränkt ist nicht bekannt, der für die iterativen Rekonstruktionsalgorithmen benötigte Support muss also zunächst bestimmt werden. Hierfür existieren verschiedene Möglichkeiten. Die triviale Methode besteht aus einer Festlegung aus zuvor bekannten Dimensionen des Experiments. Jedoch kann so nur in Ausnahmefällen der Support ausreichend eng gewählt werden, um die Bedingung, dass dieser weniger als $N/2$ Bildpunkte beinhalten muss, zu erfüllen.
 Eine verbreitete Methode, bezeichnet als \textit{Shrink-Wrap} Algorithmus, ist durch eine Anpassung des Supports während der Rekonstruktion gekennzeichnet: Der zunächst geratene (für eine eindeutige Lösung des Problems  zu große) Support wird nach einer festgelegten Anzahl an Rekonstruktionsiterationen auf den Bereich beschränkt, in dem die rekonstruierte Intensität höher als ein festgelegter Schwellwert ist. Dieser aktualisierte Support wird für weitere Iterationen genutzt und erneut aktualisiert~\cite{marchesini2003}.
 
-Die Nutzung der Holographie bietet eine weitere Methode der Bestimmung des Supports: Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
+Die Nutzung der Holographie bietet eine weitere Methode der Bestimmung des Supports: Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Hierfür wird nach Anwendung eines Median-Filters zur Rauschunterdrückung ein Schwellwert in Abhängigkeit von Mittelwert und der Standardabweichung der Rekonstruktion festgelegt. So kann nach morphologischem Öffnen und Schließen (zur Entfernung von Rauschen bzw. Löchern) die Kreuz- und Autokorrelation identifiziert werden\footnote{Hierfür wird die Funktion \texttt{holo\_support.m} mit den in XXX angegebenen Parametern verwendet}. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
 In beiden Fällen ist darauf zu achten, dass der Support nicht zu klein gewählt wird, da es sonst keine Lösung unter dieser Nebenbedingung geben kann und somit die Algorithmen keine guten Rekonstruktion liefern, ein größerer als notwendiger Support bereitet hingegen (solange er weniger als $N/2$ Bildpunkte beinhaltet) kein Problem, es kann somit sinnvoll sein, den gewonnenen Support künstlich zu vergrößern~\cite{huang2010}.
 
 \begin{figure}
@@ -146,8 +146,9 @@ Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen wer
 	\item IPR mit Shrink-Wrap Support
 	\item IPR mit FTH Support
 \end{itemize}
-
 Die Rekonstruktionsansätze werden bezüglich Ihrer Empfindlichkeit für Rauschen, durch zentrale Maskierung des Streubildes entstehenden Hochpass und Fehler in der Abschätzung der Referenz untersucht. Dies geschieht zunächst mit rein synthetischen 2D Bildern als Ersatz für Austrittswellen, um die Funktion der drei Ansätze und ihre Limitationen zu überprüfen.
+
+Als Algorithmus der IPR wird bei diesem Vergleich ein Wechsel aus HIO ($\beta=0.9$) und ER verwendet, die genauen Parameter sind in XXX angegeben. Diese Kombination wird aufgrund ihrer großen Verbreitung in der Literatur stellvertretend für IPR betrachtet. Eine Verwendung des RAAR Algorithmus liefert leicht verschiedene, aber in der Grundaussage identische Ergebnisse.
 
 Bei idealen Bedingungen, d.h. ohne Rauschen, ohne zentrale Maskierung und mit präzise bekannter Referenz liefern, wie in \fref{fig:recon2d-perfect} zu erkennen, alle Ansätze ein optisch vom Ausgangsbild nicht zu unterscheidendes Ergebnis.
 
@@ -212,15 +213,26 @@ Zusammenfassend lässt sich aus der zweidimensionalen Untersuchung die Anfällig
 	\caption[2D Rekonstruktion: Referenz]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem anderen Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung.}
 	\label{fig:recon2d-ref}
 \end{figure}
+ \clearpage
 \section{Rekonstruktion einer 3D Austrittswelle}
 Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem dreidimensionalen Objekt eingesetzt werden. In \fref{fig:recon3d} wird die Austrittswelle analog zu den 2D-Bildern betrachtet.
+	
+Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz durchgeführt. Obwohl hierfür von einer vollständig bekannte Referenz ausgegangen wird, leidet die Rekonstruktion deutlich unter deren Irregularität und der Diskretisierung. Die iterative Phasenrekonstruktion leidet sichtbar unter Zwillingsbildern. Dieses Problem kann durch die Kombination von iterativer Phasenrekonstruktion und Holographie umgangen werden. Das Ergebnis dieser Kombination unterscheidet sich optisch kaum von der Austrittswelle direkt hinter dem Objekt.
 
 \begin{figure}
 	\centering
 	\quadimage{[width=.75\textwidth]{images/recon3d-v2.png}}
 	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle in \fref{fig:komplex}. Dargestellt ist jeweils das Ergebnis normiert auf das in a) dargestellte optimale Ergebnis mit der aus \fref{fig:komplex} bekannten Farbskala. In b) ist die Rekonstruktion mittels iterativer Rekonstruktion und Shrink-Wrap, in c) mittels Entfaltung und in d) das Ergebnis nach iterativer Phasenrekonstruktion mit Holographie dargestellt.}
 	\label{fig:recon3d}
-\end{figure}	
-Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz durchgeführt. Obwohl hierfür von einer vollständig bekannte Referenz ausgegangen wird, leidet die Rekonstruktion deutlich unter deren Irregularität und der Diskretisierung. Die iterative Phasenrekonstruktion leidet sichtbar unter Zwillingsbildern. Dieses Problem kann durch die Kombination von iterativer Phasenrekonstruktion und Holographie umgangen werden. Das Ergebnis dieser Kombination unterscheidet sich vom optimalen Ergebnis durch eine Propagation -- durch Rückpropagation der Austrittswelle auf eine virtuelle Fokusebene innerhalb des Objektes kann ein optisch nicht zu unterscheidendes Bild erzeugt werden.
+\end{figure}
 
-Aus der rekonstruierten komplexen Welle lässt sich durch Propagation direkt hinter das Objekt die reale Austrittswelle bestimmen, durch Betrachtung einer Fokusebene innerhalb des Objektes die Schärfe steigern oder der Versuch der Rekonstruktion dreidimensionaler Informationen unternommen werden~\cite{ulmer2015}. 
+Durch eine Anwendung einer Propagation lässt sich die Fokusebene sowohl der idealen wie auch der rekonstruierten Austrittswelle verschieben~\cite{ulmer2015}. Wird hierbei als Schärfekriterium die Varianz genutzt und diese maximiert, so wird eine Ebene innerhalb des Objektes "`fokussiert'. Zu beachten ist, dass hierbei nicht das Wellenfeld an dieser Position berechnet wird, sondern ein in der Realität nicht vorliegendes Bild erzeugt wird, dass jedoch für die optische Beurteilung aufgrund der erhöhten Schärfe besser geeignet ist.  Bei dieser in \fref{fig:recon_focus} dargestellten Fokussierung sind ist die rekonstruierte Austrittswelle optisch kaum vom idealen Ergebnis zu unterscheiden.
+
+\begin{figure}
+	\centering
+	\dualimage{[width=.85\textwidth]{images/recon3d-v2_focus.png}}
+	\caption[Propagation der Austrittswelle]{Durch Anwendung einer Propagation um \SI{-50}{nm} bzw. \SI{30}{nm} lässt sich der Unterschied zwischen idealer Austrittswelle (a) und der durch Kombination von Entfaltung und iterativer Rekonstruktion gewonnene Welle (b) minimieren. Sie unterscheiden sich in diesem Falle optisch kaum.}
+	\label{fig:recon_focus}
+\end{figure}
+
+Somit ist auch für die Rekonstruktion einer komplexen Austrittswelle die Kombination aus Holographie und IPR gut geeignet.
