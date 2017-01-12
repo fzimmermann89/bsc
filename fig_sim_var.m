@@ -1,3 +1,6 @@
+% Draws 2d graphs of error over parameter variation for the different
+% simulation algorithms 
+
 addpath('reconstruction','simulation','helper');
 
 nicenames={'Projektion','Multislice Propagation','Thibaults Multislice','MSFT'};

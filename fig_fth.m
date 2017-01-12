@@ -1,3 +1,5 @@
+% Draws images for FTH illustration showing effect of the reference
+
 addpath('helper');
 input=imread('reconstruction/input/input_klein-tu.png');
 outpath='Tex/images/src/';

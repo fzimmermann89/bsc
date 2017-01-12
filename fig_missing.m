@@ -1,3 +1,5 @@
+% Draws plots for missing data illustration
+
 N=256;
 wm=8;
 ws=80;

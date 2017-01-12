@@ -1,3 +1,4 @@
+% Simulation of sphere
 clear all;
 g=gpuDevice();
 reset(g);

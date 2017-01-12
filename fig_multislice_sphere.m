@@ -1,3 +1,5 @@
+%Draws sphere in slices for illustrating the multislice approach
+
 clear all
 close all
 dz=1/2;

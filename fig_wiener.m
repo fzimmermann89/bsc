@@ -1,3 +1,5 @@
+% Draws graphs for the illustration of deconvolution
+
 clear all
 addpath('helper');
 addpath('reconstruction');

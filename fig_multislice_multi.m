@@ -1,5 +1,7 @@
-clear all;
-close all;
+% Draws slicewise progress of multislice and msft for illustration
+
+% clear all;
+% close all;
 N=256;
 addpath('helper','simulation');
 %all units are in nm
@@ -7,7 +9,7 @@ wavelength=1;
 dx=wavelength*2;
 dz=dx;
 gpu=parallel.gpu.GPUDevice.isAvailable;
-path='Tex\images\';
+path='Tex\images2\';
 
 %% objects
 objects=cell(1);
@@ -17,10 +19,10 @@ objects{1}.delta=1e-2;
 objects{1}.radius=100;
 
 %% msft
-figure(9);clf;hold on;
+figure(8);clf;hold on;
 fname=strcat(path,'slice_msft.png');
 exitwaveMSFT=msft2(wavelength,objects,N,dx,dz,gpu,[],@debug_msft);
-caxis([1,12]);
+caxis([.5,8]);
 axis equal
 axis off
 view(80,-30)

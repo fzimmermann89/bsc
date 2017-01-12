@@ -1,3 +1,5 @@
+% Draws profiles of simulation results and deviation from mie
+
 %% settings
 clear all;
 fname='.\Tex\Images\fig_sim_profile.pdf';
