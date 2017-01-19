@@ -30,12 +30,12 @@
 
 function ih = compleximagesc(varargin)
     rlim = [];
-    switch nargin,
-        case 0,
+    switch nargin
+        case 0
             C_index = [];
-        case 1,
+        case 1
             C_index = 1;
-        otherwise,
+        otherwise
             % Determine if last input is a radius limit
             % Taken from imagesc ver. 5.11.4.5, R2012b.
             if isequal(size(varargin{end}),[1 2])
@@ -44,7 +44,7 @@ function ih = compleximagesc(varargin)
                     str(n) = ischar(varargin{n});
                 end
                 str = find(str);
-                if isempty(str) || (rem(length(varargin)-min(str),2)==0),
+                if isempty(str) || (rem(length(varargin)-min(str),2)==0)
                     rlim = varargin{end};
                     varargin(end) = []; % Remove last cell
                 else
@@ -57,7 +57,7 @@ function ih = compleximagesc(varargin)
             % Determine whether we have x,y arguments
             if length(varargin) > 2 && ...
                     ~ischar(varargin{1}) && ...
-                    ~ischar(varargin{2}),
+                    ~ischar(varargin{2})
                 % Yes, C is argument 3
                 C_index = 3;
             elseif ~ischar(varargin{1}) 
@@ -69,7 +69,7 @@ function ih = compleximagesc(varargin)
             end
     end
 
-    if ~isempty(C_index),
+    if ~isempty(C_index)
         % Convert complex C to RGB image.
         C = varargin{C_index};
         
@@ -77,10 +77,9 @@ function ih = compleximagesc(varargin)
 
         % Convert complex image C to argument and magnitude.
         arg = angle(C);
-        
         r = abs(C);
 
-        if isempty(rlim),
+        if isempty(rlim)
             % Find magnitude limits if not specified.
             rmin = min(r(isfinite(r)));
             rmax = max(r(isfinite(r)));
@@ -90,10 +89,10 @@ function ih = compleximagesc(varargin)
         
         % Argument becomes hue
         h = mod(arg/(2*pi), 1);
-        h=mod(h-median(h(:))+pi/2,1);
+        h = mod(h-median(h(:))+pi/2,1);
         % Saturation is always 1
         s = ones(size(h));
-        % Magnitude becomes l
+        % Magnitude becomes level
         l = (r - rmin) / (rmax - rmin);
         % Clamp value between 0 and 1 outside the magnitude range.
         l(r >= rmax) = 1.;
@@ -104,9 +103,6 @@ function ih = compleximagesc(varargin)
         varargin{C_index} = hsl2rgb(hsl);
     end
     
-    hh = image(varargin{:});
+    ih = image(varargin{:});
     
-    if nargout > 0,
-        ih = hh;
-    end
 end

@@ -67,7 +67,7 @@ function waveR=multislice(wavelength,objects,N,dx,deltaz,gpu,filter,debug)
         waveF=waveF.*propagatorSingleStep;
         
         if nargin>7&&isa(debug,'function_handle')
-            debug(ft2(waveF)/(dx^2),z);
+            debug(ft2(waveF)/(dx^2),z,dnSlice);
         end
     end
     waveR=ft2(waveF)/(dx^2);

@@ -82,7 +82,7 @@ function out=msft2(wavelength,objects,N,dx,deltaz,gpu,sim_absorption,debug)
             
         end
         if nargin>7&&isa(debug,'function_handle')
-            debug(out,z);
+            debug(out,z,dnSlice);
         end
     end
     
