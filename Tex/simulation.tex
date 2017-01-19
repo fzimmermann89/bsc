@@ -62,7 +62,7 @@ Somit kann $q_z=q_\parallel$ eingesetzt werden und es gilt für die Welle im Fer
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/slice_msft.pdf}
-	\caption[Illustration MSFT]{Illustration zur MSFT: Das Streubild in der untersten Reihe wird berechnet, indem schichtweise der jeweilige Beitrag der Bornschen Näherung phasenkorrekt aufaddiert wird (dargestellt von links nach rechts). Das Bild unten rechts außen ist somit das berechnete Streubild des Objektes und das Ergebnis des Algorithmus.}
+	\caption[Illustration MSFT]{Illustration zur MSFT: Das Streubild wird berechnet, indem schichtweise der jeweilige Beitrag der Bornschen Näherung phasenkorrekt aufaddiert wird. Die Position der dargestellten Schichten ist auf der z-Achse markiert. Das Bild unten rechts außen ist somit das berechnete Streubild des Objektes und das Ergebnis des Algorithmus.}
 	\label{fig:slice_msft}
 \end{figure} 
 
@@ -101,7 +101,7 @@ Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet un
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/slice_multislice.pdf}
-	\caption[Illustration Multislice Propagation]{Illustration zur Multislice Propagation: Bei Strahlrichtung von links nach rechts ist von exemplarischen Schichten der Betrag der komplexen Wellenfront als Helligkeit, die Phase als Farbton dargestellt. Rechts außen ist die Austrittswelle hinter der Szene und damit das Ergebnis des Algorithmus.}
+	\caption[Illustration Multislice Propagation]{Illustration zur Multislice Propagation: Bei Strahlrichtung von links nach rechts ist von exemplarischen (auf der z-Achse markierten) Schichten  der Betrag der komplexen Wellenfront als Helligkeit, die Phase als Farbton dargestellt. Rechts außen ist die Austrittswelle hinter der Szene und damit das Ergebnis des Algorithmus.}
 	\label{fig:slice_multislice}
 \end{figure} 
 	
@@ -167,9 +167,9 @@ Besonders bemerkbar ist dieser Bearbeitungsschritt bei Pixeln die genau in den I
 	\label{fig:average}
 \end{figure}% 
 
-Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf die Mie-Streubilder normiert. Hierzu wird ein Skalierungsfaktor gesucht, der die mittlere Abweichung der simulierten Streubilder vom jeweiligen Mie-Streubild innerhalb der ersten 10° minimiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streubildern betrachtet. Für die \textit{Multislice Propagation} ist in \fref{fig:exitscatter} für einen konkreten Parametersatz exemplarisch Austrittswelle und Streubild dargestellt, die relative Abweichung von Mie ist für diesen Parametersatz in \fref{fig:relerror} für alle Simulationsansätze dargestellt. Aus den rotationssymmetrischen Streubildern können nun Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden um einen besseren Überblick zu erhalten (\fref{fig:profil}). Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund dessen steilen Verlaufs scharfe, nur 1-2 Datenpunkte umfassende, Maxima annimmt. Um die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu quantifizieren, wird deshalb der Median des relativen Fehlers bis 20° Streuwinkel genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie dort als valide anzusehen. In \fref{fig:variation} wird deutlich, dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung bis $10^{-4}$ (die viele Materialien bei \SI{1}{nm} Wellenlänge aufweisen~\cite{henke}) sowohl \textit{Multislice Propagation} und \textit{Thibaults Multislice} als auch \textit{MSFT} valide Ergebnisse liefern -- der mediane Fehler überschreitet 5~\% nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels \textit{MSFT} berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Absorption und Mehrfachstreuung in Vorwärtsrichtung, die bei \textit{MSFT} im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Formulierung und der \textit{Multislice Propagation} kann zu einem gewissen Anteil durch die hier verwendete numerische Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der Genauigkeit und dem Einfluss von Rundungsfehlern.
+Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf die Mie-Streubilder normiert. Hierzu wird ein Skalierungsfaktor gesucht, der die mittlere Abweichung der simulierten Streubilder vom jeweiligen Mie-Streubild innerhalb der ersten 10° minimiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streubildern betrachtet. Für die \textit{Multislice Propagation} ist in \fref{fig:exitscatter} für einen konkreten Parametersatz exemplarisch Austrittswelle und Streubild dargestellt, die relative Abweichung von Mie ist für diesen Parametersatz in \fref{fig:relerror} für alle Simulationsansätze dargestellt. 
 
-\begin{figure} %exitwave und scatter
+\begin{figure}[htb!] %exitwave und scatter
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
@@ -188,6 +188,7 @@ Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf
 	\label{fig:exitscatter}
 \end{figure}%
 
+Aus den rotationssymmetrischen Streubildern können nun Radialprofile der Intensität sowie des relativen Fehlers bestimmt werden um einen besseren Überblick zu erhalten (\fref{fig:profil}). Es ist zu erkennen, dass der relative Fehler in den Datenpunkten, in denen das Mie-Profil ein Minimum hat, aufgrund dessen steilen Verlaufs scharfe, nur 1-2 Datenpunkte umfassende, Maxima annimmt. Um die Güte einer Simulation bei einem bestimmten Radius und Stoffeigenschaften zu quantifizieren, wird deshalb der Median des relativen Fehlers bis 20° Streuwinkel genutzt. So ist es möglich, für die unterschiedlichen Simulationsalgorithmen Bereiche zu bestimmen, in denen sie ausreichend mit der Mie-Theorie übereinstimmen, um sie dort als valide anzusehen. In \fref{fig:variation} wird deutlich, dass bei Werten von $\delta$ bzw. $\beta$ in der Größenordnung bis $10^{-4}$ (die viele Materialien bei \SI{1}{nm} Wellenlänge aufweisen~\cite{henke}) sowohl \textit{Multislice Propagation} und \textit{Thibaults Multislice} als auch \textit{MSFT} valide Ergebnisse liefern -- der mediane Fehler überschreitet 5~\% nicht. Bei größeren Abweichungen der Brechzahl von der Vakuumbrechzahl steigt der mediane Fehler des mittels \textit{MSFT} berechneten Streubildes deutlich an, insbesondere bei großen Radien. Bei diesen kommt es zu deutlich mehr Absorption und Mehrfachstreuung in Vorwärtsrichtung, die bei \textit{MSFT} im Gegensatz zu den beiden anderen Multislice Varianten vollständig ignoriert wird. Der Unterschied zwischen Thibaults Formulierung und der \textit{Multislice Propagation} kann zu einem gewissen Anteil durch die hier verwendete numerische Implementierung von Thibaults Algorithmus begründet sein. Hier besteht weiteres Optimierungspotential bezüglich der Genauigkeit und dem Einfluss von Rundungsfehlern.
 
 \begin{figure} %rel error
 	\centering
