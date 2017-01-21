@@ -217,21 +217,21 @@ Zusammenfassend lässt sich aus der zweidimensionalen Untersuchung die Anfällig
 \section{Rekonstruktion einer 3D Austrittswelle}
 Die für zweidimensionale Bilder getesteten Ansätze können nun zur Rekonstruktion der Austrittswelle hinter einem dreidimensionalen Objekt eingesetzt werden. In \fref{fig:recon3d} wird die Austrittswelle analog zu den 2D-Bildern betrachtet.
 	
-Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz durchgeführt. Obwohl hierfür von einer vollständig bekannte Referenz ausgegangen wird, leidet die Rekonstruktion deutlich unter deren Irregularität und der Diskretisierung. Die IPR leidet hingegen sichtbar unter Zwillingsbildern. Dieses Problem kann durch die Kombination von IPR und Holographie umgangen werden. Das Ergebnis dieser Kombination unterscheidet sich optisch kaum von der Austrittswelle direkt hinter dem Objekt.
+Die Entfaltung wurde mit einer simulierten Austrittswelle der Referenz durchgeführt. Obwohl hierfür von einer vollständig bekannten Referenz ausgegangen wird, leidet die Rekonstruktion deutlich unter der komplexen Struktur und der Diskretisierung der Referenz. Die IPR leidet hingegen sichtbar unter Zwillingsbildern. Dieses Problem kann durch die Kombination von IPR und Holographie umgangen werden. Das Ergebnis dieser Kombination unterscheidet sich optisch kaum von der Austrittswelle direkt hinter dem Objekt.
 
 \begin{figure}
 	\centering
 	\quadimage{[width=.75\textwidth]{images/recon3d-v2.png}}
-	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion der Austrittswelle in \fref{fig:komplex}. Dargestellt ist jeweils das Ergebnis normiert auf das in a) dargestellte optimale Ergebnis mit der aus \fref{fig:komplex} bekannten Farbskala. In b) ist die Rekonstruktion mittels IPR mit Shrink-Wrap, in c) mittels Entfaltung und in d) das Ergebnis nach der Kombination aus IPR und Holographie dargestellt.}
+	\caption[Rekonstruktion einer Austrittswelle]{Die Rekonstruktion einer komplexen Austrittswelle: Dargestellt ist jeweils das Ergebnis der Rekonstruktion der Austrittswelle aus \fref{fig:komplex} (mit der von dort bekannten Farbskala) normiert auf das optimale Ergebnis (a). Die Rekonstruktion mittels IPR mit Shrink-Wrap (b) leidet unter Zwillingsbildern, die Kombination aus IPR und Holographie (d) ist optisch gut und der reinen Entfaltung (c) überlegen.}
 	\label{fig:recon3d}
 \end{figure}
 
-Durch eine Anwendung einer Propagation lässt sich die Fokusebene sowohl der idealen wie auch der rekonstruierten Austrittswelle verschieben~\cite{ulmer2015}. Wird hierbei als Schärfekriterium die Varianz genutzt und diese maximiert, so wird eine Ebene innerhalb des Objektes "`fokussiert'. Zu beachten ist, dass hierbei nicht das Wellenfeld an dieser Position berechnet wird, sondern ein in der Realität nicht vorliegendes Bild erzeugt wird, dass jedoch für die optische Beurteilung aufgrund der erhöhten Schärfe besser geeignet ist.  Bei dieser in \fref{fig:recon_focus} dargestellten Fokussierung sind ist die rekonstruierte Austrittswelle optisch kaum vom idealen Ergebnis zu unterscheiden.
+Durch eine Anwendung einer Propagation lässt sich die Fokusebene sowohl der idealen wie auch der rekonstruierten Austrittswelle verschieben~\cite{ulmer2015}. Wird hierbei als Schärfekriterium die Varianz genutzt und diese maximiert, so wird eine Ebene innerhalb des Objektes "`fokussiert"'. Zu beachten ist, dass hierbei nicht das Wellenfeld an dieser Position berechnet wird, sondern ein in der Realität nicht vorliegendes Bild erzeugt wird, dass jedoch für die optische Beurteilung aufgrund der erhöhten Schärfe besser geeignet ist.  Bei dieser in \fref{fig:recon_focus} dargestellten Fokussierung ist die rekonstruierte Austrittswelle optisch kaum vom idealen Ergebnis zu unterscheiden.
 
 \begin{figure}
 	\centering
 	\dualimage{[width=.85\textwidth]{images/recon3d-v2_focus.png}}
-	\caption[Propagation der Austrittswelle]{Durch Anwendung einer Propagation um \SI{-50}{nm} bzw. \SI{30}{nm} lässt sich der Unterschied zwischen idealer Austrittswelle (a) und der durch Kombination von Entfaltung und iterativer Rekonstruktion gewonnene Welle (b) minimieren. Sie unterscheiden sich in diesem Falle optisch kaum.}
+	\caption[Propagation der Austrittswelle]{Durch Anwendung einer Propagation um \SI{-50}{nm}  lässt die Schärfe der idealen Austrittswelle (a) bzw. einer Propagation um \SI{30}{nm} der durch Kombination von Entfaltung und iterativer Rekonstruktion gewonnene Welle (b) maximieren. Sie unterscheiden sich in diesem Falle optisch kaum.}
 	\label{fig:recon_focus}
 \end{figure}
 

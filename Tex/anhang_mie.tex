@@ -1,6 +1,6 @@
 \chapter{Mie-Streuung}
 \label{app:mie}
-Für die Intensität beim Streuwinkel $\theta$ gilt in der Mie-Theorie für die Streuung unpolarisierter Strahlung in Abhängigkeit von der Brechzahl $\eta$ der Sphäre (Radius $r$) und dem Parameter $x=r/k$:
+Für die Intensität bei einem Streuwinkel $\theta$ gilt in der Mie-Theorie für die Streuung unpolarisierter Strahlung in Abhängigkeit von der Brechzahl $\eta$ der Sphäre (Radius $r$) und dem Parameter $x=r/k$:
 \begin{equation}
 	I(\theta)\propto\frac{1}{2}\left(\abs{S_1}^2+\abs{S_2}^2\right)
 \end{equation} 
@@ -10,7 +10,7 @@ mit den Reihen
 \end{align}
 wobei die Reihen bei der numerischen Auswertung nach $N$ Termen abgebrochen werden. Eine hinreichende Konvergenz liegt meist bei $N\approx2+x+4\sqrt[3]{x}$ Termen vor.  $\pi_n$ und $\tau_n$ können mit $\pi_1=1$ und  $\pi_2=3\cos{\theta}$ rekursiv über die Relationen
 \begin{align}
-	  & \pi_n=\frac{2n-1}{n-1}\cos{\theta}\pi_{n-1}-\frac{n}{n-1}\pi_{n-2} &   & \tau_n=n\cos{\theta}\pi_n-(n+1)\pi_{n-1} \\
+	  & \pi_n=\frac{2n-1}{n-1}\cos{\theta}\pi_{n-1}-\frac{n}{n-1}\pi_{n-2} &   & \tau_n=n\cos{\theta}\pi_n-(n+1)\pi_{n-1}
 \end{align}
 und $a_n$,$b_n$ über 
 \begin{align}
@@ -24,5 +24,5 @@ berechnen. Dabei kann ausgenutzt werden, dass bei dieser Berechnung der Fehler s
 \begin{align}
 	\psi_n=x j_n &   & \chi_n=x j_n+ixy_n 
 \end{align}
-berechnen werden~\cite{bohren1983,maetzler2002}.
+berechnet werden~\cite{bohren1983,maetzler2002}.
 
