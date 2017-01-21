@@ -3,7 +3,7 @@
 Die grundlegende Iteration der Rekonstruktionsalgorithmen ER, HIO und RAAR in ihrer Projektionsschreibweise sind in \Fref{tab:ipr} dargestellt \cite{fienup1978,luke2004,marchesini2007}.
 
 Es wird an dieser Stelle davon ausgegangen, dass die Realraumbeschränkungen nur aus der Beschränkung auf den Support bestehen, d.h. dass der Realraum-Projektor $P_s$ geschrieben werden kann als 
-\begin{align*}
+\begin{align}
 	P_s\rho (x)=\begin{cases}
 	\rho (x)  &\text{für } x\in S\\
 	\mathbb{0}  &\text{für }x\notin S
@@ -12,11 +12,11 @@ Es wird an dieser Stelle davon ausgegangen, dass die Realraumbeschränkungen nur
 	\mathbb{0} &\text{für } x\in S\\
 	\rho (x)   &\text{für }x\notin S
 	\end{cases}
-\end{align*}
+\end{align}
 und somit als reiner Support-Projektor aufgefasst werden kann. In der Literatur wird unter der Bezeichnung $P_s$ teilweise auch ein Projektor bezeichnet der außerdem weitere Forderungen im Realraum beinhaltet. Im Rahmen dieser Arbeit ist nur für den ER-Algorithmus zusätzlich eine Form implementiert, deren Realraum-Projektor eine reele, positive Lösung erzwingt, da das mittelfristige Ziel die Rekonstruktion der Austrittswelle inklusive der relativen Phasenbeziehungen darstellt.
  
 Für den HIO-Algorithmus gilt mit jenem $P_s$ 
-\begin{align*}
+\begin{align}
 	\rho_{n+1}=\left.
 	\begin{cases}	
 	P_m\rho_n                               & \text{für } x\in S    \\
@@ -24,7 +24,7 @@ Für den HIO-Algorithmus gilt mit jenem $P_s$
 	\end{cases}	
 	\right\}=\left[P_sP_m+\left(P_{\bar{s}}-\beta P_{\bar{s}} P_m\right)\right]\rho_n
 	\,.
-\end{align*}
+\end{align}
 Diese Form erleichtert das Verständnis von \fref{fig:recon}. Zum weiteren Verständnis ist in \fref{fig:raar} der Prozess für den RAAR-Algorithmus schrittweise dargestellt.
 	
 Die implementierte Form des RAAR Algorithmus basiert auf folgender Umformung:
@@ -38,7 +38,8 @@ Die implementierte Form des RAAR Algorithmus basiert auf folgender Umformung:
 	\begin{cases}
 	P_m                           & \text{für } r\in S                                                        \\
 	(1-2\beta)P_m+\beta\mathbb{1} & \text{für } r\notin S                                                     
-	\end{cases}\\
+	\end{cases}
+	\numberthis
 \end{align*}
 \begin{table}
 	\centering
@@ -57,6 +58,12 @@ Die implementierte Form des RAAR Algorithmus basiert auf folgender Umformung:
 	\caption[IPR-Algorithmen]{Iterationsschritte der implementierten IPR-Algorithmen in Projektorenschreibweise.}
 	\label{tab:ipr}
 \end{table}	
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{images/hio.pdf}
+	\caption[HIO]{Detaillierte Darstellung zu \fref{fig:recon} für HIO, von links nach rechts: 1. Die Anwendung des Modulus-Projektors gefolgt vom Support-Projektor liefert $P_sP_m\rho$. 2. Die Anwendung des Modulus-Projektors gefolgt vom Projektor auf das Komplement des Supports liefert  $P_{\bar{s}}P_m\rho$, dies wird um den Parameter $\beta$ verkürzt um $\beta P_{\bar{s}}P_m\rho$ zu bilden. 3. Die Differenz aus diesem der Projektion von $\rho_n$ auf das Komplement des Supports ist $P_{\bar{s}}-\beta P_{\bar{s}}P_m$. 4. Die Kombination dieser Differenz mit $P_m\rho$ liefert das Ergebnis der Iteration und somit den Startpunkt für die nächste Iteration ($\rho_{n+1}$).}
+	\label{fig:raar}
+\end{figure} 	
 
 \begin{figure}
 	\centering
