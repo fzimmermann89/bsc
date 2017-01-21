@@ -4,9 +4,9 @@
 %%
 %% The original source files were:
 %%
-%% merlin.mbs  (with options: `head,exlang,seq-no,nm-init,ed-au,nmlm,x3,m3,mcite,mct-3,mct-x3,atit-u,jwdpg,jwdvol,num-xser,edpar,bkedcap,xedn,german,xedn,ger-phd,and-xcom,etal-xc,revdata,eprint,url,url-blk,nfss,,{}')
-%% german.mbs  (with options: `exlang,seq-no,nm-init,ed-au,nmlm,x3,m3,mcite,mct-3,mct-x3,atit-u,jwdpg,jwdvol,num-xser,edpar,bkedcap,xedn,german,xedn,ger-phd,and-xcom,etal-xc,revdata,eprint,url,url-blk,nfss,,{}')
-%% merlin.mbs  (with options: `tail,exlang,seq-no,nm-init,ed-au,nmlm,x3,m3,mcite,mct-3,mct-x3,atit-u,jwdpg,jwdvol,num-xser,edpar,bkedcap,xedn,german,xedn,ger-phd,and-xcom,etal-xc,revdata,eprint,url,url-blk,nfss,,{}')
+%% merlin.mbs  (with options: `head,exlang,seq-no,nm-init,ed-au,nmlm,x3,m3,mcite,mct-3,mct-x3,atit-u,volp-com,jwdpg,jwdvol,num-xser,edpar,bkedcap,xedn,german,xedn,ger-phd,and-xcom,etal-xc,revdata,eprint,url,url-blk,nfss,,{}')
+%% german.mbs  (with options: `exlang,seq-no,nm-init,ed-au,nmlm,x3,m3,mcite,mct-3,mct-x3,atit-u,volp-com,jwdpg,jwdvol,num-xser,edpar,bkedcap,xedn,german,xedn,ger-phd,and-xcom,etal-xc,revdata,eprint,url,url-blk,nfss,,{}')
+%% merlin.mbs  (with options: `tail,exlang,seq-no,nm-init,ed-au,nmlm,x3,m3,mcite,mct-3,mct-x3,atit-u,volp-com,jwdpg,jwdvol,num-xser,edpar,bkedcap,xedn,german,xedn,ger-phd,and-xcom,etal-xc,revdata,eprint,url,url-blk,nfss,,{}')
 %% ----------------------------------------
 %% ***  ***
 %% 
@@ -267,7 +267,7 @@ FUNCTION {bbl.techrep}
 { "{Technischer Bericht}" }
 
 FUNCTION {bbl.mthesis}
-{ "Masterarbeit" }
+{ "Diplomarbeit" }
 
 FUNCTION {bbl.phdthesis}
 { "Doktorarbeit" }
@@ -667,7 +667,7 @@ FUNCTION {format.journal.pages}
     { swap$ duplicate$ empty$
         { pop$ pop$ format.pages }
         {
-          ":" *
+          ", " *
           swap$
           n.dashify
           pages multi.page.check
@@ -688,7 +688,7 @@ FUNCTION {format.journal.eid}
   duplicate$ empty$ 'pop$
     { swap$ duplicate$ empty$ 'skip$
       {
-          ":" *
+          ", " *
       }
       if$
       swap$ *

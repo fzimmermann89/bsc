@@ -372,7 +372,7 @@ End of customized bst file
     %: (def) Volume with colon as vol(num):ppp
 % volp-sp,%: Volume with colon and space as vol(num): ppp
 % volp-semi,%: Volume with semi-colon as vol(num); ppp
-% volp-com,%: Volume with comma as vol(num), ppp
+ volp-com,%: Volume with comma as vol(num), ppp
 % volp-blk,%: Volume with blank as vol(num) ppp
 %------\ans=*(==)-------
 %>>VOLUME PUNCTUATION:
