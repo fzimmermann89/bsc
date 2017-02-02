@@ -130,14 +130,16 @@ classdef plan<handle
                                     if ~exist('f','var');f=figure();end
                                     figure(f);
                                 end
-                                subplot(2,2,1);imagesc(real(curImage));title('real cur. Image');colorbar;axis square;
-                                subplot(2,2,2);imagesc(imag(curImage));title('imag cur. Image');colorbar;axis square;
-                                subplot(2,2,3);imagesc(abs(curSupport)); title('support');axis square;
+                                subplot(2,2,1);imagesc(real(curImage)); title('real cur. Image'); colorbar; axis square;
+                                subplot(2,2,2);imagesc(imag(curImage)); title('imag cur. Image'); colorbar; axis square;
+                                subplot(2,2,3);imagesc(abs(curSupport)); title('support'); axis square;
                                 if calcErrors
                                     subplot(2,2,4); semilogy(curErrors); title('error');
                                 else
                                     subplot(2,2,4);imagesc(abs(curImage)); title('abs cur Image');axis square;
                                 end;
+                                
+                                colormap(flipud(colormap(gray)));
                                 drawnow;
                                 
                             case 'writeFrame'
