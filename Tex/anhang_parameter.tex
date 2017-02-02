@@ -1,1 +1,38 @@
-\chapter{Verwendete Parameter}
+\chapter{Technische Details zu den Rekonstruktionen}
+Die genauen für die Rekonstruktionen in \fref{chap:rekonstruktion} genutzten Abfolgen sowie die verwendeten Parameter werden die im Folgenden detailliert.
+
+Bei den zweidimensionalen Rekonstruktionen wird zur Erzeugung des initialen Supports und der Startwerte für die IPR mit Shrinkwrap die Funktion \texttt{generic\_support} genutzt, deren Ablaufschema in \fref{fig:flow_genericsupport} dargestellt ist. Die eigentliche Rekonstruktion läuft nach dem in \fref{fig:flow_sw} dargestellten Schema ab.
+Für die Erzeugung des Support und der Startwerte mittels Holographie wird die Funktion \texttt{holo\_support} genutzt, deren Ablaufschema in \fref{fig:flow_holosupport} dargestellt ist. Die genutzten Parameter sind in XXX aufgelistet. Die anschließende Rekonstruktion läuft nach dem in \fref{fig:flow_holo} dargestellten Schema ab, dass bis auf die erste Phase identisch zu zum Ablauf bei Nutzung von Shrinkrwap ist.
+Die in \texttt{holo\_support} identifizierte Kreuzkorrelation wird außerdem für die Wiener-Entfaltung genutzt.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.85\textwidth]{images/flow_genericsupport.pdf}
+
+		\caption[Initialer Support für Shrinkwrap]{Initialer Support und Startwerte für Shrinkwrap: Ausgehend vom Betrag der inversen Fouriertransformation des Streubilds wird nach einer Offset-Korrektur mit einem Schwellwert vom 0,5\% der maximalen Intensität maskiert. Nach Dilatation um \SI{3}{Pixel} und einem Auffüllen von Löchern wird der Begrenzungsrahmen der Autokorrelation bestimmt. Der Support ist der in beiden Richtungen halbierte Begrenzungsrahmen. Die Startwerte sind die inverse Fouriertransformation der Kombination aus dem Streubild sowie zufälligen Phasen.}
+	\label{fig:flow_genericsupport}
+\end{figure} 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\textwidth]{images/flow_sw.pdf}
+	\caption[Ablauf IPR mit Shrinkwrap]{Ablauf IPR mit Shrinkwrap: Ausgehend vom initialen Support sowie dem Startbild wird zunächst eine Shrinkwrap Phase durchgeführt. Diese besteht aus 50 Iterationen von jeweils 200 Iterationen HIO, 5 Iterationen ER und einem Shrinkwrap Schritt (mit den Parametern \textit{$\sigma$} und \textit{threshold}). Anschließend folgt die Rekonstruktion mit 50 Iterationen von jeweils 200 Iterationen HIO und einer Iteration ER. Die letzte Phase besteht aus einer Optimierung durch 100 Iterationen ER.}
+	\label{fig:flow_sw}
+\end{figure} 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.65\textwidth]{images/flow_holosupport.pdf}
+	\caption[Support mittels Holographie]{Erzeugung des Supports und der Startwerte mittels Holographie: Ausgehend vom Betrag der inversen Fouriertransformation des Streubilds wird zunächst ein Medianfilter (mit dem Radius \textit{radFilter}) zur Rauschunterdrückung angewendet. Das Ergebnis wird mittels eines Schwellwertes, angegeben als Vielfache (\textit{threshold}) der Standardabweichung über dem Mittelwert, maskiert. Durch morphologisches Öffnen mit einem Radius von \SI{2}{Pixeln} werden einzelne Pixel eliminiert. Das Ergebnis wird morphologisch geschlossen (mit dem Radius \textit{radClose}) und die Löcher in der Maske ausgefüllt. Anschließend findet zur Supportvergrößerung eine Dilatation (mit dem Radius \textit{radDilate}) statt. Die größte zusammenhängende Fläche in dem Ergebnis ist die Maske der Autokorrelation, die zweitgrößte die Maske einer der Kreuzkorrelationen. Die Maske der Kreuzkorrelation wird mit der Referenzabschätzung zum Support, die der Kreuzkorrelation zugrunde liegenden Werte zu den Startwerten kombiniert. Die Kreuzkorrelation wird darüber hinaus für die Entfaltung genutzt.}
+	\label{fig:flow_holosupport}
+\end{figure} 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.8\textwidth]{images/flow_holo.pdf}
+	\caption[Ablauf IPR mit Holographie]{Ablauf IPR mit Shrinkwrap: Ausgehend vom mittels Holographie erstellten Support sowie dem Startbild erfolgt die Rekonstruktion mit 50 Iterationen von jeweils 200 Iterationen HIO und einer Iteration ER, gefolgt von einer Optimierung durch 100 Iterationen ER.}
+	\label{fig:flow_holo}
+\end{figure} 
+
+
+Die dreidimensionalen Rekonstruktionen laufen ähnlich zu den zweidimensionalen ab, es werden jedoch die in XXX dargestellten Parameter genutzt. 
