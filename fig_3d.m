@@ -80,7 +80,7 @@ clear support start
 
 %% wiener deconvolution
 %get cross correlation
-[~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',0.5,'radDilate',30,'radClose',30);
+[~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',1,'radDilate',50);
 
 %and filtered (guessed) Reference
 refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
@@ -114,7 +114,7 @@ f.Position=[0,0,(2*pixel+delim),(2*pixel+delim)].*scale;
 ax(1)=subplot(2,2,1);
 ax(1).Units='pixels';
 ax(1).Position=[0,pixel+delim,pixel,pixel].*scale;
-compleximagesc(norm(finput,cut(input)),cscale);
+compleximagesc(norm(cut(finput),input),cscale);
 axis off;
 ax(1).ActivePositionProperty='position';
 
@@ -291,3 +291,57 @@ ax(2).ActivePositionProperty='position';
 subcaption='focus';
 outputfilename=sprintf('%s/recon3d-%s_%s.png',outpath,caption,subcaption);
 print(outputfilename,'-dpng','-r150');
+
+%% different wiener noise parameters
+
+%prepare
+[~,~,cross]=holoSupport(scatterImageHolo,softmask,refImage,'threshold',1,'radDilate',50);
+refImageFiltered=maskfilter(refImage,softmask,2.^nextpow2(size(refImage)*4));
+crossPadded=pad2size(cross-cross(1),size(scatterImageHolo));
+refImagePadded=pad2size(refImageFiltered-refImageFiltered(1),size(scatterImageHolo));
+
+lwienernoise=[1e2,1e4,1e6];
+for n=numel(lwienernoise):-1:1
+deconv{n}=gather(wiener(crossPadded,refImagePadded,lwienernoise(n),true));
+fdeconv{n}=gather(maskfilter(deconv{n},softmask));
+end
+
+move=@(x)moveAndMirror(finput,x,true);
+cut=@(x)x(1+end/2-end/8:end/2+end/8,1+end/2-end/8:end/2+end/8);
+norm=@(x,y)x.*(max(y(:)-y(1))./max(x(:)))+y(1);
+
+cscale=[min(abs(input(:))),max(abs(input(:)))];
+
+f=figure();
+delim=32;
+pixel=512;
+scale=1/2;
+f.Position=[0,0,(3*pixel+2*delim),pixel].*scale;
+
+ax(1)=subplot(1,3,1);
+ax(1).Units='pixels';
+ax(1).Position=[0,0,pixel,pixel].*scale;
+compleximagesc(norm(cut(move(fdeconv{1})),input),cscale);
+axis off;
+ax(1).ActivePositionProperty='position';
+
+ax(2)=subplot(1,3,2);
+ax(2).Units='pixels';
+ax(2).Position=[pixel+delim,0,pixel,pixel].*scale;
+compleximagesc(norm(cut(move(fdeconv{2})),input),cscale);
+axis off;
+ax(2).ActivePositionProperty='position';
+
+ax(3)=subplot(1,3,3);
+ax(3).Units='pixels';
+ax(3).Position=[2*(pixel+delim),0,pixel,pixel].*scale;
+compleximagesc(norm(cut(move(fdeconv{3})),input),cscale);
+axis off;
+ax(2).ActivePositionProperty='position';
+
+
+subcaption='wienernoise';
+outputfilename=sprintf('%s/recon3d-%s_%s.png',outpath,caption,subcaption);
+print(outputfilename,'-dpng','-r150');
+clear cross crossPadded refImagePadded 
+
