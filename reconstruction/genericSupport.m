@@ -12,7 +12,7 @@ function [start,support]=genericSupport(scatterImage,softmask,relThreshold,halfb
     if nargin>3&&halfbox
         st = regionprops(uint16(support), 'BoundingBox' );
         support=zeros(size(scatterImage));
-        support(end/2-st.BoundingBox(4)/4:end/2+st.BoundingBox(4)/4,end/2-st.BoundingBox(3)/4:end/2+st.BoundingBox(3)/4)=1;
+        support(floor(end/2-st.BoundingBox(4)/4):ceil(end/2+st.BoundingBox(4)/4),floor(end/2-st.BoundingBox(3)/4):ceil(end/2+st.BoundingBox(3)/4))=1;
     end
     
     randPhase=2*pi*rand(size(scatterImage));
