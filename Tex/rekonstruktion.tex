@@ -1,4 +1,5 @@
 \chapter{Rekonstruktion}
+\label{chap:rekonstruktion}
 Zur Verwendung von CDI zur Untersuchung von Proben sind aus dem aufgenommenen Streubild Informationen über die Probe zu rekonstruieren. Wie in \fref{chap:fraunhofer} gezeigt, entspricht die im Fernfeld aufgenommene Welle der Fouriertransformierten der Austrittswelle. Könnte nun sowohl Amplitude als auch Phase des Streubildes aufgenommen werden, so ließe sich durch eine einfache Rücktransformation die Austrittswelle rekonstruieren und somit die gewünschten Informationen über das Objekt gewinnen. Jedoch wird mittels eines Sensors nur die Intensität der Welle aufgezeichnet, die Informationen über die Phase gehen somit verloren. Diese trägt jedoch wie \fref{fig:phaseswap} ersichtlicht einen Großteil der Informationen. Das Problem, aus dieser unvollständigen Messung die Austrittswelle zu rekonstruieren, wird als das Phasenproblem bezeichnet. Zur Lösung existiert seit kurzem der Ansatz der Freiflug-Holographie sowie die etablierte Methode der iterativen Phasenrekonstruktion, die im Folgenden zunächst vorgestellt werden.
 
 \begin{figure}
@@ -106,7 +107,7 @@ Ein Rauschen im Fourierraum bewirkt, dass keine eindeutige exakte Lösung existi
 Üblicherweise ist der Bereich auf den das Objekt im Realraum beschränkt ist nicht bekannt, der für die iterativen Rekonstruktionsalgorithmen benötigte Support muss also zunächst bestimmt werden. Hierfür existieren verschiedene Möglichkeiten. Die triviale Methode besteht aus einer Festlegung aus zuvor bekannten Dimensionen des Experiments. Jedoch kann so nur in Ausnahmefällen der Support ausreichend eng gewählt werden, um die Bedingung, dass dieser weniger als $N/2$ Bildpunkte beinhalten muss, zu erfüllen.
 Eine verbreitete Methode, bezeichnet als \textit{Shrink-Wrap} Algorithmus, ist durch eine Anpassung des Supports während der Rekonstruktion gekennzeichnet: Der zunächst geratene (für eine eindeutige Lösung des Problems  zu große) Support wird nach einer festgelegten Anzahl an Rekonstruktionsiterationen auf den Bereich beschränkt, in dem die rekonstruierte Intensität höher als ein festgelegter Schwellwert ist. Dieser aktualisierte Support wird für weitere Iterationen genutzt und erneut aktualisiert~\cite{marchesini2003}.
 
-Die Nutzung der Holographie bietet eine weitere Methode der Bestimmung des Supports: Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Hierfür wird nach Anwendung eines Median-Filters zur Rauschunterdrückung ein Schwellwert in Abhängigkeit von Mittelwert und der Standardabweichung der Rekonstruktion festgelegt. So kann nach morphologischem Öffnen und Schließen (zur Entfernung von Rauschen bzw. Löchern) die Kreuz- und Autokorrelation identifiziert werden\footnote{Hierfür wird die Funktion \texttt{holo\_support.m} mit den in XXX angegebenen Parametern verwendet.}. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
+Die Nutzung der Holographie bietet eine weitere Methode der Bestimmung des Supports: Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Hierfür wird nach Anwendung eines Median-Filters zur Rauschunterdrückung ein Schwellwert in Abhängigkeit von Mittelwert und der Standardabweichung der Rekonstruktion festgelegt. So kann nach morphologischem Öffnen und Schließen (zur Entfernung von Rauschen bzw. Löchern) die Kreuz- und Autokorrelation identifiziert werden\footnote{Details siehe \fref{app:param}.}. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
 In beiden Fällen ist darauf zu achten, dass der Support nicht zu klein gewählt wird, da es sonst keine Lösung unter dieser Nebenbedingung geben kann und somit die Algorithmen keine guten Rekonstruktion liefern, ein größerer als notwendiger Support bereitet hingegen (solange er weniger als $N/2$ Bildpunkte beinhaltet) kein Problem, es kann somit sinnvoll sein, den gewonnenen Support künstlich zu vergrößern~\cite{huang2010}.
 
 \begin{figure}
@@ -147,14 +148,14 @@ Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen wer
 \end{itemize}
 Die Rekonstruktionsansätze werden bezüglich Ihrer Empfindlichkeit gegenüber Rauschen, gegenüber den durch zentrale Maskierung des Streubildes entstehenden Hochpass und gegenüber einem Fehler in der Abschätzung der Referenz untersucht. Dies geschieht zunächst mit rein synthetischen 2D Bildern als Ersatz für Austrittswellen, um die Funktion der drei Ansätze und ihre Limitationen zu überprüfen.
 
-Als Algorithmus der IPR wird bei diesem Vergleich ein Wechsel aus HIO ($\beta=0.9$) und ER verwendet, die genauen Parameter sind in XXX angegeben. Diese Kombination wird aufgrund ihrer großen Verbreitung in der Literatur stellvertretend für die IPR betrachtet\footnote{Die Verwendung von RAAR liefert keine signifikant abweichende Aussagen und wird daher im folgenden nicht dargestellt.}. 
+Als Algorithmus der IPR wird bei diesem Vergleich ein Wechsel aus HIO ($\beta=0.9$) und ER verwendet, die genauen Parameter und Abläufe sind in \fref{app:param} angegeben. Diese Kombination wird aufgrund ihrer großen Verbreitung in der Literatur stellvertretend für die IPR betrachtet\footnote{Die Verwendung von RAAR liefert keine signifikant abweichende Aussagen und wird daher im folgenden nicht dargestellt.}. 
 
 Bei idealen Bedingungen, d.h. ohne Rauschen, ohne zentrale Maskierung und mit präzise bekannter Referenz liefern, wie in \fref{fig:recon2d-perfect} zu erkennen, alle Ansätze ein optisch vom Ausgangsbild nicht zu unterscheidendes Ergebnis.
 
 \begin{figure}
 	\centering
 	\reconimage{[width=.48\textwidth]{images/recon2d-perfect.png}}
-	\caption[2D Rekonstruktion: Ideal]{Rekonstruktion mit Zentralstrahl ohne Rauschen: Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei späteren Bildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch IPR mit Shrink-Wrap, unten links die durch Entfaltung aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels IPR mit FTH als Start und Support. Alle Rekonstruktionen liefern optisch perfekte Ergebnisse.}
+	\caption[2D Rekonstruktion: Ideal]{Rekonstruktion mit Zentralstrahl ohne Rauschen: Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei späteren Bildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch IPR mit Shrink-Wrap, unten links die durch Entfaltung (mit dem Parameter $N=1$) aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels IPR mit FTH als Start und Support. Alle Rekonstruktionen liefern optisch perfekte Ergebnisse. }
 	\label{fig:recon2d-perfect}
 \end{figure}
 
@@ -177,7 +178,7 @@ Sowohl die Wiener-Entfaltung als auch die IPR mit Support aus der Holographie er
 		\reconimage{[width=\textwidth]{images/recon2d-mask64.png}}
 		\caption{große Maske}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion: Beamstop]{Einfluss einer zentralen Maskierung des Streubildes mit Radius 16 Pixel bzw. 64 Pixel von 2048 Pixeln auf die Rekonstruktionen (gleiche Anordnung wie in \fref{fig:recon2d-perfect}). Die Entfaltung erweist sich als am unempfindlichsten, die IPR als am empfindlichsten.}
+	\caption[2D Rekonstruktion: Beamstop]{Einfluss einer zentralen Maskierung des Streubildes mit Radius 16 Pixel bzw. 64 Pixel von 2048 Pixeln auf die Rekonstruktionen (gleiche Anordnung wie in \fref{fig:recon2d-perfect}). Die Entfaltung ($N=1$) erweist sich als am unempfindlichsten, die IPR als am empfindlichsten.}
 	\label{fig:recon2d-mask}
 \end{figure}
 
@@ -193,7 +194,7 @@ Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die 
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit14.png}}
 		\caption{viel Rauschen}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion: Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 16\,Bit bzw. 14\,Bit diskretisiert und Poisson-Rauschen hinzugefügt. Die Entfaltung erweist sich deutlich als am unempfindlichsten, die IPR als am empfindlichsten.}
+	\caption[2D Rekonstruktion: Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 16\,Bit bzw. 14\,Bit diskretisiert und Poisson-Rauschen hinzugefügt. Die Entfaltung ($N=\num{1e3} \text{ bzw. }\num{3e3}$) erweist sich deutlich als am unempfindlichsten, die IPR als am empfindlichsten.}
 	\label{fig:recon2d-noise}
 \end{figure}
 \subsection{Einfluss der Referenzabschätzung}
@@ -210,7 +211,7 @@ Zusammenfassend lässt sich aus der zweidimensionalen Untersuchung die Anfällig
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16error05.png}}
 		\caption{5~\% Abweichung des Radius}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion: Referenz]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem anderen Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung.}
+	\caption[2D Rekonstruktion: Referenz]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem anderen Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung ($N=\num{2e3} \text{ bzw. }\num{2e4}$).}
 	\label{fig:recon2d-ref}
 \end{figure}
  \clearpage
