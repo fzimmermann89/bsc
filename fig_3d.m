@@ -37,17 +37,17 @@ end
 
 %Plan:
 planHolo=recon.plan();
-for n=1:20
+for n=1:50
     planHolo.addStep('hio',200);
     planHolo.addStep('er',1);
 end
 planHolo.addStep('show');
-planHolo.addStep('er',50);
+planHolo.addStep('er',100);
 planHolo.addStep('show');
 
 %Run
 [resultHolo]=planHolo.run(scatterImageHolo,support,start,mask);
-
+clear support start
 
 %% use IPR with Shrinkwrap
 %support and start
@@ -55,18 +55,17 @@ planHolo.addStep('show');
 
 %Plan
 planSW=recon.plan();
-for n=1:20
-    planSW.addStep('hio',50);
+for n=1:50
+    planSW.addStep('hio',200);
     planSW.addStep('er',5);
     planSW.addStep('sw',1,{10,0.05});
 end
-planSW.addStep('loosen',1,{10})
 planSW.addStep('show')
-for n=1:20
+for n=1:50
     planSW.addStep('hio',200);
     planSW.addStep('er',1);
 end
-planSW.addStep('er',50);
+planSW.addStep('er',100);
 planSW.addStep('show');
 
 %Run multiple times and average
@@ -77,7 +76,7 @@ planSW.addStep('show');
 %         end
 %         [result,images,errors]=planSW.runAvg(scatterImage,support,multistart,mask,ceil(multi/2));
 [resultSW]=planSW.run(scatterImage,support,start,mask);
-
+clear support start
 
 %% wiener deconvolution
 %get cross correlation
@@ -90,14 +89,13 @@ refImagePadded=pad2size(refImageFiltered-refImageFiltered(1),size(scatterImageHo
 
 % deconvolution
 resultDeconv=wiener(crossPadded,refImagePadded,wienernoise,true);
-
+clear cross crossPadded refImagePadded 
 %% focus input
 cut=@(x)x(1+end/2-end/8:end/2+end/8,1+end/2-end/8:end/2+end/8);
-input=focusExitwave(cut(input),settings.dx,settings.wavelength,true,focus_distance); %directly behind object
+input=focusExitwave(input,settings.dx,settings.wavelength,true,focus_distance); %directly behind object
 
 %% plot reconstruction results
 finput=maskfilter(input,softmask);
-ffocus=maskfilter(focus,softmask);
 fresultSW=maskfilter(resultSW,softmask);
 fresultHolo=maskfilter(resultHolo,softmask);
 fresultDeconv=maskfilter(resultDeconv,softmask);
@@ -116,7 +114,7 @@ f.Position=[0,0,(2*pixel+delim),(2*pixel+delim)].*scale;
 ax(1)=subplot(2,2,1);
 ax(1).Units='pixels';
 ax(1).Position=[0,pixel+delim,pixel,pixel].*scale;
-compleximagesc(norm(finuput,input),cscale);
+compleximagesc(norm(finput,cut(input)),cscale);
 axis off;
 ax(1).ActivePositionProperty='position';
 
@@ -150,12 +148,19 @@ f.Resize='off';
 outputfilename=sprintf('%s/recon3d-%s.png',outpath,caption);
 print(outputfilename,'-dpng','-r150');
 
+%% move results to main memory
+finput=gather(finput);
+fresultSW=gather(fresultSW);
+fresultHolo=gather(fresultHolo);
+fresultDeconv=gather(fresultDeconv);
+resultSW=gather(resultSW);
+resultHolo=gather(resultHolo);
+resultDeconv=gather(resultDeconv);
 %% plot exitwave
 f=figure('visible','off');
-r=abs(input);
 rmin=0;
-rmax = max(r(isfinite(r)));
-im=compleximagesc(input,[rmin,rmax]);
+rmax = gather(max(abs(input(isfinite(input)))));
+compleximagesc(input,[rmin,rmax]);
 axis square
 ax=gca;
 ax.XTick=[];
@@ -223,8 +228,8 @@ print(outputfilename,'-dpdf')
 %% plot scatter image
 f=figure('visible','off');
 scatter=(abs(scatterImageHolo(1+1/4*end:3/4*end,1+1/4*end:3/4*end)));
-scatter=log10(scatter./max(scatter(:)));
-scattermin=gather(min(scatter(isfinite(scatter))).*.6);
+scatter=gather(log10(scatter./max(scatter(:))));
+scattermin=min(scatter(isfinite(scatter))).*.6;
 im=imagesc(scatter);
 colormap parula
 caxis([scattermin,0]);
@@ -256,10 +261,10 @@ move=@(x)moveAndMirror(finput,x,true);
 cut=@(x)x(1+end/2-end/8:end/2+end/8,1+end/2-end/8:end/2+end/8);
 norm=@(x,y)x.*(max(y(:)-y(1))./max(x(:)))+y(1);
 
-focusinput=focusExitwave(input,settings.dx,settings.wavelength,true,-50);
-focusrecon=focusExitwave(norm(cut(move(resultHolo)),focusinput),settings.dx,settings.wavelength,true,30);
-ffocusinput=maskfilter(focusinput,softmask);
-ffocusrecon=maskfilter(focusrecon,softmask);
+focusinput=gather(focusExitwave(cut(input),settings.dx,settings.wavelength,true,-50));
+focusrecon=gather(focusExitwave(norm(cut(move(resultHolo)),focusinput),settings.dx,settings.wavelength,true,30));
+ffocusinput=gather(maskfilter(focusinput,softmask));
+ffocusrecon=gather(maskfilter(focusrecon,softmask));
 
 cscale=[min(abs(input(:))),max(abs(input(:)))];
 
