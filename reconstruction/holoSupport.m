@@ -14,8 +14,8 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
     
     parser = inputParser;
     parser.addOptional('radFilter',15,@isscalar);
-    parser.addOptional('radClose',40,@isscalar)
-    parser.addOptional('radDilate',15,@isscalar)
+    parser.addOptional('radClose',30,@isscalar)
+    parser.addOptional('radDilate',10,@isscalar)
     parser.addOptional('threshold',.5,@isscalar)
     parser.addOptional('filterRef',false,@islogical)
     parser.addOptional('debug',false,@islogical)
