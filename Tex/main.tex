@@ -230,30 +230,24 @@ pdfauthor={Felix Frederik Zimmermann}
 
 
 %%%%%%%%%%%   INHALTSVERZEICHNIS   %%%%%%%%%%%
-%\renewcommand{\baselinestretch}{0.75}\normalsize
-%\renewcommand{\baselinestretch}{1.0}\normalsize
 \begingroup
-\let\cleardoublepage\relax
 \setlength{\parskip}{2mm}
-
 \setcounter{tocdepth}{5}
 \tableofcontents
-\clearpage
+\cleardoublepage
+\endgroup
 
 %%%%%%%%   ABBILDUNGSVERZEICHNIS   %%%%%%%%%%%
+\begingroup
+\let\cleardoublepage\relax
 \setlength{\parskip}{1mm}
 \listoffigures
+\clearpage
 
-%\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
-\vspace{1cm}
 %%%%%%%%%   TABELLENVERZEICHNIS   %%%%%%%%%%%%
-
 
 \listoftables
 \endgroup
-%\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
-
-
 \cleardoublepage
 
 
@@ -291,8 +285,8 @@ pdfauthor={Felix Frederik Zimmermann}
 	\input{anhang_dft}
 	\input{anhang_mie}
 	\input{anhang_phaseretrieval}
-	\input{anhang_code}
 	\input{anhang_parameter}
+	\input{anhang_code}
 	\addtocontents{toc}{\endgroup}
 \end{appendices}
 
