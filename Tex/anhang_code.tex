@@ -70,12 +70,12 @@ Es folgt ein Überblick über die wichtigsten im Rahmen dieser Arbeit erstellten
 
 	
 \begin{description}[style=nextline]
+
+	\item [\texttt{\textit{[start,support]}=SupportGeneric\textit{(scatterImage)}}]
+	Erzeugt aus einem aufgenommen Streubild \textit{scatterImage} mit der weichgezeichneten Maske \textit{softmask} den Support aus der Autokorrelation und ein zufälliges Startbild. Der Schwellwert wird als \textit{relThreshold} in Vielfachen des Maximums wird als festgelegt. Ist optional \textit{halfbox} wahr, so wird stat der Autokorrelation deren halbierte Begrenzungsrahmen als Support zurückgegeben. Der Ablauf der Funktion ist in \fref{fig:flow_genericsupport} dargestellt.
 		
-	\item [\texttt{\textit{[]}=SupportGeneric\textit{()}}]
-	Erzeugt aus einem aufgenommen Streubild den Support und das Startbild
-		
-	\item [\texttt{\textit{[]}=SupportHolo\textit{()}}]
-	Erzeugt aus einem mit Holographie aufgenommen Streubild den Support und das Startbild. Nutzt CUDA um auf der Grafikkarte zu rechnen.
+	\item [\texttt{\textit{[start,support,crossImage]}=SupportHolo\textit{(scatterImage,softmask,refImage)}}]
+	Erzeugt aus einem mit Holographie aufgenommen Streubild \textit{scatterImage} den Support und das Startbild. Die verwendete weichgezeichnete Maske sowie eine Abschätzung der verwendeten Referenz werden als \textit{softmask} bzw. \textit{refImage} übergeben. Der Ablauf sowie die Bedeutung der optionalen Parameter \textit{radFilter} (Default: 15), \textit{radClose} (Default: 30), \textit{radDilate} (Default: 10) und \textit{threshold} (Default: 0.5) ist in \fref{fig:flow_holosupport} dargestellt. Nutzt (sofern verfügbar) CUDA um auf der Grafikkarte zu rechnen.
 		
 	\item [\texttt{recon.Plan}] Klasse für iterative Phasenrekonstruktion. 
 	\begin{description}[style=nextline]
@@ -83,10 +83,10 @@ Es folgt ein Überblick über die wichtigsten im Rahmen dieser Arbeit erstellten
 		Schritt zur Rekonstruktion hinzufügen. Unterstützte Schritte:
 		\begin{description}
 			\item[\texttt{er, errp, hio, raar}] ER bzw ER mit postiv-realer Einschränkung
-			\item[\texttt{hio, raar}] HIO bzw. RAAR. Parameter: $\beta$
-			\item[\texttt{sw}] Shrinkwrap Suppotverfeinerung
-			\item[\texttt{loosen}] Support erweitern. Parameter: Radius Gaussfilter, Schwellenwert
-			\item[\texttt{untwin}] Fienups Ansatz zur Lösung des Zwillingsproblems duchführen
+			\item[\texttt{hio, raar}] HIO bzw. RAAR. Parameter: $\beta$ (Default: 0.9)
+			\item[\texttt{sw}] Shrinkwrap Supportverfeinerung. Parameter: Radius Gaussfilter (Default: 4 Pixel), Schwellenwert (Default: 0.05)
+			\item[\texttt{loosen}] Support erweitern. Parameter: Radius
+			\item[\texttt{untwin}] Fienups Ansatz zur Lösung des Zwillingsproblems durchführen
 			\item[\texttt{noise}] Rauschen zum Realraum Bild hinzufügen
 			\item[\texttt{show}] Aktuellen Stand anzeigen
 			\item[\texttt{writeFrame}] Aktuelles Realraumbild in animierte GIF schreiben. Parameter: Dateiname
