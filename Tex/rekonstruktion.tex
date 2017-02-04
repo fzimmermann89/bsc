@@ -154,7 +154,7 @@ Bei idealen Bedingungen, d.h. ohne Rauschen, ohne zentrale Maskierung und mit pr
 
 \begin{figure}
 	\centering
-	\reconimage{[width=.48\textwidth]{images/recon2d-perfect.png}}
+	\reconimage{[width=.48\textwidth]{images/recon2d-mask0bit0error0.png}}
 	\caption[2D Rekonstruktion: Ideal]{Rekonstruktion mit Zentralstrahl ohne Rauschen: Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei späteren Bildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch IPR mit Shrink-Wrap, unten links die durch Entfaltung (mit dem Parameter $N=1$) aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels IPR mit FTH als Start und Support. Alle Rekonstruktionen liefern optisch perfekte Ergebnisse. }
 	\label{fig:recon2d-perfect}
 \end{figure}
@@ -170,12 +170,12 @@ Bei der Aufnahme von Streubildern in Experimenten wird aufgrund der großen Inte
 Sowohl die Wiener-Entfaltung als auch die IPR mit Support aus der Holographie erzeugen optisch ideale Rekonstruktionen, die Erzeugung des Supports mittels Shrink-Wrap ist stärker beeinflusst, liefert aber ebenfalls gute Ergebnisse in Abwesenheit von Rauschen.
 \begin{figure}
 	\begin{subfigure}[b]{0.48\textwidth}
-		\reconimage{[width=\textwidth]{images/recon2d-mask16.png}}
+		\reconimage{[width=\textwidth]{images/recon2d-mask16bit0error0.png}}
 		\caption{kleine Maske}
 	\end{subfigure}
 	\hspace*{\fill}
 	\begin{subfigure}[b]{0.48\textwidth}
-		\reconimage{[width=\textwidth]{images/recon2d-mask64.png}}
+		\reconimage{[width=\textwidth]{images/recon2d-mask64bit0error0.png}}
 		\caption{große Maske}	
 	\end{subfigure}
 	\caption[2D Rekonstruktion: Beamstop]{Einfluss einer zentralen Maskierung des Streubildes mit Radius 16 Pixel bzw. 64 Pixel von 2048 Pixeln auf die Rekonstruktionen (gleiche Anordnung wie in \fref{fig:recon2d-perfect}). Die Entfaltung ($N=1$) erweist sich als am unempfindlichsten, die IPR als am empfindlichsten.}
@@ -186,12 +186,12 @@ Sowohl die Wiener-Entfaltung als auch die IPR mit Support aus der Holographie er
 Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet (\fref{fig:recon2d-noise}). Dadurch wird das natürliche Schrotrauschen bei idealer Belichtung simuliert. Hier zeigt sich eine Unempfindlichkeit der Wiener-Entfaltung gegenüber Rauschen -- durch den Rauschterm in der Entfaltung kann der störende Einfluss minimiert und gleichzeitig eine ausreichende Entfaltung bewirkt werden. Insbesondere die IPR mit Shrink-Wrap Support leidet unter Rauschen, da kein geeigneter Support gefunden werden kann. Durch die Erzeugung des Supports mittels Holographie kann dieses Problem umgangen werden.
 \begin{figure}
 	\begin{subfigure}[b]{0.45\textwidth}
-		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16.png}}
+		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16error0.png}}
 		\caption{wenig Rauschen}
 	\end{subfigure}
 	\hspace*{\fill}
 	\begin{subfigure}[b]{0.45\textwidth}
-		\reconimage{[width=\textwidth]{images/recon2d-mask16bit14.png}}
+		\reconimage{[width=\textwidth]{images/recon2d-mask16bit14error0.png}}
 		\caption{viel Rauschen}	
 	\end{subfigure}
 	\caption[2D Rekonstruktion: Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 16\,Bit bzw. 14\,Bit diskretisiert und Poisson-Rauschen hinzugefügt. Die Entfaltung ($N=\num{1e3} \text{ bzw. }\num{3e3}$) erweist sich deutlich als am unempfindlichsten, die IPR als am empfindlichsten.}
