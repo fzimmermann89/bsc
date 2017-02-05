@@ -160,16 +160,16 @@ Zur Verifizierung der vorgestellten Simulationsalgorithmen und deren numerische 
 Da ein realer Detektor nicht die Intensitäten bei präzise definierten Winkelpunkten misst, sondern innerhalb eines Areals, ist es zweckmäßig, die simulierte Detektorfläche in quadratische Areale (\textit{Pixel}) zu unterteilen und die Intensität in jedem dieser Areale als gewichtetes Mittel zwischen in dem Areal liegenden Punkten zu betrachten.
 Hierbei werden (wie in \fref{fig:average} dargestellt) an den Rändern zwischen zwei Arealen liegende Berechnungspunkte je zur Hälfte in beiden Arealen, in der Ecke zwischen vier Arealen liegende Berechnungspunkte je zu einem Viertel in den vier Arealen berücksichtigt.
 Besonders bemerkbar ist dieser Bearbeitungsschritt bei Pixeln die genau in den Intensitätsminima liegen: Ohne die gewichtete Mittlung würde der gesamten Fläche zwischen den Pixeln die Intensität des Minimums zugewiesen werden, auch wenn dessen Breite extrem schmal ist, werden zusätzliche Pixel berechnet und anschließend gewichtet gemittelt, ergibt sich eine korrektere Wiedergabe des tatsächlichen Intensitätsverlaufs. Dies wird sowohl für die mit den verschiedenen Algorithmen simulierten Streubildern als auch für die Mie-Streubilder durchgeführt und einspricht einer einfachen Form des \textit{Antialiasings}, das den Einfluss der diskreten Berechnung verringert.
-\begin{figure} %mittelwert
+\begin{figure}[b] %mittelwert
 	\centering
 	\includegraphics[width=0.9\textwidth]{images/average.pdf}
 	\caption[Gewichteter Mittelwert]{Die Verwendung von Überabtastung und gewichteten Mittelwertes bei den Streubildern: Um die Intensität im links rot umrandeten Bereich zu bestimmen, wird die Intensität an den schwarzen Punkten berechnet und ein gewichteter Mittelwert gebildet. Dazu wird die Intensität der vier Randwerte zur Hälfte, die der vier Eckpixel zu einem Viertel in dem umrandeten Bereich mitberücksichtigt. Der Effekt gegenüber einer simplen Berechnung des zentralen Pixels zeigt sich rechts: Wird die Intensität bei einem schwarz dargestellten wahren Intensitätsverlauf nur an den roten Punkten bestimmt, dominiert das Minimum den Intensitätsverlauf. Eine geringere Abweichung ergibt sich bei Berechnung auch an den blauen Punkten und anschließender Bildung des gewichteten Mittelwerts (grün).}
 	\label{fig:average}
 \end{figure}% 
 
-Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf die Mie-Streubilder normiert. Hierzu wird ein Skalierungsfaktor gesucht, der die mittlere Abweichung der simulierten Streubilder vom jeweiligen Mie-Streubild innerhalb der ersten 10° minimiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streubildern betrachtet. Für die \textit{Multislice Propagation} ist in \fref{fig:exitscatter} für einen konkreten Parametersatz exemplarisch Austrittswelle und Streubild dargestellt, die relative Abweichung von Mie ist für diesen Parametersatz in \fref{fig:relerror} für alle Simulationsansätze dargestellt. 
+Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf die Mie-Streubilder normiert. Hierzu wird ein Skalierungsfaktor gesucht, der die mittlere Abweichung der simulierten Streubilder vom jeweiligen Mie-Streu"-bild innerhalb der ersten 10° minimiert. Zur Quantifizierung des Fehlers der simulierten Streubilder wird die relative Abweichung von den Mie-Streu"-bildern betrachtet. Für die \textit{Multislice Propagation} ist in \fref{fig:exitscatter} für einen konkreten Parametersatz exemplarisch Austrittswelle und Streubild dargestellt, die relative Abweichung von Mie ist für diesen Parametersatz in \fref{fig:relerror} für alle Simulationsansätze dargestellt. 
 
-\begin{figure}[htb!] %exitwave und scatter
+\begin{figure} %exitwave und scatter
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}

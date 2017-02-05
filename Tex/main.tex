@@ -35,14 +35,7 @@
 \usepackage[printwatermark=false]{xwatermark}
 \newwatermark[allpages,textcolor=gray!70,angle=0,xpos=68,ypos=-135,fontsize=14pt,fontfamily=phv]{Entwurf\ -\ \the\day.\the\month.\the\year}
 
-\usepackage[bookmarksdepth=subsection]{hyperref} %pdf-Inhaltsverzeichnis und pdf-Links
-\hypersetup{
-pdfborder={0 0 0}, 
-bookmarksnumbered=true,
-pdftitle={Bachelorarbeit},
-pdfauthor={Felix Frederik Zimmermann}
-}
-
+%multirow in tabellen
 \usepackage{multirow}
 
 %%prüfe nach nicht verwendeten bib einträgen
@@ -50,25 +43,6 @@ pdfauthor={Felix Frederik Zimmermann}
 
 \usepackage{tocvsec2}
 \settocdepth{section}
-
-\setlength{\parindent}{0mm}
-
-\usepackage{titlesec}
-
-\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
-\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
-\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
-\titleformat{\chapter}[display]   
-{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{10pt}{\Huge}   
-\titlespacing*{\chapter}{0pt}{-50pt}{20pt}
-
-
-%\newlength{\figwi}
-%\setlength{\figwi}{130mm}
-%\newlength{\fighi}
-%\setlength{\fighi}{100mm}
-%\newlength{\txtwi}
-%\setlength{\txtwi}{145mm}
 
 
 %Appendices -> Anhang
@@ -90,6 +64,19 @@ pdfauthor={Felix Frederik Zimmermann}
 %%\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
 %\makeatother
 
+%abstände
+\usepackage{titlesec}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titleformat{\chapter}[display]   
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{10pt}{\Huge}   
+\titlespacing*{\chapter}{0pt}{-50pt}{20pt}
+
+\setlength{\parindent}{0mm}
+
+
+
 %kleiner abstände bei captions
 \setlength{\abovecaptionskip}{10pt plus 3pt minus 2pt}
 \captionsetup[subfigure]{aboveskip=1pt}
@@ -99,7 +86,6 @@ pdfauthor={Felix Frederik Zimmermann}
 
 %1.5 zeilig
 \usepackage{setspace}
-
 
 
 %bold capital
@@ -202,6 +188,15 @@ pdfauthor={Felix Frederik Zimmermann}
 \newcommand*\chem[1]{\ensuremath{\mathrm{#1}}}
 
 
+%hyperref
+\usepackage[bookmarksdepth=subsection]{hyperref} %pdf-Inhaltsverzeichnis und pdf-Links
+\hypersetup{
+	pdfborder={0 0 0}, 
+	bookmarksnumbered=true,
+	pdftitle={Bachelorarbeit},
+	pdfauthor={Felix Frederik Zimmermann}
+}
+
 
 %%%Worttrennung $$$
 \input{trennung}
@@ -239,12 +234,13 @@ pdfauthor={Felix Frederik Zimmermann}
 \setlength{\parskip}{3mm}
 
 %%%%%%%%%%%%%%%%   ABSTRACT   %%%%%%%%%%%%%%%%
-
+\onehalfspacing
 \include{abstract}
 \cleardoublepage
 
 
 %%%%%%%%%%%   INHALTSVERZEICHNIS   %%%%%%%%%%%
+\singlespacing
 \begingroup
 \setlength{\parskip}{2mm}
 \setcounter{tocdepth}{5}
