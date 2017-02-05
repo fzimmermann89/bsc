@@ -59,10 +59,9 @@ Es folgt ein Überblick über die wichtigsten im Rahmen dieser Arbeit erstellten
 			
 	\item [\texttt{\textit{[exitwave]}=thibault\textit{(lambda,objects,N,dx,gpu,debug)}}]
 	Austrittswelle nach Thibaults Multislice, die Parameter entsprechen den jeweiligen Parametern bei \texttt{msft}.
-			
-	\item [\texttt{\textit{[scatter}=exitwave2scatter\textit{(exitwave,lambda,dx)}}]
-	Streubild aus Austrittswelle.
-	      		
+	
+	\item [\texttt{\textit{[scatter,angles,exitwave]}=exitwave2scatter\textit{(exitwave,dx,lambda,padhalf,padcut,angles)}}]
+	Erzeugt ein Streubild aus einer Austrittswelle \textit{exitwave}. Ist \textit{padhalf} wahr, wird ein Padding der Austrittswelle durchgeführt und der gewichtete Mittelwert des Streubildes gebildet. Ist \textit{padcut} wahr, wird ein Padding der Austrittswelle und ein Zuschnitt des Streubild durchgeführt. Die durch diese Optionen beeinflussten Streuwinkel werden optional als \textit{angles} zurückgegeben.
 \end{description}
 
 
@@ -72,7 +71,7 @@ Es folgt ein Überblick über die wichtigsten im Rahmen dieser Arbeit erstellten
 \begin{description}[style=nextline]
 
 	\item [\texttt{\textit{[start,support]}=SupportGeneric\textit{(scatterImage)}}]
-	Erzeugt aus einem aufgenommen Streubild \textit{scatterImage} mit der weichgezeichneten Maske \textit{softmask} den Support aus der Autokorrelation und ein zufälliges Startbild. Der Schwellwert wird als \textit{relThreshold} in Vielfachen des Maximums wird als festgelegt. Ist optional \textit{halfbox} wahr, so wird stat der Autokorrelation deren halbierte Begrenzungsrahmen als Support zurückgegeben. Der Ablauf der Funktion ist in \fref{fig:flow_genericsupport} dargestellt.
+	Erzeugt aus einem aufgenommen Streubild \textit{scatterImage} mit der weichgezeichneten Maske \textit{softmask} den Support aus der Autokorrelation und ein zufälliges Startbild. Der Schwellwert wird als \textit{relThreshold} in Vielfachen des Maximums festgelegt. Ist optional \textit{halfbox} wahr, so wird stat der Autokorrelation deren halbierte Begrenzungsrahmen als Support zurückgegeben. Der Ablauf der Funktion ist in \fref{fig:flow_genericsupport} dargestellt.
 		
 	\item [\texttt{\textit{[start,support,crossImage]}=SupportHolo\textit{(scatterImage,softmask,refImage)}}]
 	Erzeugt aus einem mit Holographie aufgenommen Streubild \textit{scatterImage} den Support und das Startbild. Die verwendete weichgezeichnete Maske sowie eine Abschätzung der verwendeten Referenz werden als \textit{softmask} bzw. \textit{refImage} übergeben. Der Ablauf sowie die Bedeutung der optionalen Parameter \textit{radFilter} (Default: 15), \textit{radClose} (Default: 30), \textit{radDilate} (Default: 10) und \textit{threshold} (Default: 0.5) ist in \fref{fig:flow_holosupport} dargestellt. Nutzt (sofern verfügbar) CUDA um auf der Grafikkarte zu rechnen.

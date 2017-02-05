@@ -1,6 +1,6 @@
 \chapter{Rekonstruktion}
 \label{chap:rekonstruktion}
-Zur Verwendung von CDI zur Untersuchung von Proben sind aus dem aufgenommenen Streubild Informationen über die Probe zu rekonstruieren. Wie in \fref{chap:fraunhofer} gezeigt, entspricht die im Fernfeld aufgenommene Welle der Fouriertransformierten der Austrittswelle. Könnte nun sowohl Amplitude als auch Phase des Streubildes aufgenommen werden, so ließe sich durch eine einfache Rücktransformation die Austrittswelle rekonstruieren und somit die gewünschten Informationen über das Objekt gewinnen. Jedoch wird mittels eines Sensors nur die Intensität der Welle aufgezeichnet, die Informationen über die Phase gehen somit verloren. Diese trägt jedoch wie \fref{fig:phaseswap} ersichtlicht einen Großteil der Informationen. Das Problem, aus dieser unvollständigen Messung die Austrittswelle zu rekonstruieren, wird als das Phasenproblem bezeichnet. Zur Lösung existiert seit kurzem der Ansatz der Freiflug-Holographie sowie die etablierte Methode der iterativen Phasenrekonstruktion, die im Folgenden zunächst vorgestellt werden.
+Zur Verwendung von CDI zur Untersuchung von Proben sind aus dem aufgenommenen Streubild Informationen über die Probe zu rekonstruieren. Wie in \fref{chap:fraunhofer} gezeigt, entspricht die im Fernfeld aufgenommene Welle der Fouriertransformierten der Austrittswelle. Könnte nun sowohl Amplitude als auch Phase des Streubildes aufgenommen werden, so ließe sich durch eine einfache Rücktransformation die Austrittswelle rekonstruieren und somit die gewünschten Informationen über das Objekt gewinnen. Jedoch wird mittels eines Sensors nur die Intensität der Welle aufgezeichnet, die Informationen über die Phase gehen verloren. Diese trägt jedoch wie \fref{fig:phaseswap} ersichtlich einen Großteil der Informationen. Das Problem, aus dieser unvollständigen Messung die Austrittswelle zu rekonstruieren, wird als das Phasenproblem bezeichnet. Zur Lösung existiert seit kurzem der Ansatz der Freiflug-Holographie sowie die etablierte Methode der iterativen Phasenrekonstruktion, die im Folgenden zunächst vorgestellt werden.
 
 \begin{figure}
 	\centering
@@ -8,8 +8,9 @@ Zur Verwendung von CDI zur Untersuchung von Proben sind aus dem aufgenommenen St
 	\caption[Bedeutung der Fourierphase]{Zur Illustration der Bedeutung der Fourierphase sind links zwei unterschiedliche Testbilder dargestellt. Aus diesen werden zwei neue Bilder generiert, in dem die Fourieramplituden des einen mit den Phaseninformationen des anderen kombiniert werden. Es ist deutlich zu erkennen, dass hier der visuelle Eindruck von den Phaseninformationen bestimmt wird.}
 	\label{fig:phaseswap}
 \end{figure}
+
 \section{Holographie}
-Bei der Holographie wird versucht, Informationen über die Phase mit aufzuzeichnen. Hierzu wird ein zusätzliches, bekanntes Objekt (im Folgenden als Referenz bezeichnet) in den Strahl eingebracht, sodass die eingehende Welle an beiden gestreut wird. Die Interferenz der beiden gestreuten Wellen kodiert in diesem Fall die relativen Phaseninformationen in der Amplitude.
+Bei der Holographie wird versucht, Informationen über die Phase mit aufzuzeichnen. Hierzu wird neben der zu untersuchenden Probe ein zusätzliches, bekanntes Objekt (im Folgenden als Referenz bezeichnet) in den Strahl eingebracht, sodass die eingehende Welle an beiden gestreut wird. Die Interferenz der beiden gestreuten Wellen kodiert in diesem Fall die relativen Phaseninformationen in der Amplitude.
 Das Einbringen einer Referenz wurde in der Vergangenheit üblicherweise realisiert, indem die Probe auf eine Membran mit einer zusätzlichen Öffnung aufgebracht wurde~\cite{eisebitt2004}. Eine elegante Methode, die sog. \textit{Freiflug-Holographie (In-Flight Holography)}, bei der freie Edelgascluster mit in den Strahl eingebracht werden, wurde kürzlich u.a. von Gorkhover und Ulmer vorgestellt~\cite{gorkhover2016,ulmer2015}. 
 Sind $O$,$R$ die Austrittswellen von Objekt bzw. Referenz, so gilt für die gemeinsame Austrittswelle $\phi_1$
 \begin{equation}
@@ -33,7 +34,7 @@ so ergibt sich mit Hilfe der komplexen Konjugation der Fouriertransformation (\r
 	\mathscr{F}^{-1}[I]\propto \underbrace{O \otimes O + R\otimes R}_{\text{Autokorrelationen}}+\underbrace{R\otimes O+ O\otimes R}_{\text {Kreuzkorrelationen}}\,.
 \end{equation}
 Dies ist in \fref{fig:fth} illustriert. Die Autokorrelationen, d.h. die Korrelation der Austrittswelle von Objekt mit Objekt bzw. Referenz mit Referenz liegen hierbei um den Ursprung des Koordinatensystems und können in jede Richtung maximal die doppelte Größe von Objekt bzw. Referenz haben. Die Kreuzkorrelationen aus den Austrittswellen von Objekt und Referenz sind punktsymmetrisch zum Ursprung und haben von diesem den gleichen Abstand wie Objekt- und Referenzaustrittswelle voneinander.
-Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjugierten Referenz bzw. der Referenz mit einem gespiegelten, komplex konjugierten Objekt. Ist die Referenz in guter Näherung punktförmig und lässt sich durch eine Delta-Funktion beschreiben, so ist die Kreuzkorrelation näherungsweise die Austrittswelle des Objektes. Somit können trotz der verlorenen Phaseninformationen die Austrittswelle des Objektes inklusive der Phase wiedergewonnen werden. Dieses Verfahren wird im Weiteren als \textit{Fouriertransformations-Holografie (FTH)} bezeichnet.
+Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjugierten Referenz bzw. der Referenz mit einem gespiegelten, komplex konjugierten Objekt. Ist die Referenz in guter Näherung punktförmig und lässt sich durch eine Delta-Funktion beschreiben, so ist die Kreuzkorrelation näherungsweise gleich der Austrittswelle des Objektes. Somit können trotz der verlorenen Phaseninformationen die Austrittswelle des Objektes inklusive der Phase wiedergewonnen werden. Dieses Verfahren wird im Weiteren als \textit{Fouriertransformations-Holografie (FTH)} bezeichnet.
 
 \begin{figure}
 	\centering
@@ -43,10 +44,10 @@ Sie  entsprechen einer Faltung des Objektes mit der gespiegelten, komplex konjug
 \end{figure}
 
 \subsection{Entfaltung}
-Um bei ausgedehnten Referenzen eine bessere Approximation des Objektes zu erhalten, muss die Faltung zwischen Objekt und Referenz rückgängig gemacht werden. Nach \fref{eq:ft_faltung} entspricht die Faltung einer Multiplikation, die Inverse somit einer Division im Fourierraum. Jedoch verursachen vor allem zwei Effekte Probleme: i) Rauschen im aufgenommenen Bild, das bei der Division in Bereichen mit geringer Intensität der fouriertransformierten Referenz deutlich verstärkt werden würde und ii) Nullstellen der fouriertransformierten Referenz. 
+Um bei ausgedehnten Referenzen eine bessere Approximation des Objektes zu erhalten, muss die Faltung zwischen Objekt und Referenz rückgängig gemacht werden. Die Faltung entspricht einer Multiplikation (\fref{eq:ft_faltung}), die Inverse somit einer Division im Fourierraum. Jedoch verursachen vor allem zwei Effekte Probleme: i) Rauschen im aufgenommenen Bild, das bei der Division in Bereichen mit geringer Intensität der fouriertransformierten Referenz deutlich verstärkt werden würde und ii) Nullstellen der fouriertransformierten Referenz. 
 
 Das Problem der Entfaltung tritt in verschiedenen Bereichen auf, unter anderem in der Bildverarbeitung.
-Dort ist der Prozess der sogenannten \textit{Wiener-Entfaltung}, deren Prinzip für den eindimensionalen Fall in \fref{fig:wiener} dargestellt ist, etabliert. Hierbei wird der Wienerfilter $G$ für ein mit $H$ gefaltetes Signal $S$ mit additivem Rauschen (mit der spektralen Stärke $N$) definiert als
+Dort ist der Prozess der sogenannten \textit{Wiener-Entfaltung}, deren Prinzip für den eindimensionalen Fall in \fref{fig:wiener} dargestellt ist, etabliert. Hierbei wird der Wiener-Filter $G$ für ein mit $H$ gefaltetes Signal $S$ mit additivem Rauschen (mit der spektralen Stärke $N$) definiert als
 \begin{equation}
 	G=\frac{H^* S}{\left|H\right|^2 S+N}\,.
 \end{equation}
@@ -55,18 +56,18 @@ Für Rauschen, dass nicht mit dem Signal korreliert ist, minimiert eine Faltung 
 \begin{figure}
 	\centering
 	\heximage{[width=.99\textwidth]{images/wiener.pdf}}
-	\caption[Prinzip Enfaltung]{Prinzip der Holographie mit  Wiener Entfaltung: In der obersten Reihe sind Objekt und Referenz im Realraum (a) bzw. logarithmiert im Fourierraum (b) dargestellt. Wird das Betragsquadrat der Summe aus Objekt und Referenz im Fourierraum gebildet und in den Realraum rücktransformiert, so sind zentral die Autokorrelationen, außen die Kreuzkorrelationen zu erkennen (c). Wird die Kreuzkorrelation im logarithmierten Fourierraum betrachtet, so wird deutlich, dass bei niedrigen Raumfrequenzen das log. Objekt \textit{fast} die Differenz aus log. Kreuzkorrelation und log. Referenz ist, bei höheren Raumfrequenzen jedoch das Rauschen dominiert (d). Wenn im Fourierraum die Kreuzkorrelation durch die Referenz geteilt wird (\textit{direkte Entfaltung}), so wird bei Frequenzen, bei denen die Intensität der Referenz gering ist, das Rauschen deutlich verstärkt -- das Objekt ist nicht zu erkennen. Die \textit{Wiener-Entfaltung} verhindert dies, indem auch bei diesen Frequenzen eine "`Mindestintensität"' der Referenz in Höhe des geschätzten Rausch-zu-Signal-Verhältnisses verwendet wird (e und f). }
+	\caption[Prinzip Enfaltung]{Prinzip der Holographie mit  Wiener-Entfaltung: In der obersten Reihe sind Objekt und Referenz im Realraum (a) bzw. logarithmiert im Fourierraum (b) dargestellt. Wird das Betragsquadrat der Summe aus Objekt und Referenz im Fourierraum gebildet und in den Realraum rücktransformiert, so sind zentral die Autokorrelationen, außen die Kreuzkorrelationen zu erkennen (c). Wird die Kreuzkorrelation im logarithmierten Fourierraum betrachtet, so wird deutlich, dass bei niedrigen Raumfrequenzen das log. Objekt \textit{fast} die Differenz aus log. Kreuzkorrelation und log. Referenz ist, bei höheren Raumfrequenzen jedoch das Rauschen dominiert (d). Wenn im Fourierraum die Kreuzkorrelation durch die Referenz geteilt wird (direkte Entfaltung), so wird bei Frequenzen, bei denen die Intensität der Referenz gering ist, das Rauschen deutlich verstärkt -- das Objekt ist nicht zu erkennen. Die Wiener-Entfaltung verhindert dies, indem auch bei diesen Frequenzen eine "`Mindestintensität"' der Referenz in Höhe des geschätzten Rausch-zu-Signal-Verhältnisses verwendet wird (e und f). }
 	\label{fig:wiener}
 \end{figure} 
 
 \section{Iterative Phasenrekonstruktion}
-Wäre durch Aufnahme des Streubildes die vollständige komplexe Fouriertransformation der Austrittswelle (d.h. Amplitude und Phase) bekannt, so könnte die Austrittswelle einfach durch eine inverse Transformation gewonnen werden. Da die $N$ komplexen Datenpunkten im Realraum der Fouriertransformation durch $N$ Amplituden und $N$ Phasen, also $2N$ reelle Variablen dargestellt werden können, jedoch nur $N$ reelle Variablen (die Amplituden) gemessen werden können, ist das Problem unterbestimmt und nicht eindeutig lösbar. Kann jedoch das zu rekonstruierende Objekt im Realraum auf weniger als $N/2$ Bildpunkte beschränkt werden, so wird das Problem lösbar. Die räumliche Beschränkung im Realraum wird durch die Wahl eines sog. Supports umgesetzt, außerhalb dessen der Realraum als leer angenommen wird.  
+Wäre durch Aufnahme des Streubildes die vollständige komplexe Fouriertransformation der Austrittswelle (d.h. Amplitude und Phase) bekannt, so könnte die Austrittswelle einfach durch eine inverse Transformation gewonnen werden. Da die $N$ komplexen Datenpunkten im Realraum der Fouriertransformation durch $N$ Amplituden und $N$ Phasen, also $2N$ reelle Variablen dargestellt werden können, jedoch nur $N$ reelle Variablen (die Amplituden) gemessen werden können, ist das Problem unterbestimmt und nicht eindeutig lösbar. Kann jedoch das zu rekonstruierende Objekt im Realraum auf weniger als $N/2$ Bildpunkte beschränkt werden, so wird das Problem lösbar. Die räumliche Beschränkung im Realraum wird durch die Wahl eines sogenannten \textit{Supports} umgesetzt, außerhalb dessen der Realraum als leer angenommen wird.  
 Die Problemstellung ist nun im rauschfreien Fall eine Lösung der Gleichung $\rho(x)=\mathscr{F}^{-1}\tilde{\rho}(q)$ unter den Nebenbedingungen, dass i) $\rho$ auf den Support beschränkt ist und ii) die Amplituden von $\tilde{\rho}$ mit den gemessenen Fourieramplituden $A(q)$ übereinstimmen. Eine Lösung wird üblicherweise iterativ gefunden und stellt eine Wiederherstellung der Phase dar -- dieses Vorgehen wird deshalb als \textit{iterative Phasenrekonstruktion (IPR)} bezeichnet.
 \subsection{Algorithmen}
 Für die Lösung der Problemstellung existieren verschiedene Algorithmen, die im Folgenden vorgestellt werden. Eine detailliertere Beschreibung kann z.B. von Fienup oder Marchesini nachgelesen werden~\cite{marchesini2007,fienup1982}.
 Der Prototyp der verwendeten Algorithmen, der \textit{Error-Reduction Algorithmus (ER)} basiert auf dem abwechselnden Erzwingen der Nebenbedingungen, d.h. von einem Startwert $\rho_0$ ausgehend wird zunächst $\tilde{\rho_0}$ bestimmt, die Amplitude im Fourierraum durch die gemessenen Amplituden $A$ ersetzt, in den Realraum transformiert und dort außerhalb des Supports gleich Null gesetzt. Dies wird iterativ wiederholt, wobei sich $\rho_n$ einer Lösung annähert, die beide Nebenbedingungen erfüllt~\cite{fienup1978}.
 
-Eine Möglichkeit, sowohl den ER-Algorithmus wie auch die übrigen häufig verwendeten Algorithmen zu formulieren, sodass eine einheitliche Notation sowie graphische Darstellung möglich ist bietet die Notation mittels Projektionsoperatoren, die in \fref{fig:projektoren} skizziert sind:
+Eine Möglichkeit, sowohl den ER-Algorithmus wie auch die übrigen häufig verwendeten Algorithmen zu formulieren, sodass eine einheitliche Notation sowie graphische Darstellung möglich ist bietet die Notation mittels Projektionsoperatoren (sogenannte \textit{Projektoren}), die in \fref{fig:projektoren} skizziert sind:
 Das Erzwingen der Nebenbedingung im Realraum kann als Projektion auf die Lösungsmenge $S$ der Nebenbedingung  (mit dem Komplement $\bar{S}$) durch den Projektor $P_s$ 
 
 \begin{align}
@@ -87,10 +88,10 @@ aufgefasst werden. Der analoge Projektor für die Erfüllung der Nebenbedingung 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/projektor.pdf}
-	\caption[Operatoren zur Beschreibung der Rekonstruktionsalgorithmen]{Zur Beschreibung der Rekonstruktionsalgorithmen verwendete Operatoren: Der Support-Projektor $P_S$ projiziert auf die durch den Support beschriebene Mannigfaltigkeit, $P_{\bar{S}}$ auf das Komplement. Ein Reflektor wendet die doppelte Schrittweite wie ein Projektor an und stellt somit eine Spiegelung an der Lösungsmenge der Nebenbedingung dar. Der Fourier-Projektor stellt in Fourierraum eine Projektion auf die kreisförmige Menge der bekannten Amplituden dar.}
+	\caption[Operatoren zur Beschreibung der Rekonstruktionsalgorithmen]{Zur Beschreibung der Rekonstruktionsalgorithmen verwendete Operatoren: Der Support-Projektor $P_S$ projiziert auf die durch den Support beschriebene Mannigfaltigkeit, $P_{\bar{S}}$ auf das Komplement. Ein Reflektor wendet die doppelte Schrittweite eines Projektors an und stellt somit eine Spiegelung an der Lösungsmenge der Nebenbedingung dar. Der Fourier-Projektor stellt in Fourierraum eine Projektion auf die kreisförmige Menge der bekannten Amplituden dar.}
 	\label{fig:projektoren}
 \end{figure}
-Neben den Projektoren, die den Schritt $\rho \rightarrow P\rho = (\mathbb{1}+(P-\mathbb{1}))\rho$ ausführen, können auch sogenannte Reflektoren mit doppelter Schrittweite
+Neben den Projektoren, die den Schritt $\rho \rightarrow P\rho = (\mathbb{1}+(P-\mathbb{1}))\rho$ ausführen, können auch sogenannte \textit{Reflektoren} mit doppelter Schrittweite
 \begin{equation}
 	R_\nu= (\mathbb{1}+2(P_\nu-\mathbb{1}))=(2P_\nu-\mathbb{1})
 \end{equation}
@@ -100,14 +101,14 @@ Ein Rauschen im Fourierraum bewirkt, dass keine eindeutige exakte Lösung existi
 \begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{images/algorithmen.pdf}
-	\caption[Rekonstruktionsalgorithmen]{Darstellung der Algorithmen ER, RAAR und HIO: Bei ER findet eine abwechselnde Projektion auf die Lösungsmengen der Nebenbedingungen statt. Bei ER und HIO ist der einzelne Iterationsschritt komplexer und abhängig von einem Parameter $\beta$. Abbildung für ER und HIO nach~\cite{marchesini2007}. Für eine detailliertere Darstellung von RAAR und HIO siehe \fref{app:algos}}.
+	\caption[Rekonstruktionsalgorithmen]{Darstellung der Algorithmen ER, RAAR und HIO: Bei ER findet eine abwechselnde Projektion auf die Lösungsmengen der Nebenbedingungen statt. Bei ER und HIO ist der einzelne Iterationsschritt komplexer und abhängig von einem Parameter $\beta$. Abbildung für ER und HIO nach~\cite{marchesini2007}. Für eine detailliertere Darstellung von RAAR und HIO siehe \fref{app:algos}.}
 	\label{fig:recon}
 \end{figure} 
 \subsection{Support}
 Üblicherweise ist der Bereich auf den das Objekt im Realraum beschränkt ist nicht bekannt, der für die iterativen Rekonstruktionsalgorithmen benötigte Support muss also zunächst bestimmt werden. Hierfür existieren verschiedene Möglichkeiten. Die triviale Methode besteht aus einer Festlegung aus zuvor bekannten Dimensionen des Experiments. Jedoch kann so nur in Ausnahmefällen der Support ausreichend eng gewählt werden, um die Bedingung, dass dieser weniger als $N/2$ Bildpunkte beinhalten muss, zu erfüllen.
 Eine verbreitete Methode, bezeichnet als \textit{Shrink-Wrap} Algorithmus, ist durch eine Anpassung des Supports während der Rekonstruktion gekennzeichnet: Der zunächst geratene (für eine eindeutige Lösung des Problems  zu große) Support wird nach einer festgelegten Anzahl an Rekonstruktionsiterationen auf den Bereich beschränkt, in dem die rekonstruierte Intensität höher als ein festgelegter Schwellwert ist. Dieser aktualisierte Support wird für weitere Iterationen genutzt und erneut aktualisiert~\cite{marchesini2003}.
 
-Die Nutzung der Holographie bietet eine weitere Methode der Bestimmung des Supports: Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Hierfür wird nach Anwendung eines Median-Filters zur Rauschunterdrückung ein Schwellwert in Abhängigkeit von Mittelwert und der Standardabweichung der Rekonstruktion festgelegt. So kann nach morphologischem Öffnen und Schließen (zur Entfernung von Rauschen bzw. Löchern) die Kreuz- und Autokorrelation identifiziert werden\footnote{Details siehe \fref{app:param}.}. Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
+Die Nutzung der Holographie bietet eine weitere Methode der Bestimmung des Supports: Die aus der Holographie gewonnene Rekonstruktion des Objektes und eine Schätzung der Referenz lassen sich zu einem Support kombinieren. Hierfür wird nach Anwendung eines Median-Filters zur Rauschunterdrückung ein Schwellwert in Abhängigkeit von Mittelwert und der Standardabweichung der Rekonstruktion festgelegt. So kann nach morphologischem Öffnen und Schließen (zur Entfernung von Rauschen bzw. Löchern) die Kreuz- und Autokorrelation identifiziert werden (Details siehe \fref{app:param}). Der nötige Abstandsvektor dieser Supportteile ist der Abstandsvektor zwischen Auto- und Kreuzkorrelation (\fref{fig:support}).
 In beiden Fällen ist darauf zu achten, dass der Support nicht zu klein gewählt wird, da es sonst keine Lösung unter dieser Nebenbedingung geben kann und somit die Algorithmen keine guten Rekonstruktion liefern, ein größerer als notwendiger Support bereitet hingegen (solange er weniger als $N/2$ Bildpunkte beinhaltet) kein Problem, es kann somit sinnvoll sein, den gewonnenen Support künstlich zu vergrößern~\cite{huang2010}.
 
 \begin{figure}
@@ -127,12 +128,12 @@ In beiden Fällen ist darauf zu achten, dass der Support nicht zu klein gewählt
 \end{figure} 
 
 \subsection{Eindeutigkeit der Lösung}
-Das Problem der IPR ist, dass die Algorithmen keine eindeutige Lösung liefern. Neben der Möglichkeit, dass die Algorithmen in einem lokalen Minimum stagnieren und dieses nicht verlassen, existiert eine weitere Quelle der Unsicherheit: Das sogenannte Zwillingsbild-Problem. Da nach \fref{eq:zwilling} das Bild $f(x,y)$ und das komplex konjugierte, punktgespiegelte "`Zwillingsbild"'  $f^*(-x,-y)$ den gleichen Betrag der Fouriertransformation besitzen, sind beides Lösungen des Problems.
+Das Problem der IPR ist, dass die Algorithmen keine eindeutige Lösung liefern. Neben der Möglichkeit, dass die Algorithmen in einem lokalen Minimum stagnieren und dieses nicht verlassen, existiert eine weitere Quelle der Unsicherheit: Das sogenannte \textit{Zwillingsbild-Problem}. Da nach \fref{eq:zwilling} das Bild $f(x,y)$ und das komplex konjugierte, punktgespiegelte \textit{Zwillingsbild}  $f^*(-x,-y)$ den gleichen Betrag der Fouriertransformation besitzen, sind beides Lösungen des Problems.
 \begin{equation}
 	\label{eq:zwilling}
 	\left|\mathscr{F}[f^*(-x,-y)]\right|=\left|\mathscr{F}[f(x,y)]^*\right|=\left|\mathscr{F}[f(x,y)]\right|
 \end{equation}
-Dies führt dazu, dass bei einem punktsymmetrischen Support (oder einem Support, der so groß ist, dass Bild und Zwillingsbild in ihn hineinpassen) in einigen Regionen das Bild, in anderen das Zwillingsbild rekonstruiert wird. Beide Probleme, Stagnation im Minimum und Zwillingsproblem, sind abhängig von der Wahl des Startpunktes der Rekonstruktion, bei zufälliger Wahl der Fourierphase ist die Rekonstruktion somit nicht deterministisch.
+Dies führt dazu, dass bei einem punktsymmetrischen Support (oder einem Support, der so groß ist, dass Bild und Zwillingsbild in ihn hineinpassen) in einigen Regionen das Bild, in anderen das Zwillingsbild rekonstruiert wird. Beide Probleme, Stagnation in einem lokalen Minimum und Zwillingsproblem, sind abhängig von der Wahl des Startpunktes der Rekonstruktion, bei zufälliger Wahl der Fourierphase ist die Rekonstruktion somit nicht deterministisch.
 
 Der Shrink-Wrap-Algorithmus zur Supportgewinnung kann das Zwillingsproblem in manchen Fällen umgehen, indem bei einer Dominanz von Bild oder Zwillingsbild in einem der Randbereiche des aktuellen Supports das jeweils andere bei der nächsten Anpassung des Supports unterdrückt wird und so ein nicht-punktsymmetrischer Support gefunden werden kann.
 Die Supportgewinnung mittels Holographie löst dieses Problem vollständig. Je nach Wahl der für den Support verwendeten Kreuzkorrelation und davon abhängiger Platzierung der Referenz im Support wird Bild oder Zwillingsbild rekonstruiert, da Objekt und Referenz zusammen nicht punktsymmetrisch sind.
@@ -146,7 +147,7 @@ Es können nun die drei unterschiedliche Arten der Rekonstruktion verglichen wer
 	\item IPR mit Shrink-Wrap Support
 	\item IPR mit FTH Support
 \end{itemize}
-Die Rekonstruktionsansätze werden bezüglich Ihrer Empfindlichkeit gegenüber Rauschen, gegenüber den durch zentrale Maskierung des Streubildes entstehenden Hochpass und gegenüber einem Fehler in der Abschätzung der Referenz untersucht. Dies geschieht zunächst mit rein synthetischen 2D Bildern als Ersatz für Austrittswellen, um die Funktion der drei Ansätze und ihre Limitationen zu überprüfen.
+Die Rekonstruktionsansätze werden bezüglich ihrer Empfindlichkeit gegenüber Rauschen, gegenüber den durch zentrale Maskierung des Streubildes entstehenden Hochpass und gegenüber einem Fehler in der Abschätzung der Referenz untersucht. Dies geschieht zunächst mit rein synthetischen 2D Bildern als Ersatz für Austrittswellen, um die Funktion der drei Ansätze und ihre Limitationen zu überprüfen.
 
 Als Algorithmus der IPR wird bei diesem Vergleich ein Wechsel aus HIO ($\beta=0.9$) und ER verwendet, die genauen Parameter und Abläufe sind in \fref{app:param} angegeben. Diese Kombination wird aufgrund ihrer großen Verbreitung in der Literatur stellvertretend für die IPR betrachtet\footnote{Die Verwendung von RAAR liefert keine signifikant abweichende Aussagen und wird daher im folgenden nicht dargestellt.}. 
 
@@ -155,7 +156,7 @@ Bei idealen Bedingungen, d.h. ohne Rauschen, ohne zentrale Maskierung und mit pr
 \begin{figure}
 	\centering
 	\reconimage{[width=.48\textwidth]{images/recon2d-mask0bit0error0.png}}
-	\caption[2D Rekonstruktion: Ideal]{Rekonstruktion mit Zentralstrahl ohne Rauschen: Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei späteren Bildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch IPR mit Shrink-Wrap, unten links die durch Entfaltung (mit dem Parameter $N=1$) aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels IPR mit FTH als Start und Support. Alle Rekonstruktionen liefern optisch perfekte Ergebnisse. }
+	\caption[2D Rekonstruktion: Ideale Bedingungen]{Rekonstruktion bei idealen Bedingungen, d.h. mit Zentralstrahl und ohne Rauschen: Oben links das theoretische Optimum, in diesem Falle das Eingangsbild, bei späteren Bildern mit maskierter Mitte das hochpassgefilterte Eingangsbild. Oben rechts die durch IPR mit Shrink-Wrap, unten links die durch Entfaltung (mit dem Parameter $N=1$) aus der FTH gewonnene Rekonstruktion. Unten rechts die Rekonstruktion mittels IPR mit FTH als Start und Support. Alle Rekonstruktionen liefern optisch perfekte Ergebnisse. }
 	\label{fig:recon2d-perfect}
 \end{figure}
 
@@ -178,7 +179,7 @@ Sowohl die Wiener-Entfaltung als auch die IPR mit Support aus der Holographie er
 		\reconimage{[width=\textwidth]{images/recon2d-mask64bit0error0.png}}
 		\caption{große Maske}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion: Beamstop]{Einfluss einer zentralen Maskierung des Streubildes mit Radius 16 Pixel bzw. 64 Pixel von 2048 Pixeln auf die Rekonstruktionen (gleiche Anordnung wie in \fref{fig:recon2d-perfect}). Die Entfaltung ($N=1$) erweist sich als am unempfindlichsten, die IPR als am empfindlichsten.}
+	\caption[2D Rekonstruktion: Einfluss einer zentralen Maskierung]{Einfluss einer zentralen Maskierung des Streubildes mit Radius 16 Pixel bzw. 64 Pixel von 2048 Pixeln auf die Rekonstruktionen (gleiche Anordnung wie in \fref{fig:recon2d-perfect}). Die Entfaltung ($N=1$) erweist sich als am unempfindlichsten, die IPR als am empfindlichsten.}
 	\label{fig:recon2d-mask}
 \end{figure}
 
@@ -194,11 +195,11 @@ Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die 
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit14error0.png}}
 		\caption{viel Rauschen}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion: Rauschen]{Einfluss des Rauschen: Das gering maskierte Streubild wurde mit 16\,Bit bzw. 14\,Bit diskretisiert und Poisson-Rauschen hinzugefügt. Die Entfaltung ($N=\num{1e3} \text{ bzw. }\num{3e3}$) erweist sich deutlich als am unempfindlichsten, die IPR als am empfindlichsten.}
+	\caption[2D Rekonstruktion: Einlfuss des Rauschens]{Einfluss des Rauschens: Das gering maskierte Streubild wurde mit 16\,Bit bzw. 14\,Bit diskretisiert und Poisson-Rauschen hinzugefügt. Die Entfaltung ($N=\num{1e3} \text{ bzw. }\num{3e3}$) erweist sich deutlich als am unempfindlichsten, die IPR als am empfindlichsten.}
 	\label{fig:recon2d-noise}
 \end{figure}
 \subsection{Einfluss der Referenzabschätzung}
-Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die IPR muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung lässt sich in \fref{fig:recon2d-ref} betrachten. Schon eine Abweichung des Radius von 5~\% von der wahren Größe bewirkt ein Scheitern der Entfaltung. Die iterativen Algorithmen sind hingegen unempfindlich gegenüber diesem Einfluss.
+Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die IPR muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung lässt sich in \fref{fig:recon2d-ref} betrachten. Schon eine Abweichung des Radius um 5~\% von der wahren Größe bewirkt ein Scheitern der Entfaltung. Die iterativen Algorithmen sind hingegen unempfindlich gegenüber diesem Einfluss.
 
 Zusammenfassend lässt sich aus der zweidimensionalen Untersuchung die Anfälligkeit der IPR bezüglich Rauschen und fehlenden Bildinformationen sowie die Anfälligkeit der Wiener-Entfaltung bezüglich einer nicht perfekt bekannten Referenz bei relativer Unempfindlichkeit gegenüber den zuvor genannten Effekten hervorheben. Die Kombination aus Entfaltung zur Gewinnung des Supports und Verfeinerung mittels iterativer Rekonstruktion scheint die Vorteile beider Verfahren zu kombinieren.
 \begin{figure}
@@ -211,7 +212,7 @@ Zusammenfassend lässt sich aus der zweidimensionalen Untersuchung die Anfällig
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16error05.png}}
 		\caption{5~\% Abweichung des Radius}	
 	\end{subfigure}
-	\caption[2D Rekonstruktion: Referenz]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem anderen Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung ($N=\num{2e3} \text{ bzw. }\num{2e4}$).}
+	\caption[2D Rekonstruktion: Einfluss ungenauer Referenzabschätzung]{Einfluss von ungenauer Referenzabschätzung: Das gering verrauschte und maskierte Streubild wird mit einem anderen Radius der kreisförmigen Referenz rekonstruiert. Dies hat nur einen Einfluss auf die Entfaltung ($N=\num{2e3} \text{ bzw. }\num{2e4}$).}
 	\label{fig:recon2d-ref}
 \end{figure}
  \clearpage

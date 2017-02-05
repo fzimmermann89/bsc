@@ -17,7 +17,7 @@ Für eine kreisförmige Blende existiert eine analytische Darstellung der Fourie
 \end{equation}
 nähern~\cite{born1980}. Für nicht kreisförmige Projektionen der Dichte lässt sich die Fouriertransformation diskret numerisch auswerten.
 
-Im Weiteren wird die Projektion der Dichte und anschließende diskrete Fouriertransformation dieser als \textit{Projektions-Näherung} bezeichnet. Diese Näherung wird bei dem Vergleich der Simulationsansätze mit betrachtet aufgrund des geringen Rechenaufwandes und der Möglichkeit, auch nicht-kugelförmige Objekte zu behandeln (im Gegensatz zur Rayleigh-Gans-Näherung).
+Im Weiteren wird die Projektion der Dichte und anschließende diskrete Fouriertransformation dieser als \textit{Projektions-Näherung} bezeichnet. Diese Näherung wird bei dem Vergleich der Simulationsansätze aufgrund des geringen Rechenaufwandes mit betrachtet. 
 
 
 \section{Multislice Fouriertransformation}
@@ -39,7 +39,7 @@ Um die Komplexität zu reduzieren, wird nun versucht auf eine schichtweise Berec
 \end{equation}
 
 so lässt sich das Integral in z-Richtung als Summe interpretieren:
-Aufgrund der Impulserhaltung muss für die Wellenvektoren $\vec{k_0}^2=\vec{k}^2=k^2$ gelten. Nach  \fref{fig:vec_msft} lässt sich der Streuvektor $q$ in einen zum einfallenden Wellenvektor parallelen Anteil $q_\parallel$ sowie einen senkrechten Anteil $q_\perp$ zerlegen,
+Aufgrund der Impulserhaltung muss für die Wellenvektoren $\vec{k_0}^2=\vec{k}^2=k^2$ gelten. Nach  \fref{fig:vec_msft} lässt sich der Streuvektor $\vec{q}$ in einen zum einfallenden Wellenvektor parallelen Anteil $\vec{q_\parallel}$ sowie einen senkrechten Anteil $\vec{q_\perp}$ zerlegen,
 \begin{align}
 	k^2=(k-q_\parallel)^2+q_{\perp}^2                  
 	\Leftrightarrow q_\parallel=k-\sqrt{k^2-q_\perp^2} \,.
@@ -106,7 +106,7 @@ Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet un
 \end{figure} 
 	
 \section{Thibaults Multislice}
-Thibault stellt in~\cite{thibault2007} einen eigene Formulierung der Multislice-Simulation auf. Ausgehend von der Wellengleichung (\fref{eq:wellengleichung_green})
+Thibault stellt in~\cite{thibault2007} eine eigene Formulierung der Multislice-Simulation auf. Ausgehend von der Wellengleichung (\fref{eq:wellengleichung_green})
 lässt sich für die Welle im Hybridraum 
 \begin{equation}
 	\bar{\Phi}(z)=\bar{G}\ast_z\left[\bar{\delta\eta}\ast_{q_\perp} \bar{\Phi}\right]
@@ -150,7 +150,7 @@ Somit lässt sich in Näherung für die Welle bei $z+\Delta z$
 	\bar{\Phi}(z)+\frac{\Delta z}{2\pi}\frac{ik^2}{\sqrt{k^2-q^2_\perp}}  \left[\bar{\delta\eta}\ast_{q_\perp} \bar{\Phi}\right](z)
 	\right)
 \end{equation}
-aufstellen. Dies stellt eine iterative Beschreibung der Streuung dar -- ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um einen Algorithmus, der ebenfalls der Kategorie "`Multislice"' zuzuordnen ist. Im Gegensatz zur \textit{Multislice Propagation} findet hier die Wechselwirkung mit der Materie jedoch nicht in Form eines Exponentialfaktor statt, in Kleinwinkelnäherung entspricht \fref{eq:thibault} einer Taylornäherung erster Ordnung in der Exponentialfunktion von \fref{eq:multislice}. Unabhängig von der Gültigkeit der verwendeten Näherungen besitzt \fref{eq:thibault} bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster, in dem die Simulation durchgeführt wird, hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zum Tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\bar{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
+aufstellen. Dies stellt eine iterative Beschreibung der Streuung dar -- ausgehend von $z=0$ kann schrittweise in Einfallsrichtung die Wellengleichung in einer Szene gelöst werden. Somit handelt es sich um einen Algorithmus, der ebenfalls der Kategorie "`Multislice"' zuzuordnen ist. Im Gegensatz zur \textit{Multislice Propagation} findet hier die Wechselwirkung mit der Materie jedoch nicht in Form eines Exponentialfaktors statt, in Kleinwinkelnäherung entspricht \fref{eq:thibault} einer Taylornäherung erster Ordnung in der Exponentialfunktion von \fref{eq:multislice}. Unabhängig von der Gültigkeit der verwendeten Näherungen besitzt \fref{eq:thibault} bei $k^2=q_\perp$ eine Singularität. Aus diesem Grund muss entweder das Raster, in dem die Simulation durchgeführt wird, hinsichtlich der Auflösung in x,y-Richtung so gewählt werden, dass diese Singularität nicht zum Tragen kommt oder nach jedem Simulationsschritt im Fourierraum $\bar{\Phi}(q_x,q_y)$ für $q_x+q_y>k$ auf Null gesetzt werden.
 Die numerische Simulation dieser Methode ist in \texttt{simulation/thibault.m} implementiert.
 
 
@@ -234,44 +234,47 @@ Mit der \textit{Multislice Propagation} ist somit ein effizienter, schichtweise 
 
 
 \section{Streubilder komplexer Objekte}
-Neben der bislang zur Validierung erfolgten Berechnung von Streubildern von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen, komplexeren Objekten.
+Neben der bislang zur Validierung erfolgten Berechnung von Streubildern von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen, komplexeren Objekten. 
 
 Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Modell einer wassergefüllte ikosaederförmige Lecithin-Membran (Außenradius \SI{375}{nm}, Dicke \SI{25}{nm}) um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius \SI{90}{nm}) in den Eckpunkten eines Tetraeders angeordnet sind als biologisches Objekt betrachtet. Als Referenz dient ein disjunktes Xenon-Dodekaeder mit Außenradius \SI{100}{nm}. Die komplexen Brechzahlen der simulierten Materialien sind in \fref{tab:brechzahl} aufgeführt~\cite{henke,bergh2008,milo2015}. Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplexexit} gezeigt. Es sind sowohl die Wirkung der Absorption in Form der Intensitätsabnahme hinter den Streuobjekten, wie auch der Brechung in Form einer geringen Intensitätszunahme um die Streuobjekte sowie einer Phasenänderung zu erkennen. Das zugehörige Streubild ist in \fref{fig:komplexscatter} gezeigt und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar. Im Folgenden wird dies für den Vergleich der Rekonstruktionsansätze genutzt, indem deren Eignung zur Rekonstruktion der Austrittswelle betrachtet wird.
 
-  
-\begin{table}[b]
-	\begin{minipage}[b]{.64\textwidth }%
-	 	\begin{small}
- 			\begin{tabular}{lll}
- 				\hline
- 				Material													&Brechzahl bei \SI{1}{nm}~\cite{henke}\\
- 				\hline
- 				Lecithin (\chem{C_{44}H_{82}NO_8P})~\cite{milo2015}			&$1-(1.69-0.12i)\times10^{-4}$			\\ 					
- 				Wasser														&$1-(1.55-0.18i)\times10^{-4}$			\\
- 				Protein (\chem{H_{86}C_{52}N_{13}O_{15}S})~\cite{bergh2008}	&$1-(2.03-0.16i)\times10^{-4}$			\\
- 				Xenon-Cluster												&$1-(2.54-1.46i)\times10^{-4}$			\\
- 				\hline
- 			\end{tabular}
-		\end{small}
+
+\begin{figure}[b]
+	\centering
+	\begin{minipage}[t]{.39\textwidth}
 		\centering
-		\caption[Für die Berechnung der komplexen Austrittswelle verwendete Materialien]{Brechzahlen der verwendeten Materialien}   \label{tab:brechzahl}
-	\end{minipage}
-	\begin{minipage}[b]{.35\textwidth}
-				\hspace*{0pt}\includegraphics[width=.8\textwidth]{images/scene.png}%
-				\captionof{figure}{3D-Modell\label{fig:komplexmodel}}%
-	\end{minipage}
-	\par\bigskip
-\end{table}
+		\vspace{0pt}
+		\includegraphics[width=0.7\textwidth]{images/scene.png}
+		\caption{3D-Modell des Objektes\label{fig:komplexmodel}}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{.60\textwidth}
+		\centering
+		\vspace{0pt}
+		\captionof{table}{Für die Berechnung der komplexen Austrittswelle\\ verwendete Materialien \label{tab:brechzahl} }
+			\begin{tabular}{lll}
+				\hline
+				Material													&Brechzahl bei \SI{1}{nm}~\cite{henke}\\
+				\hline
+				Lecithin (\chem{C_{44}H_{82}NO_8P})~\cite{milo2015}			&$1-(1.69-0.12i)\times10^{-4}$			\\ 					
+				Wasser														&$1-(1.55-0.18i)\times10^{-4}$			\\
+				Protein (\chem{H_{86}C_{52}N_{13}O_{15}S})~\cite{bergh2008}	&$1-(2.03-0.16i)\times10^{-4}$			\\
+				Xenon-Cluster												&$1-(2.54-1.46i)\times10^{-4}$			\\
+				\hline
+			\end{tabular}
+		\end{minipage}
+\end{figure}
+
 
 
 \begin{figure}[b] %exitwave und scatter
-	\begin{subfigure}[b]{0.45\textwidth}
+	\centering
+	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}}
 		\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_v2_exitwave_cw.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:komplexexit}
-	\end{subfigure}	\hfill
-	\begin{subfigure}[b]{0.45\textwidth}
+	\end{subfigure}	\hspace{2cm}
+	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_scatter.png}}
 		\includegraphics[width=\textwidth]{images/fig_simholo_v2_scatter.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_v2_scatter_cb.pdf}}}
 			\caption{Streubild}

@@ -14,7 +14,7 @@
 \usepackage{xfrac}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\usepackage[textwidth=160mm,bottom=20mm,top=25mm,headsep=5mm,bindingoffset=10mm]{geometry}
+\usepackage[textwidth=160mm,bottom=25mm,top=25mm,headsep=5mm,bindingoffset=5mm]{geometry}
 \usepackage{listings}
 \usepackage{fancybox}
 
@@ -53,12 +53,22 @@ pdfauthor={Felix Frederik Zimmermann}
 
 \setlength{\parindent}{0mm}
 
-\newlength{\figwi}
-\setlength{\figwi}{130mm}
-\newlength{\fighi}
-\setlength{\fighi}{100mm}
-\newlength{\txtwi}
-\setlength{\txtwi}{145mm}
+\usepackage{titlesec}
+
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titleformat{\chapter}[display]   
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{10pt}{\Huge}   
+\titlespacing*{\chapter}{0pt}{-50pt}{20pt}
+
+
+%\newlength{\figwi}
+%\setlength{\figwi}{130mm}
+%\newlength{\fighi}
+%\setlength{\fighi}{100mm}
+%\newlength{\txtwi}
+%\setlength{\txtwi}{145mm}
 
 
 %Appendices -> Anhang
@@ -71,13 +81,14 @@ pdfauthor={Felix Frederik Zimmermann}
 \usepackage{commath}
 \usepackage{mathtools}
 \usepackage[figuresleft]{rotating} %seite quer
+\usepackage[nohyperlinks]{acronym} %abkürzungsverzeichnis
 
 %vor chapter weniger platz
-\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
-\makeatletter
-\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
-\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
-\makeatother
+%\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+%\makeatletter
+%\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
+%%\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
+%\makeatother
 
 %kleiner abstände bei captions
 \setlength{\abovecaptionskip}{10pt plus 3pt minus 2pt}
@@ -85,6 +96,10 @@ pdfauthor={Felix Frederik Zimmermann}
 %kleinere abstände bei gleichungen
 \setlength{\abovedisplayskip}{0pt}
 \setlength{\belowdisplayskip}{0pt}
+
+%1.5 zeilig
+\usepackage{setspace}
+
 
 
 %bold capital
@@ -247,6 +262,23 @@ pdfauthor={Felix Frederik Zimmermann}
 %%%%%%%%%   TABELLENVERZEICHNIS   %%%%%%%%%%%%
 
 \listoftables
+
+\vspace{4cm}
+
+%%%%%%%%%%%% AKÜRZUNGSVERZEICHNIS %%%%%%%%%%%%
+\chapter*{Abkürzungsverzeichnis}
+\begin{acronym}[XXXXX]
+	\acro{CDI}{Coherent Diffractive Imaging}
+	\acro{FDTD}{Finite Difference Time Domain}
+	\acro{DDA}{Discrete Dipole Approximation}
+	\acro{MSFT}{Multislice Fouriertransformation}
+\acro{IPR}{Iterative Phasenrekonstruktion}
+\acro{FTH}{Fouriertransformations-Holographie}
+\acro{ER}{Error Reduction Algorithmus}
+\acro{HIO}{Hybrid Input-Output Algorithmus}
+\acro{RAAR}{Relaxed Averaged Alternating Reflections Algorithmus}
+\end{acronym}
+
 \endgroup
 \cleardoublepage
 
@@ -262,6 +294,7 @@ pdfauthor={Felix Frederik Zimmermann}
 \fancyhead[LE]{\sc\nouppercase\leftmark}
 \cfoot{\thepage}
 \renewcommand{\headheight}{14pt}
+\onehalfspacing
 
 \include{einleitung}
 \include{theorie}
@@ -294,7 +327,7 @@ pdfauthor={Felix Frederik Zimmermann}
 %%%%%%%%%   LITERATURVERZEICHNIS   %%%%%%%%%%%
 
 %\nocite{*}
-
+\singlespacing
 \bibliography{ffz}
 \bibliographystyle{ffz}
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}

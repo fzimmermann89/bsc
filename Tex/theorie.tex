@@ -30,11 +30,11 @@ Hierbei bezeichnet die Notation $\tilde{f}(q)$ die Fouriertransformierte von $f(
 \begin{equation}
 	\tilde{G}=\frac{1}{(2\pi)^{\sfrac{3}{2}}}\frac{2k^2}{q^2-k^2}
 \end{equation}
-definiert, so lässt sich daraus nicht direkt die Greensche Funktion im Realraum gewinnen, da das Integral der inversen Fouriertransformation von $\tilde{G}$ divergiert. Dieses Problem lässt sich durch Hinzufügen eines infinitesimalen imaginären  $i\epsilon$ (mit $\epsilon\rightarrow 0^+$) zu $k$ im Nenner lösen (\fref{eq:green_ft})~\cite{trigg2005,griffiths2005}.
+definiert, so lässt sich daraus nicht direkt die Greensche Funktion im Realraum gewinnen, da das Integral der inversen Fouriertransformation von $\tilde{G}$ divergiert. Dieses Problem lässt sich durch Hinzufügen eines infinitesimalen imaginären  $i\epsilon$ (mit $\epsilon\rightarrow 0^+$) zu $k$ im Nenner lösen~\cite{trigg2005,griffiths2005}:
 
 \begin{align}
 	G & =\frac{1}{(2\pi)^{3}}\int_{-\infty}^{\infty} \frac{2k^2}{q^2-(k+i0^+)^2} e^{i\vec{q}\vec{r}}\dif^3 \vec{q}\nonumber \\
-	  & = \frac{k^2}{2\pi}\frac{e^{ikr}}{r}
+	  & = \frac{k^2}{2\pi}\frac{e^{ikr}}{r}\,.
 	  \label{eq:green_ft}                                                                     
 \end{align}
 Die so konstruierte Greensche Funktion lässt sich in den Realraum transformieren, stellt weiterhin eine Greensche Funktion der Wellengleichung dar und wird als \textit{retardierte Greensche Funktion} bezeichnet. Für die Wellengleichung gilt mit ihr somit im Fourier- bzw. im Realraum~\cite{cowley1995,thibault2007}:
@@ -77,7 +77,7 @@ Dies hat die Form einer Fouriertransformation -- in Näherung ist die gestreute 
 		\caption{Wellen- und Streuvektor}
 		\label{fig:bornq}
 	\end{subfigure}
-	\caption[Geometrie bei Born Näherung]{Skizze zur Bezeichnung der Ortsvektoren (a) sowie
+	\caption[Geometrie bei Born-Näherung]{Skizze zur Bezeichnung der Ortsvektoren (a) sowie
 		 der Wellenvektoren und des Streuvektors (b): Das Streuobjekt ist räumlich um den Ursprung beschränkt und liegt bei $\vec{r'}$, die Beobachtung findet bei $\vec{r}$ statt. $\vec{k_{0}}$ und $\vec{k}$ bezeichnen den Wellenvektor der einfallenden bzw. ausfallenden Welle mit dem dazwischenliegenden Winkel $\theta$, $\vec{q}$ bezeichnet den Streuvektor.}
 \end{figure} 
 
@@ -86,7 +86,7 @@ Dies hat die Form einer Fouriertransformation -- in Näherung ist die gestreute 
 Wird eine elektromagnetische Welle $\phi$ durch ihre zweidimensionale Fouriertransformierte $\bar{\phi}$ als
 \begin{equation}
 	\phi(x,y,z)=\frac{1}{2\pi}\iint_{-\infty}^{\infty}\bar{\phi}(f_x,f_y,z)e^{i(q_xx+q_yy)} \dif q_x \dif q_y
-\end{equation}dargestellt und gefordert, dass diese im Vakuum die Wellengleichung \eqref{eq:wellengleichung_r} erfüllt,
+\end{equation}dargestellt und gefordert, dass diese im Vakuum die Wellengleichung \ref{eq:wellengleichung_r} erfüllt,
 so muss $\bar{\phi}$ im Hybridraum ($q_x,q_y$ im Fourierraum, in z-Richtung jedoch im Realraum)
 \begin{equation}
 	\label{eq:wellengleichung_h}
@@ -102,11 +102,12 @@ Somit lässt sich die Propagation einer Welle im Vakuum als Multiplikation mit e
 
 \section{Fresnel- und Fraunhofer-Näherung}
 \label{chap:fraunhofer}
-Wird in \fref{eq:angularspectrum} die Taylor-Näherung 2. Ordnung
+Wird in \fref{eq:angularspectrum} die Taylor-Näherung 2. Ordnung durchgeführt (\fref{eq:taylor} und \ref{eq:fresnel_fourier}) sowie eine zweidimensionale inverse Fouriertransformation angewendet, so erhält man mit dem Faltungstheorem die Fresnel-Näherung im Realraum (\fref{eq:fresnel_real}).
+
 \begin{equation}
-	\sqrt{k^2-(q_x+q_y)^2}\approx k-\frac{(q_x^2+q_y^2)}{2k}
+\label{eq:taylor}
+\sqrt{k^2-(q_x+q_y)^2}\approx k-\frac{(q_x^2+q_y^2)}{2k}
 \end{equation}
-durchgeführt (\fref{eq:fresnel_fourier}) und eine zweidimensionale inverse Fouriertransformation angewendet, so erhält man mit dem Faltungstheorem die Fresnel-Näherung im Realraum (\fref{eq:fresnel_real}).
 
 \begin{align}
 	\bar{\phi}(x,y, z) &=\bar{\phi}(x,y,0) e^{ik z}e^{\frac{i z}{2k}(q_x^2+q_y^2)} 
