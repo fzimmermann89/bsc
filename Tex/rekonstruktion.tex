@@ -181,7 +181,7 @@ Sowohl die Wiener-Entfaltung als auch die IPR mit Support aus der Holographie er
 
 \subsection{Einfluss des Rauschens}
 Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die Fourieramplituden mit verschiedenen Auflösungen diskretisiert und ein Poisson-Rauschen angewendet (\fref{fig:recon2d-noise}). Dadurch wird das natürliche Schrotrauschen bei idealer Belichtung simuliert. Hier zeigt sich eine Unempfindlichkeit der Wiener-Entfaltung gegenüber Rauschen -- durch den Rauschterm in der Entfaltung kann der störende Einfluss minimiert und gleichzeitig eine ausreichende Entfaltung bewirkt werden. Insbesondere die IPR mit Shrink-Wrap Support leidet unter Rauschen, da kein geeigneter Support gefunden werden kann. Durch die Erzeugung des Supports mittels Holographie kann dieses Problem umgangen werden.
-\begin{figure}
+\begin{figure}[p]
 	\begin{subfigure}[b]{0.45\textwidth}
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16error0.png}}
 		\caption{wenig Rauschen}
@@ -198,7 +198,7 @@ Zur Beurteilung des Einflusses von Rauschen auf die Rekonstruktionen werden die 
 Sowohl für die Entfaltung wie auch für die Festlegung des Supports für die IPR muss die Referenz abgeschätzt werden. Der Einfluss der Güte dieser Abschätzung lässt sich in \fref{fig:recon2d-ref} betrachten. Schon eine Abweichung des Radius um 5~\% von der wahren Größe bewirkt ein Scheitern der Entfaltung. Die iterativen Algorithmen sind hingegen unempfindlich gegenüber diesem Einfluss.
 
 Zusammenfassend lässt sich aus der zweidimensionalen Untersuchung die Anfälligkeit der IPR bezüglich Rauschen und fehlenden Bildinformationen sowie die Anfälligkeit der Wiener-Ent"-faltung bezüglich einer nicht perfekt bekannten Referenz bei relativer Unempfindlichkeit gegenüber den zuvor genannten Effekten hervorheben. Die Kombination aus Entfaltung zur Gewinnung des Supports und Verfeinerung mittels iterativer Rekonstruktion scheint die Vorteile beider Verfahren zu kombinieren.
-\begin{figure}
+\begin{figure}[p]
 	\begin{subfigure}[b]{0.45\textwidth}
 		\reconimage{[width=\textwidth]{images/recon2d-mask16bit16error01.png}}
 		\caption{1~\% Abweichung des Radius}
