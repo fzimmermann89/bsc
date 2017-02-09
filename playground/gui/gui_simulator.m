@@ -3,8 +3,6 @@ function varargout = gui_simulator(varargin)
 %      gui_simulator(), by itself, creates a new Gui or raises the existing
 %      singleton returning the handle.
 
-% Last Modified by GUIDE v2.5 02-Feb-2016 20:12:29
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -27,7 +25,7 @@ end
 
 % --- Executes just before gui_simulator is made visible.
 function gui_simulator_OpeningFcn(hObject, eventdata, handles, varargin)
-gpu=true; %TODO
+gpu=parallel.gpu.GPUDevice.isAvailable; 
 
 % Choose default command line output for gui_simulator
 handles.output = [];

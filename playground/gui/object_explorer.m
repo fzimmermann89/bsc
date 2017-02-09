@@ -1,4 +1,6 @@
 classdef object_explorer<handle
+    % Displays a tree showing the objects and their properties. No longer used.
+    
     properties
         onchange=@()pause(0);
         settingSelected=@(x)display(x);
@@ -102,10 +104,9 @@ classdef object_explorer<handle
                 props=properties(selectedObject);
                 data=cell(length(props),3);
                 for n=1:length(props)
-
                     name=props{n};
                     value=selectedObject.(name);
-                    %                     minmax= sprintf('[%f;%f]',curSetting.minValue,curSetting.maxValue);
+                    %minmax= sprintf('[%f;%f]',curSetting.minValue,curSetting.maxValue);
                     data(n,:)={name,.value, 0};
                 end
                 this.detailTable.Data=data;
