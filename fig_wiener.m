@@ -22,7 +22,7 @@ gaussFilter = @(in,sigma) normalize(ift(ft(exp( (-(N/2-(1:N)+1).^2) / (2 * sigma
 ramp=linspace(1,objdip,floor(objwidth/4)+1);
 rampoffset=objwidth-floor(objwidth/4)*4;
 ramps=[ramp(1:end-1),fliplr(ramp(2:end)),ones(1,rampoffset),ramp(2:end-1),fliplr(ramp(1:end))];
-obj= ramps;%-.2*sin(linspace(0,3*pi,objwidth));
+obj=ramps;
 obj=objsum*obj./sum(obj);
 objpad=[zeros(1,ceil((N-objwidth)/2)+objoffset),obj,zeros(1,floor((N-objwidth)/2)-objoffset)];
 objpad=gaussFilter(objpad,2);
@@ -49,7 +49,7 @@ refcut=pad2size(refCentered(1+end/2-cutsize:end/2+cutsize),[1,N]);
 objcut=pad2size(signal(1+end/2+objoffset-objwidth:1+end/2+objoffset+objwidth),size(cross));
 autoref=ift(abs(ft(refcut)).^2);
 
-deconv=abs(wiener(cross,refcut,abs(ft(n)).^2));%./sqrt(numel(n)));
+deconv=abs(wiener(cross,refcut,abs(ft(n)).^2));
 deconv1=abs(wiener(cross,refcut,abs(ft(n)).^2,ft(auto)));
 deconv2=deconvwnr(cross,refcut,(ift(abs(ft(n)).^2)),auto);
 deconv3=deconvwnr(cross,refcut,(ift(abs(ft(n)).^2)),ift(abs(ft(objcut)).^2));
@@ -60,16 +60,6 @@ deconvt=@(w)deconvwnr(cross,refcut,w);
 options = optimset('TolFun',1e-18,'TolX',1e-8);
 o=fminsearch(@(w)mse(deconvt(w)),1,options);
 deconv4=deconvt(o);
-
-% figure(2);clf;
-% plabs=@(data)plot(abs(data));
-% subplot(711); plabs(objcut)
-% subplot(712); plabs(cross)
-% subplot(713); plabs(deconv);title(strcat('nur n ',num2str(mse(deconv))));
-% subplot(714); plabs(deconv1);title(strcat('wienerauto ',num2str(mse(deconv1))));
-% subplot(715); plabs(deconv2);title(strcat('auto ',num2str(mse(deconv2))));
-% subplot(716); plabs(deconv3);title(strcat('objcut ',num2str(mse(deconv3))));
-% subplot(717); plabs(deconv4);title(strcat('optimis ',num2str(mse(deconv4))));
 
 
 figure(1);clf

@@ -1,3 +1,5 @@
+% Performs all the 2D reconstructions and plots the results
+
 clear all;
 close all;
 
@@ -20,7 +22,6 @@ if ~isequal(numel(ldiscreteBits),numel(lmaskScale),numel(lrefError),numel(lthres
 end
 refRadius=40;
 sigmaMask=24;
-fastscale=1; %setting this to a value higher than 1 reduces iterations
 outpath='./Tex/images';
 inputfilename='./reconstruction/input/input_tu2.png';
 
@@ -56,13 +57,13 @@ for nrun=1:numel(ldiscreteBits)
     
     %Plan:
     planHolo=recon.plan();
-    for n=1:ceil(50/fastscale)
-        planHolo.addStep('hio',ceil(200/fastscale));
+    for n=1:50
+        planHolo.addStep('hio',200);
         planHolo.addStep('errp',1);
         planHolo.addStep('show',[],f);
         
     end
-    planHolo.addStep('er',ceil(100/fastscale));
+    planHolo.addStep('er',100);
     planHolo.addStep('show',[],f);
     
     %Run
@@ -86,11 +87,11 @@ for nrun=1:numel(ldiscreteBits)
     planSW.addStep('loosen',1,{5})
     
     planSW.addStep('show',[],f)
-    for n=1:ceil(50/fastscale)
-        planSW.addStep('hio',ceil(200/fastscale));
+    for n=1:50
+        planSW.addStep('hio',20);
         planSW.addStep('errp',1);
     end
-    planSW.addStep('er',ceil(100/fastscale));
+    planSW.addStep('er',100);
     planSW.addStep('show',[],f)
     
     %Run multiple times and average
@@ -100,6 +101,7 @@ for nrun=1:numel(ldiscreteBits)
     %             multistart(:,:,n)=gather(ift2(ft2(start).*exp(2i*pi*rand(size(start))).*softmask));
     %         end
     %         [result,images,errors]=planSW.runAvg(scatterImage,support,multistart,mask,ceil(multi/2));
+    
     [resultSW]=planSW.run(scatterImage,support,start,mask);
     lresultSW{nrun}=gather(resultSW);
     

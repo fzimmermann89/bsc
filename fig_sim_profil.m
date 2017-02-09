@@ -31,6 +31,7 @@ x=angles(end/2+1:end,end/2+1);
 err=structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error_rel,'UniformOutput',false);
 disp(err);
 names=fieldnames(run.scatter);
+
 %% figure
 f=figure('visible','off');
 set(f,'defaultAxesColorOrder',[[0 0 0]; [0 0 0]]);
@@ -64,8 +65,6 @@ hL.FontSize=16;
 hL.Position=[0.5,0.05,0,0];
 f.PaperSize=3*[15,9];
 f.PaperPosition=3*[-1 -.25 17 9.5];
-
-
 
 print(fname,'-dpdf');
 open(fname);

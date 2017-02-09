@@ -1,3 +1,6 @@
+% Runs the different simulations for a range of parameters
+% Outputs a file that can be opend by the gui
+
 clear all;
 addpath('.','../recon/')
 %% settings
@@ -26,14 +29,14 @@ for nN=1:numel(Nsteps)
             for ndz=1:numel(dzsteps)
                 for nradius=1:numel(radiussteps)
                     for nbeta=1:numel(betasteps)
-                        %                         for ndelta=1:numel(deltasteps)
+                        %for ndelta=1:numel(deltasteps)
                         cN=Nsteps(nN);
                         cwavelength=wavelengthsteps(nwavelength);
                         cdx=dxsteps(ndx);
                         cdz=dzsteps(ndz);
                         cradius=radiussteps(nradius);
                         cbeta=betasteps(nbeta);
-                        %                             cdelta=deltasteps(ndelta);
+                        %cdelta=deltasteps(ndelta);
                         cdelta=cbeta;
                         objects{1}.radius=cradius;
                         objects{1}.beta=cbeta;
@@ -65,7 +68,7 @@ for nN=1:numel(Nsteps)
                         fprintf('\n status %g %% \n\n',(nmax-n)/(nmax)*100);
                         wait(g);
                         
-                        %                         end
+                        %end
                     end
                 end
             end

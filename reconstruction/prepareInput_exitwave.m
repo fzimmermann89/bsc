@@ -1,4 +1,5 @@
 function [scatterImageHolo,scatterImageObj,refImage,mask,softmask,outermask,exitwaveHolo,exitwaveObj,settings]=prepareInput_exitwave(inputfilename,refError,maskScale,sigmaMask,discreteBits);
+    % Prepares the input used for the reconstructions
     
     
     %load input
@@ -32,7 +33,7 @@ function [scatterImageHolo,scatterImageObj,refImage,mask,softmask,outermask,exit
         
         scale=(max(scatterImageObj(:))-min(scatterImageObj(scatterImageObj~=0)))/(1e-12*2^discreteBits);
         scatterImageObj=scatterImageObj./scale;
-        scatterImageObj=round(10^12*imnoise(double(scatterImageObj),'poisson'));      
+        scatterImageObj=round(10^12*imnoise(double(scatterImageObj),'poisson'));
     end
-   settings=input.settings; 
+    settings=input.settings;
 end

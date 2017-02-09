@@ -5,6 +5,7 @@ function [theta,Intensity,S1,S2]=mie(lambda,radius,beta,delta,steps)
     % Normalized for forward intensity.
     % based on Mie functions by C. Mätzler (2002)
     % which are based on Bohren and Huffman (1983)
+    
     blocklength=1e5;
     k=2*pi/lambda;                  % vacuum wave number in 1/nm
     x=gather(k*radius);             % size parameter

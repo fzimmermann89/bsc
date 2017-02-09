@@ -15,7 +15,7 @@ discreteBits=0;
 wienernoise=1e4;
 focus_distance=-71; %distance to focus exitwave directly behind object
 caption='v2';
-outpath='./Tex/images2';
+outpath='./Tex/images';
 inputfilename='.\data\sim_complexobject.mat';
 
 

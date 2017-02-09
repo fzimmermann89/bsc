@@ -1,4 +1,3 @@
-function out=normalize(in)%,ids)
+function out=normalize(in)
     out=in./in(end/2+2,end/2+2);
-% out=(out-min(out(ids)));
 end

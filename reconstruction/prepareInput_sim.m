@@ -1,4 +1,5 @@
 function [scatterImageHolo,scatterImage,refImage,mask,softmask,outermask,inputHolo,input]=prepareInput_sim(filename,refRadius,refError,maskScale,sigmaMask,discreteBits)
+    % Prepares the input used for the reconstructions
     
     %load image
     input=double((rgb2gray(imread(filename))))/255;

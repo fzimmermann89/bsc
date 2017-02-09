@@ -1,7 +1,8 @@
 % Draws slicewise progress of multislice and msft for illustration
 
-% clear all;
-% close all;
+clear all;
+close all;
+
 N=256;
 addpath('helper','simulation');
 %all units are in nm

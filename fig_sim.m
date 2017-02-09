@@ -1,4 +1,5 @@
 % Simulation of sphere
+
 clear all;
 g=gpuDevice();
 reset(g);
@@ -144,7 +145,7 @@ print(fname,'-dpdf')
 open(fname)
 %% figure error
 c=load('colormap-error.mat');
-for n=1:length(names);
+for n=1:length(names)
     name=names{n};
     f=figure('visible','off');
     f.PaperSize=[14,11.5];

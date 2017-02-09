@@ -1,3 +1,5 @@
+% old version. Not used anymore
+
 close all
 clear all
 addpath('helper');

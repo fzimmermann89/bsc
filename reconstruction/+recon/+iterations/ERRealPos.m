@@ -1,6 +1,5 @@
 function [ newImage,realError ] = ERRealPos(amplitude, curImage, support,mask )
     %Perform one iteration of ER
-    %   Detailed explanation goes here
 
     %Take Phase of curImag and amplitude to construct a tmpImage
     curImagF=ft2(curImage);

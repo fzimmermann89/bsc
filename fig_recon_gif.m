@@ -1,3 +1,5 @@
+% Example of creating an animated gif of the reconstruction
+
 clear all;
 close all;
 

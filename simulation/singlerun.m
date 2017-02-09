@@ -1,4 +1,3 @@
-
 function run=singlerun(N,dx,dz,wavelength,objects,simabs)
     % runs all algorithms for a single set of parameters
     %% setup
@@ -25,8 +24,6 @@ function run=singlerun(N,dx,dz,wavelength,objects,simabs)
     run.exitwave_scale=((-N/2:N/2-1)*dx);
     
     
-    
-    
     %% mie
     imie=gpuArray(mie_scatter(wavelength,objects{1}.radius,objects{1}.beta,objects{1}.delta,2*N,dx));
     imie=normalize(imie);
@@ -37,28 +34,23 @@ function run=singlerun(N,dx,dz,wavelength,objects,simabs)
     clear pmie;
     
     %% ft projection
-%     exitwave=exp(2i*pi*dx/wavelength*scatterObjects.projection(objects,N,dx,gpu)); %absorption
-   exitwave=scatterObjects.projection(objects,N,dx,gpu); %direct projection
-%   exitwave=scatterObjects.projection(objects,N,dx,gpu)~=0; % outline
-
+    exitwave=scatterObjects.projection(objects,N,dx,gpu); %direct projection
+    
     name='FTproj';
     run=addtorun(run,name,exitwave);
     clear exitwave;
-%     if gpu;wait(g);end;
     
     %% multislice
     exitwave=(multislice(wavelength,objects,N,dx,dz,gpu,false));
     name='multislice';
     run=addtorun(run,name,exitwave);
     clear exitwave;
-%     if gpu;wait(g);end;
     
     %% thibault
     exitwave=(thibault(wavelength,objects,N,dx,dz,gpu));
     name='thibault';
     run=addtorun(run,name,exitwave);
     clear exitwave;
-%     if gpu;wait(g);end;
     
     %% msft
     msft=(msft2(wavelength,objects,N,dx,dz,gpu,simabs));
@@ -67,7 +59,6 @@ function run=singlerun(N,dx,dz,wavelength,objects,simabs)
     name='msft';
     run=addtorun(run,name,exitwave);
     clear exitwave;
-%     if gpu;wait(g);end;
     
     %% status
     err=structfun(@(x)median(abs(x(angles>minangle&angles<maxangle))),run.error_rel,'UniformOutput',false);
@@ -77,8 +68,6 @@ function run=singlerun(N,dx,dz,wavelength,objects,simabs)
     
     %% helper functions
     function run=addtorun(run,name,exitwave)
-        %exitwave=gather(exitwave);
-       
         scatter=exitwave2scatter(exitwave,dx,wavelength,padhalf,padcut,angles);
         scatter=icorrectoffsetspan(scatter,imie,angles>minangle&angles<maxangle/2);
         

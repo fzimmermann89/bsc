@@ -1,5 +1,6 @@
 function out=mie_scatter_avg(wavelength,radius,beta,delta,N,dx)
     % calculates a mie scatter image using oversampling and weighted average.
+    
     y=-N/2-.5:.5:.5;
     dscale=(wavelength/(N*dx));
     out=zeros(N,N);

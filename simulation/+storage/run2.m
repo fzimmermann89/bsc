@@ -1,6 +1,5 @@
 classdef run2<handle
-    %RUN Summary of this class goes here
-    %   Detailed explanation goes here
+% Stores the data of one simulation run
     
     properties
         settings;
