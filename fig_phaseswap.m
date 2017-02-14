@@ -1,9 +1,7 @@
-% Draw figure illustrating the importance of the fourier phase
-
 addpath('helper')
 
-l=imread('Tex/images/src/lena.tif');
-d=imread('Tex/images/src/david.tif');
+l=imread('Tex/images/src/lena2.tif');
+d=imread('Tex/images/src/david2.tif');
 L=ft2(l);
 D=ft2(d);
 
@@ -29,3 +27,18 @@ subplot(2,2,4);
 imshow(lpda)
 
 print('Tex/images/src/phaseswap.pdf','-dpdf')
+
+% %Mean intensity 
+% figure(2)
+% Ma=(La+Da)./2;
+% lm=uint8(abs(ift2(exp(1i*Lp).*Ma)));
+% dm=uint8(abs(ift2(exp(1i*Dp).*Ma)));
+% subplot(2,1,1); imshow(lm);
+% subplot(2,1,2);imshow(dm);
+% %Intensity plot
+% figure(3);clf
+% hold on;
+% [~,rl]=rprofil(log(La));
+% [~,rd]=rprofil(log(Da));
+% plot((rl));
+% plot((rd));
