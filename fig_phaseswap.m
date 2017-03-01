@@ -1,3 +1,5 @@
+% Draw figure illustrating the importance of the fourier phase
+
 addpath('helper')
 
 l=imread('Tex/images/src/lena2.tif');
