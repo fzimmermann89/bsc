@@ -2,7 +2,7 @@
 Es ist sinnvoll, die Evaluierung von Rekonstruktionsansätzen zunächst mit synthetischen Streubilder durchzuführen, da so das ideale Rekonstruktionsergebnis bekannt ist und für einen direkten optischen Vergleich zur Verfügung steht\footnote{\textit{"`To our
 	knowledge there is no reliable objective metric for image quality. Ultimately, the quality
 	comparison between algorithms is based on what looks good to the user"'}, D. R. Luke in der Vorstellung des \textit{RAAR}-Algorithmus~\cite{luke2004}.}. 
-Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen, kann die 3D-Fouriertransformierte, die auch mit weniger Punkten noch valide Ergebnisse liefern kann, genutzt werden~\cite{kunz1993,sander2014,hantke2016}. Diese vernachlässigt jedoch Mehrfachstreuung und Absorption und wird ebenfalls durch den Berechnungsaufwand hinsichtlich der Ausmaße der Objekte, deren Streubilder berechnet werden können, limitiert. Von besonderem Interesse sind deshalb die verschiedene schichtweise arbeitende Ansätze, die im Folgenden vorgestellt und bezüglich ihrer Gültigkeit überprüft werden.
+Für das Problem der Berechnung synthetischer Streubilder existieren verschiedene Lösungsansätze: Neben den verbreiteten Methoden \textit{DDA} und \textit{FDTD}, die in allen Raumrichtungen Berechnungspunkte in einem Abstand deutlich geringer als die Wellenlänge benötigen, kann die 3D-Fouriertransformierte, die auch mit weniger Punkten noch valide Ergebnisse liefern kann, genutzt werden~\cite{kunz1993,sander2014,hantke2016}. Diese vernachlässigt jedoch Mehrfachstreuung und Absorption und wird ebenfalls durch den Berechnungsaufwand hinsichtlich der Ausmaße der Objekte, deren Streubilder berechnet werden können, limitiert. Von besonderem Interesse sind deshalb die verschiedenen schichtweise arbeitenden Ansätze, die im Folgenden vorgestellt und bezüglich ihrer Gültigkeit überprüft werden.
 
 \section{Mie-Streuung}
 Die Mie-Theorie bietet eine analytische Lösung der Streuung an einer Kugel in Form einer unendlichen Reihe, basierend auf einer Lösung der Grenzbedingungen für elektromagnetische Wellen~\cite{bohren1983}. Diese unendliche Reihe lässt sich näherungsweise numerisch berechnen (Details siehe \fref{app:mie}). Eine vektorisierte Version dieser Berechnung ist in den auf Mätzler~\cite{maetzler2002} basierenden Matlab Funktionen \texttt{simulation/mie.m} für winkelabhängige Radialprofile sowie \texttt{simulation/mie\_scatter.m} für Streubilder implementiert. Diese für eine homogene Kugel im Vakuum korrekte Lösung dient im Rahmen dieser Arbeit der Verifizierung der Simulationsverfahren.
@@ -106,7 +106,7 @@ Diese Methode wird im Weiteren als \textit{Multislice Propagation} bezeichnet un
 \end{figure} 
 	
 \section{Thibaults Multislice}
-Thibault stellt in~\cite{thibault2007} eine eigene Formulierung der Multislice-Simulation auf. Ausgehend von der Wellengleichung (\fref{eq:wellengleichung_green})
+Thibault hat in~\cite{thibault2007} eine eigene Formulierung der Multislice-Simulation aufgestellt. Ausgehend von der Wellengleichung (\fref{eq:wellengleichung_green})
 lässt sich für die Welle im Hybridraum 
 \begin{equation}
 	\bar{\Phi}(z)=\bar{G}\ast_z\left[\bar{\delta\eta}\ast_{q_\perp} \bar{\Phi}\right]
@@ -173,7 +173,7 @@ Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
-		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
+		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.33\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:exitwave}
 	\end{subfigure}
@@ -184,7 +184,7 @@ Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf
 		\caption{Streubild}
 		\label{fig:scatter}
 	\end{subfigure}
-	\caption[Austrittswelle und Streubild einer Kugel]{Exemplarische Multislice-Propagations Austrittwelle (a) und logarithmiertes Streubild (b) einer Kugel mit Radius \SI{100}{nm} bei $\beta,\delta$=$10^{-3}$. Die relative Intensität der Austrittswelle bezüglich der Eintrittswelle ist über die Helligkeit dargestellt, die Phase über den Farbton. Das Streubild zeigt einen Bereich bis 15°.}
+	\caption[Austrittswelle und Streubild einer Kugel]{Exemplarische Multislice-Propagations Austrittwelle (a) und logarithmierte Intensität des simulierten Streubildes (b) einer Kugel mit Radius \SI{100}{nm} bei $\beta,\delta$=$10^{-3}$. Die relative Intensität der Austrittswelle bezüglich der Eintrittswelle ist über die Helligkeit dargestellt, die Phase über den Farbton. Das Streubild zeigt einen Bereich bis 15°.}
 	\label{fig:exitscatter}
 \end{figure}%
 
@@ -209,7 +209,7 @@ Aus den rotationssymmetrischen Streubildern können nun Radialprofile der Intens
 		\includegraphics[width=\textwidth]{images/fig_sim_relerror_multislice-r100-bd1e-3.pdf}
 		\subcaption{Multislice Propagation}
 	\end{subfigure}
-	\caption[Relativer Fehler der Simulationen]{Relative Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius \SI{100}{nm} bei $\beta=\delta=10^{-3}$. Es ist bei allen Simulationsmethoden der Trend zu ansteigenden Abweichung bei höheren Streuwinkeln sowie konzentrische Zonen höherer Abweichungen zu erkennen. Bei den hier verwendeten Parametern zeigt die Projektionsnäherung ein deutlich schlechteres Ergebnis als die Multislice Ansätze.}
+	\caption[Relativer Fehler der Simulationen]{Betrag der relativen Abweichungen von Mie der simulierten Streubilder einer Kugel mit Radius \SI{100}{nm} bei $\beta=\delta=10^{-3}$. Es ist bei allen Simulationsmethoden der Trend zu ansteigenden Abweichung bei größeren Streuwinkeln sowie konzentrische Zonen höherer Abweichungen zu erkennen. Bei den hier verwendeten Parametern zeigt die Projektionsnäherung ein deutlich schlechteres Ergebnis als die Multislice Ansätze.}
 	\label{fig:relerror}
 \end{figure}
 
@@ -218,7 +218,7 @@ Aus den rotationssymmetrischen Streubildern können nun Radialprofile der Intens
 	\centering
 	\includegraphics[width=1\textwidth]{images/fig_sim_profile.pdf}
 	\captionsetup{width=0.95\textwidth}
-	\caption[Radiale Profile]{Radiale logarithmierte Intensitätsprofile berechnet mit den verschiedenen Algorithmen sowie die relative Abweichung von Mie für eine Kugel mit Radius \SI{20}{nm} und $\beta,\delta$=$10^{-4}$. Es ist bei kleinen Streuwinkeln eine gute Übereinstimmung aller Algorithmen zu erkennen, bei höheren Winkeln versagt die Projektion. Über den gesamten Bereich besitzt bei diesen Parametern die Multislice Propagation die beste Übereinstimmung. Die relativen Fehler der Simulationen sind in den Intensitätsminima aufgrund der dort deutlich abfallenden Referenzintensität bei allen Verfahren stärker ausgeprägt.}
+	\caption[Radiale Profile]{Radiale logarithmierte Intensitätsprofile berechnet mit den verschiedenen Algorithmen sowie die relative Abweichung von Mie für eine Kugel mit Radius \SI{20}{nm} und $\beta,\delta$=$10^{-4}$. Es ist bei kleinen Streuwinkeln eine gute Übereinstimmung aller Algorithmen zu erkennen, bei größeren Winkeln versagt die Projektion. Über den gesamten Bereich besitzt bei diesen Parametern die Multislice Propagation die beste Übereinstimmung. Die relativen Fehler der Simulationen sind in den Intensitätsminima aufgrund der dort deutlich abfallenden Referenzintensität bei allen Verfahren stärker ausgeprägt.}
 	\label{fig:profil}
 \end{sidewaysfigure}
 \clearpage
@@ -226,7 +226,7 @@ Aus den rotationssymmetrischen Streubildern können nun Radialprofile der Intens
 \begin{figure} %parameter variation
 	\centering
 	\includegraphics[width=1\textwidth]{images/fig_sim_var.pdf}
-	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichungen der Brechzahl vom Vakuum die Simulationen noch valide sind, ist die mediane, relative Abweichung bis 20° von Mie über den Parametern aufgetragen. Es sind somit die Bereiche erkennbar, in denen der jeweilige Simulationsalgorithmus valide Ergebnisse liefert. Es ist insbesondere zu erkennen, dass bei größeren Brechzahlen sowie größeren Abweichungen von der Vakuumbrechzahl \textit{MSFT} nur eingeschränkt valide ist, sowie dass die \textit{Multislice Propagation} und \textit{Thibaults Multislice} über den gesammten dargestellten Bereich gute Ergebnisse liefern. Parameter: $\Delta x=\sfrac{\lambda}{2}$, $\Delta z$ und $\sfrac{\lambda}{8}$ und N=2048.}
+	\caption[Gültigkeit der Simulationsalgorithmen]{Zur Entscheidung bei welchen Radien und welchen Abweichungen der Brechzahl vom Vakuum die Simulationen noch valide sind, ist der Median des Betrags der relative Abweichung bis 20° von Mie über den Parametern aufgetragen. Es sind somit die Bereiche erkennbar, in denen der jeweilige Simulationsalgorithmus valide Ergebnisse liefert. Es ist insbesondere zu erkennen, dass bei größeren Brechzahlen sowie größeren Abweichungen von der Vakuumbrechzahl \textit{MSFT} nur eingeschränkt valide ist, sowie dass die \textit{Multislice Propagation} und \textit{Thibaults Multislice} über den gesammten dargestellten Bereich gute Ergebnisse liefern. Parameter: $\Delta x=\sfrac{\lambda}{2}$, $\Delta z$ und $\sfrac{\lambda}{8}$ und N=2048.}
 	\label{fig:variation}
 \end{figure}
 
@@ -236,7 +236,7 @@ Mit der \textit{Multislice Propagation} ist somit ein effizienter, schichtweise 
 \section{Streubilder komplexer Objekte}
 Neben der bislang zur Validierung erfolgten Berechnung von Streubildern von Kugeln eignen sich die Simulationsalgorithmen auch zur Berechnung der Austrittswellen und Streubilder hinter anderen, komplexeren Objekten. 
 
-Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Modell einer wassergefüllte ikosaederförmige Lecithin-Membran (Außenradius \SI{375}{nm}, Dicke \SI{25}{nm}) um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius \SI{90}{nm}) in den Eckpunkten eines Tetraeders angeordnet sind als biologisches Objekt betrachtet. Als Referenz dient ein disjunktes Xenon-Dodekaeder mit Außenradius \SI{100}{nm}. Die komplexen Brechzahlen der simulierten Materialien sind in \fref{tab:brechzahl} aufgeführt~\cite{henke,bergh2008,milo2015}. Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplexexit} gezeigt. Es sind sowohl die Wirkung der Absorption in Form der Intensitätsabnahme hinter den Streuobjekten, wie auch der Brechung in Form einer geringen Intensitätszunahme um die Streuobjekte sowie einer Phasenänderung zu erkennen. Das zugehörige Streubild ist in \fref{fig:komplexscatter} gezeigt und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar. Im Folgenden wird dies für den Vergleich der Rekonstruktionsansätze genutzt, indem deren Eignung zur Rekonstruktion der Austrittswelle betrachtet wird.
+Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Modell einer wassergefüllte ikosaederförmige Lecithin-Membran (Außenradius \SI{375}{nm}, Dicke \SI{25}{nm}), um deren Mittelpunkt vier kleinere, DNA gefüllte Kugeln (Radius \SI{90}{nm}) in den Eckpunkten eines Tetraeders angeordnet sind, als biologisches Objekt betrachtet. Als Referenz dient ein disjunktes Xenon-Dodekaeder mit Außenradius \SI{100}{nm}. Die komplexen Brechzahlen der simulierten Materialien sind in \fref{tab:brechzahl} aufgeführt~\cite{henke,bergh2008,milo2015}. Die für diese Szene berechnete komplexe Austrittswelle ist in \fref{fig:komplexexit} gezeigt. Es sind sowohl die Wirkung der Absorption in Form der Intensitätsabnahme hinter den Streuobjekten, wie auch der Brechung in Form einer geringen Intensitätszunahme um die Streuobjekte sowie einer Phasenänderung zu erkennen. Das zugehörige Streubild ist in \fref{fig:komplexscatter} gezeigt und stellt das Ergebnis der Bemühungen synthetische Streubilder zu erstellen dar. Im Folgenden wird dies für den Vergleich der Rekonstruktionsansätze genutzt, indem deren Eignung zur Rekonstruktion der Austrittswelle betrachtet wird.
 
 
 \begin{figure}[b]
@@ -270,7 +270,7 @@ Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Mode
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}}
-		\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.5\textwidth]{images/fig_simholo_v2_exitwave_cw.pdf}}}
+		\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.33\textwidth]{images/fig_simholo_v2_exitwave_cw.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:komplexexit}
 	\end{subfigure}	\hspace{2cm}

@@ -26,7 +26,7 @@ Eine für die Betrachtung von Streuvorgängen hilfreiche Form der Wellengleichun
 	\label{eq:wellengleichung_f}
 	(-q^2+k^2)\tilde{\phi}=\frac{-2k^2}{{(2\pi)}^{\sfrac{3}{2}}}(\tilde{\delta \eta} \ast \tilde{\phi}) \,.
 \end{equation}
-Hierbei bezeichnet die Notation $\tilde{f}(q)$ die Fouriertransformierte von $f(r)$. Wird nun die Greensche Funktion  $\tilde{G}$ im Fourierraum als
+Hierbei bezeichnet die Notation $\tilde{f}(q)$ die Fouriertransformierte von $f(r)$ und es gilt $q=\abs{q}$ . Wird nun die Greensche Funktion  $\tilde{G}$ im Fourierraum als
 \begin{equation}
 	\tilde{G}=\frac{1}{(2\pi)^{\sfrac{3}{2}}}\frac{2k^2}{q^2-k^2}
 \end{equation}
@@ -45,7 +45,7 @@ Die so konstruierte Greensche Funktion lässt sich in den Realraum transformiere
 \end{align*}
 Diese Formulierung erweist sich im Folgenden für die Herleitung der Born-Näherung als hilfreich.
 \section{Born-Näherung}
-Eine häufige Näherung bei Streuproblemen ist die sogenannte \textit{Born-Näherung}. Sei zunächst mit den in \fref{fig:bornr}  dargestellten Bezeichnungen für die Vektoren das streuende Objekt bei $\vec{r'}$ räumlich um den Koordinatenursprung beschränkt (und somit auch $\delta\eta(\vec{r'})$). Zur Berechnung der Welle am Beobachtungsort $\vec{r}$ wird nun davon ausgegangen, dass gilt $|\vec{r}| \gg |\vec{r'}|$ für alle Punkte an denen $\delta\eta$ von Null verschieden ist, d.h. dass der Beobachtungsabstand groß gegenüber den Ausmaßen des Streuobjektes ist~\cite{griffiths2005}. In diesem Fall gilt die Näherung
+Eine häufige Näherung bei Streuproblemen ist die sogenannte \textit{Born-Näherung}. Sei zunächst mit den in \fref{fig:bornr}  dargestellten Bezeichnungen für die Vektoren das streuende Objekt bei $\vec{r'}$ räumlich um den Koordinatenursprung beschränkt (und somit auch $\delta\eta(\vec{r'})$). Zur Berechnung der Welle am Beobachtungsort $\vec{r}$ wird nun davon ausgegangen, dass gilt $r\gg |\vec{r'}|$ (mit $|\vec{r}| =r$) für alle Punkte an denen $\delta\eta$ von Null verschieden ist, d.h. dass der Beobachtungsabstand groß gegenüber den Ausmaßen des Streuobjektes ist~\cite{griffiths2005}. In diesem Fall gilt die Näherung
 \begin{equation}
 	\abs{\vec{r}-\vec{r'}} = \sqrt{r^2+r'^2-2\vec{r}\cdot\vec{r'}} \approx r-\frac{\vec{r}}{r}\cdot\vec{r'} \,.
 	\label{eq:born_r_approx}
