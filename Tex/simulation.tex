@@ -70,7 +70,7 @@ Bei dieser Methode wird Mehrfachstreuung vollständig ignoriert. Durch nachträg
 Eine Implementierung des MSFT-Algorithmus mit optionaler Absorptionskorrektur liegt in \texttt{simulation/msft.m} vor. 
 
 \section{Multislice Propagation}
-Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice Propagation} oder \textit{Beam Propagation} bekannt~\cite{hare1994,cowley1957}. Bei diesem in \fref{fig:multislice} skizzierten Verfahren wird zunächst die Szene in einzelne Schichten mit dem Abstand $\Delta z$ zerlegt. Die Ausbreitung der in die Szene einfallenden ebenen Welle wird nun genähert durch eine Vakuumpropagation von Schicht zu Schicht nach \textit{Angular Spectrum Propagation} im Hybridraum\footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu~\cite{hare1994} auf diese Näherung verzichtet.},
+Ein alternatives Verfahren zur Simulation von Streubildern ist in der Literatur als \textit{Multislice Propagation} oder \textit{Beam Propagation} bekannt~\cite{hare1994,cowley1957}. Bei diesem in \fref{fig:multislice} skizzierten Verfahren wird zunächst die Szene ebenfalls in einzelne Schichten mit dem Abstand $\Delta z$ zerlegt. Jedoch unterscheidet sich das weitere Vorgehen deutlich von \textit{MSFT}: Statt auf der Born-Näherung zu basieren, wird schichtweise der Durchtritt der in die Szene einfallenden ebenen Welle durch das Objekt simuliert. Hierbei wird die Ausbreitung von Schicht zu Schicht genähert durch eine Vakuumpropagation nach \textit{Angular Spectrum Propagation} im Hybridraum\footnote{Die Näherung der Vakuumausbreitung durch einen Fresnel-Propagator bringt gegenüber der korrekten Berechnung über die Angular Spectrum Propagation keine numerischen Vorteile. Aus diesem Grund wird im Gegensatz zu~\cite{hare1994} auf diese Näherung verzichtet.},
 \begin{equation}
 	\bar{\phi}\left(q_x,q_y,z+\Delta z\right)=\bar{\phi}(z)e^{i\Delta z\sqrt{k^2-(q_x+q_y)^2}} \, ,
 \end{equation}
@@ -85,7 +85,7 @@ sowie durch eine Wechselwirkung mit der Materie der Schicht in einer einzelnen E
 	\label{fig:multislice}
 \end{figure} 	
 
-Bei diesem Verfahren wird die Annahme getroffen, dass  innerhalb einer Schicht die örtliche Verteilung der Materie konstant ist, sowie die durch die Propagation bedingte Veränderung innerhalb von $\Delta z$ ausreichend klein ist, sodass keine Anteile der Wellenfront innerhalb einer Schicht unterschiedliche Brechzahlen durchlaufen~\cite{hare1994}. Dies kann durch ein hinreichend kleines $\Delta z$ gewährleistet werden. 
+Dabei wird die Annahme getroffen, dass  innerhalb einer Schicht die örtliche Verteilung der Materie konstant ist, sowie die durch die Propagation bedingte Veränderung innerhalb von $\Delta z$ ausreichend klein ist, sodass keine Anteile der Wellenfront innerhalb einer Schicht unterschiedliche Brechzahlen durchlaufen~\cite{hare1994}. Dies kann durch ein hinreichend kleines $\Delta z$ gewährleistet werden. 
 Des Weiteren wird bei der Wechselwirkung mit der Materie der Winkel mit dem ein Anteil der Wellenfront durch die Materie läuft vernachlässigt: Bei Anteilen der Welle, die durch vorangegangene Streueffekte bereits in einem deutlichen Winkel die Szene durchlaufen, wird genähert, dass ihr Weg durch die Materie gleich lang wie der Weg von nicht gestreuten Anteilen ist. Somit wird Mehrfachstreuung zwar mitberücksichtigt, jedoch nur näherungsweise.
 	
 Der Algorithmus zur Berechnung der Austrittswelle, d.h. der Welle hinter der Szene bzw. dem Streuobjekt, ist somit die iterative Anwendung von
@@ -173,7 +173,7 @@ Anschließend werden die simulierten Streubilder bezüglich ihrer Skalierung auf
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}}
-		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.33\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
+		\includegraphics[width=\textwidth]{images/fig_sim_exitwave_multislice-r100-bd1e-3.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.4\textwidth]{images/fig_sim_exitwave_multislice_cw-r100-bd1e-3.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:exitwave}
 	\end{subfigure}
@@ -270,7 +270,7 @@ Als interessante Testszene wird das in \fref{fig:komplexmodel} dargestellte Mode
 	\centering
 	\begin{subfigure}[b]{0.4\textwidth}
 		\setbox1=\hbox{\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}}
-		\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.33\textwidth]{images/fig_simholo_v2_exitwave_cw.pdf}}}
+		\includegraphics[width=\textwidth]{images/fig_simholo_v2_exitwave.png}\llap{\makebox[\wd1][l]{\includegraphics[width=0.4\textwidth]{images/fig_simholo_v2_exitwave_cw.pdf}}}
 		\caption{Austrittswelle}
 		\label{fig:komplexexit}
 	\end{subfigure}	\hspace{2cm}
