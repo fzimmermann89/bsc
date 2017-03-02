@@ -131,7 +131,7 @@ function [ start,support,crossImage ] = holoSupport( scatterImage,softmask,refIm
         0+  ceil (end/2+crossSize(2)/2)-  ceil(diff(1)/2)...
         )=cross(1).Image;
     
-    %dilate for loose support (XXX)
+    %Fill holes in support
     support = imfill((support), 'holes');
     
 end

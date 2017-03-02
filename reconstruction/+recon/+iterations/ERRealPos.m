@@ -8,9 +8,8 @@ function [ newImage,realError ] = ERRealPos(amplitude, curImage, support,mask )
 
     %Force (real) constrains on tmpImage to get newImage
     newImage=support.*abs(real(tmpImage));
-    %should be different function? XXX
 
-    %calculate realError (nochmal nachdenken XXX)
+    %calculate realError
     if nargout>1
      realError=norm(tmpImage.*~support,'fro')./norm(tmpImage,'fro');
     end

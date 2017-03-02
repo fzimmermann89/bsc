@@ -22,9 +22,8 @@ function [ newImage,realError  ] = RAAR( amplitude, curImage, support,mask  )
     %outside support
     feedback=beta*curImage+(1-2*beta).*tmpImage;
     newImage=newImage+~support.*feedback;
-    %should be different function? XXX
 
-    %calculate realError (nochmal nachdenken XXX)
+    %calculate realError
     if nargout>1
         realError=norm(tmpImage.*~support,'fro')./norm(tmpImage,'fro');
     end
